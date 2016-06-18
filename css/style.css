@@ -239,6 +239,7 @@ input[type="search"]::-webkit-search-decoration {
 }
 /* css3 animate */
 .animated {
+  border-bottom: solid 1px #fff;
   -webkit-animation-fill-mode: both;
   -moz-animation-fill-mode: both;
   -o-animation-fill-mode: both;
@@ -832,13 +833,13 @@ article header.article-info >p.article-time {
   article header.article-info >p.article-time {
     float: right;
     margin-right: 1em;
-    padding-top: 0.1em;
+    padding-top: 0.5em;
     font-size: 0.9em;
   }
 }
 article header.article-info >p.article-time:before {
   font-family: "FontAwesome";
-  font-size: 130%;
+  font-size: 110%;
   content: "\f017";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -962,7 +963,7 @@ article .article-content em code {
   text-shadow: 0 1px #fff;
 }
 article .article-content p {
-  font-size: 105%;
+  font-size: font-size-5;
   line-height: 1.7;
   margin: 0.7em 0;
 }
@@ -1629,6 +1630,17 @@ section.comment {
   padding: 0.5em;
 }
 .archiveslist li a:hover {
+  color: #009fcc;
+  -webkit-transition: color 0.25s;
+  -moz-transition: color 0.25s;
+  -o-transition: color 0.25s;
+  -ms-transition: color 0.25s;
+  transition: color 0.25s;
+}
+.archiveslist .archive-list-link {
+  padding: 0.5em;
+}
+.archiveslist .archive-list-link:hover {
   color: #009fcc;
   -webkit-transition: color 0.25s;
   -moz-transition: color 0.25s;
