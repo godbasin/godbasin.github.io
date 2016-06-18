@@ -1,10 +1,10 @@
 
-  <!DOCTYPE HTML>
+ <!DOCTYPE HTML>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
   
-    <title>Archives: 2016 | Here. There.</title>
+    <title>categories | Here. There.</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="被删">
@@ -66,47 +66,21 @@ var _hmt = _hmt || [];
 
       </header>
       <div id="container">
-        
-
+          
 <div class="archive-title" >
-  <h2 class="archive-icon">2016</h2>
-  
-  <div class="archiveslist archive-float clearfix">
-   <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">1</span></li></ul>
- </div>
-  
+<h2 class="category-icon">分类</h2>
+<div class="archiveslist archive-float clearfix">
+
+  <a class="archive-list-link" data-src="/categories/assorted/" href="#assorted" title="assorted">assorted<sup>1</sup></a>
+ 
 </div>
-<div id="main" class="archive-part clearfix">
-  <div id="archive-page">
-
-  <section class="post" itemscope itemprop="blogPost">
-  
-    <a href="/2016/06/18/first-blog/" title="前端在变，然而热情不变" itemprop="url">
-  
-    <h1 itemprop="name">前端在变，然而热情不变</h1>
-    
-    <time datetime="2016-06-17T19:59:57.000Z" itemprop="datePublished">2016-06-18</time>
-  </a>
-</section>
-
-
-  </div>
 </div>
+<div id="main" class="archive-part">
+<div class="all-list-box"></div>
+</div>
+
 
       </div>
-      <footer><div id="footer" >
-	
-	<section class="info">
-		<p> 即使梦想再小，却很伟大 ^_^ </p>
-	</section>
-	 
-		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2016 
-		
-		<a href="https://godbasin.github.io" target="_blank" title="被删">被删</a>
-		
-		</p>
-</div>
-</footer>
       <script src="/js/jquery-2.1.0.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){ 
@@ -155,6 +129,24 @@ $(document).ready(function(){
 
 
 
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var list    = $('.archive-title a'),
+      box     = $('.all-list-box'),
+      first   = $('.archive-title a:first-of-type');
+      box.load(first.attr('data-src').toString()+' #archive-page');
+      first.addClass('current');
+  list.each(function(){
+    $(this).click(function(){
+      var listSrc=$(this).attr('data-src').toString()+' #archive-page';
+      box.load(listSrc);
+      list.removeClass('current');
+      $(this).addClass('current');
+     });  
+    });
+  }); 
+</script>
 
 
 
