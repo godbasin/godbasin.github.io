@@ -268,8 +268,7 @@
 				_options.canvas_top = _top;
 			}
 		},
-		cutOver: function(obj) {
-			
+		cutOver: function(obj) {			
 			var _options = obj.options,
 				canvas1 = document.getElementById(_options.canvas_id + "1"),
 				ctx1 = canvas1.getContext('2d'),
