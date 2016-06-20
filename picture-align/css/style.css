@@ -1,0 +1,214 @@
+@charset "utf-8";
+/* CSS Document */
+
+html,
+body,
+div,
+span,
+div,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+abbr,
+address,
+cite,
+code,
+img,
+ins,
+kbd,
+q,
+samp,
+small,
+strong,
+sub,
+sup,
+var,
+b,
+i,
+ol,
+ul,
+li,
+section,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tr,
+th,
+td,
+figure,
+footer,
+header,
+&nbsp;
+hgroup,
+nav,
+section,
+time,
+mark,
+audio,
+video,
+container {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	background: transparent;
+}
+ul,
+li,
+p {
+	margin: 0;
+	padding: 0;
+	-webkit-margin-before: 0px;
+	-webkit-margin-after: 0px;
+}
+ul,
+li,
+p,
+a,
+h1,
+h2,
+h3,
+h4,
+h5,
+td,
+tr,
+th,
+label {
+	font-family: "微软雅黑";
+	padding: 0;
+	margin: 0;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none !important;
+	margin: 0;
+}
+input[type="number"] {
+	-moz-appearance: textfield;
+}
+body {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	text-align: center;
+	font-weight: 500;
+	min-height: 100%;
+	-webkit-text-size-adjust: none;
+}
+html,
+body {
+	width: 100%;
+	overflow-x: hidden;
+	background: #fff;
+}
+li {
+	list-style: none;
+}
+a {
+	text-decoration: none;
+	color: inherit;
+	blr: expression(this.onFocus=this.blur());
+}
+*{font-family: "微软雅黑";-webkit-overflow-scrolling : touch;}
+a:active,
+a:visited {
+	outline: none !important;
+}
+.container {
+	width: 100%;	
+	overflow-x: hidden;
+}
+.block{
+	display: block;
+}
+/**********************banner**********************/
+#banner {
+	width: 100%;
+	overflow: hidden;
+}
+#slider {
+	text-align: center;
+	overflow: hidden;
+	position: relative;
+	background: #999;
+	width: 100%;
+	float: left;
+}
+#slider-con {
+	width: 1000%;
+	white-space: nowrap;
+	position: absolute;
+	left: 0;
+}
+#nav-con {
+	width: 100%;
+	height: auto;
+	position: absolute;
+	text-align: center;
+	bottom: 0;
+	z-index: 999;
+}
+#nav-con a {
+	width: 10px;
+	height: 10px;
+	border-radius: 5px;
+	display: inline-block;
+	margin: 5px;
+	color: #666;
+	background: #fff;
+	cursor: pointer;
+	filter: alpha(Opacity=50);
+	-moz-opacity: 0.5;
+	opacity: 0.5;
+}
+.nav-chose {
+	filter: alpha(Opacity=100) !important;
+	-moz-opacity: 1 !important;
+	opacity: 1 !important;
+}
+#direction-con{
+	width: 100%;
+	position: absolute;
+	left: 0;
+	top: 45%;
+	height: 10%;
+}
+#left{
+	width: 20%;
+	height: 100%;
+	float: left;
+}
+#left img{
+	width: 40px;
+	height: 100%;
+	opacity: 0;
+	float: left;
+}
+#right{
+	width: 20%;
+	height: 100%;
+	float: right;
+}
+#right img{
+	width: 40px;
+	height: 100%;
+	opacity: 0;
+	z-index: 999;
+	float: right;
+}
+#banner:hover #right img, #banner:hover #left img{
+	opacity: 0.8;
+}
+#banner:hover #right:hover img,#banner:hover #left:hover img{
+	opacity: 1;
+	cursor: pointer;
+}
