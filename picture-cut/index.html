@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0">
+		<title>picture对齐</title>
+		<link rel="stylesheet" href="./css/style.css">
+		<script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+		<script src="./js/mousestyle.js"></script>
+	</head>
+	<body>
+		<img class="img-to-cut" src="img/1.png" />
+		<img class="img-to-cut" src="img/2.png" />
+		<img class="img-to-cut" src="img/3.png" />
+		<section id="bsphotocut-con"></section>
+	</body>
+	<script>
+	$(".img-to-cut").click(function(){
+		$(this).bsPhotoCut({
+			"section":"#bsphotocut-con",  //外框
+			"canvas_id":"bsphotocut-canvas",
+			"ratio": "0",  //宽度和高度比例n:m, 为0则不限比例
+			"success": function(src,obj){   //src为返回图片src, obj为调用此插件的DOM对象this
+				var _img = $("<img src='"+src+"' />");
+				$("body").append(_img);
+			}
+		});
+	});
+	</script>
+</html>

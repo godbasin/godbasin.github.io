@@ -1,0 +1,183 @@
+@charset "utf-8";
+/* CSS Document */
+
+html,
+body,
+div,
+span,
+div,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+abbr,
+address,
+cite,
+code,
+img,
+ins,
+kbd,
+q,
+samp,
+small,
+strong,
+sub,
+sup,
+var,
+b,
+i,
+ol,
+ul,
+li,
+section,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tr,
+th,
+td,
+figure,
+footer,
+header,
+&nbsp;
+hgroup,
+nav,
+section,
+time,
+mark,
+audio,
+video,
+container {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	background: transparent;
+}
+ul,
+li,
+p {
+	margin: 0;
+	padding: 0;
+	-webkit-margin-before: 0px;
+	-webkit-margin-after: 0px;
+}
+ul,
+li,
+p,
+a,
+h1,
+h2,
+h3,
+h4,
+h5,
+td,
+tr,
+th,
+label {
+	font-family: "微软雅黑";
+	padding: 0;
+	margin: 0;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none !important;
+	margin: 0;
+}
+input[type="number"] {
+	-moz-appearance: textfield;
+}
+body {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	text-align: center;
+	font-weight: 500;
+	min-height: 100%;
+	-webkit-text-size-adjust: none;
+}
+html,
+body {
+	width: 100%;
+	overflow-x: hidden;
+	background: #fff;
+}
+li {
+	list-style: none;
+}
+a {
+	text-decoration: none;
+	color: inherit;
+	blr: expression(this.onFocus=this.blur());
+}
+*{font-family: "微软雅黑";-webkit-overflow-scrolling : touch;}
+a:active,
+a:visited {
+	outline: none !important;
+}
+.container {
+	width: 100%;	
+	overflow-x: hidden;
+}
+.block{
+	display: block;
+}
+/**********************img**********************/
+.img-to-cut{
+	width: 100%;
+	margin-bottom: 10px;
+}
+#bsphotocut-con{
+	width: 100%;
+	height: 100%;
+	padding-bottom: 50px;
+	box-sizing: border-box;
+	position: fixed;
+	overflow: auto;
+	background: #666;
+	z-index: 999;
+	top: 0;
+	left: 0;
+	display: none;
+}
+#bsphotocut-con > div{
+	width: 100%;
+	height: 100%;
+	position: relative;
+}
+#bsphotocut-con footer{
+	width: 100%;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	height: 50px;
+	background: #333;
+	padding: 5px 10px;
+	box-sizing: border-box;
+}
+#bsphotocut-con footer a{
+	height: 40px;
+	line-height: 30px;
+	box-sizing: border-box;
+	display: block;
+	padding: 5px 20px;
+	border-radius: 5px;
+}
+#bsphotocut-con footer .cancel{
+	float: left;
+	background: #ccc;
+	color: #fff;
+}
+#bsphotocut-con footer .confirm{
+	float: right;
+	background: #18CFD5;
+	color: #fff;
+}
