@@ -106,7 +106,10 @@ body {
 }
 html,
 body {
+	font-size: 30px;
 	width: 100%;
+	max-width: 600px;
+	margin: 0 auto;
 	overflow-x: hidden;
 	background: #fff;
 }
@@ -118,13 +121,17 @@ a {
 	color: inherit;
 	blr: expression(this.onFocus=this.blur());
 }
+img{
+	cursor: pointer;
+}
 *{font-family: "微软雅黑";-webkit-overflow-scrolling : touch;}
 a:active,
 a:visited {
 	outline: none !important;
 }
 .container {
-	width: 100%;	
+	width: 100%;
+	margin: 0 auto;	
 	overflow-x: hidden;
 }
 .block{
