@@ -119,6 +119,9 @@ a {
 	blr: expression(this.onFocus=this.blur());
 }
 *{font-family: "微软雅黑";-webkit-overflow-scrolling : touch;}
+img, section{
+	display: inline-block;
+}
 a:active,
 a:visited {
 	outline: none !important;

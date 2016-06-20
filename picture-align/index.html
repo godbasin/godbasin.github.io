@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0">
@@ -8,22 +9,56 @@
 		<script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
 		<script src="./js/style.js"></script>
 	</head>
+
 	<body>
-		<section class="fill">
+		<section>
 			<img src="img/1.png" />
-			<img src="img/2.png" />
+			<p>原图</p>
 		</section>
-		<section class="fill">
+		<section>
+			<section class="fill">
+				<img src="img/1.png" />
+			</section>
+			<p>fill填充效果</p>
+		</section>
+		<section>
+			<section class="full">
+				<img src="img/1.png" />
+			</section>
+			<p>full裁剪效果</p>
+		</section>
+		<section>
 			<img src="img/2.png" />
+			<p>原图</p>
+		</section>
+		<section>
+			<section class="fill">
+				<img src="img/2.png" />
+			</section>
+			<p>fill填充效果</p>
+		</section>
+		<section>
+			<section class="full">
+				<img src="img/2.png" />
+			</section>
+			<p>full裁剪效果</p>
 		</section>
 	</body>
 	<script>
 		$(".fill").bsPictureAlign({
-				"img_dom":".img",  //img的class，为0则选中该容器内所有img图片
+				"img_dom":"0",  //img的class，为0则选中该容器内所有img图片
 				"style":"fill",   //两种style：full为最短边对齐，过长剪裁；fill为最长边对齐，填充背景
-				"width":"100%",   //容器宽度，默认为100%
+				"width":"300px",   //容器宽度，默认为100%
 				"height":"300px",   //容器高度，默认为300px
-				"background":"#000"  //背景填充颜色，默认为#000黑色
+				"background":"#999"  //背景填充颜色，默认为#000黑色
+		});
+		$(".full").bsPictureAlign({
+				"img_dom":"0",  //img的class，为0则选中该容器内所有img图片
+				"style":"full",   //两种style：full为最短边对齐，过长剪裁；fill为最长边对齐，填充背景
+				"width":"300px",   //容器宽度，默认为100%
+				"height":"300px",   //容器高度，默认为300px
+				"background":"#999"  //背景填充颜色，默认为#000黑色
 		});
 	</script>
+
 </html>

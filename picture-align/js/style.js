@@ -39,7 +39,7 @@
 				_options = that.options,
 				_ele = $(this.$ele),
 				_dom = _options.img_dom,
-				_img = _dom ? _ele.find(_dom) : _ele.find("img"),
+				_img = _dom != 0 ? _ele.find(_dom) : _ele.find("img"),
 				_this, _width, _height, _ratio, _w, _h, _r, _wider;
 			//修改图片容器宽高
 			_ele.css({
