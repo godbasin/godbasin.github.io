@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="./css/style_drag.css">
+		<link rel="stylesheet" href="./css/style_part.css">
+		<link href="http://netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+		<title>拖放测试</title>
+		<script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+		<script src="./js/style_drag.js"></script>
+		<script src="./js/style_slider.js"></script>	
+	</head>
+
+	<body>
+		<section class="container">
+			<section id="layout">
+				<header class="layout-header">
+					<p>栅格布局</p>
+				</header>
+				<section class="tab-layout">
+					<div class="tab-layout-nav"><a id="tab-layout-id1" onClick="fadetab('#tab-layout-id','#tab-layout-con','1','4','tab-layer-chosen','tab-layer-static')">高度1层/2层</a></div>
+					<div class="tab-layout-nav"><a id="tab-layout-id2" onClick="fadetab('#tab-layout-id','#tab-layout-con','2','4','tab-layer-chosen','tab-layer-static')">高度3层</a></div>
+					<div class="tab-layout-nav"><a id="tab-layout-id3" onClick="fadetab('#tab-layout-id','#tab-layout-con','3','4','tab-layer-chosen','tab-layer-static')">多面板布局</a></div>
+					<div class="tab-layout-nav"><a id="tab-layout-id4" onClick="fadetab('#tab-layout-id','#tab-layout-con','4','4','tab-layer-chosen','tab-layer-static')">自定义布局</a></div>
+					<section class="tab-layout-con">
+						<div id="tab-layout-con1">
+							<div class="fix-layout">
+								<div data-type="layout" class="layout-1-1-1"></div>
+							</div>
+							<div class="fix-layout">
+								<div data-type="layout" class="layout-1-2-1"></div>
+								<div data-type="layout" class="layout-1-2-1"></div>
+							</div>
+							<div class="fix-layout">
+								<div data-type="layout" class="layout-1-3-1"></div>
+								<div data-type="layout" class="layout-1-3-1"></div>
+								<div data-type="layout" class="layout-1-3-1"></div>
+							</div>
+							<div class="fix-layout">
+								<div data-type="layout" class="layout-1-3-1"></div>
+								<div data-type="layout" class="layout-1-3-2"></div>
+							</div>
+							<div class="fix-layout">
+								<div data-type="layout" class="layout-1-3-2"></div>
+								<div data-type="layout" class="layout-1-3-1"></div>
+							</div>
+							<div class="fix-layout">
+								<div data-type="layout" class="layout-1-4-1"></div>
+								<div data-type="layout" class="layout-1-4-1"></div>
+								<div data-type="layout" class="layout-1-4-1"></div>
+								<div data-type="layout" class="layout-1-4-1"></div>
+							</div>
+							<div class="fix-layout">
+								<div data-type="layout" class="layout-1-4-1"></div>
+								<div data-type="layout" class="layout-1-4-3"></div>
+							</div>
+							<div class="fix-layout">
+								<div data-type="layout" class="layout-1-4-3"></div>
+								<div data-type="layout" class="layout-1-4-1"></div>
+							</div>
+							<div class="fix-layout">
+								<div data-type="layout" class="layout-1-5-1"></div>
+								<div data-type="layout" class="layout-1-5-1"></div>
+								<div data-type="layout" class="layout-1-5-1"></div>
+								<div data-type="layout" class="layout-1-5-1"></div>
+								<div data-type="layout" class="layout-1-5-1"></div>
+							</div>
+							<div class="fix-layout">
+								<div data-type="layout" class="layout-1-5-1"></div>
+								<div data-type="layout" class="layout-1-5-4"></div>
+							</div>
+							<div class="fix-layout">
+								<div data-type="layout" class="layout-1-5-4"></div>
+								<div data-type="layout" class="layout-1-5-1"></div>
+							</div>
+							<div class="fix-layout">
+								<div data-type="layout" class="layout-1-5-2"></div>
+								<div data-type="layout" class="layout-1-5-3"></div>
+							</div>
+							<div class="fix-layout">
+								<div data-type="layout" class="layout-1-5-3"></div>
+								<div data-type="layout" class="layout-1-5-2"></div>
+							</div>
+							<div class="fix-layout">
+								<div data-type="layout" class="layout-1-5-1"></div>
+								<div data-type="layout" class="layout-1-5-3"></div>
+								<div data-type="layout" class="layout-1-5-1"></div>
+							</div>
+							<div class="fix-layout">
+								<div data-type="layout" class="layout-2-1-1"></div>
+							</div>
+							<div class="fix-layout">
+								<div data-type="layout" class="layout-2-2-1"></div>
+								<div data-type="layout" class="layout-2-2-1"></div>
+							</div>
+							<div class="fix-layout">
+								<div data-type="layout" class="layout-2-3-1"></div>
+								<div data-type="layout" class="layout-2-3-1"></div>
+								<div data-type="layout" class="layout-2-3-1"></div>
+							</div>
+							<div class="fix-layout">
+								<div data-type="layout" class="layout-2-3-1"></div>
+								<div data-type="layout" class="layout-2-3-2"></div>
+							</div>
+							<div class="fix-layout">
+								<div data-type="layout" class="layout-2-3-2"></div>
+								<div data-type="layout" class="layout-2-3-1"></div>
+							</div>
+							<div class="fix-layout">
+								<div data-type="layout" class="layout-2-4-1"></div>
+								<div data-type="layout" class="layout-2-4-1"></div>
+								<div data-type="layout" class="layout-2-4-1"></div>
+								<div data-type="layout" class="layout-2-4-1"></div>
+							</div>
+							<div class="fix-layout">
+								<div data-type="layout" class="layout-2-4-1"></div>
+								<div data-type="layout" class="layout-2-4-3"></div>
+							</div>
+							<div class="fix-layout">
+								<div data-type="layout" class="layout-2-4-3"></div>
+								<div data-type="layout" class="layout-2-4-1"></div>
+							</div>
+							<div class="fix-layout">
+								<div data-type="layout" class="layout-2-5-1"></div>
+								<div data-type="layout" class="layout-2-5-1"></div>
+								<div data-type="layout" class="layout-2-5-1"></div>
+								<div data-type="layout" class="layout-2-5-1"></div>
+								<div data-type="layout" class="layout-2-5-1"></div>
+							</div>
+							<div class="fix-layout">
+								<div data-type="layout" class="layout-2-5-1"></div>
+								<div data-type="layout" class="layout-2-5-4"></div>
+							</div>
+							<div class="fix-layout">
+								<div data-type="layout" class="layout-2-5-4"></div>
+								<div data-type="layout" class="layout-2-5-1"></div>
+							</div>
+							<div class="fix-layout">
+								<div data-type="layout" class="layout-2-5-2"></div>
+								<div data-type="layout" class="layout-2-5-3"></div>
+							</div>
+							<div class="fix-layout">
+								<div data-type="layout" class="layout-2-5-3"></div>
+								<div data-type="layout" class="layout-2-5-2"></div>
+							</div>
+							<div class="fix-layout">
+								<div data-type="layout" class="layout-2-5-1"></div>
+								<div data-type="layout" class="layout-2-5-3"></div>
+								<div data-type="layout" class="layout-2-5-1"></div>
+							</div>
+						<div style="clear: both;"></div>
+						</div>
+						<div id="tab-layout-con2">
+							<div class="fix-layout">
+								<div data-type="layout" class="layout-3-1-1"></div>
+							</div>
+							<div class="fix-layout">
+								<div data-type="layout" class="layout-3-2-1"></div>
+								<div data-type="layout" class="layout-3-2-1"></div>
+							</div>
+							<div class="fix-layout">
+								<div data-type="layout" class="layout-3-3-1"></div>
+								<div data-type="layout" class="layout-3-3-1"></div>
+								<div data-type="layout" class="layout-3-3-1"></div>
+							</div>
+							<div class="fix-layout">
+								<div data-type="layout" class="layout-3-3-1"></div>
+								<div data-type="layout" class="layout-3-3-2"></div>
+							</div>
+							<div class="fix-layout">
+								<div data-type="layout" class="layout-3-3-2"></div>
+								<div data-type="layout" class="layout-3-3-1"></div>
+							</div>
+							<div class="fix-layout">
+								<div data-type="layout" class="layout-3-4-1"></div>
+								<div data-type="layout" class="layout-3-4-1"></div>
+								<div data-type="layout" class="layout-3-4-1"></div>
+								<div data-type="layout" class="layout-3-4-1"></div>
+							</div>
+							<div class="fix-layout">
+								<div data-type="layout" class="layout-3-4-1"></div>
+								<div data-type="layout" class="layout-3-4-3"></div>
+							</div>
+							<div class="fix-layout">
+								<div data-type="layout" class="layout-3-4-3"></div>
+								<div data-type="layout" class="layout-3-4-1"></div>
+							</div>
+							<div class="fix-layout">
+								<div data-type="layout" class="layout-3-5-1"></div>
+								<div data-type="layout" class="layout-3-5-1"></div>
+								<div data-type="layout" class="layout-3-5-1"></div>
+								<div data-type="layout" class="layout-3-5-1"></div>
+								<div data-type="layout" class="layout-3-5-1"></div>
+							</div>
+							<div class="fix-layout">
+								<div data-type="layout" class="layout-3-5-1"></div>
+								<div data-type="layout" class="layout-3-5-4"></div>
+							</div>
+							<div class="fix-layout">
+								<div data-type="layout" class="layout-3-5-4"></div>
+								<div data-type="layout" class="layout-3-5-1"></div>
+							</div>
+							<div class="fix-layout">
+								<div data-type="layout" class="layout-3-5-2"></div>
+								<div data-type="layout" class="layout-3-5-3"></div>
+							</div>
+							<div class="fix-layout">
+								<div data-type="layout" class="layout-3-5-3"></div>
+								<div data-type="layout" class="layout-3-5-2"></div>
+							</div>
+							<div class="fix-layout">
+								<div data-type="layout" class="layout-3-5-1"></div>
+								<div data-type="layout" class="layout-3-5-3"></div>
+								<div data-type="layout" class="layout-3-5-1"></div>
+							</div>
+						<div style="clear: both;"></div>
+						</div>
+						<div id="tab-layout-con3">
+							<div class="fix-layout">
+								<div data-type="layout" class="layout-onehalf-1"></div>
+							</div>
+							<div class="fix-layout">
+								<div data-type="layout" class="layout-6-5-1"></div>
+								<div data-type="layout" class="layout-6-5-3">
+									<div data-type="layout" class="layout-2-1-1"></div>
+									<div data-type="layout" class="layout-2-1-1"></div>
+									<div data-type="layout" class="layout-2-1-1"></div>
+								</div>
+								<div data-type="layout" class="layout-6-5-1"></div>
+							</div>
+							<div class="fix-layout">
+								<div data-type="layout" class="layout-6-2-1"></div>
+								<div data-type="layout" class="layout-6-2-1">
+									<div data-type="layout" class="layout-2-1-1"></div>
+									<div data-type="layout" class="layout-2-1-1"></div>
+									<div data-type="layout" class="layout-2-1-1"></div>
+								</div>								
+							</div>
+							<div class="fix-layout">
+								<div data-type="layout" class="layout-5-5-2"></div>
+								<div data-type="layout" class="layout-5-5-3">
+									<div data-type="layout" class="layout-2-1-1"></div>
+									<div data-type="layout" class="layout-3-2-1"></div>
+									<div data-type="layout" class="layout-3-2-1"></div>
+								</div>																								
+							</div>
+							<div class="fix-layout">
+								<div data-type="layout" class="layout-4-5-2">
+									<div data-type="layout" class="layout-2-1-1"></div>
+									<div data-type="layout" class="layout-2-1-1"></div>
+								</div>
+								<div data-type="layout" class="layout-4-5-3">
+								</div>																								
+							</div>
+						<div style="clear: both;"></div>
+						
+						</div>
+						<div id="tab-layout-con4">
+								<form id="set-layout">
+									<label for="height">高度<small>&nbsp;&nbsp;(一层为50)</small></label><br />
+									<input type="text" name="height" value="50" /><br />
+									<label for="column">比例</label><small>&nbsp;&nbsp;(如1:2，1:3:1等，最小为1/5)</small><br />
+									<input type="text" name="column" value="1:3:1" /><br /><br />
+									<p id="set-layout-info"></p>
+									<button type="button">添加布局</button>
+								</form>
+							<div style="clear: both;"></div>
+						</div>
+					</section>
+					<div style="clear: both;"></div>
+				</section>
+
+			</section>
+			<section id="box">
+				<header class="box-header">
+					<p>页面效果</p>
+				</header>
+				<div id="box-content">
+
+				</div>
+				<footer class="box-footer">
+					<button id="save-page" type="submit">保存页面</button>
+				</footer>			
+				<div style="clear: both;"></div>
+			</section>
+			<section id="part">
+				<header class="target-header">
+					<p>控件样式</p>
+				</header>
+				<section class="tab-part">
+					<div class="tab-part-nav"><a id="tab-part-id1" onClick="slidetab('#tab-part-id','#tab-part-con','1','6','tab-layer-chosen','tab-layer-static')">页头</a></div>
+					<div class="tab-part-nav"><a id="tab-part-id2" onClick="slidetab('#tab-part-id','#tab-part-con','2','6','tab-layer-chosen','tab-layer-static')">页脚</a></div>
+					<div class="tab-part-nav"><a id="tab-part-id3" onClick="slidetab('#tab-part-id','#tab-part-con','3','6','tab-layer-chosen','tab-layer-static')">导航</a></div>
+					<div class="tab-part-nav"><a id="tab-part-id4" onClick="slidetab('#tab-part-id','#tab-part-con','4','6','tab-layer-chosen','tab-layer-static')">列表内容</a></div>
+					<div class="tab-part-nav"><a id="tab-part-id5" onClick="slidetab('#tab-part-id','#tab-part-con','5','6','tab-layer-chosen','tab-layer-static')">文本内容</a></div>
+					<div class="tab-part-nav"><a id="tab-part-id6" onClick="slidetab('#tab-part-id','#tab-part-con','6','6','tab-layer-chosen','tab-layer-static')">广告</a></div>
+					<section class="tab-part-con">
+						<div id="tab-part-con1">
+							<div class="fix-target">
+								<header class="header blue-static">
+									<div>
+										<h1><p>页头标题</p></h1>
+									</div>
+								</header>
+								<a class="to-edit" href="#" onclick="showEdit(this,'.edit-header')">编辑</a>
+							</div>
+							<div class="fix-target">
+								<header class="header orange-static">
+									<div>
+										<a class="header-back" href="#"><i class="fa fa-chevron-circle-left"></i></a>
+										<h1><p>页头标题</p></h1>
+									</div>
+								</header>
+								<a class="to-edit" href="#" onclick="showEdit(this,'.edit-header')">编辑</a>
+							</div>
+							<div class="fix-target">
+								<header class="header black-static">
+									<div>
+										<a class="header-back" href="#"><i class="fa fa-chevron-circle-left"></i></a>
+										<h1>
+											<p>页头标题</p>
+											<a class="header-search">
+											<button type="button"><i class="fa fa-search"></i></button>
+											<label for="search">search</label>
+											<input type="search" placeholder="search……" />
+										</a>
+										</h1>
+									</div>
+								</header>
+								<a class="to-edit" href="#" onclick="showEdit(this,'.edit-header')">编辑</a>
+							</div>
+							<div class="fix-target">
+								<header class="header gray-static">
+									<div>
+										<h1><p>页头标题</p></h1>
+										<a class="header-search">
+											<div class="search">
+												<button type="button"><i class="fa fa-search"></i></button>
+												<label for="search">search</label>
+												<input type="search" placeholder="search……" />
+											</div>
+										</a>
+									</div>
+								</header>
+								<a class="to-edit" href="#" onclick="showEdit(this,'.edit-header')">编辑</a>
+							</div>
+						</div>
+						<div id="tab-part-con2">
+							<div class="fix-target">
+								<footer class="footer footer-a footer-3 white-static">
+									<div>
+										<a href="#" class="footer-a-chosen"><img src="./img/contact-icon1.png"></img><p>微信</p></a>
+										<a href="#"><img src="./img/contact-icon2.png"></img><p>QQ</p></a>
+										<a href="#"><img src="./img/contact-icon3.png"></img><p>用户</p></a>	
+									</div>
+								</footer>
+								<a class="to-edit" href="#" onclick="showEdit(this,'.edit-footer')">编辑</a>
+							</div>
+							<div class="fix-target">
+								<footer class="footer footer-a footer-4 white-static">
+									<div>
+										<a href="#"><span ><img src="./img/contact-icon1.png"></img><p>出租车</p></a>
+										<a href="#" class="footer-a-chosen"><span><img src="./img/contact-icon2.png"></img><p>微信</p></a>
+										<a href="#"><span><img src="./img/contact-icon3.png"></img><p>QQ</p></a>
+										<a href="#"><span><img src="./img/contact-icon4.png"></img><p>用户</p></a>	
+									</div>
+								</footer>
+								<a class="to-edit" href="#" onclick="showEdit(this,'.edit-footer')">编辑</a>
+							</div>
+							<div class="fix-target">
+								<footer class="footer footer-a footer-5 white-static">
+									<div>
+										<a href="#"><span><img src="./img/contact-icon1.png"></img><p>拍照</p></a>
+										<a href="#"><span><img src="./img/contact-icon2.png"></img><p>出租车</p></a>
+										<a href="#"><span><img src="./img/contact-icon3.png"></img><p>微信</p></a>
+										<a href="#" class="footer-a-chosen"><span><img src="./img/contact-icon4.png"></img><p>QQ</p></a>
+										<a href="#"><span><img src="./img/contact-icon5.png"></img><p>用户</p></a>	
+									</div>
+								</footer>
+								<a class="to-edit" href="#" onclick="showEdit(this,'.edit-footer')">编辑</a>
+							</div>
+							<div class="fix-target">
+								<footer class="footer footer-b footer-3 white-static">
+									<div>
+										<a href="#" class="footer-b-chosen"><img src="./img/contact-icon1.png"></img><p>微信</p><div class="line"></div></a>
+										<a href="#"><img src="./img/contact-icon2.png"></img><p>QQ</p><div class="line"></div></a>
+										<a href="#"><img src="./img/contact-icon3.png"></img><p>用户</p></a>	
+									</div>
+								</footer>
+								<a class="to-edit" href="#" onclick="showEdit(this,'.edit-footer')">编辑</a>
+							</div>
+							<div class="fix-target">
+								<footer class="footer footer-b footer-4 white-static">
+									<div>
+										<a href="#"><span ><img src="./img/contact-icon1.png"></img><p>出租车</p><div class="line"></div></a>
+										<a href="#" class="footer-b-chosen"><span><img src="./img/contact-icon2.png"></img><p>微信</p><div class="line"></div></a>
+										<a href="#"><span><img src="./img/contact-icon3.png"></img><p>QQ</p><div class="line"></div></a>
+										<a href="#"><span><img src="./img/contact-icon4.png"></img><p>用户</p></a>	
+									</div>
+								</footer>
+								<a class="to-edit" href="#" onclick="showEdit(this,'.edit-footer')">编辑</a>
+							</div>
+							<div class="fix-target">
+								<footer class="footer footer-b footer-5 white-static">
+									<div>
+										<a href="#"><span><img src="./img/contact-icon1.png"></img><p>拍照</p><div class="line"></div></a>
+										<a href="#"><span><img src="./img/contact-icon2.png"></img><p>出租车</p><div class="line"></div></a>
+										<a href="#"><span><img src="./img/contact-icon3.png"></img><p>微信</p><div class="line"></div></a>
+										<a href="#" class="footer-b-chosen"><span><img src="./img/contact-icon4.png"></img><p>QQ</p><div class="line"></div></a>
+										<a href="#"><span><img src="./img/contact-icon5.png"></img><p>用户</p></a>	
+									</div>
+								</footer>
+								<a class="to-edit" href="#" onclick="showEdit(this,'.edit-footer')">编辑</a>
+							</div>
+							<div class="fix-target">
+								<footer class="footer footer-c footer-3 black-static">
+									<div>
+										<a href="#" class="footer-c-chosen"><img src="./img/contact-icon1.png"></img><p>微信</p></a>
+										<a href="#"><img src="./img/contact-icon2.png"></img><p>QQ</p></a>
+										<a href="#"><img src="./img/contact-icon3.png"></img><p>用户</p></a>	
+									</div>
+								</footer>
+								<a class="to-edit" href="#" onclick="showEdit(this,'.edit-footer')">编辑</a>
+							</div>
+							<div class="fix-target">
+								<footer class="footer footer-c footer-4 black-static">
+									<div>
+										<a href="#"><span ><img src="./img/contact-icon1.png"></img><p>出租车</p></a>
+										<a href="#" class="footer-c-chosen"><span><img src="./img/contact-icon2.png"></img><p>微信</p></a>
+										<a href="#"><span><img src="./img/contact-icon3.png"></img><p>QQ</p></a>
+										<a href="#"><span><img src="./img/contact-icon4.png"></img><p>用户</p></a>	
+									</div>
+								</footer>
+								<a class="to-edit" href="#" onclick="showEdit(this,'.edit-footer')">编辑</a>
+							</div>
+							<div class="fix-target">
+								<footer class="footer footer-c footer-5 black-static">
+									<div>
+										<a href="#"><span><img src="./img/contact-icon1.png"></img><p>拍照</p></a>
+										<a href="#"><span><img src="./img/contact-icon2.png"></img><p>出租车</p></a>
+										<a href="#"><span><img src="./img/contact-icon3.png"></img><p>微信</p></a>
+										<a href="#" class="footer-c-chosen"><span><img src="./img/contact-icon4.png"></img><p>QQ</p></a>
+										<a href="#"><span><img src="./img/contact-icon5.png"></img><p>用户</p></a>	
+									</div>
+								</footer>
+								<a class="to-edit" href="#" onclick="showEdit(this,'.edit-footer')">编辑</a>
+							</div>
+						</div>
+						<div id="tab-part-con3">
+							
+						</div>
+						<div id="tab-part-con4">
+							<div class="fix-target">
+								<a><div class="listview-l">
+									<img src="./img/icon1.png" />
+									<a class="listview-l-left">
+										<h1>主要信息</h1>
+										<p>查看详细信息</p>
+									<a class="listview-l-right" href="#"><i class="fa fa-chevron-circle-right"></i></a>
+									
+								</div></a>
+								<a class="to-edit" href="#" onclick="showEdit(this,'.edit-listview')">编辑</a>
+							</div>
+							<div class="fix-target">
+								<div class="listview-s">
+									<img src="./img/icon2.png" />
+									<a class="listview-s-left"><h1>查看详细信息</h1></a>
+									<a class="listview-s-right" href="#"><i class="fa fa-chevron-circle-right"></i></a>
+								</div>
+								<a class="to-edit" href="#" onclick="showEdit(this)">编辑</a>
+							</div>
+						</div>
+						<div id="tab-part-con5">
+							<div class="fix-target">
+								<section class="content content-img">
+									<img src="./img/img.jpg" />
+								</section>
+								<a class="to-edit" href="#" onclick="showEdit(this)">编辑</a>
+							</div>
+							<div class="fix-target">
+								<section class="content">
+									<a><h1>标题内容</h1></a>
+								</section>
+								<a class="to-edit" href="#" onclick="showEdit(this)">编辑</a>
+							</div>
+							<div class="fix-target">
+								<section class="content">
+									<a><p>小段广告内容小段广告内容小段广告内容</p></a>
+								</section>
+								<a class="to-edit" href="#" onclick="showEdit(this)">编辑</a>
+							</div>
+							<div class="fix-target">
+								<section class="content">	
+									<a>
+										<ul>
+										<li><h1>标题内容</h1></li>
+										<li><p>小段广告内容小段广告内容小段广告内容</p></li>
+										<li><img src="./img/img.jpg" /></li>
+										</ul>
+									</a>
+								</section>
+								<a class="to-edit" href="#" onclick="showEdit(this)">编辑</a>
+							</div>
+							<div class="fix-target">
+								<section class="content">					
+									<a>
+										<ul>
+										<li><img src="./img/img.jpg" class="fullimg" /></li>
+										<li><h1>标题内容</h1></li>
+										<li><p>小段广告内容小段广告内容小段广告内容</p></li>						
+										</ul>
+									</a>
+								</section>
+								<a class="to-edit" href="#" onclick="showEdit(this)">编辑</a>
+							</div>
+						</div>
+						<div id="tab-part-con6">
+							<div class="fix-target">
+								<section class="slider-7">										
+									<img id="slider-7-img1" src="./img/slide1.png" />
+									<img id="slider-7-img2" src="./img/slide2.png" />
+									<img id="slider-7-img3" src="./img/slide3.png" />
+									<img id="slider-7-img4" src="./img/slide4.png" />
+									<nav class="nav-con">
+										<a onClick="showtabslide('#slider-7-img','1','4')"> </a>
+										<a onClick="showtabslide('#slider-7-img','2','4')"> </a>
+										<a onClick="showtabslide('#slider-7-img','3','4')"> </a>
+										<a onClick="showtabslide('#slider-7-img','4','4')"> </a>
+									</nav>
+								</section>
+								<a class="to-edit" href="#" onclick="showEdit(this)">编辑</a>
+								<div style="clear: both;"></div>
+							</div>
+							<div class="fix-target">
+								<section class="slider-8">	
+								<div class="slider-8-con">
+									<img id="slider-8-img1" src="./img/slide1.png" />
+									<img id="slider-8-img2" src="./img/slide2.png" />
+									<img id="slider-8-img3" src="./img/slide3.png" />
+									<img id="slider-8-img4" src="./img/slide4.png" />
+								</div>					
+									<ul class="nav-con">
+										<li onClick="showtabcollapse('#slider-8-img','1','4')">page1</li>
+										<li onClick="showtabcollapse('#slider-8-img','2','4')">page2</li>
+										<li onClick="showtabcollapse('#slider-8-img','3','4')">page3</li>
+										<li onClick="showtabcollapse('#slider-8-img','4','4')">page4</li>
+									</ul>
+								</section>
+								<a class="to-edit" href="#" onclick="showEdit(this)">编辑</a>
+							</div>
+							<div class="fix-target">
+								<section class="slider-9">										
+									<div id="slider-9-img" class="slider-9-con">
+										<img src="./img/slide1.png" />
+										<img src="./img/slide2.png" />
+										<img src="./img/slide3.png" />
+										<img src="./img/slide4.png" />
+										<img src="./img/slide1.png" />
+									</div>
+									<ul class="nav-con">
+										<li><a onClick="showtabmove('#slider-9-img','1','4')">page1</a></li>
+										<li><a onClick="showtabmove('#slider-9-img','2','4')">page2</a></li>
+										<li><a onClick="showtabmove('#slider-9-img','3','4')">page3</a></li>
+										<li><a onClick="showtabmove('#slider-9-img','4','4')">page4</a></li>
+									</ul>				
+								</section>
+								<a class="to-edit" href="#" onclick="showEdit(this)">编辑</a>
+							</div>
+						</div>
+					</section>
+				<div style="clear: both;"></div>
+			</section>
+		</section>
+<section id="loadfromsys"></section>
+<section class="edit edit-header">
+	<div>
+		<button class="edit-close" onclick="closeEdit()">关闭</button>
+		<form class="chose-source">
+			<input type="radio" name="sorce" value="edit" checked="checked" />自编译
+			<input type="radio" name="sorce" value="origin" />从系统导入
+		</form>
+		<div class="edit-con">
+			<label for="edit-title">标题内容</label><br />
+			<input type="text" name="edit-title" /><br />	
+			<label for="edit-color">颜色</label><br />
+			<input type="radio" name="edit-color" value="black-static" />黑色
+			<input type="radio" name="edit-color" value="gray-static" />灰色
+			<input type="radio" name="edit-color" value="white-static" />白色
+			<input type="radio" name="edit-color" value="orange-static" />橙色
+			<input type="radio" name="edit-color" value="red-static" />红色
+			<input type="radio" name="edit-color" value="blue-static" />蓝色
+			<input type="radio" name="edit-color" value="rosy-static" />玫瑰色
+			<input type="radio" name="edit-color" value="green-static" />绿色
+			<input type="radio" name="edit-color" value="pink-static" />粉红色
+			<br />
+		</div>			
+		<button class="edit-save" onclick="saveEdit()">保存</button>
+	</div>
+</section>
+<section class="edit edit-footer">
+	<div>
+		<button class="edit-close" onclick="closeEdit()">关闭</button>
+		<form class="chose-source">
+			<input type="radio" name="sorce" value="edit" checked="checked" />自编译
+			<input type="radio" name="sorce" value="origin" />从系统导入
+		</form>
+		<div class="edit-con">
+			<label for="edit-color">颜色</label><br />
+			<input type="radio" name="edit-color" value="black-static" />黑色
+			<input type="radio" name="edit-color" value="gray-static" />灰色
+			<input type="radio" name="edit-color" value="white-static" />白色
+			<input type="radio" name="edit-color" value="orange-static" />橙色
+			<input type="radio" name="edit-color" value="red-static" />红色
+			<input type="radio" name="edit-color" value="blue-static" />蓝色
+			<input type="radio" name="edit-color" value="rosy-static" />玫瑰色
+			<input type="radio" name="edit-color" value="green-static" />绿色
+			<input type="radio" name="edit-color" value="pink-static" />粉红色
+		</div>
+		<button class="edit-save" onclick="saveEdit()">保存</button>
+	</div>
+</section>
+<section class="edit edit-listview">
+	<div>
+		<button class="edit-close" onclick="closeEdit()">关闭</button>
+		<div class="edit-con">
+				<select class="articlefrom">
+					<option class="option1">我的分类1</option>
+					<option class="option1">我的分类1</option>
+					<option class="option1">我的分类1</option>
+					<option class="option1">我的分类1</option>
+					<option class="option1">我的分类1</option>
+					<option class="option2">我的分类2</option>
+					<option class="option2">我的分类2</option>
+					<option class="option2">我的分类2</option>
+					<option class="option2">我的分类2</option>
+					<option class="option3">我的分类3</option>
+					<option class="option3">我的分类3</option>
+					<option class="option3">我的分类3</option>
+				</select>
+				<section class="articleshow">
+					
+				</section>
+		</div>
+		<button class="edit-save" onclick="saveEdit()">保存</button>
+	</div>
+</section>
+<script>
+
+function showEdit(object,editclass) {
+		$(object).attr("id","to-edit");
+		var section = $(editclass).clone();
+		$(section).attr("id","edit");
+		$(section).css("display","block");
+		if(editclass == ".edit-header"){
+			$(section).find("[name='edit-title']").val($(object).parent().find(".header h1 p").text());
+			var objclass = $(object).parent().find(".header").attr("class");
+			var objcolor = objclass.split(' ')[1];
+			$(section).find("[value='"+objcolor+"']").attr("checked","checked");
+		}
+		if(editclass == ".edit-footer"){
+			var objclass = $(object).parent().find(".footer").attr("class");
+			var objlength = objclass.split(' ')[2];
+			var objnum;
+			if(objlength == "footer-3"){
+				objnum = 3;
+			}
+			if(objlength == "footer-4"){
+				objnum = 4;
+			}
+			if(objlength == "footer-5"){
+				objnum = 5;
+			}
+			for(i=objnum;i>0;i--){
+				var objnavconlabel = $("<label></label>");
+				var objnavconinp = $("<input type='text' />");
+				var objnavlinklabel = $("<label></label>");
+				var objnavlinkinp = $("<input type='text' />");
+				var objfromsys = "<a href='#'>从系统导入</a>";
+				var br = "<br />";
+				var j = i-1;
+				$(objnavconlabel).attr("for","edit-nav"+i).text("导航"+i+"内容");
+				$(objnavconinp).attr("name","edit-nav"+i);
+				$(objnavlinklabel).attr("for","edit-link"+i).text("导航"+i+"链接");
+				$(objnavlinkinp).attr("name","edit-link"+i);
+				$(section).find(".edit-con").prepend(objnavconlabel,objnavconinp,br,objnavlinklabel,objnavlinkinp,br,objfromsys,br,br);
+				$(section).find("[name='edit-nav"+i+"']").val($(object).parent().find(".footer a p").eq(j).text());
+			}		
+			var objcolor = objclass.split(' ')[3];			
+			$(section).find("[value='"+objcolor+"']").attr("checked","checked");
+		}
+		if(editclass == ".edit-listview"){
+			
+		}
+		$(section).mousedown(function(event){
+         	event.stopPropagation();
+     	});
+		$(section).find(".chose-source input").click(function(e){
+			if($(section).find(":checked").val() == "origin"){
+				$(section).find(".edit-con").css({
+					"opacity":"0.6",
+					"cursor":"not-allowed"
+				});
+				$(section).find(".edit-con input").attr("disabled","disabled");
+			}
+			if($(section).find(":checked").val() == "edit"){
+				$(section).find(".edit-con").css({
+					"opacity":"1",
+					"cursor":"default"
+				});
+				$(section).find(".edit-con input").removeAttr("disabled");
+			}
+		});
+		$(object).after(section);
+		$(object).after(section);
+		$(".edit").mousedown(function(event){
+            event.stopPropagation();
+        });
+		$(".edit").mousemove(function(event){
+            event.stopPropagation();
+        });
+		$(".edit").mouseup(function(event){
+            event.stopPropagation();
+        });
+}
+
+function closeEdit() {
+		$("#edit").remove();
+}
+function saveEdit() {
+		if($("#edit").attr("class")=="edit edit-header"){
+			$("#to-edit").parent().find(".header h1 p").text($("#edit").find("[name='edit-title']").val());
+			var bgcolor = $("#edit").find(".edit-con [name='edit-color']:checked").val();
+			$("#to-edit").parent().find(".header").attr("class","header "+bgcolor);
+		}
+		if($("#edit").attr("class")=="edit edit-footer"){
+			var objclass = $("#to-edit").parent().find(".footer").attr("class");
+			var objlength = objclass.split(' ')[2];
+			var objnum;
+			if(objlength == "footer-3"){
+				objnum = 3;
+			}
+			if(objlength == "footer-4"){
+				objnum = 4;
+			}
+			if(objlength == "footer-5"){
+				objnum = 5;
+			}
+			for(i=objnum;i>0;i--){
+				var j = i-1;
+				$("#to-edit").parent().find(".footer a p").eq(j).text($("#edit").find("[name='edit-nav"+i+"']").val());
+			}	
+			var bgcolor = $("#edit").find(".edit-con [name='edit-color']:checked").val();
+			var objstyle = objclass.split(' ')[1];
+			$("#to-edit").parent().find(".footer").attr("class","footer "+objstyle+" "+objlength+" "+bgcolor);
+		}
+		$("#edit").remove();
+		$("#to-edit").removeAttr("id");
+}
+ $(document).ready(function(){
+     $("#set-layout, .to-edit").mousedown(function(event){
+         event.stopPropagation();
+     });
+});
+
+$("#set-layout button").click(function(e){
+	var height = $("#set-layout input[name='height']").val();
+	var columnval = $("#set-layout input[name='column']").val();
+	var value = String(parseInt(columnval.replace(/[^0-9]/ig,"")));
+	var vallength = value.length;
+	var html, div = $("<div></div>").attr("class","float-layout");
+	var totalcol, thecol;
+	var errormsg = "请输入比例，如1:2，1:3:1等，宽度最小为1/5";
+	if(vallength==5){
+		if(value[0]==1&&value[1]==1&&value[2]==1&&value[3]==1&&value[4]==1){
+			html = "<div data-type='layout' class='layout-5-1'></div><div data-type='layout' class='layout-5-1'></div><div data-type='layout' class='layout-5-1'></div><div data-type='layout' class='layout-5-1'></div><div data-type='layout' class='layout-5-1'></div>";							
+		}else {$("#set-layout-info").text(errormsg);return;}
+	}else if(vallength==4){
+		totalcol = parseInt(value[0])+parseInt(value[1])+parseInt(value[2])+parseInt(value[3]);
+		if(totalcol>5) {$("#set-layout-info").text(errormsg);return;}
+		html = "<div data-type='layout' class='layout-" + totalcol + "-" + value[0] + "'></div><div data-type='layout' class='layout-"+ totalcol + "-" + value[1] + "'></div><div data-type='layout' class='layout-"+ totalcol + "-" + value[2] + "'></div><div data-type='layout' class='layout-"+ totalcol + "-" + value[3] + "'></div>";
+	}else if(vallength==3){
+		totalcol = parseInt(value[0])+parseInt(value[1])+parseInt(value[2]);
+		if(totalcol>5) {$("#set-layout-info").text(errormsg);return;}
+		html = "<div data-type='layout' class='layout-" + totalcol + "-" + value[0] + "'></div><div data-type='layout' class='layout-"+ totalcol + "-" + value[1] + "'></div><div data-type='layout' class='layout-"+ totalcol + "-" + value[2] + "'></div>";
+	}else if(vallength==2){
+		totalcol = parseInt(value[0])+parseInt(value[1]);
+		if(totalcol>5) {$("#set-layout-info").text(errormsg);return;}
+		html = "<div data-type='layout' class='layout-" + totalcol + "-" + value[0] + "'></div><div data-type='layout' class='layout-"+ totalcol + "-" + value[1] + "'></div>";
+	}else if(vallength==1){
+		if(value[0]==1){
+			html = "<div data-type='layout' class='layout-1-1'></div>";							
+		}else {$("#set-layout-info").text(errormsg);return;}
+	}else {$("#set-layout-info").text(errormsg);return;}
+	$(div).append(html);
+	$(div).children().css("height",height);
+	$("#box-content").append(div);
+	$("#set-layout-info").text(' ');
+	
+	
+});
+$("#save-page").click(function (){
+	$("#box-content > div").removeAttr("style");
+	$("#box-content .edit").remove();
+	$("#box-content .to-edit").remove();
+	var pagehtml = $("#box-content").html();
+	alert(pagehtml);
+});
+	
+	for (i = 1; i <= 10; i++) {
+		if (i == 1) {
+			$("#tab-part-id" + i).addClass("tab-layer-chosen");
+			$("#tab-layout-id" + i).addClass("tab-layer-chosen");
+		} else {
+			$("#tab-part-id" + i).addClass("tab-layer-static");
+			$("#tab-layout-id" + i).addClass("tab-layer-static");
+		}
+	}
+	$("#tab-layout-con1").css("display", "block");
+	$("#tab-part-con1").css("display", "block");
+
+	function fadetab(id1, id2, idnum, totalnum, addclass, removeclass) {
+		for (i = 1; i <= totalnum; i++) {
+			if (idnum == i) {
+				$(id1 + idnum).removeClass(removeclass);
+				$(id1 + idnum).addClass(addclass);
+				$(id2 + idnum).fadeIn(500);
+			} else {
+				$(id1 + i).removeClass(addclass);
+				$(id1 + i).addClass(removeclass);
+				$(id2 + i).css("display", "none");
+			}
+		}
+	}
+	function slidetab(id1, id2, idnum, totalnum, addclass, removeclass) {
+	for (i = 1; i <= totalnum; i++) {
+		if (idnum == i) {
+			$(id1 + idnum).removeClass(removeclass);
+			$(id1 + idnum).addClass(addclass);
+			$(id2 + idnum).slideDown(500);
+		} else {
+			$(id1 + i).removeClass(addclass);
+			$(id1 + i).addClass(removeclass);
+			$(id2 + i).css("display", "none");
+		}
+	}
+}
+	
+</script>	
+	</body>
+</html>
