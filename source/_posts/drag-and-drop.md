@@ -7,7 +7,7 @@ categories: js什锦
 <!--more-->
 
 项目放在github上，有兴趣的小伙伴可以下载玩玩看
-[DD-custom-pages](https://github.com/godbasin/DD-custom-pages)
+[DD-custom-pages](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/DD-custom-pages)
 已经没有在维护了，也基本没优化，但还是挺有意思的一个项目
 
 最终效果图如下[点击查看页面](http://o907xb1mi.bkt.clouddn.com/index.html)
