@@ -3,6 +3,7 @@
 ### 被删前端博客  
 
 
+> [《jQuery插件--图片居中对齐》](https://godbasin.github.io/2016/06/21/picture-align/) 
 > [《jQuery响应式瀑布流》](https://godbasin.github.io/2016/06/20/responsive-waterfall/) 
 > [《做一个拖放功能的自定义页面》](https://godbasin.github.io/2016/06/19/drag-and-drop/)         
 > [《js判断某个位置是否特定元素》](https://godbasin.github.io/2016/06/19/position-object/)   
