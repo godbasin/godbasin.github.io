@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Ball</title>
+
+		<!--=============================-->
+		<!-- Copy this part to your app. -->
+		<!-- START                       -->
+		<!--=============================-->
+		<!-- libs -->
+		<!--[if IE]><script type="text/javascript" src="lib/excanvas.js"></script><![endif]-->
+    <script src="lib/prototype-1.6.0.2.js"></script>
+
+		<!-- box2djs -->
+    <script src='js/box2d/common/b2Settings.js'></script>
+    <script src='js/box2d/common/math/b2Vec2.js'></script>
+    <script src='js/box2d/common/math/b2Mat22.js'></script>
+    <script src='js/box2d/common/math/b2Math.js'></script>
+    <script src='js/box2d/collision/b2AABB.js'></script>
+    <script src='js/box2d/collision/b2Bound.js'></script>
+    <script src='js/box2d/collision/b2BoundValues.js'></script>
+    <script src='js/box2d/collision/b2Pair.js'></script>
+    <script src='js/box2d/collision/b2PairCallback.js'></script>
+    <script src='js/box2d/collision/b2BufferedPair.js'></script>
+    <script src='js/box2d/collision/b2PairManager.js'></script>
+    <script src='js/box2d/collision/b2BroadPhase.js'></script>
+    <script src='js/box2d/collision/b2Collision.js'></script>
+    <script src='js/box2d/collision/Features.js'></script>
+    <script src='js/box2d/collision/b2ContactID.js'></script>
+    <script src='js/box2d/collision/b2ContactPoint.js'></script>
+    <script src='js/box2d/collision/b2Distance.js'></script>
+    <script src='js/box2d/collision/b2Manifold.js'></script>
+    <script src='js/box2d/collision/b2OBB.js'></script>
+    <script src='js/box2d/collision/b2Proxy.js'></script>
+    <script src='js/box2d/collision/ClipVertex.js'></script>
+    <script src='js/box2d/collision/shapes/b2Shape.js'></script>
+    <script src='js/box2d/collision/shapes/b2ShapeDef.js'></script>
+    <script src='js/box2d/collision/shapes/b2BoxDef.js'></script>
+    <script src='js/box2d/collision/shapes/b2CircleDef.js'></script>
+    <script src='js/box2d/collision/shapes/b2CircleShape.js'></script>
+    <script src='js/box2d/collision/shapes/b2MassData.js'></script>
+    <script src='js/box2d/collision/shapes/b2PolyDef.js'></script>
+    <script src='js/box2d/collision/shapes/b2PolyShape.js'></script>
+    <script src='js/box2d/dynamics/b2Body.js'></script>
+    <script src='js/box2d/dynamics/b2BodyDef.js'></script>
+    <script src='js/box2d/dynamics/b2CollisionFilter.js'></script>
+    <script src='js/box2d/dynamics/b2Island.js'></script>
+    <script src='js/box2d/dynamics/b2TimeStep.js'></script>
+    <script src='js/box2d/dynamics/contacts/b2ContactNode.js'></script>
+    <script src='js/box2d/dynamics/contacts/b2Contact.js'></script>
+    <script src='js/box2d/dynamics/contacts/b2ContactConstraint.js'></script>
+    <script src='js/box2d/dynamics/contacts/b2ContactConstraintPoint.js'></script>
+    <script src='js/box2d/dynamics/contacts/b2ContactRegister.js'></script>
+    <script src='js/box2d/dynamics/contacts/b2ContactSolver.js'></script>
+    <script src='js/box2d/dynamics/contacts/b2CircleContact.js'></script>
+    <script src='js/box2d/dynamics/contacts/b2Conservative.js'></script>
+    <script src='js/box2d/dynamics/contacts/b2NullContact.js'></script>
+    <script src='js/box2d/dynamics/contacts/b2PolyAndCircleContact.js'></script>
+    <script src='js/box2d/dynamics/contacts/b2PolyContact.js'></script>
+    <script src='js/box2d/dynamics/b2ContactManager.js'></script>
+    <script src='js/box2d/dynamics/b2World.js'></script>
+    <script src='js/box2d/dynamics/b2WorldListener.js'></script>
+    <script src='js/box2d/dynamics/joints/b2JointNode.js'></script>
+    <script src='js/box2d/dynamics/joints/b2Joint.js'></script>
+    <script src='js/box2d/dynamics/joints/b2JointDef.js'></script>
+    <script src='js/box2d/dynamics/joints/b2DistanceJoint.js'></script>
+    <script src='js/box2d/dynamics/joints/b2DistanceJointDef.js'></script>
+    <script src='js/box2d/dynamics/joints/b2Jacobian.js'></script>
+    <script src='js/box2d/dynamics/joints/b2GearJoint.js'></script>
+    <script src='js/box2d/dynamics/joints/b2GearJointDef.js'></script>
+    <script src='js/box2d/dynamics/joints/b2MouseJoint.js'></script>
+    <script src='js/box2d/dynamics/joints/b2MouseJointDef.js'></script>
+    <script src='js/box2d/dynamics/joints/b2PrismaticJoint.js'></script>
+    <script src='js/box2d/dynamics/joints/b2PrismaticJointDef.js'></script>
+    <script src='js/box2d/dynamics/joints/b2PulleyJoint.js'></script>
+    <script src='js/box2d/dynamics/joints/b2PulleyJointDef.js'></script>
+    <script src='js/box2d/dynamics/joints/b2RevoluteJoint.js'></script>
+    <script src='js/box2d/dynamics/joints/b2RevoluteJointDef.js'></script>
+		<!--=============================-->
+		<!-- Copy this part to your app. -->
+		<!-- END                         -->
+		<!--=============================-->
+
+
+    <script type="text/javascript" src="js/initWorldClass.js"></script>
+	<script type="text/javascript" src="js/0.js"></script>	
+	<script type="text/javascript" src="js/1.js"></script>
+		-->
+	<script type="text/javascript" src="js/specialDateClass.js"></script>
+	<!--
+	<script type="text/javascript" src="jquery-1.6.js"></script>
+	-->
+	<script type="text/javascript" src="js/addClass.js"></script>
+	<script type="text/javascript" src="js/drawClass.js"></script>
+	<script type="text/javascript" src="js/drawSpecialClass.js"></script>
+	<script type="text/javascript" src="js/collisionTestClass.js"></script>
+	<script type="text/javascript" src="js/controlBodyClass.js"></script>
+	<script type="text/javascript" src="js/getBodyClass.js"></script>
+	<script type="text/javascript" src="js/musicClass.js"></script>
+
+    <script type="text/javascript" src="./js/jquery-1.6.js"></script>
+    <script type="text/javascript" src="./js/ball/Start.js"></script>
+    <script type="text/javascript" src="./js/ball/End.js"></script>
+    <script type="text/javascript" src="./js/ball/Nochanges.js"></script>
+    <script type="text/javascript" src="./js/ball/Changes.js"></script>
+    <script type="text/javascript">
+
+
+
+
+setInterval("stop()",50)
+
+
+
+
+function GameLoop()
+{
+   ctx.clearRect(0,0,screenWidth,screenHeight);
+   ctx.save();
+   ctx.drawImage(background,0,0);
+   ctx.drawImage(stick.image,stick.x,stick.y);
+   DrawPrizes();
+   DrawLives();
+   DrawScore();
+   ball.x+=horizontalSpeed;
+   ball.y+=verticalSpeed;
+   ball.angle+=ballAngle;
+   ctx.translate(ball.x+(ball.image.width/2),ball.y+(ball.image.height/2));
+   ctx.rotate(ball.angle*Math.PI/180);
+   ctx.drawImage(ball.image,-(ball.image.width/2),-(ball.image.height/2));
+   ctx.restore();
+   HasBallHitEdge();
+   HasBallHitStick();
+   HasBallHitPrize();
+   HsaAllPrizesHit();
+}
+
+
+
+
+function ToggleGameplay()
+{    
+	gameRunning=!gameRunning;
+	if(gameRunning)
+	{
+	     $("#BtnImgStart").hide();
+		 gameloopId=setInterval(GameLoop,10);
+	}else
+	{
+	      clearInterval(gameloopId);
+	}
+}
+
+
+
+$(window).ready(function(){
+   AddEventHandlers();
+   loadImages();
+   ctx=document.getElementById('canvas').getContext('2d');
+   screenWidth=parseInt($("#canvas").attr("width"));
+   screenHeight=parseInt($("#canvas").attr("height"));
+   stick.x=parseInt(screenWidth/2);
+   stick.y=screenHeight-30;
+   ball.x=parseInt(screenWidth/2);
+   ball.y=parseInt(screenHeight/2);
+   InitPrizes();
+  
+});
+
+
+
+</script>
+<audio id="ballhitstick" src="./music/ballhitstick.wav"></audio> 
+<audio id="ballhitprize" src="./music/ballhitprize.wav"></audio> 
+</head>
+
+<body>
+
+
+<div id="container" style="border:1px solid; cursor:none; width:600px; height::450px;">
+<canvas id="canvas" width="600" height="450" >
+</canvas>
+
+
+</div>
+<img id="BtnImgStart" style="position: absolute;left: 260px;top: 300px;cursor:pointer; float:left; display:block;" src="./images/start.png">
+</body>
+</html>
+
+ 

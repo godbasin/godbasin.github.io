@@ -1,0 +1,88 @@
+/* CSS Document */
+html, body{
+	background: url(../images/website_background.jpg);
+	
+	font-family: 'Play', arial, serif;
+}
+
+em {
+	margin: 0 6px;
+	color: #006600;
+}
+
+am {
+	color: #FF0000;
+}
+
+.startscreen {
+	background: #eee url(../images/starting_screen.jpg);
+}
+
+.gamebg_level0 {
+	background: #eee url(../images/bg.jpg);
+}
+
+.gamebg_level1 {
+	background: #eee url(../images/bg2.jpg);
+}
+
+.gamebg_level2 {
+	background: #eee url(../images/bg3.jpg);
+}
+
+.gamebg_level3 {
+	background: #eee url(../images/bg4.jpg);
+}
+
+.gamebg_level4 {
+	background: #eee url(../images/bg5.jpg);
+}
+
+.gamebg_won {
+	background: #eee url(../images/game_completed_screen.jpg);
+}
+
+.gamebg_Lose {
+	background: #eee url(../images/game_Lose_screen.jpg);
+}
+
+#game {
+	width: 1300px;
+}
+
+#asset {
+	position: absolute;
+	top: -99999px;
+}
+
+#game-container {
+	position: relative;
+	width: 1300px;
+}
+
+#level {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+}
+
+.progressbar {
+	position: absolute;
+	top: 550px;
+	right: 950px;
+	
+	width: 300px;
+	height:20px;
+	margin: 2px;
+	border: 1px solid #000;
+	
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#8C906F), color-stop(48%,#8C906F), color-stop(51%,#323721), color-stop(54%,#55624F), color-stop(100%,#55624F)); /* webkit */
+	background: gradient(linear, left top, left bottom, color-stop(0%,#8C906F), color-stop(48%,#8C906F), color-stop(51%,#323721), color-stop(54%,#55624F), color-stop(100%,#55624F)); 
+}
+
+.progressbar .fuel-value {
+	height:20px;
+	
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#A8D751), color-stop(48%,#A8D751), color-stop(51%,#275606), color-stop(54%,#4A8A49), color-stop(100%,#4A8A49)); /* webkit */
+	background: gradient(linear, left top, left bottom, color-stop(0%,#A8D751), color-stop(48%,#A8D751), color-stop(51%,#275606), color-stop(54%,#4A8A49), color-stop(100%,#4A8A49));
+}

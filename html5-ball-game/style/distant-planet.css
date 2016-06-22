@@ -1,0 +1,124 @@
+body {
+	background-color: #787bad;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+#CONTAINER {
+	background-color: #787bad;
+	width: 800px;
+	margin-left: 20%;
+}
+#HEADER {
+	background-image: url(images/Distant-Planet_02.gif);
+	float: left;
+	height: 202px;
+	width: 713px;
+}
+#NAVIGATION {
+	background-image: url(images/Distant-Planet_04.gif);
+	float: left;
+	height: 39px;
+	width: 713px;
+}
+#BODYBOX {
+	background-color: #969ad0;
+	float: left;
+	width: 713px;
+}
+.LEFT {
+	background-image: url(images/Distant-Planet_05.gif);
+	float: left;
+	width: 51px;
+	height: 493px;
+}
+.MIDDLE {
+	background-image: url(images/Distant-Planet_06.gif);
+	float: left;
+	width: 593px;
+	padding-bottom: 14px;
+	padding-top: 14px;
+	font-family: Arial;
+	font-size: 12px;
+	font-style: normal;
+	line-height: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	color: #FFFFFF;
+	text-decoration: none;
+}
+.footertext {
+	text-align: center;
+	width: 100%;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.RIGHT {
+	background-image: url(images/Distant-Planet_07.gif);
+	float: left;
+	width: 69px;
+	height: 493px;
+}
+.Nav {
+	font-family: Arial;
+	font-size: 12px;
+	font-style: normal;
+	line-height: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	color: #FFFFFF;
+	text-decoration: none;
+	text-align: center;
+	margin-top: 12px;
+}
+.links {
+	font-family: Arial;
+	font-size: 12px;
+	font-style: normal;
+	line-height: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	color: #FFFFFF;
+	text-decoration: none;
+}
+.links a {
+	font-family: Arial;
+	font-size: 12px;
+	font-style: normal;
+	line-height: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	color: #FFFFFF;
+	text-decoration: none;
+}
+.links a:visited {
+	font-family: Arial;
+	font-size: 12px;
+	font-style: normal;
+	line-height: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	color: #FFFFFF;
+	text-decoration: none;
+}
+.links a:hover {
+	font-family: Arial;
+	font-size: 12px;
+	font-style: normal;
+	line-height: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	color: #FFFFFF;
+	text-decoration: underline;
+}
+#FOOTER {
+	background-image: url(images/Distant-Planet_08.gif);
+	float: left;
+	width: 713px;
+}

@@ -1,0 +1,61 @@
+#canvas {
+	padding:0; 
+	margin:0; 
+	border:1px solid white;
+	position:absolute; 
+	background-color:#333388;
+}
+#CONTAINER { 
+	margin-left: 30px; 
+}
+#HEADER h1 { 
+	margin-top: 95px; 
+	padding-right: 30px;
+	text-align: center;
+	font-size: xx-large; 
+	font-style: italic; 
+	font-weight: bold; 
+	color: #ccccff; 
+}
+#HEADER h1 b { 
+	color: #ffffff; 
+	font-size: 110%; 
+}
+#spacer {
+	height: 300px;
+}
+span.key {
+	text-decoration: underline;
+}
+#BODYBOX {
+	background-image: url(images/bodybox_bg.png);
+	background-repeat: repeat-y;
+}
+p {
+	padding-left: 20px;
+}
+.contact {
+	border: 1px solid white;
+	padding: 5px;
+	margin: 5px;
+	margin-left: 30px;
+	width: 350px;
+}
+a{
+	color: yellow;
+}
+a:hover {
+	color: yellow;
+	background-color: black;
+}
+a:visited {
+	color: yellow;
+}
+a:active {
+	color: yellow;
+}
+pre.prettyprint {
+	margin-left: 30px;
+	padding: 5px;
+	background-color: #bbbbff;
+}
