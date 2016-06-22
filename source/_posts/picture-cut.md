@@ -1,7 +1,8 @@
 ---
 title: jQuery插件--Canvas实现图片裁剪
-date: 2016-06-20 22:04:12
+date: 2016-06-22 19:44:20
 categories: jQuery杂烩
+tags: 自制插件
 ---
 需要对图片进行裁剪时，可使用该jQuery插件。本文介绍实现方法。
 <!--more-->
