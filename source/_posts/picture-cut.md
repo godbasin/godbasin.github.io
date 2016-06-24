@@ -13,10 +13,10 @@ tags: 自制插件
 最终效果图如下[点击查看页面](http://o92md66rk.bkt.clouddn.com/index.html)
 ![image](http://o905ne85q.bkt.clouddn.com/picture-cut.png)
 
-### 插件介绍
-
-- 使用方法
--- html
+## 插件介绍
+-----
+### 使用方法
+- html
 ``` html
 <img class="img-to-cut" src="img/1.png" />
 <img class="img-to-cut" src="img/2.png" />
@@ -24,7 +24,7 @@ tags: 自制插件
 <!--需加上一个包裹的外壳-->
 <section id="bsphotocut-con"></section>
 ```
--- js
+- js
 ``` javascript
 //初始化能进行裁剪的图片：此处使用class='img-to-cut'
 $(".img-to-cut").click(function() {
@@ -38,27 +38,27 @@ $(".img-to-cut").click(function() {
 	});
 });
 ```
-- 插件封装方法
--- 使用jQuery拓展属性$.fn.xxx来进行封装
--- 这里有超详细教程[《jQuery插件开发精品教程，让你的jQuery提升一个台阶》](http://www.cnblogs.com/Wayou/p/jquery_plugin_tutorial.html)
--- 本插件的封装不是特别完美，因为涉及事件绑定，当时还没想到很好的办法，欢迎小伙伴们提意见
+### 插件封装方法
+- 使用jQuery拓展属性$.fn.xxx来进行封装
+- 这里有超详细教程[《jQuery插件开发精品教程，让你的jQuery提升一个台阶》](http://www.cnblogs.com/Wayou/p/jquery_plugin_tutorial.html)
+- 本插件的封装不是特别完美，因为涉及事件绑定，当时还没想到很好的办法，欢迎小伙伴们提意见
 
-### 图片裁剪原理
+## 图片裁剪原理
+-----
+### 使用HTML5 Canvas实现裁剪过程
+- 创建两个canvas：canvas1--装载图片 canvas2--装载裁剪框
+### canvas1
+- 装载图片，实现图片居中处理，具体相关原理可参考[picture-align插件](https://github.com/godbasin/godbasin.github.io/blob/blog-codes/picture-align/js/style.js)
 
-- 使用HTML5 Canvas实现裁剪过程
--- 创建两个canvas：canvas1--装载图片 canvas2--装载裁剪框
-- canvas1
--- 装载图片，实现图片居中处理，具体相关原理可参考[picture-align插件](https://github.com/godbasin/godbasin.github.io/blob/blog-codes/picture-align/js/style.js)
+### canvas2
+- 装载裁剪框，若有限制比例则按照比例缩放
+- 裁剪框溢出canvas1时候的处理
 
-- canvas2
--- 装载裁剪框，若有限制比例则按照比例缩放
--- 裁剪框溢出canvas1时候的处理
-
-- 获取裁剪后图片
--- 使用Canvas函数getImageData可读取特定区域的图片数据
--- 使用Canvas函数putImageData可导出图片数据至canvas
--- 使用Canvas函数toDataURL可将canvas导出为图片格式
--- 这里需要注意，getImageData可能产生跨域问题，解决办法可自行google（似乎没有特别好的解决方法）
+### 获取裁剪后图片
+- 使用Canvas函数getImageData可读取特定区域的图片数据
+- 使用Canvas函数putImageData可导出图片数据至canvas
+- 使用Canvas函数toDataURL可将canvas导出为图片格式
+- 这里需要注意，getImageData可能产生跨域问题，解决办法可自行google（似乎没有特别好的解决方法）
 ``` javascript
 cutOver: function(obj) {
 	var _options = obj.options,
@@ -81,11 +81,12 @@ cutOver: function(obj) {
 ```
 
 
-### 鼠标或者触屏事件处理
+## 鼠标或者触屏事件处理
+-----
 - 鼠标事件为mousedown/mousemove/mouseup，相应js文件为mousestyle.js
--- 鼠标获取坐标位置可参考[js判断某个位置是否特定元素]()
+  - 鼠标获取坐标位置可参考[js判断某个位置是否特定元素]()
 - 触屏事件为touchstart/touchmove/touchend，相应js文件为touchstyle.js
--- 触屏事件获取坐标位置为event.touches[0].clientX和event.touches[0].clientY
+  - 触屏事件获取坐标位置为event.touches[0].clientX和event.touches[0].clientY
 - 在裁剪过程中，全程绑定开始事件（mousedown/touchstart）的检测
 ``` javascript
 //此处为鼠标事件部分代码
@@ -112,7 +113,8 @@ function mouseStart() {
 }
 ```
 - 触发开始事件后，开始绑定移动（mousemove/touchmove）和结束事件（mouseup/touchend）的检测
--- 具体的实现这里不详细说明，大家可查看源文件获取
+  - 具体的实现这里不详细说明，大家可查看源文件获取
 
-### 结束语
+## 结束语
+-----
 曾经我很喜欢用下划线命名变量，被小伙伴们吐槽过很多遍，这些代码还处于那个时代的产物，小伙伴们请见谅呀。

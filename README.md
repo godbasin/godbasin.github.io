@@ -3,6 +3,8 @@
 ### 被删前端博客  
 
 
+
+> [《我的前端入门之路》](https://godbasin.github.io/2016/06/24/front-end-getting-started/) 
 > [《jQuery插件--图片裁剪》](https://godbasin.github.io/2016/06/22/picture-cut/) 
 > [《jQuery插件--图片居中对齐》](https://godbasin.github.io/2016/06/21/picture-align/) 
 > [《jQuery响应式瀑布流》](https://godbasin.github.io/2016/06/20/responsive-waterfall/) 

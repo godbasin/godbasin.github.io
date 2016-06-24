@@ -7,26 +7,30 @@ tags: 逻辑实现
 需要获取鼠标所在位置是否为某种特定元素，然后进行相关处理。本文介绍一种实现方法。
 <!--more-->
 
+## 常用坐标相关属性
+-----
 首先，获取鼠标坐标的兼容问题大家都很熟悉了。
-
 此处粘贴一些常用坐标相关属性：
-  scrollHeight: 获取对象的滚动高度
-  scrollLeft:设置或获取位于对象左边界和窗口中目前可见内容的最左端之间的距离
-  scrollTop:设置或获取位于对象最顶端和窗口中可见内容的最顶端之间的距离
-  scrollWidth:获取对象的滚动宽度
-  offsetHeight:获取对象相对于版面或由父坐标 offsetParent 属性指定的父坐标的高度
-  offsetLeft:获取对象相对于版面或由 offsetParent 属性指定的父坐标的计算左侧位置
-  offsetTop:获取对象相对于版面或由 offsetTop 属性指定的父坐标的计算顶端位置
-  event.clientX 相对文档的水平座标
-  event.clientY 相对文档的垂直座标
-  event.offsetX 相对容器的水平坐标
-  event.offsetY 相对容器的垂直坐标
-  document.documentElement.scrollTop 垂直方向滚动的值
-  event.clientX + document.documentElement.scrollTop 相对文档的水平座标+垂直方向滚动的量
+``` javascript
+scrollHeight //获取对象的滚动高度
+scrollLeft //设置或获取位于对象左边界和窗口中目前可见内容的最左端之间的距离
+scrollTop //设置或获取位于对象最顶端和窗口中可见内容的最顶端之间的距离
+scrollWidth //获取对象的滚动宽度
+offsetHeight //获取对象相对于版面或由父坐标 offsetParent 属性指定的父坐标的高度
+offsetLeft //获取对象相对于版面或由 offsetParent 属性指定的父坐标的计算左侧位置
+offsetTop //获取对象相对于版面或由 offsetTop 属性指定的父坐标的计算顶端位置
+event.clientX //相对文档的水平座标
+event.clientY //相对文档的垂直座标
+event.offsetX //相对容器的水平坐标
+event.offsetY //相对容器的垂直坐标
+document.documentElement.scrollTop 垂直方向滚动的值
+event.clientX + document.documentElement.scrollTop //相对文档的水平座标+垂直方向滚动的量
+```
 
+## 绑定鼠标事件
+-----
 现在我们来获取鼠标位置
-### 绑定鼠标事件
-- 此处需对IE事件、FireFox事件等兼容
+此处需对IE事件、FireFox事件等兼容
 - 绑定方式有几种
   - 1.在元素中，onXXX（事件）绑定
   - 2.在Javascript代码中，获得元素并为元素的onXXX（事件）绑定
@@ -38,19 +42,21 @@ if (document.addEventListener) {
 	element.attachEvent(event, eventFunction);//IE 
 }
 ```
-### 获取鼠标坐标
-- IE中可以直接使用 event对象，而 FF中则不可以
-  - 1.window.event || arguments.callee.caller.arguments[0]获取event对象
-  - 2.将 event 作为参数来传递, function xxx(e){var e = e || window.event;}
+## 获取鼠标坐标
+-----
+IE中可以直接使用 event对象，而 FF中则不可以
+- 1.window.event || arguments.callee.caller.arguments[0]获取event对象
+- 2.将 event 作为参数来传递, function xxx(e){var e = e || window.event;}
 
-### 计算鼠标位置
-
+## 计算鼠标位置
+-----
 ``` javascript
 var eventX = e.pageX - scrollX || e.clientX ;
 var eventY = e.pageY - scrollY || e.clientY ;
 ```
 
-### 获取当前位置是否有特定元素
+## 获取当前位置是否有特定元素
+-----
 - 给需要检测的元素绑定id或者自定义属性
 - 通过不断获取当前元素父元素，直至获取成功（通过自定义属性判断）或者元素为body
 
@@ -63,8 +69,8 @@ function fnGetTable(oEl) {
 }
 ```
 
-### 实例：下拉菜单点击外围自动关闭
-
+## 实例：下拉菜单点击外围自动关闭
+-----
 - 通过点击当前元素时绑定到事件
 
 ``` javascript
@@ -110,5 +116,6 @@ function clickOutside() {
 }
 ```
 
-### 结束语
+## 结束语
+-----
 解决办法很多，优化方法也很多，代码都是在一次又一次重构和提炼中变得出彩的呢。
