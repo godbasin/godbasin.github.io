@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="gb2312">
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<link rel="stylesheet" href="./css/style.css">
+<title>被删动漫前线</title>
+<script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+</head>
+<body>
+<div class="container" align="center">
+  <div class="asideright"><div style="float:right;"><img src="./images/aside.jpg" /><br><a>最爱幽灵公主</a></div></div>
+  <div class="asideleft">
+    <div class="asidemenu">
+	  <ul>
+	    <li><a href="#">经典回顾</a></li>
+	    <li><a href="#">新番追击</a></li>
+	    <li><a href="#">激动人心</a></li>
+	    <li><a href="#">情节再现</a></li>
+	    <li><a href="#">会员专享</a></li>
+	    <li><a href="#">在线查询</a></li>
+	    <li><a href="#">漫画世界</a></li>
+	  </ul>
+	</div>
+	<div class="asidepull" onClick="pullmenu()"><p>点我</p></div>
+  </div>
+
+  <div class="canvas">
+  
+    <div class="header">
+      <p class="language"><a href="#">中文</a><a href="#">英文</a><a href="#">日文</a></p>
+	  <div class="headerlog"><input type="text" placeholder="用户名" /><input type="password" placeholder="密码"  ><button type="submit">登陆</button></div>
+    </div>
+	
+	<div class="topinfo">
+	  <div class="toptitle"  onmouseover="hidetab('#navt','#nav','5','navchosen')">
+	    <div class="topheader"><h>被删动漫前线</h></div>
+		<div class="topservice">
+		  热线：0755-566xxxx
+		  <input type="text" placeholder="请输入关键词"><button type="submit">搜索</button>
+		</div>
+	  </div>
+	  <div class="topnav">
+	    <ul>
+		  <li onMouseOver="hidetab('#navt','#nav','5','navchosen')"><a href="#">首页</a></li>
+		  <li onMouseOver="showtab('#navt','#nav','1','navchosen')"><a id="navt1">热播动漫</a></li>
+		  <li onMouseOver="showtab('#navt','#nav','2','navchosen')"><a id="navt2">经典动漫</a></li>
+		  <li onMouseOver="showtab('#navt','#nav','3','navchosen')"><a id="navt3">漫画相关</a></li>
+		  <li onMouseOver="showtab('#navt','#nav','4','navchosen')"><a id="navt4">会员业务</a></li>
+		  <li onMouseOver="hidetab('#navt','#nav','5','navchosen')"><a href="#">关于</a></li>
+		</ul>
+	  </div>
+	  <div class="menubox" id="nav1" onMouseOver="showtab('#navt','#nav','1','navchosen')" onMouseOut="hidetab('#navt','#nav','5','navchosen')">
+	    <div class="menulist">
+		  <ul>
+		    <li><a href="#">犬夜叉第56集</a></li>
+		    <li><a href="#">《海贼王》下周休刊 </a></li>
+		    <li><a href="#">全职猎人最终集</a></li>
+		    <li><a href="#">火影忍者番外篇</a></li>
+		    <li><a href="#">赢者第516集</a></li>
+		  </ul>
+		</div>
+	    <div class="menulist">
+		  <ul>
+		    <li><a href="#">海贼王第2345集</a></li>
+		    <li><a href="#">《魔法使的新娘》作者新作</a></li>
+		    <li><a href="#">火影忍者番外篇</a></li>
+		    <li><a href="#">赢者第516集</a></li>
+		  </ul>
+		</div>
+	  </div>
+	  <div class="menubox" id="nav2" onMouseOver="showtab('#navt','#nav','2','navchosen')" onMouseOut="hidetab('#navt','#nav','5','navchosen')">
+	    <div class="menulist">
+		  <ul>
+		    <li><a href="#">《PUPA》短篇新作即将开载</a></li>
+		    <li><a href="#">海贼王第2345集</a></li>
+		    <li><a href="#">《海贼王》784话图透</a></li>
+		    <li><a href="#">火影忍者番外篇</a></li>
+		    <li><a href="#">《不可思议少女》续作连载再开</a></li>
+		    <li><a href="#">《海贼王》784话图透</a></li>
+		  </ul>
+		</div>
+	    <div class="menulist">
+		  <ul>
+		    <li><a href="#">《女子落语》今夏将有新动向</a></li>
+		    <li><a href="#">四格漫画《琴浦小姐》完结</a></li>
+		    <li><a href="#">全职猎人最终集</a></li>
+		    <li><a href="#">《可塑性记忆》前传漫画4/27发售</a></li>
+		    <li><a href="#">漫画《小小起司猫》6/23最终卷</a></li>
+		  </ul>
+		</div>
+	    <div class="menulist">
+		  <ul>
+		    <li><a href="#">《一周的朋友》新连载预告</a></li>
+		    <li><a href="#">《xxxHOLiC?戻》时隔九月将继续连载</a></li>
+		    <li><a href="#">四格漫画《琴浦小姐》完结</a></li>
+		    <li><a href="#">赢者第516集</a></li>
+		    <li><a href="#">赢者第516集</a></li>
+		  </ul>
+		</div>
+	  </div>
+	  <div class="menubox" id="nav3" onMouseOver="showtab('#navt','#nav','3','navchosen')" onMouseOut="hidetab('#navt','#nav','5','navchosen')">
+	    <div class="menulist">
+		  <ul>
+		    <li><a href="#">犬夜叉第56集</a></li>
+		    <li><a href="#">《早安、荆棘公主》1卷 “既有悬疑又有恐怖还有恋爱”</a></li>
+		    <li><a href="#">全职猎人最终集</a></li>
+		  </ul>
+		</div>
+	    <div class="menulist">
+		  <ul>
+		    <li><a href="#">绪方波子氏新漫画「卟嘶卟嘶」已发售</a></li>
+		    <li><a href="#">《bleach》作者生病休刊一期</a></li>
+		    <li><a href="#">赢者第516集</a></li>
+		    <li><a href="#">久住昌之新作秋叶原热销中</a></li>
+		  </ul>
+		</div>
+	  </div>
+	  <div class="menubox" id="nav4" onMouseOver="showtab('#navt','#nav','4','navchosen')" onMouseOut="hidetab('#navt','#nav','5','navchosen')">
+	    <div class="menulist">
+		  <ul>
+		    <li><a href="#">《亚尔斯兰战记》创作过程专访</a></li>
+		    <li><a href="#">全职猎人最终集</a></li>
+		    <li><a href="#">火影忍者番外篇</a></li>
+		    <li><a href="#">《暗杀教室》第135话情报</a></li>
+		  </ul>
+		</div>
+	    <div class="menulist">
+		  <ul>
+		    <li><a href="#">犬夜叉第56集</a></li>
+		    <li><a href="#">全职猎人最终集</a></li>
+		    <li><a href="#">樱井光新作《Fate/Labyrinth》开载</a></li>
+		    <li><a href="#">漫画版《咒怨》6月发售</a></li>
+		  </ul>
+		</div>
+	    <div class="menulist">
+		  <ul>
+		    <li><a href="#">漫画《Soul Catcher(s)》下期重大发表</a></li>
+		    <li><a href="#">漫画《好想告诉你》中文版国内上市</a></li>
+		  </ul>
+		</div>
+	  </div>
+	</div>
+	
+	<div class="sliderinfo">
+	  <div class="sliderimg">
+	    <img id="img1" src="./images/s1.jpg"/><img id="img2" src="./images/s2.jpg" style="display:none;"/><img id="img3" src="./images/s3.jpg" style="display:none;"/><img id="img4" src="./images/s4.jpg" style="display:none;"/>
+	    <div class="sliderhover"><ul><li><a href="#">点击登陆</a></li><li><a href="#">点击注册</a></li></ul></div>
+	  </div>
+	  <div class="slidernav" id="imgt1"><a onClick="showtabfade('#imgt','#img','1','imgchosen')"><p>犬夜叉<br>经典动漫</p></a></div>
+	  <div class="slidernav" id="imgt2"><a onClick="showtabfade('#imgt','#img','2','imgchosen')"><p>海贼王<br>热播动漫</p></a></div>
+	  <div class="slidernav" id="imgt3"><a onClick="showtabfade('#imgt','#img','3','imgchosen')"><p>火隐忍者<br>完结动漫</p></a></div>
+	  <div class="slidernav" id="imgt4"><a onClick="showtabfade('#imgt','#img','4','imgchosen')"><p>宫崎骏<br>温馨治愈</p></a></div>
+	  <div class="sliderad"><p>关注我们</p>wangbeishan@163.com</div>
+	</div>
+	
+	<div class="newsinfo">
+	  <div class="news">
+	    <div class="newstitle">
+		  <ul>
+		    <li style="border-right:#ccc solid 1px;"><a onClick="showtabfade('#newst','#news','1','newschosen')" id="newst1">公告</a></li>
+		    <li><a onClick="showtabfade('#newst','#news','2','newschosen')" id="newst2">动态</a></li></ul></div>
+		    <div class="newscontent" id="news1">
+		  <ul>
+		    <li><a href="#">「飙速宅男」一番赏主题周边</a></li>
+		    <li><a href="#">“V-Star”化身最强声优英雄，替流浪“喵汪”星人呐喊</a></li>
+		    <li><a href="#">中二祭日语翻唱比赛结果揭晓</a></li>
+		  </ul>
+		  <div class="more"><a href="#">更多></a></div>
+		</div>
+		<div class="newscontent" id="news2" style="display:none;">
+		  <ul>
+		    <li><a href="#">《女子落语》今夏将有新动向</a></li>
+		    <li><a href="#">四格漫画《琴浦小姐》完结</a></li>
+		    <li><a href="#">《海贼王》784话图透</a></li>
+		  </ul>
+		  <div class="more"><a href="#">更多></a></div>
+		</div>
+	  </div>
+	  <div class="spdoperation">
+	    <div class="spdtitle"><p>便捷服务</p></div>
+		<div class="spdchoicebox">
+		  <div style="width:20px; height:100px; float:left;"><div class="to-change" style="display:none; width:100%;" id="to-change-left"><a onClick="slidediv('left','10')"><</a></div></div>
+		  <div class="choicebox">
+			<div class="allchoice">
+			  <div class="spdchoice"><a href="#"><img src="./images/sc1.jpg" /><p>宫崎骏</p></a></div>
+			  <div class="spdchoice"><a href="#"><img src="./images/sc2.jpg" /><p>犬夜叉</p></a></div>
+			  <div class="spdchoice"><a href="#"><img src="./images/sc3.jpg" /><p>海贼王</p></a></div>
+			  <div class="spdchoice"><a href="#"><img src="./images/sc4.jpg" /><p>柯南</p></a></div>
+			  <div class="spdchoice"><a href="#"><img src="./images/sc5.jpg" /><p>浪客剑心</p></a></div>
+			  <div class="spdchoice"><a href="#"><img src="./images/sc6.jpg" /><p>全金属狂潮</p></a></div>
+			  <div class="spdchoice"><a href="#"><img src="./images/sc7.jpg" /><p>蜡笔小新</p></a></div>
+			  <div class="spdchoice"><a href="#"><img src="./images/sc8.jpg" /><p>超电磁炮</p></a></div>
+			  <div class="spdchoice"><a href="#"><img src="./images/sc9.jpg" /><p>飞轮少年</p></a></div>
+			  <div class="spdchoice"><a href="#"><img src="./images/sc10.jpg" /><p>火影忍者</p></a></div>
+			</div>
+	      </div>
+		  <div style="width:20px; height:100px; float:left;"><div class="to-change" style=" width:100%;" id="to-change-right"><a onClick="slidediv('right','10')">></a></div></div>
+		</div>
+	  </div>
+	</div>
+	
+	<div class="serviceinfo">
+	  <div class="sertitle">会员服务</div>
+	  <div class="serpackage">
+	    <a href="#">年套餐购买</a>
+	    <a href="#">月套餐购买</a>
+	    <a href="#">日套餐购买</a>
+	  </div>
+	  <div class="sercontent">
+	    <div class="serconheader">
+		  <ul>
+		    <li><a onClick="showtabfade('#sert','#ser','1','serchosen')" id="sert1">头像</a></li>
+		    <li><a onClick="showtabfade('#sert','#ser','2','serchosen')" id="sert2">资料</a></li>
+		    <li style="border:none;"><a onClick="showtabfade('#sert','#ser','3','serchosen')" id="sert3">会员功能</a></li>
+		  </ul>
+		</div>
+		
+		<div class="serconcontent" id="ser1">
+		  <div class="serhead">
+		  	<div class="to-change"><a onClick="showtabslide('','#head','8','left')"><</a></div>
+		    <div class="serheadimg" id="head1"><a href="#"><img src="./images/h1.jpg" /></a></div>
+		    <div class="serheadimg" id="head2" style="display:none;"><a href="#"><img src="./images/h2.jpg" /></a></div>
+		    <div class="serheadimg" id="head3" style="display:none;"><a href="#"><img src="./images/h3.jpg" /></a></div>
+		    <div class="serheadimg" id="head4" style="display:none;"><a href="#"><img src="./images/h4.jpg" /></a></div>
+		    <div class="serheadimg" id="head5" style="display:none;"><a href="#"><img src="./images/h5.jpg" /></a></div>
+		    <div class="serheadimg" id="head6" style="display:none;"><a href="#"><img src="./images/h6.jpg" /></a></div>
+		    <div class="serheadimg" id="head7" style="display:none;"><a href="#"><img src="./images/h7.jpg" /></a></div>
+		    <div class="serheadimg" id="head8" style="display:none;"><a href="#"><img src="./images/h8.jpg" /></a></div>
+			<div class="to-change"><a onClick="showtabslide('','#head','8','right')">></a></div>
+		  </div>
+		  <div class="serheadcontent">
+		    <ul>
+			  <li><a href="#">日媒曝光“不被废柴男吸引法则”</a></li>
+			  <li><a href="#">腐女做的蛋糕太屌了</a></li>
+			  <li><a href="#">国外玩家狂喷游戏海量付费DLC</a></li>
+			  <li><a href="#">日本推出柯南智能侦探眼镜</a></li>
+			</ul>
+		    <div class="more"><a href="#">更多></a></div>
+		  </div>
+		</div>
+		
+		<div class="serconcontent" id="ser2" style="display:none;">
+		  <div class="sertopnews">
+		    <p>重要资料</p>
+		    <ul>
+			  <li><a href="#">会员登陆方式</a></li>
+			  <li><a href="#">会员账号管理</a></li>
+			  <li><a href="#">个人资料提交/更改</a></li>
+			</ul>
+		  </div>
+		  <div class="serheadcontent">
+		    <ul>
+			  <li><a href="#">《刀剑神域》诗乃最新手办</a></li>
+			  <li><a href="#">御宅与御宅爱好之间的战争！</a></li>
+			  <li><a href="#">为了祖国花朵文化部才怒下重手？</a></li>
+			  <li><a href="#">那些年天朝“翻拍”过的日本动画</a></li>
+			</ul>
+		    <div class="more"><a href="#">更多></a></div>
+		  </div>
+		</div>
+		
+		<div class="serconcontent" id="ser3" style="display:none;">
+		  <div class="sertopnews">
+		    <p>重点推荐</p>
+		    <ul>
+			  <li><a href="#">年套餐购买最新优惠</a></li>
+			  <li><a href="#">月套餐购买热门</a></li>
+			  <li><a href="#">日套餐购买推荐</a></li>
+			</ul>
+		  </div>
+		  <div class="serheadcontent">
+		    <ul>
+			  <li><a href="#">芦月祭3.0·首届东营动漫文化节</a></li>
+			  <li><a href="#">《hurly burly》唯美旗袍弱音 Cos</a></li>
+			  <li><a href="#">学习机变成游戏机到底谁该背锅</a></li>
+			  <li><a href="#">《黑子的篮球》中的逆天技能</a></li>
+			</ul>
+		    <div class="more"><a href="#">更多></a></div>
+		  </div>
+		</div>
+	  </div>
+	</div>
+	
+	<div class="questinfo">
+	  <div class="hotquest">
+	    <div class="questheader">动漫热讯</div>
+		<div class="hotcontent">
+		  <div class="questpart">
+		    <p>最新</p>
+			<ul><li><a href="#">12岁少女论文抗议游戏性别歧视</a></li></ul>
+		  </div>
+		  <div class="questpart">
+		    <p>经典动漫</p>
+			<ul><li><a href="#">韩国版《死亡笔记》定妆照</a></li></ul>
+		  </div><div style="clear:both"></div> 
+		  <div class="questpart">
+		    <p>新番动漫</p>
+			<ul><li><a href="#">樱井光新作《Fate/Labyrinth》开载</a></li></ul>
+		  </div>
+		  <div class="questpart">
+		    <p>漫画热点</p>
+			<ul><li><a href="#">《海贼王》下周休刊 </a></li></ul>
+		  </div><div style="clear:both"></div> 
+		  <div class="questpart">
+		    <p>动漫前沿</p>
+			<ul><li><a href="#">《四月是你的谎言》结局解读</a></li></ul>
+		  </div>
+		  <div class="questpart">
+		    <p>实时追踪</p>
+			<ul><li><a href="#">《横乳版开胸衣》强大威力</a></li></ul>
+		  </div><div style="clear:both"></div> 
+		<div class="more"><a href="#">更多></a></div>
+		</div>
+	  </div>
+	  <div class="qquest">
+	    <div class="questheader">相关咨询</div>
+		<div class="qquestpart">
+			<ul>
+			  <li><a href="#">丧心病狂！你选左边，还是右边？</a></li>
+			  <li><a href="#">二次元少女咸湿百合图集</a></li>
+			  <li><a href="#">《路人女主》霞之丘诗羽图集</a></li>
+			  <li><a href="#">「闪乱神乐」葛城手办</a></li>
+			  <li><a href="#">一集日本动画要花多少钱？</a></li>
+			  <li><a href="#">《K》动画2期没开播就先来杀必死</a></li>
+			  <li><a href="#">真实版“后宫学校”的开学典礼</a></li>
+			  <li><a href="#">部分人看到是透明的裙子</a></li>
+			  <li><a href="#">黑暗恐怖动画电影一览</a></li>
+			  <li><a href="#">一集日本动画要花多少钱？</a></li>
+			</ul>
+		</div>
+		<div class="more"><a href="#">更多></a></div>
+	  </div>
+	</div>
+	<div class="footer">
+	  <div class="footertop"><ul><li>服务热线：0755-566xxxx</li></ul></div>
+	  <div class="footercontent">
+	    <div class="footerrelate">
+		  <ul>
+		    <li><a href="#">网站</a></li>
+		    <li><a href="#">版权声明</a></li>
+		    <li><a href="#">使用条款</a></li>
+		    <li><a href="#">相关</a></li>
+		    <li style="border:none;"><a href="#">联系我们</a></li>
+		  </ul>
+		</div>
+		<div class="copyright">Copyright@ 被删</div>
+	  </div>
+	</div>
+  </div>
+</div>
+<script> 
+var j=2,k;
+var h=1;
+var n=1;
+var int=window.setInterval("turntab('#imgt','#img','imgchosen')",5000);
+function showtabfade(id1,id2,idnum,addclass){
+	for(i=1;i<5;i++)
+	{
+		if(idnum == i){
+			$(id1+idnum).addClass(addclass);
+			$(id2+idnum).fadeIn(500); 
+		}
+		else{
+			$(id1+i).removeClass(addclass);
+			$(id2+i).css("display","none");   
+		}
+	}
+	if(id1=="#imgt"){
+		j=idnum;
+		window.clearInterval(int);
+		int=window.setInterval("turntab('#imgt','#img','imgchosen')",5000);
+	}
+}
+function showtab(id1,id2,idnum,addclass){
+	for(i=1;i<5;i++)
+	{
+		if(idnum == i){
+			$(id1+idnum).addClass(addclass);
+			$(id2+idnum).css("display","block");
+		}
+		else{
+			$(id1+i).removeClass(addclass);
+			$(id2+i).css("display","none");   
+		}
+	}
+}
+function showtabslide(id1,id2,idnum,direction){
+	for(i=1;i<=idnum;i++)
+	{
+		$(id2+i).css("display","none");   
+	}
+	if(direction == "left")
+	{
+		if(h != 1){h--;}
+		$(id2+h).slideDown(500);
+	}
+	if(direction == "right")
+	{
+		if(h != idnum){h++;}
+		$(id2+h).slideDown(500);
+	}
+}
+
+function turntab(id1,id2,addclass,addclasst){
+	if(j == 5){j=1;}
+	k=j-1;
+	if(j == 1)
+	{
+		$(id1+4).removeClass(addclass);
+		$(id2+4).fadeOut(500);  
+		$(id1+j).addClass(addclass);
+		$(id2+j).fadeIn(1500);   
+	}
+	if(j != 1)
+	{
+		$(id1+k).removeClass(addclass);
+		$(id2+k).fadeOut(500);  
+		$(id1+j).addClass(addclass);
+		$(id2+j).fadeIn(1500);    
+	}
+	j++;
+}
+
+function hidetab(id1,id2,idnum,addclass){
+	for(i=1;i<5;i++)
+	{
+		$(id1+i).removeClass(addclass);
+		$(id2+i).css("display","none");   
+	}
+}
+function pullmenu(){
+	var l=n%2;
+	if(l == 1){
+		$(".asideleft").animate({left:0},1000); 
+	}
+	if(l == 0){
+		$(".asideleft").animate({left:-120},1000); 
+	}
+	n++;
+}
+
+function slidediv(direction,cnum){
+	var cboxleft = $(".allchoice").position().left;
+	var leftmove = - (cnum-4) * 90;
+	if(direction=="left")
+	{
+		cboxleft=cboxleft+90;
+		$(".allchoice").animate({left:cboxleft},200);
+		$("#to-change-right").css("display","block");
+	}
+	if(direction=="right")
+	{
+		cboxleft=cboxleft-90;
+		$(".allchoice").animate({left:cboxleft},200);
+		$("#to-change-left").css("display","block");
+	}
+	if(cboxleft==0){$("#to-change-left").css("display","none");}
+	if(cboxleft==leftmove){$("#to-change-right").css("display","none");}
+}
+
+$(function(){
+	//滚动条事件
+	$(window).scroll(function(){
+		//获取滚动条的滑动距离
+		var scroH = $(this).scrollTop();
+		//滚动条的滑动距离大于等于定位元素距离浏览器顶部的距离，就固定，反之就不固定
+		var asideH = scroH+300;
+        $(".asideright").animate({top:asideH},100);  
+	})
+})
+
+</script>
+</body>
+</html>
