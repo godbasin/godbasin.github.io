@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="gb2312" />
+		<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+		<link rel="stylesheet" href="./css/style.css">
+		<title>HTML5被删</title>
+		<script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+	</head>
+
+	<body>
+		<div class="container" align="center">
+			<div class="page" id="page1">
+				<div class="page-middle" style="background:#999999;" onmousemove="pageMove(event)">
+					<div class="page1-text"><h1>Let's play basketball.</h1></div>
+					<div class="basketball-move">
+						<img src="./img/basketball-move.png" />
+					</div>
+					<div class="basket-move">
+						<img src="./img/basket-move.png" />
+					</div>
+					<div class="page1-center"><a class="page-button" onclick="nextpage()">Get Started</a>
+					</div>
+				</div>
+			</div>
+			<div class="page" id="page2">
+				<div class="page2">
+					<div class="page-middle" style="background: #0080C0;">
+						<div class="clould">
+							<div class="clouldmove1">
+								<img src="./img/clould1.png" />
+							</div>
+							<div class="clouldmove2">
+								<img src="./img/clould2.png" />
+							</div>
+							<div class="clouldmove3">
+								<img src="./img/clould3.png" />
+							</div>
+						</div>
+						<div class="basket-stand">
+							<img src="./img/basket2.png" />
+						</div>
+						<div class="page2-text">
+							<h1>Blue Sky and White Cloud<br />Go and pick up your lovely basketball now.</h1>
+						</div>
+						<div class="basketball-icon">
+							<img src="./img/basketball-icon1.png" />
+							<img src="./img/basketball-icon2.png" />
+						</div>
+						<div class="page-button-next"><a class="page-button" onclick="nextpage()">Next</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="page" id="page3">
+				<div class="page-middle" style="background: #F07800;">
+					<div class="page3-text">
+						<h1>Who cares the sun<br />Let's put on our clothes.</h1>
+					</div>
+					<div class="sun">
+						<img src="./img/sun.png" />
+					</div>
+					<div class="chose-clothes">
+						<img src="./img/clothes1.png" />
+						<img src="./img/clothes2.png" />
+						<img src="./img/clothes3.png" />
+						<img src="./img/clothes4.png" />
+						<img src="./img/clothes5.png" />
+						<img src="./img/clothes6.png" />
+					</div>
+					<div class="page-button-next"><a class="page-button" onclick="nextpage()">Next</a>
+					</div>
+				</div>
+			</div>
+			<div class="page" id="page4">
+				<div class="page-middle" style="background: #FF80FF;">
+					<div class="page4-text">
+						<h1>There is more than blood and youth<br />You can come across love here.</h1>
+					</div>
+					<div class="basketball-love">
+						<img src="./img/basketball-love.png" />
+					</div>
+					<div class="sex-chose-boy" onmouseover="choseboy()" onmouseout="nochoseboy()">
+						<h2>I am a boy</h2>
+						<img id="boy" src="./img/boy.png" />
+						<img id="boy-hover" src="./img/boy-hover.png" style="display: none;" />
+					</div>
+					<div class="sex-chose-girl" onmouseover="chosegirl()" onmouseout="nochosegirl()">
+						<h2>I am a girl</h2>
+						<img id="girl" src="./img/girl.png" />
+						<img id="girl-hover" src="./img/girl-hover.png" style="display: none;" />
+					</div>
+					<div class="page-button-next"><a class="page-button" onclick="nextpage()">Next</a>
+					</div>
+				</div>
+			</div>
+			<div class="page" id="page5">
+				<div class="page-middle" style="background: #FED681;">
+					<div class="tabclould">
+						<a class="tab-button" style="background: #8A9B0F;">Power Forward with highly jump</a>
+						<a class="tab-button" style="background: #EB6841;">Around Player with surprising speed</a>
+						<a class="tab-button" style="background: #3FB8AF;">Center with with perfect dump</a>
+						<a class="tab-button" style="background: #FE4365;">Shooting Guard with three point shoot</a>
+						<a class="tab-button" style="background: #FC9D9A;">Point Guard with amazing eyesight</a>
+						<a class="tab-button" style="background: #EDC951;">Captain with big heart</a>
+						<a class="tab-button" style="background: #C8C8A9;">Coach that can excellent organize</a>
+						<a class="tab-button" style="background: #83AF9B;">Lovely Mascot</a>
+					</div>
+					<div class="page5-text">
+						<h1>You can have your teammates<br />Your own team.</h1>
+					</div>
+					<div class="page-button-next"><a class="page-button" onclick="nextpage()">Next</a>
+					</div>
+				</div>
+			</div>
+			<div class="page" id="page6">
+				<div class="page-middle" style="background: #03A337;">
+					<div class="page6-text">
+						<h1>Why basketball is attracting<br />We will tell you.</h1>
+					</div>
+					<div class="playimg">
+						<img src="./img/basketball-play.png" />
+					</div>
+					<div class="text-title">
+						<ul>
+							<li>
+								<div id="text-title1">
+									<h3>Reason for basketball</h3><a>(click and hide)</a>
+								</div>
+								<div class="textbox" id="textbox1">
+									<p>It is just a game.You pass,You shoot,You score,It’s simple, right?It is just a game.But sometimes it’s more than that.Much more.Playing basketball makes me feel strong.It gives me more confidence in myself.It makes me want to be something in
+										my life.Basketball makes me feel healthy.</p>
+									<p>When I play basketball, it helps me make new friends.And I love being a part of a team.Basketball brings us together.It connects us.And no matter where we come from.When we are on the court,We all speak the same language.We dream bigger.We dream
+										higher.</p>
+								</div>
+							</li>
+							<li>
+								<div id="text-title2">
+									<h3>Never say never</h3><a>(click and show)</a>
+								</div>
+								<div class="textbox" id="textbox2" style="display: none;">
+									<p>Sometimes we win.Sometimes we don’t.But no matter what,You always have to work hard.Basketball teaches,It teaches us that even when there is no chance to win.There’s still an opportunity to be a hero.It takes effort.You have to practice.</p>
+									<p>Practice really hard.You have to practice dedication, team work, sportsmanship, patience, unity and love.And if we can practice all those things to make our game better,Can we practice all those things to make our world better?Basketball is just
+										a game.But sometimes it is more than that.Much more.</p>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<div class="page-button-next"><a class="page-button" onclick="nextpage()">Next</a>
+					</div>
+				</div>
+			</div>
+			<div class="page" id="page7">
+				<div class="page-middle" style="background: #6666FF;">
+					<div class="page7-text">
+						<h1>Join Us!</h1>
+					</div>
+					<div class="page7-img"><img src="./img/basketball-dump.png" /></div>
+					<div class="form">
+						<ul>
+							<li>
+								<p>Name:</p>
+								<input type="text" placeholder="Input your name" required />
+							</li>
+							<li>
+								<p>Phone:</p>
+								<input type="tel" placeholder="Input your phone number" required />
+							</li>
+							<li>
+								<p>Email:</p>
+								<input type="email" placeholder="Input your E-mail" required />
+							</li>
+							<li>
+								<p>Your City:</p>
+								<select>
+									<option value="shenzhen" selected>Shenzhen</option>
+									<option value="guangzhou">Guangzhou</option>
+									<option value="shanghai">Shanghai</option>
+									<option value="beijing">Beijing</option>
+								</select>
+							</li>
+							<li>
+								<p>Your Idea:</p>
+								<textarea rows="6" placeholder="Input your amazing idea"></textarea>	
+							</li>
+							<li><a class="submit-button">Submit</a></li>
+						</ul>
+					</div>
+					<div class="page-button-next"><a class="page-button" onclick="nextpage()">Next</a></div>
+				</div>
+			</div>
+			<div class="page" id="page8">
+				<div class="page-middle" style="background: #408080;">
+					<div class="page8-text"><h1>How to contact us</h1></div>
+					<div class="contact-text">
+						<ul>
+							<li><p>Address: Caifudasha Futian, Shenzhen@Guangdong,China</p></li>
+							<li><p>Phone Number: 136xxxxxxxx/0755-xxxxxxxx</p></li>
+							<li><p>Email: wangbeishan@163.com</p></li>
+						</ul>
+					</div>
+					<div class="contact-icon">
+						<img src="./img/contact-icon1.png" />
+						<img src="./img/contact-icon2.png" />
+						<img src="./img/contact-icon3.png" />
+						<img src="./img/contact-icon4.png" />
+						<img src="./img/contact-icon5.png" />
+						<img src="./img/contact-icon6.png" />
+						<img src="./img/contact-icon7.png" />
+					</div>
+					<div class="page-button-next"><a class="page-button" onclick="nextpage()">Next</a></div>
+				</div>
+			</div>
+			<div class="page" id="page9">
+				<div class="page-middle" style="background: #AC5959;">
+					<div class="page9-text1"><h1>Separation is to better meet</h1></div>
+					<div class="page9-text2"><p>Created by @被删</p></div>
+					<div class="page9-img"><img src="./img/basketball-all.png"/></div>
+					<div class="page-button-next"><a class="page-button" onclick="nextpage()">Back</a></div>
+				</div>
+			</div>
+			<div class="changepage">
+				<a id="paget1" class="a-button" onclick="setpage('#paget','#page','1','pagechosen');slidepage('#paget','#page','1','pagechosen');">Index</a>
+				<a id="paget2" class="a-button" onclick="setpage('#paget','#page','2','pagechosen');slidepage('#paget','#page','2','pagechosen');">Sky</a>
+				<a id="paget3" class="a-button" onclick="setpage('#paget','#page','3','pagechosen');slidepage('#paget','#page','3','pagechosen');">Clothes</a>
+				<a id="paget4" class="a-button" onclick="setpage('#paget','#page','4','pagechosen');slidepage('#paget','#page','4','pagechosen');">Love</a>
+				<a id="paget5" class="a-button" onclick="setpage('#paget','#page','5','pagechosen');slidepage('#paget','#page','5','pagechosen');">Team</a>
+				<a id="paget6" class="a-button" onclick="setpage('#paget','#page','6','pagechosen');slidepage('#paget','#page','6','pagechosen');">Why</a>
+				<a id="paget7" class="a-button" onclick="setpage('#paget','#page','7','pagechosen');slidepage('#paget','#page','7','pagechosen');">Join</a>
+				<a id="paget8" class="a-button" onclick="setpage('#paget','#page','8','pagechosen');slidepage('#paget','#page','8','pagechosen');">Contact</a>
+				<a id="paget9" class="a-button" onclick="setpage('#paget','#page','9','pagechosen');slidepage('#paget','#page','9','pagechosen');">Bye</a>
+			</div>
+		</div>
+		<script>
+			//取消滚动条显示
+		document.body.style.overflow = "hidden";
+		
+		$("#text-title1").click(function(){
+		  $("#textbox1").slideToggle();
+		});
+		$("#text-title2").click(function(){
+		  $("#textbox2").slideToggle();
+		});
+		
+		//当前页面
+		var pagenow = 1;
+		var pagenum = 1;
+		
+		//起始样式添加
+		$("#paget1").addClass("pagechosen");
+		
+		//按钮翻页效果
+		function setpage(id1, id2, idnum, addclass) {
+				for (i = 1; i <= 9; i++) {
+					$(id1 + i).removeClass(addclass);
+					$(id2 + i).removeClass("slideDown");
+					$(id2 + i).removeClass("scale");
+					$(id2 + i).removeClass("rotateY");
+					$(id2 + i).removeClass("skewX");
+					$(id2 + i).removeClass("skewY");
+				}
+				pagenow = parseInt(idnum);
+				$(id1 + idnum).addClass(addclass);
+			}
+		
+		//翻页效果
+		function slidepage(id1, id2, idnum, addclass) {
+				var str = [1, 2, 3, 4, 5, 6];
+				var random = Math.floor(Math.random() * str.length);
+				var result = str[random];
+				var slideleft = -$(id2 + idnum).position().left;
+				var slidetop = -$(id2 + idnum).position().top;
+				$(".container").animate({
+					left: slideleft
+				}, 300).animate({
+					top: slidetop
+				}, 500);
+				if (result == 1) {
+					$(id2 + idnum).delay(800).addClass("slideDown");
+				}
+				if (result == 2) {
+					$(id2 + idnum).slideUp(50).delay(700).slideDown(900);
+				}
+				if (result == 3) {
+					$(id2 + idnum).delay(800).addClass("scale");
+				}
+				if (result == 4) {
+					$(id2 + idnum).delay(800).addClass("rotateY");
+				}
+				if (result == 5) {
+					$(id2 + idnum).delay(800).addClass("skewX");
+				}
+				if (result == 6) {
+					$(id2 + idnum).delay(800).addClass("skewY");
+				}
+		}
+		//下一页
+		function nextpage(){
+			pagenow++;
+			if (pagenow == 10) {
+					pagenow = 1;
+			}
+			setpage('#paget','#page',pagenow,'pagechosen');slidepage('#paget','#page',pagenow,'pagechosen');
+		}
+		//滚轮事件
+		if (window.addEventListener)
+			window.addEventListener('DOMMouseScroll', wheel, false);
+		window.onmousewheel = document.onmousewheel = wheel;
+		
+		var topValue = 0, // 上次滚动条到顶部的距离
+			interval = null, // 定时器
+			wheelnum = 0,
+			wheelrunning = 0;
+			
+		function wheel(event) {
+				if (interval == null)
+					interval = setInterval("test()", 500); //这里就是判定时间，当前是1秒一判定
+				topValue = document.documentElement.scrollTop;
+				var delta = 0;
+				if (!event) event = window.event;
+				if (event.wheelDelta) {
+					wheelnum++;
+					if(wheelnum%2 == 0){
+						delta = event.wheelDelta / 120;
+						if (window.opera) delta = -delta;
+					}
+				} else if (event.detail) {
+					delta = -event.detail / 3;
+				}
+				if (delta){
+					handle(delta);
+					setpage("#paget", "#page", pagenum, "pagechosen");
+				}
+			}
+		
+		//监控滚轮停止
+		function test() {
+			// 判断此刻到顶部的距离是否和1秒前的距离相等
+			if (document.documentElement.scrollTop == topValue) {
+				slidepage("#paget", "#page", pagenum, "pagechosen");
+				clearInterval(interval);
+				interval = null;
+				wheelrunning = 0;
+			}
+		}
+		
+		//滚轮处理
+		function handle(delta) {
+			if (delta == -1) {
+				if(wheelrunning == 0) {
+					pagenow++;
+					wheelrunning=1;
+					if (pagenow == 10) {
+						pagenow = 1;
+					}
+					pagenum = String(pagenow);
+				}
+				
+			}
+			if (delta == 1) {
+				if(wheelrunning == 0) {
+					pagenow--;
+					wheelrunning=1;
+					if (pagenow == 0) {
+						pagenow = 9;
+					}
+					pagenum = String(pagenow);
+				}
+			}
+		}
+		//获取鼠标位置
+		function getMousePos(event){
+			var e = event || window.event;
+			var scrollX = document.documentElement.scrollLeft || document.body.scrollLeft;
+			var scrollY = document.documentElement.scrollTop || document.body.scrollTop;
+			var x = e.pageX || e.clientX + scrollX;
+			var y = e.pageY || e.clientY + scrollY;
+			return{'x':x,'y':y};
+		}
+		
+		//page1页面随鼠标移动
+		function pageMove(e){
+			var pcenterX = document.getElementById("page1").offsetWidth/2;
+			var pcenterY = document.getElementById("page1").offsetHeight/2;
+			var pomoveX = - (getMousePos(e).x - pcenterX)/4;
+			var pomoveY = (getMousePos(e).y - pcenterY)/2;
+			var pbmoveX = (pcenterX - getMousePos(e).x)/10;
+			var pbmoveY = (pcenterY - getMousePos(e).y)/6;
+			$(".basketball-move").css("top",pomoveY).css("right",pomoveX);
+			$(".basket-move").css("top",pbmoveY).css("left",pbmoveX);
+		}
+		
+		//选择男女生
+		function choseboy(){
+			$("#boy").css("display","none");
+			$("#boy-hover").css("display","block");
+		}
+		function chosegirl(){
+			$("#girl").css("display","none");
+			$("#girl-hover").css("display","block");
+		}
+		function nochoseboy(){
+			$("#boy-hover").css("display","none");
+			$("#boy").css("display","block");
+		}
+		function nochosegirl(){
+			$("#girl-hover").css("display","none");
+			$("#girl").css("display","block");
+		}
+		</script>
+	</body>
+
+</html>

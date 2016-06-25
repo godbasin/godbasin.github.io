@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style type="text/css">
+		html, body{margin:0;padding:0;height:100%}
+		a:hover {cursor:pointer; text-decoration:none;}
+		a:visited{text-decoration:none;}
+		.navbar .nav > li .dropdown-menu {margin:0;}
+		.navbar .nav > li:hover .dropdown-menu {display: block;}
+		#previous:hover{cursor:url(./images/previous.png),auto;}
+		#next:hover{cursor:url(./images/next.png),auto;}
+		.nav-tab{ text-align:center;}
+		.nav-tab-static{background:#016AA9; color:#FFFFFF; width:80%; padding:10px; float:right; text-decoration:none;}
+		.nav-tab-static:hover{text-decoration:none; color:#FFFFFF;}
+		.nav-tab-active{ padding:10px; float:right; text-decoration:none; width:90%; background:#FFFFFF; color:#016AA9;}	
+		.nav-tab-active:hover{text-decoration:none;}
+		
+		.book-tab-static{ text-align:center;color:#666666; width:31%; padding:1%; float:left; text-decoration:none; border-bottom:#FFFFFF solid 2px;}
+		.book-tab-static:hover{text-decoration:none;}
+		.book-tab-active{ text-align:center;color:#016AA9; border-bottom:#016AA9 solid 2px; width:31%; padding:1%; float:left; text-decoration:none; }	
+		.book-tab-active:hover{text-decoration:none;}	
+		
+		.service-tab-static{ text-align:center;color:#666666; width:23%; padding:1%; float:left; text-decoration:none; border-bottom:#FFFFFF solid 2px;}
+		.service-tab-static:hover{text-decoration:none;}
+		.service-tab-active{ text-align:center;color:#016AA9; border-bottom:#016AA9 solid 2px; width:23%; padding:1%; float:left; text-decoration:none; }	
+		.service-tab-active:hover{text-decoration:none;}	
+		
+		.special-tab-static{ text-align:center;color:#666666; width:220px; padding:0; float:left; text-decoration:none; border-bottom:#FFFFFF solid 2px; font-size:25px;}
+		.special-tab-static:hover{text-decoration:none;}
+		.special-tab-active{ text-align:center;color:#016AA9; border-bottom:#016AA9 solid 2px; width:220px; padding:0; float:left; text-decoration:none;  font-size:25px;}	
+		.special-tab-active:hover{text-decoration:none;}	
+		
+		.breakfast-tab-static{background:#016AA9; color:#FFFFFF; width:20%; padding:10px; float:left; text-decoration:none; margin-top:10px; border:#016AA9 solid 1px;}
+		.breakfast-tab-static:hover{text-decoration:none; color:#FFFFFF;}
+		.breakfast-tab-active{ padding:10px; margin:0; float:left; text-decoration:none; width:20%; background:#FFFFFF; color:#016AA9; padding-top:20px; border:#DDDDDD solid 1px; border-bottom:#FFFFFF solid 1px;}	
+		.breakfast-tab-active:hover{text-decoration:none;}
+		
+		.lunch-tab-static{background:#016AA9; color:#FFFFFF; width:20%; padding:10px; float:left; text-decoration:none; margin-top:10px; border:#016AA9 solid 1px;}
+		.lunch-tab-static:hover{text-decoration:none; color:#FFFFFF;}
+		.lunch-tab-active{ padding:10px; margin:0; float:left; text-decoration:none; width:20%; background:#FFFFFF; color:#016AA9; padding-top:20px; border:#DDDDDD solid 1px; border-bottom:#FFFFFF solid 1px;}	
+		.lunch-tab-active:hover{text-decoration:none;}
+
+		.dinner-tab-static{background:#016AA9; color:#FFFFFF; width:20%; padding:10px; float:left; text-decoration:none; margin-top:10px; border:#016AA9 solid 1px;}
+		.dinner-tab-static:hover{text-decoration:none; color:#FFFFFF;}
+		.dinner-tab-active{ padding:10px; margin:0; float:left; text-decoration:none; width:20%; background:#FFFFFF; color:#016AA9; padding-top:20px; border:#DDDDDD solid 1px; border-bottom:#FFFFFF solid 1px;}	
+		.dinner-tab-active:hover{text-decoration:none;}
+		
+		.a-black a{color:#000000;}
+		.a-black a:hover{color:#016AA9;}
+		.slide-hover{position:absolute; top:5%; left:15%; width:60%;}
+		head1{ font-size:35px; line-height:80px;}
+		head2{ font-size:30px; line-height:80px; }
+		head3{ font-size:25px; line-height:40px;}
+		head4{ font-size:18px; line-height:30px; }
+		head5{ font-size:14px; line-height:30px;}
+		
+		.img-scale{width:100%; margin:0; padding:0; height:140px; overflow:hidden; position:relative;}
+		.img-scale img{width:100%; position:absolute; left:0; top:0;transition: All 1s ease;-webkit-transition: All 1s ease;-moz-transition: All 1s ease;-ms-transition: All 1s ease;-o-transition: All 1s ease; }
+		.img-scale:hover img{width:120%; left:-10%; top:-10%;transition: All 1s ease;-webkit-transition: All 1s ease;-moz-transition: All 1s ease;-ms-transition: All 1s ease;-o-transition: All 1s ease; }
+		
+		.info-style{background:#FFFFFF; padding:0; margin:4%; color:#000000; border:#DDDDDD solid 1px; margin-bottom:0;}
+		.info-style:hover{box-shadow:2px 2px 3px 1px #999;transition: All 0.5s ease;-webkit-transition: All 0.5s ease;-moz-transition: All 0.5s ease;-ms-transition: All 0.5s ease;-o-transition: All 0.5s ease;}
+		
+	@media screen and (min-width: 1200px)  {
+	.slide-hover{position:absolute; top:5%; left:25%; width:50%;}
+	}
+	@media screen and (max-width: 800px)  {
+	.slide-hover{position:relative; width:80%; left:10%; padding:5%; margin-top:2%; border:#DDDDDD solid 1px; font-size:10px;}
+	.nav-tab-active{ border:#DDDDDD solid 1px;}
+	head1{ font-size:30px; line-height:80px;}
+	head2{ font-size:25px; line-height:80px;}
+	head3{ font-size:18px; line-height:40px; }
+	head4{ font-size:15px; line-height:30px;}
+	head5{ font-size:12px; line-height:30px; }
+	a{font-size:15px;}
+
+	.special-tab-static{ width:150px; font-size:15px;}
+	.special-tab-active{ width:150px; font-size:15px;}	
+
+	}
+	@media screen and (max-width: 600px)  {
+	.slide-hover{position:relative; width:90%; left:5%;}
+	head1{ font-size:30px; line-height:80px;}
+	head2{ font-size:20px; line-height:80px; }
+	head3{ font-size:15px; line-height:40px; }
+	head4{ font-size:12px; line-height:30px; }
+	head5{ font-size:10px; line-height:30px; }
+	a{font-size:10px;}
+	.special-tab-static{ width:100px; font-size:12px;}
+	.special-tab-active{ width:100px; font-size:12px;}	
+
+	}
+	@media screen and (max-width: 400px)  {
+	.slide-hover{position:relative; width:90%; left:5%;}
+	head1{ font-size:25px; line-height:80px; }
+	head2{ font-size:18px; line-height:80px; }
+	head3{ font-size:12px; line-height:40px; }
+	head4{ font-size:10px; line-height:30px;}
+	head5{ font-size:8px; line-height:30px; }
+	a{font-size:8px;}
+	.special-tab-static{ width:80px; font-size:10px;}
+	.special-tab-active{ width:80px; font-size:10px;}	
+
+	}
+
+	</style>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Basin Restaurant</title>	
+	<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+	<script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container-fluid" style="margin:0; padding:0;">
+	<div class="container" >
+		<div class="row">
+			<div class="col-md-4 col-sm-6 col-xs-10"><head1>Basin Restaurant</head1></div>
+			<div class="col-md-6 col-md-offset-2 col-sm-8 col-sm-offset-4 col-xs-10 col-xs-offset-2">
+				<div class="row">
+					<div class="col-sm-12 hidden-xs" style="text-align:right;">
+						<head5 style="width:100%;">Hi, Welcome to Basin Restaurant.<a style="color:#FF0000; padding:0 10px;">Sign in</a><a style="color:#666666;">Register</a></head5>
+					</div>
+					<div class="col-xs-12 visible-xs-block" style="text-align:right;">
+						<head5 style="width:100%;">Hi, Welcome to Basin Restaurant.<br /><a style="color:#FF0000; padding:0 10px;">Sign in</a><a style="color:#666666;">Register</a></head5>
+					</div>
+					<div class="col-sm-7 col-sm-offset-5 col-xs-10 col-xs-offset-2 hidden-xs" style="text-align:right;">
+						<form class="form-inline">
+						  <div class="form-group">
+							<label class="sr-only" for="search">Search</label>
+							<div class="input-group">
+							  <input type="text" class="form-control" id="search" placeholder="How to book...">
+							  <div class="input-group-addon"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></div>
+							</div>
+						  </div>
+						</form>
+					</div>
+					<div class="col-sm-7 col-sm-offset-5 col-xs-10 col-xs-offset-2 visible-xs-block" style="text-align:right;">
+						<form class="form-inline">
+						  <div class="form-group">
+							<label class="sr-only" for="search">Search</label>
+							<div class="input-group">
+							  <input type="text" class="form-control" id="search" placeholder="How to book..." style="font-size:10px; height:30px;float:right; padding:1px; width:60%;">
+							  <div class="input-group-addon" style="font-size:10px; height:20px; padding:1px;"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></div>
+							</div>
+						  </div>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2 col-xs-12  col-sm-12 navbar" style="margin-bottom:0;">
+				<ul class="nav nav-pills" style="font-size:18px;">
+					<li role="presentation"><a href="#">Index</a></li>
+					<li role="presentation"  class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false" id="dropdown1">Meal<span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu" aria-labelledby="meal" style="width:100%;">
+							<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Breakfast</a></li>
+							<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Lunch</a></li>
+							<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Dinner</a></li>
+							<li role="presentation" class="divider"></li>
+							<li role="presentation"><a role="menuitem" tabindex="-1" href="#">afternoon tea</a></li>
+						</ul>
+					</li>
+					<li role="presentation">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false" id="dropdown2">Book<span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu" aria-labelledby="book" style="width:100%;">
+							<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Single Person</a></li>
+							<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Couple</a></li>
+							<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Family</a></li>
+							<li role="presentation" class="divider"></li>
+							<li role="presentation"><a role="menuitem" tabindex="-1" href="#">other choice</a></li>
+						</ul>
+					</li>
+					<li role="presentation">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false" id="dropdown3">Custom Made<span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu" aria-labelledby="custom-made" style="width:100%;">
+							<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Taste</a></li>
+							<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Food</a></li>
+							<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Vegetables</a></li>
+							<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Meat</a></li>
+							<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Pizza</a></li>
+							<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Mousse</a></li>
+							<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Drink and Wine</a></li>
+						</ul>
+					</li>
+					<li role="presentation">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false" id="dropdown4">Location<span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu" aria-labelledby="location" style="width:100%;">
+							<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Shenzhen</a></li>
+							<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Guangzhou</a></li>
+							<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Shanghai</a></li>
+							<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Beijing</a></li>
+							<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Chengdu</a></li>
+							<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Xi'an</a></li>
+						</ul>
+					</li>
+					<li role="presentation">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false" id="dropdown5">Special Offer<span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu" aria-labelledby="special-offer" style="width:100%;">
+							<li role="presentation"><a role="menuitem" tabindex="-1" href="#">COMBO</a></li>
+							<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Snack</a></li>
+							<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Mousse</a></li>
+							<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Meat</a></li>
+							<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Drink</a></li>
+							<li role="presentation" class="divider"></li>
+							<li role="presentation"><a role="menuitem" tabindex="-1" href="#">more</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	
+	<div class="container-fluid" style="border-radius:0px; border-top:#0260C8 solid 1px; margin:0; padding:0; position:relative;">
+		<div id="carousel-example-captions" class="carousel slide" data-ride="carousel" style="opacity:0.8;">
+		  <div class="carousel-inner" role="listbox">
+			<div class="item active"  style="margin:0; padding:0;">
+			  <img src="./images/slide1.png" alt="First slide image" style="width:100%;">
+			</div>
+			<div class="item">
+			  <img src="./images/slide2.png" alt="Second slide image" style="width:100%;">
+			</div>
+			<div class="item">
+			  <img src="./images/slide3.png" alt="Third slide image" style="width:100%;">
+			</div>
+		  </div>
+		  <a class="left carousel-control" href="#carousel-example-captions" role="button" data-slide="prev" id="previous" style="opacity:0;">
+			<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+			<span class="sr-only">Previous</span>
+		  </a>
+		  <a class="right carousel-control" href="#carousel-example-captions" role="button" data-slide="next" id="next" style="opacity:0;">
+			<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+			<span class="sr-only">Next</span>
+		  </a>
+		</div>
+		<div class="slide-hover">
+			<div class="row">
+				<div class="col-xs-4 col-sm-3 col-md-2 nav-tab" style="padding:0;">
+					<a href="#book" data-toggle="tab" class="nav-tab-static" id="tab-nav1" onClick="tabchosen('#tab-nav','1','4','nav-tab-static','nav-tab-active')" style="text-decoration:none;">Book</a>
+					<a href="#service" data-toggle="tab" class="nav-tab-static" id="tab-nav2" onClick="tabchosen('#tab-nav','2','4','nav-tab-static','nav-tab-active')" style="text-decoration:none;">Service</a>
+					<a href="#" class="nav-tab-static" id="tab-nav3" href="#" style="text-decoration:none;">Group</a>
+					<a href="#info" data-toggle="tab" class="nav-tab-static" id="tab-nav4" onClick="tabchosen('#tab-nav','4','4','nav-tab-static','nav-tab-active')" style="text-decoration:none;">Info</a>
+				</div>
+				<div class="col-xs-8 col-sm-9 col-md-10"  style="padding:0;">
+					<div class="tab-content" style="background:#FFFFFF; color:#333333; margin:0; padding:0; float:left; width:100%;">
+						<div class="tab-pane fade in active" id="book" style="margin:0; width:100%;">
+							<div class="row">
+								<div class="col-sm-12 col-xs-12">
+									<a href="#book-meal" data-toggle="tab" class="book-tab-static" id="book-nav1" onClick="tabchosen('#book-nav','1','3','book-tab-static','book-tab-active')" style="text-decoration:none;">Meal</a>
+									<a href="#book-location" data-toggle="tab" class="book-tab-static" id="book-nav2" onClick="tabchosen('#book-nav','2','3','book-tab-static','book-tab-active')" style="text-decoration:none;">Location</a>
+									<a href="#book-time" data-toggle="tab" class="book-tab-static" id="book-nav3" onClick="tabchosen('#book-nav','3','3','book-tab-static','book-tab-active')" style="text-decoration:none;">Time</a>
+								</div>
+								<div class="col-sm-12 col-xs-12">
+									<div class="tab-content">
+										<div class="tab-pane fade in active" id="book-meal">
+											<div class="row  hidden-xs" style="margin:1%;">
+												<div class="col-xs-2 col-sm-2" style="text-align:right;">
+													<p class="form-control-static" style="color:#333333;">Name</p>
+												</div>
+												<div class="col-sm-6">
+													<label class="sr-only" for="name">Name</label>
+													<input type="text"  class="form-control" style="width:100%;" id="name" placeholder="Input your name">
+												</div>
+												<div class="col-sm-4">
+													<button type="submit" class="btn btn-default" style="background:#016AA9; color:#FFFFFF;">Check</button></div>
+												</div>
+											<div class="clearfix"></div>
+											<div class="row visible-xs-block" style="margin:1%;">
+												<div class="col-xs-3" style="text-align:right;">
+													<p class="form-control-static" style="color:#333333;">Name</p>
+												</div>
+												<div class="col-xs-4 col-xs-offset-4">
+													<button type="submit" class="btn btn-default" style="background:#016AA9; color:#FFFFFF;font-size:10px;  height:30px; padding:2px 8px; ">Check</button></div>
+												
+												<div class="col-xs-12">
+													<label class="sr-only" for="name">Name</label>
+													<input type="text"  class="form-control" style="width:100%;font-size:10px; height:20px;margin-top:5px; padding:2px; margin:0; " id="name" placeholder="Input your name" >
+												</div>
+											</div>	
+											<div class="clearfix"></div>
+											
+											<div class="row hidden-xs" style="margin:1%;">
+												<div class="col-sm-2" style="text-align:right;">
+													<p class="form-control-static" style="color:#333333;">Phone</p>
+												</div>
+												<div class="col-sm-9">
+													<label class="sr-only" for="phonenumber">Phone</label>
+													<input type="tel"  class="form-control" style="width:100%;" id="phonenumber" placeholder="Input your phone number">
+												</div>
+											</div><div class="clearfix"></div>
+											<div class="row visible-xs-block" style="margin:1%;">
+												<div class="col-xs-3" style="text-align:right;">
+													<p class="form-control-static" style="color:#333333;">Phone</p>
+												</div>
+												<div class="col-xs-9">
+													<label class="sr-only" for="phonenumber">Phone</label>
+													<input type="tel"  class="form-control" style="width:100%;font-size:10px; height:20px;margin-top:5px; padding:0 2px; margin-top:5px;" id="phonenumber" placeholder="Input your phone number">
+												</div>
+											</div><div class="clearfix"></div>
+											
+											<div class="row" style="margin:1%;">
+												<div class="col-xs-3 col-sm-2" style="text-align:right;">
+													<p class="form-control-static" style="color:#333333;">Choose</p>
+												</div>
+												<div class="col-sm-9 hidden-xs">
+													<div class="input-group" style="width:100%;">
+														<div class="input-group-btn" style="width:30%; float:left;" align="left">
+															<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Menu<span class="caret"></span></button>
+															<ul class="dropdown-menu">
+																<li><a href="#">Food</a></li>
+																<li><a href="#">Drink</a></li>
+																<li><a href="#">Snack</a></li>
+																<li class="divider"></li>
+																<li><a href="#">others</a></li>
+															</ul>
+														</div>
+														
+														<div class="input-group" style="width:70%; float:right;">
+															<input type="text" class="form-control" placeholder="Search...">
+															<span class="input-group-btn">
+																<button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+															</span>
+														</div><!-- /input-group -->
+													</div><!-- /btn-group -->
+												</div>
+												<div class="col-xs-9 visible-xs-block">
+													<div class="input-group" style="width:100%;">
+														<div class="input-group-btn" style="width:30%; float:left;" align="left">
+															<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="font-size:10px; height:20px;margin-top:5px; padding:0 4px; margin-top:5px;">Menu<span class="caret"></span></button>
+															<ul class="dropdown-menu">
+																<li><a href="#">Food</a></li>
+																<li><a href="#">Drink</a></li>
+																<li><a href="#">Snack</a></li>
+																<li class="divider"></li>
+																<li><a href="#">others</a></li>
+															</ul>
+														</div>
+														
+														<div class="input-group" style="width:70%; float:right;">
+															<input type="text" class="form-control" placeholder="Search..." style="font-size:10px; height:20px; padding:0 2px; margin-top:5px;">
+															<span class="input-group-btn">
+																<button class="btn btn-default" type="button" style="font-size:10px; height:20px;margin-top:5px; padding:0 8px;"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+															</span>
+														</div><!-- /input-group -->
+													</div><!-- /btn-group -->
+												</div>
+											</div><div class="clearfix"></div>
+											
+											<div class="row" style="margin:1%;">
+												<div class="col-xs-3 col-sm-2" style="text-align:right;">
+													<p class="form-control-static" style="color:#333333;">Taste</p>
+												</div>
+												<div class="col-xs-9 col-sm-9">
+													<div class="checkbox"  style="width:100%; color:#333333;" align="left">
+														<div style="margin-bottom:10px; width:120px; float:left;" ><label><input type="checkbox" value=""  >Western</label></div>
+														<div style="margin-bottom:10px; width:120px; float:left;" ><label><input type="checkbox" value="" >Eastern</label></div>
+														<div style="margin-bottom:10px; width:120px; float:left;" ><label><input type="checkbox" value="" >Sweet</label></div>													
+														<div style="margin-bottom:10px; width:120px; float:left;" ><label><input type="checkbox" value="" >Salty</label></div>
+													</div>
+												</div>
+											</div><div class="clearfix"></div>
+											
+											<div class="row" style="margin:1%;">
+												<div class="col-xs-12 col-sm-12" align="center">
+														<button type="submit" class="btn btn-default" style="background:#016AA9; color:#FFFFFF; height:30px; font-size:15px; padding:4px 8px;" >Next</button>
+														<button type="reset" class="btn btn-default" style=" height:30px; font-size:15px; padding:4px 8px;">Reset</button>
+												</div>
+											</div><div class="clearfix"></div>
+										</div>
+										
+										<div class="tab-pane fade" id="book-location">
+											<div class="row" style="margin:1%;">
+												<div class="col-xs-3 col-sm-2" style="text-align:right;">
+													<p class="form-control-static" style="color:#333333;">Search</p>
+												</div>
+												<div class="col-xs-10 col-sm-9 hidden-xs">
+													<div class="input-group" style="width:70%; float:left;">
+															<input type="text" class="form-control" placeholder="Search...">
+															<span class="input-group-btn">
+																<button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true" ></span></button>
+															</span>
+													</div><!-- /input-group -->
+												</div>
+												<div class="col-xs-9 visible-xs-block">
+													<div class="input-group" style="width:70%; float:left;">
+															<input type="text" class="form-control" placeholder="Search..." style="font-size:10px; height:20px;margin-top:5px; padding:0 8px;" >
+															<span class="input-group-btn">
+																<button class="btn btn-default" type="button" style="font-size:10px; height:20px;margin-top:5px; padding:0 8px;"><span class="glyphicon glyphicon-search" aria-hidden="true" ></span></button>
+															</span>
+													</div><!-- /input-group -->
+												</div>
+											</div><div class="clearfix"></div>
+											
+											<div class="row" style="margin:1%;">
+												<div class="col-xs-3 col-sm-2" style="text-align:right;">
+													<p class="form-control-static" style="color:#333333;">City</p>
+												</div>
+												<div class="col-sm-9 hidden-xs">
+													<div class="input-group" style="width:100%;">
+														<div class="input-group-btn" style="width:30%; float:left;" align="left">
+															<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Shenzhen<span class="caret"></span></button>
+															<ul class="dropdown-menu">
+																<li><a href="#">Shenzhen</a></li>
+																<li><a href="#">Guangzhou</a></li>
+																<li><a href="#">Shanghai</a></li>
+																<li><a href="#">Beijing</a></li>
+																<li><a href="#">Chengdu</a></li>
+															</ul>
+														</div>
+													</div><!-- /btn-group -->
+												</div>
+												<div class="col-xs-9 col-sm-9 visible-xs-block">
+													<div class="input-group" style="width:100%;">
+														<div class="input-group-btn" style="width:30%; float:left;" align="left">
+															<button type="button" class="btn btn-default dropdown-toggle" style="font-size:10px; height:20px;margin-top:5px; padding:0 8px;" data-toggle="dropdown">Shenzhen<span class="caret"></span></button>
+															<ul class="dropdown-menu">
+																<li><a href="#">Shenzhen</a></li>
+																<li><a href="#">Guangzhou</a></li>
+																<li><a href="#">Shanghai</a></li>
+																<li><a href="#">Beijing</a></li>
+																<li><a href="#">Chengdu</a></li>
+															</ul>
+														</div>
+													</div><!-- /btn-group -->
+												</div>
+											</div><div class="clearfix"></div>
+											
+											<div class="row" style="margin:1%;">
+												<div class="col-xs-3 col-sm-2" style="text-align:right;">
+													<p class="form-control-static" style="color:#333333;">Near By</p>
+												</div>
+												<div class="col-xs-9 col-sm-9">
+													<div class="radio" align="left" style="width:100%; color:#333333;">
+														<div style="margin-bottom:10px; width:150px; float:left;"><label><input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked><1km</label></div>
+														<div style="margin-bottom:10px; width:150px; float:left;"><label><input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked><2km</label></div>
+														<div style="margin-bottom:10px; width:150px; float:left;"><label><input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked><5km</label></div>
+														<div style="margin-bottom:10px; width:150px; float:left;"><label><input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked><10km</label></div>
+													</div>
+												</div>			
+											</div><div class="clearfix"></div>
+											
+											<div class="row" style="margin:1%;">
+												<div class="col-xs-12 col-sm-12" align="center">
+														<button type="submit" class="btn btn-default" style="background:#016AA9; color:#FFFFFF; height:30px; font-size:15px; padding:4px 8px;" >Next</button>
+														<button type="reset" class="btn btn-default" style=" height:30px; font-size:15px; padding:4px 8px;">Reset</button>
+												</div>
+											</div><div class="clearfix"></div>
+										</div>
+
+										<div class="tab-pane fade" id="book-time">
+											<div class="row" style="margin:1%;">
+												<div class="col-xs-3 col-sm-2" style="text-align:right;">
+													<p class="form-control-static" style="color:#333333;">Date</p>
+												</div>
+												<div class="col-sm-9 hidden-xs">
+													<div class="input-group" style="width:100%;">
+														<div class="input-group-btn" style="width:50%; float:left;" align="left">
+															<button type="button" class="btn btn-default dropdown-toggle"data-toggle="dropdown">Today(2015.04.29)<span class="caret"></span></button>
+															<ul class="dropdown-menu">
+																<li><a href="#">Tomoorrow(2015.04.30)</a></li>
+																<li><a href="#">2015.05.01</a></li>
+																<li><a href="#">2015.05.02</a></li>
+																<li><a href="#">2015.05.03</a></li>
+																<li><a href="#">2015.05.04</a></li>
+															</ul>
+														</div>
+													</div><!-- /btn-group -->
+												</div>
+												<div class="col-xs-9 col-sm-9 visible-xs-block">
+													<div class="input-group" style="width:100%;">
+														<div class="input-group-btn" style="width:90%; float:left;" align="left">
+															<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="font-size:10px; height:20px;margin-top:5px; padding:0 8px; width:100%;">Today(2015.04.29)<span class="caret"></span></button>
+															<ul class="dropdown-menu">
+																<li><a href="#">Tomoorrow(2015.04.30)</a></li>
+																<li><a href="#">2015.05.01</a></li>
+																<li><a href="#">2015.05.02</a></li>
+																<li><a href="#">2015.05.03</a></li>
+																<li><a href="#">2015.05.04</a></li>
+															</ul>
+														</div>
+													</div><!-- /btn-group -->
+												</div>
+											</div><div class="clearfix"></div>
+											
+											<div class="row" style="margin:1%;">
+												<div class="col-xs-3 col-sm-2" style="text-align:right;">
+													<p class="form-control-static" style="color:#333333;">Time</p>
+												</div>
+												<div class=" col-sm-9 col-xs-9">
+													<div class="radio" align="left" style="width:100%; color:#333333;">
+														<div style="margin-bottom:10px; width:150px; float:left;"><label><input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>Breakfast</label></div>
+														<div style="margin-bottom:10px; width:150px; float:left;"><label><input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>Lunch</label></div>
+														<div style="margin-bottom:10px; width:150px; float:left;"><label><input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>Afternoon Tea</label></div>
+														<div style="margin-bottom:10px; width:150px; float:left;"><label><input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>Dinner</label></div>
+													</div>
+												</div>			
+											</div><div class="clearfix"></div>
+											
+											<div class="row" style="margin:1%;">
+												<div class="col-xs-12 col-sm-12" align="center">
+														<button type="submit" class="btn btn-default" style="background:#016AA9; color:#FFFFFF; height:30px; font-size:15px; padding:4px 8px;" >Submit</button>
+														<button type="reset" class="btn btn-default" style=" height:30px; font-size:15px; padding:4px 8px;">Reset</button>
+												</div>
+											</div><div class="clearfix"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="tab-pane fade" id="service">
+							<div class="row">
+								<div class="col-sm-12 col-xs-12">
+									<a href="#service-vip" data-toggle="tab" class="service-tab-static" id="service-nav1" onClick="tabchosen('#service-nav','1','4','service-tab-static','service-tab-active')" style="text-decoration:none;">VIP</a>
+									<a href="#service-consult" data-toggle="tab" class="service-tab-static" id="service-nav2" onClick="tabchosen('#service-nav','2','4','service-tab-static','service-tab-active')" style="text-decoration:none;">Consult</a>
+									<a href="#service-advise" data-toggle="tab" class="service-tab-static" id="service-nav3" onClick="tabchosen('#service-nav','3','4','service-tab-static','service-tab-active')" style="text-decoration:none;">Advise</a>
+									<a href="#service-special" data-toggle="tab" class="service-tab-static" id="service-nav4" onClick="tabchosen('#service-nav','4','4','service-tab-static','service-tab-active')" style="text-decoration:none;">Special</a>
+								</div>
+								<div class="col-sm-12 col-xs-12">
+									<div class="tab-content">
+										<div class="tab-pane fade in active" id="service-vip">
+											<div class="row hidden-xs" style="margin:1%;">
+												<div class="col-sm-2" style="text-align:right;">
+													<p class="form-control-static" style="color:#333333;">VIP NO.</p>
+												</div>
+												<div class="col-sm-7">
+													<label class="sr-only" for="vip">VIP</label>
+													<input type="text"  class="form-control" style="width:100%;"id="vip" placeholder="Input your VIP NO">
+												</div>
+												<div class="col-sm-2">
+													<button type="submit" class="btn btn-default" style="background:#016AA9; color:#FFFFFF;">Sign in</button></div>
+												</div>
+											<div class="clearfix"></div>
+											<div class="row visible-xs-block" style="margin:1%;">
+												<div class="col-xs-3" style="text-align:right;">
+													<p class="form-control-static" style="color:#333333;">VIP NO.</p>
+												</div>
+												<div class="col-xs-5 col-xs-offset-3">
+													<button type="submit" class="btn btn-default" style="font-size:10px; height:20px;margin-top:5px; padding:0 8px; background:#016AA9; color:#FFFFFF;">Sign in</button>
+												</div>
+												<div class="col-xs-12">
+													<label class="sr-only" for="vip">VIP</label>
+													<input type="text"  class="form-control" style="width:100%;font-size:10px; height:20px;margin-top:5px; padding:0 2px;"id="vip" placeholder="Input your VIP NO">
+												</div>
+											</div><div class="clearfix"></div>
+											
+											<div class="row" style="margin:1%;">
+												<div class="col-xs-3 col-sm-2" style="text-align:right;">
+													<p class="form-control-static" style="color:#333333;">Sex</p>
+												</div>
+												<div class="col-xs-9 col-sm-9">
+													<div class="radio" align="left" style="width:100%; color:#333333;">
+														<div style="margin-bottom:10px; width:150px; float:left;"><label><input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>Gentlement</label></div>
+														<div style="margin-bottom:10px; width:150px; float:left;"><label><input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>Lady</label></div>
+													</div>
+												</div>
+											</div><div class="clearfix"></div>
+											
+											<div class="row" style="margin:1%;">
+												<div class="col-xs-3 col-sm-2" style="text-align:right;">
+													<p class="form-control-static" style="color:#333333;">Phone</p>
+												</div>
+												<div class="col-sm-9 hidden-xs">
+													<label class="sr-only" for="phonenumber">Phone</label>
+													<input type="tel"  class="form-control" style="width:100%;" id="phonenumber" placeholder="Input your phone number">
+												</div>
+												<div class="col-xs-9 visible-xs-block">
+													<label class="sr-only" for="phonenumber">Phone</label>
+													<input type="tel"  class="form-control" style="width:100%;font-size:10px; height:20px;margin-top:5px; padding:0 2px;" id="phonenumber" placeholder="Input your phone number">
+												</div>
+											</div><div class="clearfix"></div>
+											
+											<div class="row" style="margin:1%;">
+												<div class="col-xs-3 col-sm-2" style="text-align:right;">
+													<p class="form-control-static" style="color:#333333;">Service</p>
+												</div>
+												<div class="col-sm-9 hidden-xs">
+													<div class="input-group" style="width:100%;">
+														<div class="input-group-btn" style="width:60%; float:left;" align="left">
+															<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Book<span class="caret"></span></button>
+															<ul class="dropdown-menu">
+																<li><a href="#">Food</a></li>
+																<li><a href="#">Drink</a></li>
+																<li><a href="#">Snack</a></li>
+																<li class="divider"></li>
+																<li><a href="#">others</a></li>
+															</ul>
+														</div>
+													</div><!-- /btn-group -->
+												</div>
+												<div class="col-xs-9 visible-xs-block">
+													<div class="input-group" style="width:100%;">
+														<div class="input-group-btn" style="width:60%; float:left;" align="left">
+															<button type="button" style="font-size:10px; height:20px;margin-top:5px; padding:0 8px;" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Book<span class="caret"></span></button>
+															<ul class="dropdown-menu">
+																<li><a href="#">Food</a></li>
+																<li><a href="#">Drink</a></li>
+																<li><a href="#">Snack</a></li>
+																<li class="divider"></li>
+																<li><a href="#">others</a></li>
+															</ul>
+														</div>
+													</div><!-- /btn-group -->
+												</div>
+											</div><div class="clearfix"></div>
+											
+											<div class="row" style="margin:1%;">
+												<div class="col-xs-12 col-sm-12" align="center">
+														<button type="submit" class="btn btn-default" style="background:#016AA9; color:#FFFFFF;height:30px; font-size:15px; padding:4px 8px;" >Submit</button>
+												</div>
+											</div><div class="clearfix"></div>
+										</div>
+										
+										<div class="tab-pane fade" id="service-consult">
+											<div class="row" style="margin:1%;">
+												<div class="col-xs-3 col-sm-2" style="text-align:right;">
+													<p class="form-control-static" style="color:#333333;">Search</p>
+												</div>
+												<div class="col-sm-9 hidden-xs">
+													<div class="input-group" style="width:70%; float:left;">
+															<input type="text" class="form-control" placeholder="Search...">
+															<span class="input-group-btn">
+																<button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+															</span>
+													</div><!-- /input-group -->
+												</div>
+												<div class="col-xs-9 visible-xs-block">
+													<div class="input-group" style="width:70%; float:left;">
+															<input type="text" class="form-control" placeholder="Search..." style="font-size:10px; height:20px;margin-top:5px; padding:0 4px;" >
+															<span class="input-group-btn">
+																<button class="btn btn-default" type="button" style="font-size:10px; height:20px;margin-top:5px; padding:0 8px;" ><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+															</span>
+													</div><!-- /input-group -->
+												</div>
+											</div><div class="clearfix"></div>
+											
+											<div class="row" style="margin:1%;">
+												<div class="col-xs-3 col-sm-2" style="text-align:right;">
+													<p class="form-control-static" style="color:#333333;">For</p>
+												</div>
+												<div class="col-sm-9 hidden-xs">
+													<div class="input-group" style="width:100%;">
+														<div class="input-group-btn" style="width:30%; float:left;" align="left">
+															<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Location<span class="caret"></span></button>
+															<ul class="dropdown-menu">
+																<li><a href="#">Location</a></li>
+																<li><a href="#">Phone Number</a></li>
+																<li><a href="#">Booking</a></li>
+																<li><a href="#">Business Hours</a></li>
+															</ul>
+														</div>
+													</div><!-- /btn-group -->
+												</div>
+												<div class="col-xs-9 visible-xs-block">
+													<div class="input-group" style="width:100%;">
+														<div class="input-group-btn" style="width:30%; float:left;" align="left">
+															<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="font-size:10px; height:20px;margin-top:5px; padding:0 8px;" >Location<span class="caret"></span></button>
+															<ul class="dropdown-menu">
+																<li><a href="#">Location</a></li>
+																<li><a href="#">Phone Number</a></li>
+																<li><a href="#">Booking</a></li>
+																<li><a href="#">Business Hours</a></li>
+															</ul>
+														</div>
+													</div><!-- /btn-group -->
+												</div>
+											</div><div class="clearfix"></div>
+																						
+											<div class="row" style="margin:1%;">
+												<div class="col-xs-12 col-sm-12" align="center">
+														<button type="submit" class="btn btn-default" style="background:#016AA9; color:#FFFFFF;height:30px; font-size:15px; padding:4px 8px;" >Submit</button>
+												</div>
+											</div><div class="clearfix"></div>
+										</div>
+
+										<div class="tab-pane fade" id="service-advise">
+											<div class="row" style="margin:1%;">
+												<div class="col-xs-2 col-sm-2" style="text-align:right;">
+													<p class="form-control-static" style="color:#333333;">About</p>
+												</div>
+												<div class="col-xs-10 col-sm-9 hidden-xs">
+													<div class="input-group" style="width:100%;">
+														<div class="input-group-btn" style="width:50%; float:left;" align="left">
+															<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Meal<span class="caret"></span></button>
+															<ul class="dropdown-menu">
+																<li><a href="#">Meal</a></li>
+																<li><a href="#">Time</a></li>
+																<li><a href="#">Join</a></li>
+																<li><a href="#">VIP</a></li>
+																<li><a href="#">Others</a></li>
+															</ul>
+														</div>
+													</div><!-- /btn-group -->
+												</div>
+												<div class="col-xs-10 col-sm-9 visible-xs-block">
+													<div class="input-group" style="width:100%;">
+														<div class="input-group-btn" style="width:50%; float:left;" align="left">
+															<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="font-size:10px; height:20px;margin-top:5px; padding:0 8px;" >Meal<span class="caret"></span></button>
+															<ul class="dropdown-menu">
+																<li><a href="#">Meal</a></li>
+																<li><a href="#">Time</a></li>
+																<li><a href="#">Join</a></li>
+																<li><a href="#">VIP</a></li>
+																<li><a href="#">Others</a></li>
+															</ul>
+														</div>
+													</div><!-- /btn-group -->
+												</div>
+											</div><div class="clearfix"></div>
+
+											<div class="row" style="margin:1%;">
+												<div class="col-xs-2 col-sm-2" style="text-align:right;">
+													<p class="form-control-static" style="color:#333333;">Advise</p>
+												</div>
+												<div class="col-xs-10 col-sm-9 hidden-xs">
+													<div class="input-group"  style="width:100%; float:right;" >
+														<textarea rows="6" style="width:100%;"></textarea>				
+													</div><div class="clearfix"></div>
+												</div>			
+												<div class="col-xs-10 col-sm-9 visible-xs-block">
+													<div class="input-group"  style="width:100%; float:right;" >
+														<textarea rows="6" style="width:100%;font-size:10px; padding:0 8px;"></textarea>				
+													</div><div class="clearfix"></div>
+												</div>			
+											</div><div class="clearfix"></div>
+											
+											<div class="row" style="margin:1%;">
+												<div class="col-xs-12 col-sm-12" align="center">
+														<button type="submit" class="btn btn-default" style="background:#016AA9; color:#FFFFFF;" >Submit</button>
+														<button type="reset" class="btn btn-default">Reset</button>
+												</div>
+											</div><div class="clearfix"></div>
+										</div>
+										
+										<div class="tab-pane fade" id="service-special">
+											<div class="row" style="margin:1%;">
+												<div class="col-xs-2 col-sm-2" style="text-align:right;">
+													<p class="form-control-static" style="color:#333333;">Time</p>
+												</div>
+												<div class="col-xs-10 col-sm-9">
+													<div class="radio" align="left" style="width:100%; color:#333333;">
+														<div style="margin-bottom:10px; width:150px; float:left;"><label><input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>Breakfast</label></div>
+														<div style="margin-bottom:10px; width:150px; float:left;"><label><input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>Lunch</label></div>
+														<div style="margin-bottom:10px; width:150px; float:left;"><label><input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>Afternoon Tea</label></div>
+														<div style="margin-bottom:10px; width:150px; float:left;"><label><input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>Dinner</label></div>
+													</div>
+												</div>			
+											</div><div class="clearfix"></div>
+
+											<div class="row" style="margin:1%;">
+												<div class="col-xs-12 col-sm-12" style="text-align:center;">
+													<a>French style Foie Gras with Green apple cheese and caviar</a><br />
+													<a>Pan-fried Scallops with Arctic Flavor Spinach and Cauliflower Spread</a><br />
+													<a>Bourgogne Vanilla Baked Snails</a><br />
+													<a>Nordic Seafood Soup</a><br />
+													<a>Mediterranean Cream Matsutake with Wild Truffle</a>
+												</div>
+											</div><div class="clearfix"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="tab-pane fade" id="info">
+							<div class="row">
+								<div class="col-xs-12 col-sm-12" style="padding:2% 10%; text-align:center; color:#016AA9;">
+									<head5 >Address: Shenzhen, Guangzhou, Shanghai, Beijing</head5><br>
+									<head5>Contact: 136xxxxxxxx/0755-xxxxxx</head5><br>
+									<head5>Email: wangbeishan@163.com</head5>
+								</div>
+							</div>
+						</div>
+					</div>		
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container" style="margin-top:2%;">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 visible-lg-block" style="margin-top:2%;">
+				<a href="#special-breakfast" data-toggle="tab" class="special-tab-static" id="special-nav11" onClick="tabchosen('#special-nav1','1','3','special-tab-static','special-tab-active')" style="text-decoration:none;">Breakfast Special</a>
+				<a href="#special-lunch" data-toggle="tab" class="special-tab-static" id="special-nav12" onClick="tabchosen('#special-nav1','2','3','special-tab-static','special-tab-active')" style="text-decoration:none;">Lunch Special</a>
+				<a href="#special-dinner" data-toggle="tab" class="special-tab-static" id="special-nav13" onClick="tabchosen('#special-nav1','3','3','special-tab-static','special-tab-active')" style="text-decoration:none;">Dinner Special</a>
+			</div><div style="clear:both;"></div>
+			<div class="col-xs-12 col-sm-12 hidden-lg" style="margin-top:8%;">
+				<a href="#special-breakfast" data-toggle="tab" class="special-tab-static" id="special-nav21" onClick="tabchosen('#special-nav2','1','3','special-tab-static','special-tab-active')" style="text-decoration:none;">Breakfast Special</a>
+				<a href="#special-lunch" data-toggle="tab" class="special-tab-static" id="special-nav22" onClick="tabchosen('#special-nav2','2','3','special-tab-static','special-tab-active')" style="text-decoration:none;">Lunch Special</a>
+				<a href="#special-dinner" data-toggle="tab" class="special-tab-static" id="special-nav23" onClick="tabchosen('#special-nav2','3','3','special-tab-static','special-tab-active')" style="text-decoration:none;">Dinner Special</a>
+			</div><div style="clear:both;"></div>
+			<div class="col-xs-12 col-sm-6" style="padding:2% 5%;">
+				<div class="tab-content">
+					<div class="tab-pane fade in active" id="special-breakfast">
+						<div class="row">
+							<div class="col-xs-12 col-sm-12">
+								<a href="#breakfast-sz" data-toggle="tab" class="breakfast-tab-static" id="breakfast-nav1" onClick="tabchosen('#breakfast-nav','1','5','breakfast-tab-static','breakfast-tab-active')" style="text-decoration:none;">Shenzhen</a>
+								<a href="#breakfast-bj" data-toggle="tab" class="breakfast-tab-static" id="breakfast-nav2" onClick="tabchosen('#breakfast-nav','2','5','breakfast-tab-static','breakfast-tab-active')" style="text-decoration:none;">Beijing</a>
+								<a href="#breakfast-sh" data-toggle="tab" class="breakfast-tab-static" id="breakfast-nav3" onClick="tabchosen('#breakfast-nav','3','5','breakfast-tab-static','breakfast-tab-active')" style="text-decoration:none;">Shanghai</a>
+								<a href="#breakfast-gz" data-toggle="tab" class="breakfast-tab-static" id="breakfast-nav4" onClick="tabchosen('#breakfast-nav','4','5','breakfast-tab-static','breakfast-tab-active')" style="text-decoration:none;">Guangzhou</a>
+								<a href="#breakfast-cd" data-toggle="tab" class="breakfast-tab-static" id="breakfast-nav5" onClick="tabchosen('#breakfast-nav','5','5','breakfast-tab-static','breakfast-tab-active')" style="text-decoration:none;">Chengdu</a>
+							</div>
+							<div class="col-xs-12 col-sm-12">
+								<div class="tab-content" style="margin:0; border:#DDDDDD solid 1px; border-top:#FFFFFF solid 1px; padding:1% 5%;">
+									<div class="tab-pane fade in active" id="breakfast-gz">
+										<a>French style Foie Gras with Green apple cheese and caviar</a><a style="font-size:20px; color:#FF0000;">$90</a><br />
+										<a>Pan-fried Scallops with Arctic Flavor Spinach and Cauliflower Spread</a><a style="font-size:20px; color:#FF0000;">$70</a><br />
+										<a>Bourgogne Vanilla Baked Snails</a><a style="font-size:20px; color:#FF0000;">$50</a><br />
+										<a>Nordic Seafood Soup</a><a style="font-size:20px; color:#FF0000;">$99</a><br />
+										<a>Mediterranean Cream Matsutake with Wild Truffle</a><a style="font-size:20px; color:#FF0000;">$59</a><br />
+									</div>
+									<div class="tab-pane fade" id="breakfast-sz">
+										<a>Bourgogne Vanilla Baked Snails</a><a style="font-size:20px; color:#FF0000;">$88</a><br />
+										<a>French style Foie Gras with Green apple cheese and caviar</a><a style="font-size:20px; color:#FF0000;">$76</a><br />
+										<a>Nordic Seafood Soup</a><a style="font-size:20px; color:#FF0000;">$90</a><br />
+										<a>Mediterranean Cream Matsutake with Wild Truffle</a><a style="font-size:20px; color:#FF0000;">$91</a><br />
+										<a>Pan-fried Scallops with Arctic Flavor Spinach and Cauliflower Spread</a><a style="font-size:20px; color:#FF0000;">$54</a><br />
+									</div>
+									<div class="tab-pane fade" id="breakfast-bj">
+										<a>Mediterranean Cream Matsutake with Wild Truffle</a><a style="font-size:20px; color:#FF0000;">$59</a><br />
+										<a>French style Foie Gras with Green apple cheese and caviar</a><a style="font-size:20px; color:#FF0000;">$90</a><br />
+										<a>Pan-fried Scallops with Arctic Flavor Spinach and Cauliflower Spread</a><a style="font-size:20px; color:#FF0000;">$70</a><br />
+										<a>Bourgogne Vanilla Baked Snails</a><a style="font-size:20px; color:#FF0000;">$50</a><br />
+										<a>Nordic Seafood Soup</a><a style="font-size:20px; color:#FF0000;">$99</a><br />
+									</div>
+									<div class="tab-pane fade" id="breakfast-sh">
+										<a>Nordic Seafood Soup</a><a style="font-size:20px; color:#FF0000;">$34</a><br />
+										<a>Bourgogne Vanilla Baked Snails</a><a style="font-size:20px; color:#FF0000;">$56</a><br />
+										<a>French style Foie Gras with Green apple cheese and caviar</a><a style="font-size:20px; color:#FF0000;">$76</a><br />
+										<a>Mediterranean Cream Matsutake with Wild Truffle</a><a style="font-size:20px; color:#FF0000;">$61</a><br />
+										<a>Pan-fried Scallops with Arctic Flavor Spinach and Cauliflower Spread</a><a style="font-size:20px; color:#FF0000;">$59</a><br />
+									</div>
+									<div class="tab-pane fade" id="breakfast-cd">
+										<a>French style Foie Gras with Green apple cheese and caviar</a><a style="font-size:20px; color:#FF0000;">$76</a><br />
+										<a>Mediterranean Cream Matsutake with Wild Truffle</a><a style="font-size:20px; color:#FF0000;">$59</a><br />
+										<a>Pan-fried Scallops with Arctic Flavor Spinach and Cauliflower Spread</a><a style="font-size:20px; color:#FF0000;">$70</a><br />
+										<a>Bourgogne Vanilla Baked Snails</a><a style="font-size:20px; color:#FF0000;">$50</a><br />
+										<a>Nordic Seafood Soup</a><a style="font-size:20px; color:#FF0000;">$99</a><br />
+									</div>
+								<div>
+								
+								</div>
+							</div>
+						</div>
+					</div>
+					</div>
+					<div class="tab-pane fade" id="special-lunch">
+						<div class="row">
+							<div class="col-xs-12 col-sm-12">
+								<a href="#lunch-gz" data-toggle="tab" class="lunch-tab-static" id="lunch-nav1" onClick="tabchosen('#lunch-nav','1','5','lunch-tab-static','lunch-tab-active')" style="text-decoration:none;">Guangzhou</a>
+								<a href="#lunch-sz" data-toggle="tab" class="lunch-tab-static" id="lunch-nav2" onClick="tabchosen('#lunch-nav','2','5','lunch-tab-static','lunch-tab-active')" style="text-decoration:none;">Shenzhen</a>
+								<a href="#lunch-bj" data-toggle="tab" class="lunch-tab-static" id="lunch-nav3" onClick="tabchosen('#lunch-nav','3','5','lunch-tab-static','lunch-tab-active')" style="text-decoration:none;">Beijing</a>
+								<a href="#lunch-sh" data-toggle="tab" class="lunch-tab-static" id="lunch-nav4" onClick="tabchosen('#lunch-nav','4','5','lunch-tab-static','lunch-tab-active')" style="text-decoration:none;">Shanghai</a>
+								<a href="#lunch-cd" data-toggle="tab" class="lunch-tab-static" id="lunch-nav5" onClick="tabchosen('#lunch-nav','5','5','lunch-tab-static','lunch-tab-active')" style="text-decoration:none;">Chengdu</a>
+							</div>
+							<div class="col-xs-12 col-sm-12">
+								<div class="tab-content" style="margin:0; border:#DDDDDD solid 1px; border-top:#FFFFFF solid 1px; padding:1% 5%;">
+									<div class="tab-pane fade in active" id="lunch-gz">
+										<a>French style Foie Gras with Green apple cheese and caviar</a><a style="font-size:20px; color:#FF0000;">$90</a><br />
+										<a>Pan-fried Scallops with Arctic Flavor Spinach and Cauliflower Spread</a><a style="font-size:20px; color:#FF0000;">$70</a><br />
+										<a>Bourgogne Vanilla Baked Snails</a><a style="font-size:20px; color:#FF0000;">$50</a><br />
+										<a>Nordic Seafood Soup</a><a style="font-size:20px; color:#FF0000;">$99</a><br />
+										<a>Mediterranean Cream Matsutake with Wild Truffle</a><a style="font-size:20px; color:#FF0000;">$59</a><br />
+									</div>
+									<div class="tab-pane fade" id="lunch-sz">
+										<a>Bourgogne Vanilla Baked Snails</a><a style="font-size:20px; color:#FF0000;">$88</a><br />
+										<a>French style Foie Gras with Green apple cheese and caviar</a><a style="font-size:20px; color:#FF0000;">$76</a><br />
+										<a>Nordic Seafood Soup</a><a style="font-size:20px; color:#FF0000;">$90</a><br />
+										<a>Mediterranean Cream Matsutake with Wild Truffle</a><a style="font-size:20px; color:#FF0000;">$91</a><br />
+										<a>Pan-fried Scallops with Arctic Flavor Spinach and Cauliflower Spread</a><a style="font-size:20px; color:#FF0000;">$54</a><br />
+									</div>
+									<div class="tab-pane fade" id="lunch-bj">
+										<a>Mediterranean Cream Matsutake with Wild Truffle</a><a style="font-size:20px; color:#FF0000;">$59</a><br />
+										<a>French style Foie Gras with Green apple cheese and caviar</a><a style="font-size:20px; color:#FF0000;">$90</a><br />
+										<a>Pan-fried Scallops with Arctic Flavor Spinach and Cauliflower Spread</a><a style="font-size:20px; color:#FF0000;">$70</a><br />
+										<a>Bourgogne Vanilla Baked Snails</a><a style="font-size:20px; color:#FF0000;">$50</a><br />
+										<a>Nordic Seafood Soup</a><a style="font-size:20px; color:#FF0000;">$99</a><br />
+									</div>
+									<div class="tab-pane fade" id="lunch-sh">
+										<a>Nordic Seafood Soup</a><a style="font-size:20px; color:#FF0000;">$34</a><br />
+										<a>Bourgogne Vanilla Baked Snails</a><a style="font-size:20px; color:#FF0000;">$56</a><br />
+										<a>French style Foie Gras with Green apple cheese and caviar</a><a style="font-size:20px; color:#FF0000;">$76</a><br />
+										<a>Mediterranean Cream Matsutake with Wild Truffle</a><a style="font-size:20px; color:#FF0000;">$61</a><br />
+										<a>Pan-fried Scallops with Arctic Flavor Spinach and Cauliflower Spread</a><a style="font-size:20px; color:#FF0000;">$59</a><br />
+									</div>
+									<div class="tab-pane fade" id="lunch-cd">
+										<a>French style Foie Gras with Green apple cheese and caviar</a><a style="font-size:20px; color:#FF0000;">$76</a><br />
+										<a>Mediterranean Cream Matsutake with Wild Truffle</a><a style="font-size:20px; color:#FF0000;">$59</a><br />
+										<a>Pan-fried Scallops with Arctic Flavor Spinach and Cauliflower Spread</a><a style="font-size:20px; color:#FF0000;">$70</a><br />
+										<a>Bourgogne Vanilla Baked Snails</a><a style="font-size:20px; color:#FF0000;">$50</a><br />
+										<a>Nordic Seafood Soup</a><a style="font-size:20px; color:#FF0000;">$99</a><br />
+									</div>
+								<div>
+								
+								</div>
+							</div>
+						</div>
+					</div>
+					</div>
+					<div class="tab-pane fade" id="special-dinner">
+						<div class="row">
+							<div class="col-xs-12 col-sm-12">
+								<a href="#dinner-bj" data-toggle="tab" class="dinner-tab-static" id="dinner-nav1" onClick="tabchosen('#dinner-nav','1','5','dinner-tab-static','dinner-tab-active')" style="text-decoration:none;">Beijing</a>
+								<a href="#dinner-sh" data-toggle="tab" class="dinner-tab-static" id="dinner-nav2" onClick="tabchosen('#dinner-nav','2','5','dinner-tab-static','dinner-tab-active')" style="text-decoration:none;">Shanghai</a>
+								<a href="#dinner-cd" data-toggle="tab" class="dinner-tab-static" id="dinner-nav3" onClick="tabchosen('#dinner-nav','3','5','dinner-tab-static','dinner-tab-active')" style="text-decoration:none;">Chengdu</a>
+								<a href="#dinner-gz" data-toggle="tab" class="dinner-tab-static" id="dinner-nav4" onClick="tabchosen('#dinner-nav','4','5','dinner-tab-static','dinner-tab-active')" style="text-decoration:none;">Guangzhou</a>
+								<a href="#dinner-sz" data-toggle="tab" class="dinner-tab-static" id="dinner-nav5" onClick="tabchosen('#dinner-nav','5','5','dinner-tab-static','dinner-tab-active')" style="text-decoration:none;">Shenzhen</a>
+							</div>
+							<div class="col-xs-12 col-sm-12">
+								<div class="tab-content" style="margin:0; border:#DDDDDD solid 1px; border-top:#FFFFFF solid 1px; padding:1% 5%;">
+									<div class="tab-pane fade in active" id="dinner-gz">
+										<a>French style Foie Gras with Green apple cheese and caviar</a><a style="font-size:20px; color:#FF0000;">$90</a><br />
+										<a>Pan-fried Scallops with Arctic Flavor Spinach and Cauliflower Spread</a><a style="font-size:20px; color:#FF0000;">$70</a><br />
+										<a>Bourgogne Vanilla Baked Snails</a><a style="font-size:20px; color:#FF0000;">$50</a><br />
+										<a>Nordic Seafood Soup</a><a style="font-size:20px; color:#FF0000;">$99</a><br />
+										<a>Mediterranean Cream Matsutake with Wild Truffle</a><a style="font-size:20px; color:#FF0000;">$59</a><br />
+									</div>
+									<div class="tab-pane fade" id="dinner-sz">
+										<a>Bourgogne Vanilla Baked Snails</a><a style="font-size:20px; color:#FF0000;">$88</a><br />
+										<a>French style Foie Gras with Green apple cheese and caviar</a><a style="font-size:20px; color:#FF0000;">$76</a><br />
+										<a>Nordic Seafood Soup</a><a style="font-size:20px; color:#FF0000;">$90</a><br />
+										<a>Mediterranean Cream Matsutake with Wild Truffle</a><a style="font-size:20px; color:#FF0000;">$91</a><br />
+										<a>Pan-fried Scallops with Arctic Flavor Spinach and Cauliflower Spread</a><a style="font-size:20px; color:#FF0000;">$54</a><br />
+									</div>
+									<div class="tab-pane fade" id="dinner-bj">
+										<a>Mediterranean Cream Matsutake with Wild Truffle</a><a style="font-size:20px; color:#FF0000;">$59</a><br />
+										<a>French style Foie Gras with Green apple cheese and caviar</a><a style="font-size:20px; color:#FF0000;">$90</a><br />
+										<a>Pan-fried Scallops with Arctic Flavor Spinach and Cauliflower Spread</a><a style="font-size:20px; color:#FF0000;">$70</a><br />
+										<a>Bourgogne Vanilla Baked Snails</a><a style="font-size:20px; color:#FF0000;">$50</a><br />
+										<a>Nordic Seafood Soup</a><a style="font-size:20px; color:#FF0000;">$99</a><br />
+									</div>
+									<div class="tab-pane fade" id="dinner-sh">
+										<a>Nordic Seafood Soup</a><a style="font-size:20px; color:#FF0000;">$34</a><br />
+										<a>Bourgogne Vanilla Baked Snails</a><a style="font-size:20px; color:#FF0000;">$56</a><br />
+										<a>French style Foie Gras with Green apple cheese and caviar</a><a style="font-size:20px; color:#FF0000;">$76</a><br />
+										<a>Mediterranean Cream Matsutake with Wild Truffle</a><a style="font-size:20px; color:#FF0000;">$61</a><br />
+										<a>Pan-fried Scallops with Arctic Flavor Spinach and Cauliflower Spread</a><a style="font-size:20px; color:#FF0000;">$59</a><br />
+									</div>
+									<div class="tab-pane fade" id="dinner-cd">
+										<a>French style Foie Gras with Green apple cheese and caviar</a><a style="font-size:20px; color:#FF0000;">$76</a><br />
+										<a>Mediterranean Cream Matsutake with Wild Truffle</a><a style="font-size:20px; color:#FF0000;">$59</a><br />
+										<a>Pan-fried Scallops with Arctic Flavor Spinach and Cauliflower Spread</a><a style="font-size:20px; color:#FF0000;">$70</a><br />
+										<a>Bourgogne Vanilla Baked Snails</a><a style="font-size:20px; color:#FF0000;">$50</a><br />
+										<a>Nordic Seafood Soup</a><a style="font-size:20px; color:#FF0000;">$99</a><br />
+									</div>
+								<div>
+								
+								</div>
+							</div>
+						</div>
+					</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-6" style="padding-top:50px;">
+				<div id="carousel-example-captions2" class="carousel slide" data-ride="carousel">
+					   <ol class="carousel-indicators">
+						  <li data-target="#carousel-example-captions2" data-slide-to="0" class="active"></li>
+						  <li data-target="#carousel-example-captions2" data-slide-to="1"></li>
+					   </ol>  
+				  <div class="carousel-inner" role="listbox">
+					<div class="item active"  style="margin:0; padding:0;">
+					  <img src="./images/menu1.png" alt="First slide image" style="width:100%;">
+					</div>
+					<div class="item">
+					  <img src="./images/menu2.png" alt="Second slide image" style="width:100%;">
+					</div>
+				  </div>
+				  <a class="left carousel-control" href="#carousel-example-captions2" role="button" data-slide="prev" id="previous" style="opacity:0;">
+					<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+					<span class="sr-only">Previous</span>
+				  </a>
+				  <a class="right carousel-control" href="#carousel-example-captions2" role="button" data-slide="next" id="next" style="opacity:0;">
+					<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+					<span class="sr-only">Next</span>
+				  </a>
+				</div>
+			</div>
+		</div>
+	</div><div style="clear:both;"></div>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-5 col-lg-3 info-style" style="padding:0;">
+				<div class="img-scale">
+					<img src="./images/service1.png">
+				</div>			
+				<div class="caption" style="padding-left:5%; padding-right:5%; color:#016AA9;">
+					<a style="text-decoration:none;"><head3>Special Info</head3></a><br />
+					<a style="text-decoration:none;"><head4>Lunch and Dinner Special</head4></a><br />
+					<a><head5><span class="glyphicon glyphicon-play-circle" aria-hidden="true" style="color:#FF0000;"></span>For More...</head5></a>
+				</div>
+			</div>
+			<div class="col-sm-5 col-lg-3 info-style" style="padding:0;">
+				<div class="img-scale">
+					<img src="./images/service2.png">
+				</div>			
+				<div class="caption" style="padding-left:5%; padding-right:5%; color:#016AA9;">
+					<a style="text-decoration:none;"><head3>Fast Entrance</head3></a><br />
+					<a style="text-decoration:none;"><head4>Fast booking and reservation</head4></a><br />
+					<a><head5><span class="glyphicon glyphicon-play-circle" aria-hidden="true" style="color:#FF0000;"></span>For More...</head5></a>
+				</div>
+			</div>
+			<div class="col-sm-5 col-lg-3 info-style" style="padding:0;">
+				<div class="img-scale">
+					<img src="./images/service3.png">
+				</div>			
+				<div class="caption" style="padding-left:5%; padding-right:5%; color:#016AA9;">
+					<a style="text-decoration:none;"><head3>VIP Area</head3></a><br />
+					<a style="text-decoration:none;"><head4>Product or COMBO of VIP</head4></a><br />
+					<a style="text-decoration:none;"><head5><span class="glyphicon glyphicon-play-circle" aria-hidden="true" style="color:#FF0000;"></span>For More...</head5></a>
+				</div>
+			</div>		
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12" style="color:#016AA9;">
+				<head3 style=" white-space:nowrap;">Restaurant Info
+					 <a href="#carousel-example-captions3" role="button" data-slide="prev" style="font-size:15px;"><span class="glyphicon glyphicon-triangle-left" aria-hidden="true" ></span></a>
+					<a href="#carousel-example-captions3" role="button" data-slide="next" style="font-size:15px;"><span class="glyphicon glyphicon-triangle-right" aria-hidden="true" ></span></a>
+				</head3>
+			</div>
+			<div class="col-xs-12 col-sm-12">
+				<div id="carousel-example-captions3" class="carousel slide" data-ride="carousel">
+				 		<ol class="carousel-indicators" style="bottom:-30px;">
+						  <li data-target="#carousel-example-captions3" data-slide-to="0" class="active" style="border:#016AA9 solid 1px;"></li>
+						  <li data-target="#carousel-example-captions3" data-slide-to="1" style="border:#016AA9 solid 1px;"></li>
+						  <li data-target="#carousel-example-captions3" data-slide-to="2" style="border:#016AA9 solid 1px;"></li>
+					   </ol>  
+				  <div class="carousel-inner" role="listbox">
+					<div class="item active"  style="margin:0; padding:0;">
+					  <a href="#"  style="width:40%; margin:0 5%; float:left;"><img src="./images/dishes1.png" alt="First slide image" style="width:100%;"></a>
+					  <a href="#" style="width:40%; margin:0 5%; float:left;"><img src="./images/dishes2.png" alt="First slide image" style="width:100%;"></a>
+					</div>
+					<div class="item">
+					  <a href="#"  style="width:40%; margin:0 5%; float:left;"><img src="./images/dishes3.png" alt="First slide image" style="width:100%;"></a>
+					  <a href="#" style="width:40%; margin:0 5%; float:left;"><img src="./images/dishes4.png" alt="First slide image" style="width:100%;"></a>
+					</div>
+					<div class="item">
+					  <a href="#"  style="width:40%; margin:0 5%; float:left;"><img src="./images/dishes5.png" alt="First slide image" style="width:100%;"></a>
+					  <a href="#" style="width:40%; margin:0 5%; float:left;"><img src="./images/dishes6.png" alt="First slide image" style="width:100%;"></a>
+					</div>
+				  </div>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-10 col-sm-offset-1" style="border:#DDDDDD solid 1px; margin-top:30px;">
+				<div class="row" style="color:#016AA9; text-align:center;">
+					<div class="col-xs-3 col-sm-2" style="padding:0 2%; margin:0;">
+						<head2>News</head2>
+					</div>
+					<div class="col-xs-6 col-sm-8"  style="padding:0 2%; margin:1% 0;  border-right:#016AA9 solid 1px; border-left:#016AA9 solid 1px; text-align:left;">
+						<head4>The next restaurant open</head4><br>
+						<head5>Where will it be?</head5>
+					</div>
+					<div class="col-xs-3 col-sm-2" style="padding:0 2%; margin:0; margin-top:2%;">
+						<a><head5><span class="glyphicon glyphicon-play-circle" aria-hidden="true" style="color:#FF0000;"></span>For More...</head5></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid" style="border-radius:0px; margin:2% 0; padding:0;">
+		<img style="width:100%;opacity:0.8;" src="./images/display.png" />
+	</div>
+	<div class="container">
+		<div class="row" style="text-align:center;">
+			<div class="col-sm-2 col-sm-offset-1 col-xs-4" >
+				<head4>About</head4>
+				<ul style="list-style:none; text-align:center; padding:0;" class="a-black">
+					<a href="#"><li>news</li></a>
+					<a href="#"><li>emails</li></a>
+					<a href="#"><li>phone</li></a>
+					<a href="#"><li>fax</li></a>
+					<a href="#"><li>join</li></a>
+					<a href="#"><li>operation</li></a>
+				</ul>
+			</div>
+			<div class="col-sm-2 col-xs-4" >
+				<head4>Product</head4>
+				<ul style="list-style:none; text-align:center; padding:0;" class="a-black">
+					<a href="#"><li>food</li></a>
+					<a href="#"><li>restaurant</li></a>
+					<a href="#"><li>webstation</li></a>
+					<a href="#"><li>menu</li></a>
+					<a href="#"><li>decoration</li></a>
+					<a href="#"><li>organization</li></a>
+				</ul>
+			</div>
+			<div class="col-sm-2 col-xs-4" >
+				<head4>Customer</head4>
+				<ul style="list-style:none; text-align:center; padding:0;" class="a-black">
+					<a href="#"><li>Q&amp;A</li></a>
+					<a href="#"><li>booking</li></a>
+					<a href="#"><li>web</li></a>
+					<a href="#"><li>map</li></a>
+					<a href="#"><li>contact</li></a>
+					<a href="#"><li>online</li></a>
+					<a href="#"><li>feedback</li></a>
+				</ul>
+			</div>
+			<div class="col-sm-2 col-xs-4" >
+				<head4>Service</head4>
+				<ul style="list-style:none; text-align:center; padding:0;" class="a-black">
+					<a href="#"><li>booking</li></a>
+					<a href="#"><li>management</li></a>
+					<a href="#"><li>customer</li></a>
+					<a href="#"><li>entertain</li></a>
+					<a href="#"><li>VIP</li></a>
+					<a href="#"><li>register</li></a>
+				</ul>
+			</div>
+			<div class="col-sm-2 col-xs-4" >
+				<head4>Meal</head4>
+				<ul style="list-style:none; text-align:center; padding:0;" class="a-black">
+					<a href="#"><li>breakfast</li></a>
+					<a href="#"><li>brunch</li></a>
+					<a href="#"><li>lunch</li></a>
+					<a href="#"><li>dinner</li></a>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid" style="border-radius:0px; margin:0; padding:2%; background:#CCCCCC;">
+		<div class="container" style="padding:0 5%;" >
+			<div class="row" style="color:#666;">
+				<div class="col-xs-12 col-sm-6"  style="text-align:left;"><head5>Copyright @Basin Personal, Shenzhen, Guangdong, China</head5></div>
+				<div class="col-xs-12 col-sm-6" style="text-align:center;">
+					<a href="#" style="border-left:#666 solid 1px;float:right; color:#666; text-decoration:none; padding:0 2%;">Contact</a>
+					<a href="#" style="border-left:#666 solid 1px;float:right; color:#666; text-decoration:none; padding:0 2%;">Booking</a>
+					<a href="#" style="border-left:#666 solid 1px;float:right; color:#666; text-decoration:none; padding:0 2%;">Management</a>
+					<a href="#" style="border-left:#666 solid 1px;float:right; color:#666; text-decoration:none; padding:0 2%;">Orginization</a>
+					<a href="#" style="border:none;float:right; color:#666; text-decoration:none; padding:0 2%;">About</a>
+				</div>
+		</div>
+	</div>
+</div>
+<script>
+$('#tab-nav1').removeClass('nav-tab-static');
+$('#tab-nav1').addClass('nav-tab-active');
+$('#book-nav1').removeClass('book-tab-static');
+$('#book-nav1').addClass('book-tab-active');
+$('#service-nav1').removeClass('service-tab-static');
+$('#service-nav1').addClass('service-tab-active');
+$('#special-nav11').removeClass('special-tab-static');
+$('#special-nav11').addClass('special-tab-active');
+$('#special-nav21').removeClass('special-tab-static');
+$('#special-nav21').addClass('special-tab-active');
+$('#breakfast-nav1').removeClass('breakfast-tab-static');
+$('#breakfast-nav1').addClass('breakfast-tab-active');
+$('#lunch-nav1').removeClass('lunch-tab-static');
+$('#lunch-nav1').addClass('lunch-tab-active');
+$('#dinner-nav1').removeClass('dinner-tab-static');
+$('#dinner-nav1').addClass('dinner-tab-active');
+
+$('#carousel-example-captions2').carousel({
+  interval: 2000
+})
+$('#carousel-example-captions').carousel({
+  interval: 4000
+})
+$('#carousel-example-captions3').carousel({
+  interval: 3000
+})
+
+
+function tabchosen(id,now,num,removeclass,addclass){
+for(i=1;i<=num;i++){$(id+i).removeClass(addclass);$(id+i).addClass(removeclass);}
+$(id+now).removeClass(removeclass);
+$(id+now).addClass(addclass);
+}
+
+function toggledropmenu(num){
+$('#dropdown'+num).dropdown('toggle');
+}
+
+function hidedropmenu(){
+$('#dropdown2').dropdown('toggle');
+$('#dropdown1').dropdown('toggle');
+$('#dropdown1').dropdown('toggle');
+}
+</script>
+</body>
+</html>
