@@ -1,5 +1,5 @@
 ---
-title: 有关CSS的position和z-index
+title: CSS的position和z-index有关
 date: 2016-06-25 12:03:10
 categories: CSS炒饭
 tags: 分享
@@ -118,8 +118,10 @@ fixed脱离文档流，相对于浏览器窗口来定位，且不占位
 ## z-index
 -----
 ### z-index简述
+- z-index属性定义了第三维度，默认为0
 - z-index属性设置元素的堆叠顺序，拥有更高堆叠顺序的元素总是会处于堆叠顺序较低的元素的前面
 - z-index只能在position属性值为relative或absolute或fixed的元素上有效
+-
 
 ### z-index在同级元素下的效果
 如图，[查看页面效果](http://o9bc2k1st.bkt.clouddn.com/position-z-index-same-level.html)
@@ -175,6 +177,8 @@ parent1和parent2的position均为relative，是不是有些难以理解？这�
 
 - 参考
 [浅析CSS——元素重叠及position定位的z-index顺序](http://www.cnblogs.com/mind/archive/2012/04/01/2198995.html)
+
+- 相关代码保存在[about-position](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/about-position)
 
 ## 结束语
 不得不说，写这篇文章的过程自己对position和z-index相关的原理和规则也熟悉了很多，总结也是一种学习的方式呢。
