@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		</script>
+		<style type="text/css">
+			.parent {
+				position: relative;
+				width: 100px;
+				height: 100px;
+			}
+			.absolute {
+				position: absolute;
+				border: solid 1px red;
+				height: 200px;
+				width: 200px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="parent" style="margin-left: 200px;position: relative;">
+			<div class="absolute" style="background: yellow;left: 20px;top: 20px;">position=absolute</div>
+			<div class="absolute" style="background: blueviolet;left: 70px;top: 70px;">position=absolute</div>
+			<div class="absolute" style="background: salmon;left: 120px;top: 120px;">position=absolute</div>
+			<div class="absolute" style="background: greenyellow;left: 170px;top: 170px;">position=absolute</div>
+		</div>
+		<div class="parent" style="margin-left: 200px;margin-top:300px;position: relative;">
+			<div class="absolute" style="background: yellow;left: 20px;top: 20px;z-index: 2;">position=absolute, z-index=2</div>
+			<div class="absolute" style="background: blueviolet;left: 70px;top: 70px;z-index: 1;">position=absolute, z-index=1</div>
+			<div class="absolute" style="background: salmon;left: 120px;top: 120px;z-index: 4;">position=absolute, z-index=4</div>
+			<div class="absolute" style="background: greenyellow;left: 170px;top: 170px;z-index: 3;">position=absolute, z-index=3</div>
+		</div>
+
+	</body>
+
+</html>

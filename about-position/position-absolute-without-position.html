@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		</script>
+		<style type="text/css">
+			.parent {
+				border: solid 1px blue;
+				width: 300px;
+				margin-top: 50px;
+			}		
+			.parent > div {
+				border: solid 1px red;
+				height: 100px;
+				width: 300px;
+			}		
+			.absolute {
+				position: absolute;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="parent" style="margin-left: 200px;position: relative;">
+			<div>默认流：position=static</div>
+			<div class="absolute">position=absolute</div>
+			<div>默认流：position=static</div>
+		</div>
+		<div class="parent" style="margin-left: 200px;position: relative;">
+			<div>默认流：position=static</div>
+			<div class="absolute" style="left: 100px;top: 100px;">position=absolute, left=100px, top=100px</div>
+			<div>默认流：position=static</div>
+		</div>
+	</body>
+</html>

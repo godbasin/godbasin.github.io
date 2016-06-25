@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		</script>
+		<style type="text/css">
+			.parent {
+				border: solid 1px red;
+				position: relative;				
+				width: 300px;
+				height: 300px;
+				float: left;
+			}
+			.absolute {
+				position: absolute;
+				border: solid 1px red;
+				height: 200px;
+				width: 200px;
+			}
+			.fixed {
+				position: fixed;
+				border: solid 1px red;
+				height: 200px;
+				width: 200px;
+			}
+		</style>
+	</head>
+
+	<body>	
+		<div class="parent" style="background: gainsboro;">
+			<p>parent</p>
+			<div class="absolute" style="background: greenyellow;left: 20px;top: 20px;z-index: 3;">position=absolute, z-index=3</div>
+			<div class="fixed" style="background: blueviolet;left: 70px;top: 70px;z-index: 2;">position=fixed, z-index=2</div>	
+			<div class="absolute" style="background: salmon;left: 120px;top: 120px;z-index: 1;">position=absolute, z-index=1</div>
+		</div>
+		<div class="fixed" style="background: yellow;left: 90px;top: 90px;z-index: 2;">position=fixed, z-index=2</div>	
+	</body>
+</html>

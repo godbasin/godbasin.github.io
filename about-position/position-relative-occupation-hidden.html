@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		</script>
+		<style type="text/css">		
+			.parent{
+				border: solid 1px blue;
+				overflow: hidden;
+			}
+			.parent > div{
+				border: solid 1px red;
+				height: 100px;
+			}
+			.relative{
+				position: relative;
+				left: 100px;
+				height: 100px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="parent">
+			<div>默认流：position=static</div>
+			<div class="relative">position=relative, left=100px, top=100px</div>
+			<div>默认流：position=static</div>
+		</div>
+
+	</body>
+
+</html>
