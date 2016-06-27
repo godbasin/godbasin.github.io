@@ -1,0 +1,28 @@
+<style type="text/css">
+	#login {
+		padding: 200px 20px;
+	}
+	
+	#login > form {
+		border: solid 1px #999;
+		padding: 20px;
+		border-radius: 5px;
+	}
+</style>
+<div class="container" id="login">
+	<!--ng-submit绑定登录事件-->
+	<form id="login-form" ng-submit="submit()">
+		<h3 class="text-center">login</h3>
+		<div class="form-group">
+			<label>account</label>
+			<!--ng-model双向绑定账号-->
+			<input type="text" class="form-control" placeholder="Account" ng-model="username" required />
+		</div>
+		<div class="form-group">
+			<label>Password</label>
+			<!--ng-model双向绑定密码-->
+			<input type="password" class="form-control" placeholder="Password" ng-model="password" required>
+		</div>
+		<button type="submit"  class="btn btn-default">登录</button>
+	</form>
+</div>
