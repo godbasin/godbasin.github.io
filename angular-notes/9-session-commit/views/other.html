@@ -1,0 +1,69 @@
+<header app-header></header>
+<div class="container">
+	<h3>过滤器filter的使用</h3>
+	<table class="table">
+		<tbody>
+			<tr>
+				<td>
+					<h4>{{ '\{\{ string \}\}' }} : </h4>
+					<h5>{{ string }}</h5>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<h4>{{ '\{\{ string | limitTo : 10 \}\}' }}: </h4>
+					<h5>{{ string | limitTo : 10 }}</h5>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<h4>{{ '\{\{ string | lowercase \}\}' }}: </h4>
+					<h5>{{ string | lowercase }}</h5>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<h4>{{ '\{\{ string | uppercase \}\}' }}: </h4>
+					<h5>{{ string | uppercase }}</h5>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<h4>{{ '\{\{ date | date : \'yyyy-MM-dd hh:mm:ss\' \}\}' }}: </h4>
+					<h5>{{ date | date : 'yyyy-MM-dd hh:mm:ss' }}</h5>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<h4>{{ '\{\{ date | date : \'yyyy-MM-dd\' | mydate \}\}' }}: </h4>
+					<h5>{{ date | date : 'yyyy-MM-dd' | mydate }}</h5>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<h4>{{ '\{\{ date | date : \'yyyy-MM-dd\' | mydate : \'cn\' \}\}' }}: </h4>
+					<h5>{{ date | date : 'yyyy-MM-dd' | mydate : 'cn' }}</h5>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<h4>{{ '\{\{ number \}\}' }}: </h4>
+					<h5>{{ number }}</h5>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<h4>{{ '\{\{ number | number \}\}' }}: </h4>
+					<h5>{{ number | number }}</h5>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<h4>{{ '\{\{ number_with_currency \}\}' }}: </h4>
+					<h5>{{ number_with_currency }}</h5>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+</div>
