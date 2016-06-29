@@ -22,7 +22,7 @@ app.directive('appHeader', function() {
 			'<li class="dropdown">' +
 			'<a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">菜单 <span class="caret"></span></a>' +
 			'<ul class="dropdown-menu">' +
-			'<li ng-repeat="usermenu in usermenus"><a ng-href="{{ usermenu.href }}">{{ usermenu.text }}</a></li>' +
+			'<li ng-repeat="usermenu in usermenus" ng-click="usermenu.click()"><a href="">{{ usermenu.text }}</a></li>' +
 			'</ul>' +
 			'</li>' +
 			'</ul>' +
@@ -43,8 +43,11 @@ app.directive('appHeader', function() {
 			}];
 			//$scope.usermenus用于储存侧边下拉菜单
 			$scope.usermenus = [{
-				href: 'index.html#/login', //href用于设定该菜单跳转路由
 				text: '退出', //text用于储存该菜单显示名称
+				click: function() {
+					sessionStorage.clear(); //清除登录信息
+					location.href = 'index.html#/login'; //设定该菜单跳转路由
+				}
 			}];
 			//判断当前路径，点亮对应模块
 			var _location = location.hash.split('/')[1];
