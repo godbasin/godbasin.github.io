@@ -1,8 +1,9 @@
 # [godbasin.github.io](https://godbasin.github.io)      
 ---      
-### 被删前端博客  
-
-
+### 被删前端博客                    
+                     
+             
+> [《谈谈js的闭包》](https://godbasin.github.io/2016/07/03/js-closure/)                         
 > [《谈谈js的this》](https://godbasin.github.io/2016/07/02/js-this/)                         
 > [《Angular使用笔记1--搭建Angular项目》](https://godbasin.github.io/2016/07/01/angular-note-1-create-angular-project/)                                          
 > [《CSS的display有关》](https://godbasin.github.io/2016/06/26/about-display/)                         
