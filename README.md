@@ -2,7 +2,8 @@
 ---      
 ### 被删前端博客                    
                      
-             
+                  
+> [《Angular使用笔记2--创建登录页面》](https://godbasin.github.io/2016/07/08/angular-note-2-create-login/)                
 > [《谈谈js的闭包》](https://godbasin.github.io/2016/07/03/js-closure/)                         
 > [《谈谈js的this》](https://godbasin.github.io/2016/07/02/js-this/)                         
 > [《Angular使用笔记1--搭建Angular项目》](https://godbasin.github.io/2016/07/01/angular-note-1-create-angular-project/)                                          
