@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for scripts\directives\headerDir.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">all files</a> / <a href="index.html">scripts/directives/</a> headerDir.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">3.85% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>1/26</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/6</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/6</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">3.85% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>1/26</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">'use strict';
+&nbsp;
+/*全局头部加载*/
+app.directive('appHeader', <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >	return {</span>
+		restrict: 'AE',
+		template: '&lt;nav class="navbar navbar-default header"&gt;' +
+			'&lt;div class="container-fluid"&gt;' +
+			'&lt;div class="navbar-header"&gt;' +
+			'&lt;a class="navbar-brand" href="#"&gt;Godbasin&lt;/a&gt;' +
+			'&lt;/div&gt;' +
+			'&lt;div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"&gt;' +
+			'&lt;ul class="nav navbar-nav"&gt;' +
+			'&lt;li ng-repeat="menu in menus" ng-class="menu.current ? \'active\' : \'\'"&gt;&lt;a ng-href="{{ menu.href }}"&gt;' +
+			'{{ menu.text }}' +
+			'&lt;span ng-show="menu.current" class="sr-only"&gt;(current)&lt;/span&gt;' +
+			'&lt;/a&gt;' +
+			'&lt;/li&gt;' +
+			'&lt;/ul&gt;' +
+			'&lt;ul class="nav navbar-nav navbar-right"&gt;' +
+			'&lt;li&gt;&lt;a&gt;{{ clock }}&lt;/a&gt;&lt;/li&gt;' +
+			'&lt;li class="dropdown"&gt;' +
+			'&lt;a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"&gt;菜单 &lt;span class="caret"&gt;&lt;/span&gt;&lt;/a&gt;' +
+			'&lt;ul class="dropdown-menu"&gt;' +
+			'&lt;li ng-repeat="usermenu in usermenus" ng-click="usermenu.click()"&gt;&lt;a href=""&gt;{{ usermenu.text }}&lt;/a&gt;&lt;/li&gt;' +
+			'&lt;/ul&gt;' +
+			'&lt;/li&gt;' +
+			'&lt;/ul&gt;' +
+			'&lt;/div&gt;' +
+			'&lt;/div&gt;' +
+			'&lt;/nav&gt;',
+		replace: true,
+		controller: <span class="fstat-no" title="function not covered" >function($scope, $element, $timeout) {</span>
+			//$scope.menus用于储存主菜单
+<span class="cstat-no" title="statement not covered" >			$scope.menus = [{</span>
+				title: 'index', //title用于储存路由对应的路径
+				href: 'index.html#/index', //href用于设定该菜单跳转路由
+				text: '首页', //text用于储存该菜单显示名称
+			}, {
+				title: 'other',
+				href: 'index.html#/other',
+				text: '其他',
+			}];
+			//$scope.usermenus用于储存侧边下拉菜单
+<span class="cstat-no" title="statement not covered" >			$scope.usermenus = [{</span>
+				text: '退出', //text用于储存该菜单显示名称
+				click: <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >					sessionStorage.clear(); </span>//清除登录信息
+<span class="cstat-no" title="statement not covered" >					location.href = 'index.html#/login'; </span>//设定该菜单跳转路由
+				}
+			}];
+			//判断当前路径，点亮对应模块
+<span class="cstat-no" title="statement not covered" >			var _location = location.hash.split('/')[1];</span>
+<span class="cstat-no" title="statement not covered" >			for (var i in $scope.menus) {</span>
+				//current用于储存当前菜单是否与当前路径符合，符合则点亮(active)菜单
+<span class="cstat-no" title="statement not covered" >				if ($scope.menus[i].title == _location) {</span>
+<span class="cstat-no" title="statement not covered" >					$scope.menus[i].current = true;</span>
+				} else {
+<span class="cstat-no" title="statement not covered" >					$scope.menus[i].current = false;</span>
+				}
+			}
+			//用于格式化时间（少于10在前面增加0）
+<span class="cstat-no" title="statement not covered" >			var numberStandard = <span class="fstat-no" title="function not covered" >function(num) {</span></span>
+<span class="cstat-no" title="statement not covered" >				var _val = Number(num),</span>
+					_num;
+<span class="cstat-no" title="statement not covered" >				_num = (_val &lt; 10) ? ('0' + _val) : ('' + _val);</span>
+<span class="cstat-no" title="statement not covered" >				return _num;</span>
+			};
+			//用于渲染时钟
+<span class="cstat-no" title="statement not covered" >			var renderClock = <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >				var _date = new Date();</span>
+<span class="cstat-no" title="statement not covered" >				$scope.clock = '';</span>
+<span class="cstat-no" title="statement not covered" >				$scope.clock += _date.getFullYear() + '年' + (_date.getMonth() + 1) + '月' +</span>
+					_date.getDate() + '日';
+<span class="cstat-no" title="statement not covered" >				$scope.clock += ' ' + numberStandard(_date.getHours()) + ':' + numberStandard(_date.getMinutes()) +</span>
+					':' + numberStandard(_date.getSeconds());
+				//此处已通过参数注入$timeout服务，若需要注入自定义服务需要require
+<span class="cstat-no" title="statement not covered" >				$timeout(<span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >					renderClock();</span>
+				}, 500);
+			};
+<span class="cstat-no" title="statement not covered" >			renderClock();</span>
+			//判断是否已经登录，未登录则进行跳转
+<span class="cstat-no" title="statement not covered" >			if (!sessionStorage.getItem('username')) {</span>
+<span class="cstat-no" title="statement not covered" >				alert("请登录");</span>
+<span class="cstat-no" title="statement not covered" >				location.href = 'index.html#/';</span>
+			}
+		}
+	};
+});
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Jul 15 2016 12:48:43 GMT+0800 (中国标准时间)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

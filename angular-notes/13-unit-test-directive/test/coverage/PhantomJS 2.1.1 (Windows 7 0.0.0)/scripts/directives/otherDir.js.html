@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for scripts\directives\otherDir.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">all files</a> / <a href="index.html">scripts/directives/</a> otherDir.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">4.76% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>1/21</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/2</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/7</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">4.76% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>1/21</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">'use strict';
+&nbsp;
+//上传图片模块加载
+app.directive('fileInput', ['$timeout', <span class="fstat-no" title="function not covered" >function($timeout) {</span>
+<span class="cstat-no" title="statement not covered" >	return {</span>
+		restrict: 'AE',
+		transclude: true,
+		replace: true,
+		template: '&lt;div class="file-input" ng-click="click()"&gt;' +
+			'&lt;a class="btn btn-default"&gt;{{ text }}&lt;/a&gt;' +
+			'&lt;/div&gt;',
+		scope: {
+			loadphoto: "=loadphoto",
+			text: "@text",
+		},
+		link: <span class="fstat-no" title="function not covered" >function(scope, element, attrs) {</span>
+<span class="cstat-no" title="statement not covered" >			scope.click = <span class="fstat-no" title="function not covered" >function() {</span></span>
+				//从该指令根节点元素element中查找input
+<span class="cstat-no" title="statement not covered" >				var $input = element[0].getElementsByTagName("input");</span>
+				//如果已经存在则先移除input
+<span class="cstat-no" title="statement not covered" >				if ($input.length) {</span>
+<span class="cstat-no" title="statement not covered" >					element[0].removeChild($input[0]);</span>
+				}
+				//创建新的file input
+<span class="cstat-no" title="statement not covered" >				$input = document.createElement("input");</span>
+<span class="cstat-no" title="statement not covered" >				$input.setAttribute("type", "file");</span>
+<span class="cstat-no" title="statement not covered" >				$input.setAttribute("name", "file");</span>
+<span class="cstat-no" title="statement not covered" >				$input.setAttribute("accept", "image/*");</span>
+				//将input添加进该指令根节点元素element中
+<span class="cstat-no" title="statement not covered" >				element[0].appendChild($input);</span>
+				//绑定click事件，取消事件的传播
+<span class="cstat-no" title="statement not covered" >				$input.addEventListener("click", <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >					event.stopPropagation();</span>
+				});
+				//绑定change事件，分析获取图片url
+<span class="cstat-no" title="statement not covered" >				$input.addEventListener("change", <span class="fstat-no" title="function not covered" >function(e) {</span></span>
+<span class="cstat-no" title="statement not covered" >					var fReader = new FileReader(),</span>
+						file = e.target.files[0];
+<span class="cstat-no" title="statement not covered" >					fReader.readAsDataURL(file); </span>//获取图片url
+<span class="cstat-no" title="statement not covered" >					fReader.onload = <span class="fstat-no" title="function not covered" >function(e) {</span></span>
+<span class="cstat-no" title="statement not covered" >						var url = e.target.result;</span>
+<span class="cstat-no" title="statement not covered" >						scope.loadphoto(url); </span>//返回图片url
+					};
+				}, false);
+				//即刻触发点击
+<span class="cstat-no" title="statement not covered" >				$timeout(<span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >					$input.click();</span>
+				});
+&nbsp;
+			};
+		},
+	};
+}]);
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Jul 15 2016 15:38:29 GMT+0800 (中国标准时间)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

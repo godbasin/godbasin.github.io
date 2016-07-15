@@ -1,0 +1,34 @@
+<header app-header></header>
+<div class="container-fluid row">
+	<aside class="col-md-2  col-md-offset-1" id="according">
+		<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+			<div class="panel panel-default list-group" ng-repeat="menu in asidemenus">
+				<div class="panel-heading" role="tab">
+					<ul class="panel-title ">
+						<li data-toggle="collapse" aria-expanded="true" aria-controls="collapse{{ $index }}" data-target="#collapse{{ $index }}" ng-click="menu.click()">
+							{{ menu.title }}
+						</li>
+					</ul>
+				</div>
+				<div id="collapse{{ $index }}" class="panel-collapse collapse in">
+					<ul class="list-group">
+						<li ng-repeat="item in menu.menus" class="list-group-item" role="button" data-toggle="collapse" ng-click="item.click()">{{ item.text }}</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</aside>
+	<article class="col-md-7">
+		<section class="index-content">
+			<p ng-show="loading == 'init' || loading == 'name'">昵称：被删</p>
+			<p ng-show="loading == 'init' || loading == 'email'">邮箱：wangbeishan@163.com</p>
+			<p ng-show="loading == 'init' || loading == 'github'">github: <a href="https://github.com/godbasin">github.com/godbasin</a></p>
+			<div ng-show="loading == 'sethead'">
+				<a file-input text="上传头像" loadphoto="loadphoto"></a>
+				<img ng-src="{{ avatar }}"  />
+			</div>
+			<div ng-show="loading == 'setinfo'">这里是修改资料页面</div>
+			<div ng-show="loading == 'other'">这里是其他页面</div>
+		</section>
+	</article>
+</div>

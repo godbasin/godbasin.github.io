@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for scripts\filter\filter.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">all files</a> / <a href="index.html">scripts/filter/</a> filter.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">2.7% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>1/37</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/31</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/6</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">3.03% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>1/33</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">'use strict';
+&nbsp;
+//小数百分比格式
+app.filter('percentage', <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >	return <span class="fstat-no" title="function not covered" >function(str, len) {</span></span>
+<span class="cstat-no" title="statement not covered" >		if (str === undefined) <span class="cstat-no" title="statement not covered" >return;</span></span>
+<span class="cstat-no" title="statement not covered" >		var _str = (parseFloat(str) * 100).toFixed(1) + '%';</span>
+<span class="cstat-no" title="statement not covered" >		return _str;</span>
+	}
+})
+&nbsp;
+//日期转换,type指格式(默认为xxxx.xx.xx，传入cn为中文日期xxxx年xx月xx日)
+.filter('mydate', <span class="fstat-no" title="function not covered" >function() {</span>
+	//格式化数字，小于10表示为0x
+<span class="cstat-no" title="statement not covered" >	var numStd = <span class="fstat-no" title="function not covered" >function(num) {</span></span>
+<span class="cstat-no" title="statement not covered" >			if (num === undefined) <span class="cstat-no" title="statement not covered" >return; </span></span>//若无传入值，则返回
+<span class="cstat-no" title="statement not covered" >			var _val = parseInt(num), //数字化值，去除多余0</span>
+				_num;
+			//判断小于10，则在前方添加0
+<span class="cstat-no" title="statement not covered" >			_num = (_val &lt; 10) ? ('0' + _val) : ('' + _val);</span>
+<span class="cstat-no" title="statement not covered" >			return _num; </span>//返回新值
+		},
+		//反格式化数字，去掉0
+		numUnstd = <span class="fstat-no" title="function not covered" >function(num) {</span>
+<span class="cstat-no" title="statement not covered" >			if (num === undefined) <span class="cstat-no" title="statement not covered" >return; </span></span>//若无传入值，则返回
+<span class="cstat-no" title="statement not covered" >			var _num = parseInt(num); </span>//数字化值，去除多余0
+<span class="cstat-no" title="statement not covered" >			return _num; </span>//返回新值
+		};
+<span class="cstat-no" title="statement not covered" >	return <span class="fstat-no" title="function not covered" >function(str, type) {</span></span>
+<span class="cstat-no" title="statement not covered" >		if (str === undefined) <span class="cstat-no" title="statement not covered" >return; </span></span>//若无传入值，则返回
+<span class="cstat-no" title="statement not covered" >		var _str = str + ''; </span>//将该值转换为字符串格式
+		//正则判断当前日期格式
+		//是否为xxxx-xx-xx
+<span class="cstat-no" title="statement not covered" >		if (/\d{4}-\d{1,2}-\d{1,2}/.test(_str)) {</span>
+<span class="cstat-no" title="statement not covered" >			var datearr = _str.split('-'); </span>//取出年月日
+			//若type为cn，则转换成xxxx年xx月xx日，否则为xxxx.xx.xx
+<span class="cstat-no" title="statement not covered" >			if (type &amp;&amp; type.toLowerCase() == 'cn') {</span>
+<span class="cstat-no" title="statement not covered" >				_str = numUnstd(datearr[0]) + '年' + numUnstd(datearr[1]) + '月' + numUnstd(datearr[2]) + '日';</span>
+			} else {
+<span class="cstat-no" title="statement not covered" >				_str = numStd(datearr[0]) + '.' + numStd(datearr[1]) + '.' + numStd(datearr[2]);</span>
+			}
+		//是否为xxxx.xx.xx
+		} else <span class="cstat-no" title="statement not covered" >if (/\d{4}\.\d{1,2}\.\d{1,2}/.test(_str)) {</span>
+<span class="cstat-no" title="statement not covered" >			var datearr = _str.split('.'); </span>//取出年月日
+			//若type为cn，则转换成xxxx年xx月xx日，否则为xxxx.xx.xx
+<span class="cstat-no" title="statement not covered" >			if (type &amp;&amp; type.toLowerCase() == 'cn') {</span>
+<span class="cstat-no" title="statement not covered" >				_str = numUnstd(datearr[0]) + '年' + numUnstd(datearr[1]) + '月' + numUnstd(datearr[2]) + '日';</span>
+			} else {
+<span class="cstat-no" title="statement not covered" >				_str = numStd(datearr[0]) + '.' + numStd(datearr[1]) + '.' + numStd(datearr[2]);</span>
+			}
+		//是否为xxxx年xx月xx日
+		} else <span class="cstat-no" title="statement not covered" >if ((_str.indexOf('年') &gt; -1) &amp;&amp; (_str.indexOf('月') &gt; -1) &amp;&amp; (_str.indexOf('日') &gt; -1)) {</span>
+			 //取出年月日
+<span class="cstat-no" title="statement not covered" >			var datearr = _str.split('年'),</span>
+				year = datearr[0],
+				month = datearr[1].split('月')[0],
+				day = datearr[1].split('月')[1].replace('日', '');
+			//若type为cn，则转换成xxxx年xx月xx日，否则为xxxx.xx.xx
+<span class="cstat-no" title="statement not covered" >			if (type &amp;&amp; type.toLowerCase() == 'cn') {</span>
+<span class="cstat-no" title="statement not covered" >				_str = numUnstd(year) + '年' + numUnstd(month) + '月' + numUnstd(day) + '日';</span>
+			} else {
+<span class="cstat-no" title="statement not covered" >				_str = numStd(year) + '.' + numStd(month) + '.' + numStd(day);</span>
+			}	
+		} else {
+<span class="cstat-no" title="statement not covered" >			return str; </span>//以上均不符合，返回原值
+		}
+<span class="cstat-no" title="statement not covered" >		return _str; </span>//返回新值
+	};
+});</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Jul 15 2016 12:48:43 GMT+0800 (中国标准时间)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

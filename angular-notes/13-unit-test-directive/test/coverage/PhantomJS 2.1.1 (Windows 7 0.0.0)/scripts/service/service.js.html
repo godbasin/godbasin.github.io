@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for scripts\service\service.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">all files</a> / <a href="index.html">scripts/service/</a> service.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">2.56% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>1/39</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/24</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/11</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">2.7% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>1/37</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">'use strict';
+&nbsp;
+app.factory('qService', ['$http', '$q', <span class="fstat-no" title="function not covered" >function($http, $q) {</span>
+<span class="cstat-no" title="statement not covered" >	return {</span>
+		query: <span class="fstat-no" title="function not covered" >function(param) {</span>
+<span class="cstat-no" title="statement not covered" >			var deferred = $q.defer(), //声明承诺</span>
+				cancel = <span class="fstat-no" title="function not covered" >function(reason) {</span>
+<span class="cstat-no" title="statement not covered" >					deferred.reject(reason);</span>
+				};
+<span class="cstat-no" title="statement not covered" >			$http(param).</span>
+			success(<span class="fstat-no" title="function not covered" >function(data) {</span>
+<span class="cstat-no" title="statement not covered" >				deferred.resolve(data); </span>//请求成功
+			}).
+			error(<span class="fstat-no" title="function not covered" >function(data) {</span>
+<span class="cstat-no" title="statement not covered" >				deferred.reject(data); </span>//请求失败
+			});
+<span class="cstat-no" title="statement not covered" >			return {</span>
+				promise: deferred.promise, // 返回承诺
+				cancel: cancel // 返回取消事件
+			};
+		},
+		multiquery: <span class="fstat-no" title="function not covered" >function(params) {</span>
+<span class="cstat-no" title="statement not covered" >			var promises = [];</span>
+<span class="cstat-no" title="statement not covered" >			for (var i in params) {</span>
+<span class="cstat-no" title="statement not covered" >				var promise = $http(params[i]);</span>
+<span class="cstat-no" title="statement not covered" >				promises.push(promise);</span>
+			}
+<span class="cstat-no" title="statement not covered" >			return $q.all(promises);</span>
+		}
+	};
+}])
+//异步提交带图片表单
+/* params:
+ * {
+ * 	fileinput: 传入file input的dom对象,
+ * 	url: 服务器地址,
+ * 	other: 其他需要发送的参数{键：值}
+ *  callback: 成功回调
+ *  errback: 失败回调
+ * }
+ */
+.factory('AsyncForm', <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >	var feature = {}; </span>//用于检查FormData和fileAPI的兼容性
+<span class="cstat-no" title="statement not covered" >	feature.fileapi = (window.File &amp;&amp; window.FileReader &amp;&amp; window.FileList &amp;&amp; window.Blob);</span>
+<span class="cstat-no" title="statement not covered" >	feature.formdata = window.FormData !== undefined;</span>
+<span class="cstat-no" title="statement not covered" >	var fileAPI = feature.fileapi &amp;&amp; feature.formdata,</span>
+		formData,
+		xhr = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP'),
+		AsyncForm = <span class="fstat-no" title="function not covered" >function(params) {</span>
+<span class="cstat-no" title="statement not covered" >			if (fileAPI) {</span>
+<span class="cstat-no" title="statement not covered" >				var otherparams = params.other, //其他需要发送的参数{键：值}</span>
+					callback = params.callback, //成功回调
+					errback = params.errback, //失败回调
+					files = (params.fileinput &amp;&amp; params.fileinput.files) ? params.fileinput.files : {}, //传入file input的dom对象
+					onreadystatechange;
+				//设置onreadystatechange
+<span class="cstat-no" title="statement not covered" >				onreadystatechange = <span class="fstat-no" title="function not covered" >function(func, _xhr, errfunc) {</span></span>
+<span class="cstat-no" title="statement not covered" >					_xhr.onreadystatechange = <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >						if (_xhr.readyState == 4) {</span>
+<span class="cstat-no" title="statement not covered" >							if (_xhr.status == 200) {</span>
+								//判断若有成功回调，则执行
+<span class="cstat-no" title="statement not covered" >								if (typeof func == 'function') {<span class="cstat-no" title="statement not covered" >func(_xhr.responseText);} </span></span>
+							} else {
+								//判断若有失败回调，则执行
+<span class="cstat-no" title="statement not covered" >								if (typeof errfunc == 'function') {<span class="cstat-no" title="statement not covered" >errfunc();}</span></span>
+							}
+						}
+					}
+				};
+				//新建formData对象
+<span class="cstat-no" title="statement not covered" >				formData = new FormData();</span>
+				//判断是否有图片对象，有则添加进队列
+<span class="cstat-no" title="statement not covered" >				if (files) {</span>
+<span class="cstat-no" title="statement not covered" >					for (var i = 0; i &lt; files.length; i++) {</span>
+<span class="cstat-no" title="statement not covered" >						formData.append('file', files[i]);</span>
+					}
+				}
+				//若有其他表单项，添加进队列
+<span class="cstat-no" title="statement not covered" >				for (i in otherparams) {</span>
+<span class="cstat-no" title="statement not covered" >					formData.append(i, otherparams[i]);</span>
+				}
+				//设置POST方法，以及服务器地址
+<span class="cstat-no" title="statement not covered" >				xhr.open('post', params.url);</span>
+<span class="cstat-no" title="statement not covered" >				onreadystatechange(callback, xhr, errback);</span>
+			} else {
+<span class="cstat-no" title="statement not covered" >				alert("浏览器不支持FormData或fileAPI");</span>
+			}
+		};
+<span class="cstat-no" title="statement not covered" >	AsyncForm.prototype = {</span>
+		//提交表单事件
+		submit: <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >			xhr.send(formData);</span>
+		},
+	};
+<span class="cstat-no" title="statement not covered" >	return AsyncForm;</span>
+});</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Jul 15 2016 15:38:29 GMT+0800 (中国标准时间)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>
