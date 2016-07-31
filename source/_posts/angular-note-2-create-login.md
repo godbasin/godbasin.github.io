@@ -20,6 +20,7 @@ tags: 笔记
 
 ### 创建登录页面
 - 首先我们在views文件夹内添加一个login.html
+
 ``` html
 <div class="container" id="login">
 	<!--ng-submit绑定登录事件-->
@@ -69,6 +70,7 @@ tags: 笔记
 ### 添加登录页面的控制器
 - 在scripts文件夹中的controller目录下增加loginCtrl.js
 - 在index中引入该js文件
+
 ``` javascript
 app.controller('LoginCtrl', ['$scope', '$http', function($scope, $http) {
 	//定义submit事件，对应html中ng-submit

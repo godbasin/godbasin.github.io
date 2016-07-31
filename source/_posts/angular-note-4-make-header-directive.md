@@ -18,10 +18,10 @@ tags: 笔记
 ### 指令常用属性
 - restrict
 - 可以是EAMC这四个字母的任意组合，来限定指令的应用场景
-  > E: 只限元素名使用
-  > A: 只限属性使用
-  > C: 只限类名使用
-  > M: 只限注释使用
+  - E: 只限元素名使用
+  - A: 只限属性使用
+  - C: 只限类名使用
+  - M: 只限注释使用
 
 - template/templateUrl
   - 指定HTML标记替换指令内容（或指令自身）
@@ -36,14 +36,14 @@ tags: 笔记
 
 - scope作用域
   - 如果设置为true 
-  > 将为这个指令创建一个新的作用域
-  > 如果在同一个元素中有多个指令需要新的作用域的话，它还是只会创建一个作用域
-  > 新的作用域规则不适用于根模版（root of the template），因此根模版往往会获得一个新的作用域
+    - 将为这个指令创建一个新的作用域
+    - 如果在同一个元素中有多个指令需要新的作用域的话，它还是只会创建一个作用域
+    - 新的作用域规则不适用于根模版（root of the template），因此根模版往往会获得一个新的作用域
   - 如果设置为{}(object hash)
-  > 将创建一个新的、独立(isolate)的作用域
-  > @或@attr: 建立一个local scope property到DOM属性的绑定
-  > =或=expression: 在本地作用域属性与父作用域属性之间设置双向的绑定
-  > &或&attr: 提供一个在父作用域上下文中执行一个表达式的途径
+    - 将创建一个新的、独立(isolate)的作用域
+    - @或@attr: 建立一个local scope property到DOM属性的绑定
+    - =或=expression: 在本地作用域属性与父作用域属性之间设置双向的绑定
+    - &或&attr: 提供一个在父作用域上下文中执行一个表达式的途径
 
 - require
   - 请求另外的controller，传入当前directive的link函数中
@@ -88,6 +88,7 @@ tags: 笔记
 ### 添加index页面
 - 在views文件夹内添加一个index.html
 - 在app.js文件中添加路由
+
 ``` javascript
 .when('/index', {
 	templateUrl: 'views/index.html', //index的html页面
@@ -95,12 +96,14 @@ tags: 笔记
 })
 ```
 - 设置login登录后跳转至index页面
+
 ``` javascript
 window.location.href = 'index.html#/index';
 ```
 ### 添加头部菜单指令
 - 在scripts文件夹中添加directives文件夹，然后新增headerDir.js文件
 - 创建指令header
+
 ``` javascript
 app.directive('appheader', ['$timeout', function($timeout) {
 	return {
@@ -126,6 +129,7 @@ app.directive('appheader', ['$timeout', function($timeout) {
   - 设置主菜单和侧边下拉菜单内容
   - 判断当前路径，并点亮对应菜单（使其active）
   - 加载和格式化时钟，并定时刷新时间
+
 ``` javascript
 controller: function($scope, $element, $timeout) {
 	//$scope.menus用于储存主菜单

@@ -22,6 +22,7 @@ tags: 笔记
 
 ### factory服务示例
 - 创建一个对象，为它添加属性，然后把这个对象返回出来
+
 ``` javascript
 app.factory('CommonInfo', function() {
 	var data = '';
@@ -39,6 +40,7 @@ app.factory('CommonInfo', function() {
 ### service服务示例
 - 用"new"关键字实例化，给"this"添加属性，然后 service返回"this"
 - Angular中，Services和Factories几乎一样
+
 ``` javascript
 app.service('CommonInfo', function() {
 	var data = '';
@@ -53,6 +55,7 @@ app.service('CommonInfo', function() {
 
 ### provider
 - 使用Provider创建一个service的独特之处是，你可以在Provider对象传递到应用程序的其他部分之前在app.config函数对其进行修改
+
 ``` javascript
 app.provider('CommonInfo', function() {
 	var data = '';
@@ -89,6 +92,7 @@ app.config(function(CommonInfo) {
 ### 使用$rootscope保存公用信息
 - 使用$rootscope跟作用域保存公用信息，则在每个控制器中均可获取这些信息
 - 使用$rootscope需要引用'$rootscope'依赖
+
 ``` javascript
 app.controller('SomeCtrl', ['$rootscope', '$scope', function($rootscope, $scope) {
 	//设置$rootscope的信息
@@ -109,11 +113,11 @@ app.controller('SomeCtrl', ['$rootscope', '$scope', function($rootscope, $scope)
 - 可利用SessionStorage保存一些会话类公共信息
 
 ### 使用sessionStorage
-> 检测兼容性：window.sessionStorage
-> 设置session项：sessionStorage.setItem(key, value)
-> 获取session项：sessionStorage.getItem(key)
-> 删除session项：sessionStorage.removeItem(key)
-> 清除所有session信息：sessionStorage.clear()
+- 检测兼容性：window.sessionStorage
+- 设置session项：sessionStorage.setItem(key, value)
+- 获取session项：sessionStorage.getItem(key)
+- 删除session项：sessionStorage.removeItem(key)
+- 清除所有session信息：sessionStorage.clear()
 
 ## 各种方法适用性
 -----
@@ -128,10 +132,10 @@ app.controller('SomeCtrl', ['$rootscope', '$scope', function($rootscope, $scope)
 ### sessionStorage的使用
 - 会话中的数据，如登录信息
 - 模块间跳转时需要携带数据信息
-> 跳转前设置session
-> location.href进行跳转
-> 控制器加载时判断是否加载特定数据
-> 加载数据后销毁相关session
+  - 跳转前设置session
+  - location.href进行跳转
+  - 控制器加载时判断是否加载特定数据
+  - 加载数据后销毁相关session
 
 ## 结束语
 -----

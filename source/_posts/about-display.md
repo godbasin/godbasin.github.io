@@ -28,8 +28,8 @@ tags: 分享
 -----
 ### block：块状元素
 - 常见的默认display: block元素
-> div/p/h1/h2...h6/ul/ol
-> html5新元素: section/article/header/footer等
+  - div/p/h1/h2...h6/ul/ol
+  - html5新元素: section/article/header/footer等
 
 - 可容纳其他块状元素或内联元素
 此时我们可以在block元素里添加其他块状元素和内联元素。
@@ -47,7 +47,7 @@ block元素可以设置宽度width和高度height，有效。
 
 ### inline：内联元素
 - 常见的默认display: inline元素
-> a/span/i/strong/sub等
+  - a/span/i/strong/sub等
 
 - 位于行内，即位于块状元素或者其他内联元素内
 此时我们可以将inline元素放置于块状元素或者其他内联元素内。
@@ -76,18 +76,18 @@ block元素可以设置宽度width和高度height，有效。
 - 使用inline-block
 其实，使用inline-block可以很方便解决一些问题：
   - 使元素居中
-  > 考虑下面情况，在块状元素parent内添加了另外一个块状元素child
-  > 可以将child设置display: inline-block，同时配合parent设置text-align: center，就可以设置child在parent内横向居中
-  > 此时将parent的height和line-height设置相等，就可以轻松实现child在parent内纵向居中啦
-  > 当然child元素设置margin: auto也是可以实现横向居中的
+    - 考虑下面情况，在块状元素parent内添加了另外一个块状元素child
+    - 可以将child设置display: inline-block，同时配合parent设置text-align: center，就可以设置child在parent内横向居中
+    - 此时将parent的height和line-height设置相等，就可以轻松实现child在parent内纵向居中啦
+    - 当然child元素设置margin: auto也是可以实现横向居中的
   - inline元素a/span设置宽高
-  > 考虑下面情况，我们需要给多个a元素设置为宽高一致
-  > 由于a元素内文字长度可能不一样，若使用padding也达不到想要的效果
-  > 此时将a元素设置display: inline-block，然后就可以添加有效的width和height进行设置啦
+    - 考虑下面情况，我们需要给多个a元素设置为宽高一致
+    - 由于a元素内文字长度可能不一样，若使用padding也达不到想要的效果
+    - 此时将a元素设置display: inline-block，然后就可以添加有效的width和height进行设置啦
   - 将多个块状元素放在一行
-  > 考虑下面情况，我们需要将多个block块状元素放在一行
-  > 由于block元素占位一行，即使设置宽度很小，后面的元素也会出现在下一行
-  > 此时将块状元素设置display: inline-block，解决问题
+    - 考虑下面情况，我们需要将多个block块状元素放在一行
+    - 由于block元素占位一行，即使设置宽度很小，后面的元素也会出现在下一行
+    - 此时将块状元素设置display: inline-block，解决问题
 
 ### 其他display属性
 - table/table-cell等
@@ -142,17 +142,17 @@ div { border: solid 1px red; width: 50px; height: 50px; display: display: inline
 相信使用float的童鞋们都遇到过父元素高度塌陷的问题，这是因为浮动元素不占位的问题引起的。本骚年用过的解决办法如下：
   - 父元素使用overflow: hidden（此时高度为auto）
   父元素overflow:hidden后，首先会计算height: auto的真实高度，由于其触发了BFC，需要包含子元素，所以高度不是0，而是子元素高度。
-  > 这里补充BFC的三个特性
-  > 1.BFC会阻止垂直外边距（margin-top、margin-bottom）折叠
-  > 2.BFC不会重叠浮动元素
-  > 3.BFC可以包含浮动
+    - 这里补充BFC的三个特性
+    - 1.BFC会阻止垂直外边距（margin-top、margin-bottom）折叠
+    - 2.BFC不会重叠浮动元素
+    - 3.BFC可以包含浮动
   - 使父元素也成为浮动float元素
   将父容器也改成浮动定位，这样它就可以带着子元素一起浮动了
   - 使用clear清除浮动
   在浮动元素后方加入clear: both的元素，就可以清除浮动撑开父元素
-  > 简述clear原理
-  > 在样式中添加clear:right，理解为不允许右边有浮动元素，由于上一个元素是浮动元素，因此该元素会自动下移一行来满足规则
-  > 添加clear:both，则可以清除左右两边的浮动了
+    - 简述clear原理
+    - 在样式中添加clear:right，理解为不允许右边有浮动元素，由于上一个元素是浮动元素，因此该元素会自动下移一行来满足规则
+    - 添加clear:both，则可以清除左右两边的浮动了
 
 - 参考
 [《浮动从何而来 我们为何要清除浮动 清除浮动的原理是什么》](http://www.jb51.net/css/67471.html) 
