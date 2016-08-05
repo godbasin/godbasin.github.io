@@ -2,7 +2,8 @@
 ---      
 ### 被删前端博客                    
                             
-                      
+
+> [《Angular使用笔记13-对指令Directive进行单元测试》](https://godbasin.github.io/2016/08/05/angular-note-13-unit-test-directive/)                                     
 > [《Angular使用笔记12-Karma的一些配置项》](https://godbasin.github.io/2016/07/31/angular-note-12-karma-config/)               
 > [《Angular使用笔记11-使用Karma和Jasmine进行单元测试》](https://godbasin.github.io/2016/07/30/angular-note-11-karma-jasmine-test-create/)               
 > [《Angular使用笔记10-有关路由以及控制器间通信》](https://godbasin.github.io/2016/07/29/angular-note-10-route-and-controller-conmunitaion/)                 
