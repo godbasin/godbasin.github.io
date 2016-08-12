@@ -3,6 +3,8 @@
 ### 被删前端博客                    
                             
 
+> [《React使用笔记2--创建登录组件》](https://godbasin.github.io/2016/08/12/react-notes-2-create-login/)                 
+> [《React使用笔记1--使用webpack搭建React项目》](https://godbasin.github.io/2016/08/06/react-notes-1-build-react-project/)                                     
 > [《Angular使用笔记13-对指令Directive进行单元测试》](https://godbasin.github.io/2016/08/05/angular-note-13-unit-test-directive/)                                     
 > [《Angular使用笔记12-Karma的一些配置项》](https://godbasin.github.io/2016/07/31/angular-note-12-karma-config/)               
 > [《Angular使用笔记11-使用Karma和Jasmine进行单元测试》](https://godbasin.github.io/2016/07/30/angular-note-11-karma-jasmine-test-create/)               
