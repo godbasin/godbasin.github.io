@@ -2,7 +2,8 @@
 ---      
 ### 被删前端博客                    
                             
-
+> [《React使用笔记4--创建头部组件》](https://godbasin.github.io/2016/08/14/react-notes-4-create-header/)               
+> [《React使用笔记3--组件的State/Props与生命周期》](https://godbasin.github.io/2016/08/13/react-notes-3-props-state-lifecycle/)                 
 > [《React使用笔记2--创建登录组件》](https://godbasin.github.io/2016/08/12/react-notes-2-create-login/)                 
 > [《React使用笔记1--使用webpack搭建React项目》](https://godbasin.github.io/2016/08/06/react-notes-1-build-react-project/)                                     
 > [《Angular使用笔记13-对指令Directive进行单元测试》](https://godbasin.github.io/2016/08/05/angular-note-13-unit-test-directive/)                                     
