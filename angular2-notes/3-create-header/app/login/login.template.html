@@ -1,0 +1,17 @@
+<div class="container login">
+    <!--(ngSubmit)为绑定表单事件-->
+    <form id="login-form" (ngSubmit)="submitForm(name, password)">
+        <h3 class="text-center">login</h3>
+        <div class="form-group">
+            <label>account</label>
+            <!--[value]绑定该组件作用域的值，而(input)用于处理输入事件，实现双向绑定-->
+            <input class="form-control" type="text" [value]="name" (input)="name = $event.target.value" placeholder="username" autofocus required>
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <!--[value]绑定该组件作用域的值，而(input)用于处理输入事件，实现双向绑定-->
+            <input class="form-control" type="password" [value]="password" (input)="password = $event.target.value" placeholder="password" required>
+        </div>
+        <button type="submit" class="btn btn-default">登录</button>
+    </form>
+</div>
