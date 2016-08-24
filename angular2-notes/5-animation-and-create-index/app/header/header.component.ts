@@ -9,6 +9,7 @@ export class Header {
   // clock用于保存时间
   clock: string = '';
   clockTime;
+  // menus用于储存主菜单
   menus = [{
     title: 'index', // title用于储存路由对应的路径
     href: '/index', // href用于设定该菜单跳转路由
@@ -41,11 +42,13 @@ export class Header {
     this.clock = clock;
   }
 
+  // 生命周期钩子：初始化
   ngOnInit() {
     // 使用bind解决setInterval的执行环境问题
     this.clockTime = setInterval(this.renderClock.bind(this), 500);
   }
 
+  // 生命周期钩子：销毁
   ngOnDestroy() {
     // 控件摧毁时移除定时事件
     clearInterval(this.clockTime);
