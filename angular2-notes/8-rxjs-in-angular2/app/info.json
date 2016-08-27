@@ -1,0 +1,20 @@
+{
+    "data": [
+        {
+            "name": "Observable(可观察对象)",
+            "content": "是一个包含来自未来、可以被使用的值(value)或事件(event)的集合"
+        }, {
+            "name": "Observe(观察者)",
+            "content": "是一个知道如何监听、处理来自Obervable的值的函数集合"
+        }, {
+            "name": "Subscription(订阅)",
+            "content": "代表着Observable的执行动作，我们可以使用它来停止Obervable继续执行"
+        }, {
+            "name": "Operators(操作)",
+            "content": "一系列可以操作集合的pure function，像是过滤(filter)、转换(map)等等"
+        }, {
+            "name": "Subject",
+            "content": "相当于一个事件发射器，是唯一能够向多个Observer广播值(value)的唯一手段"
+        }
+    ]
+}

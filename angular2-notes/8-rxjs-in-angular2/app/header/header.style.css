@@ -1,0 +1,27 @@
+.header {
+    box-shadow: 0 1px 1px 1px rgba(0, 0, 0, .1);
+    background-image: linear-gradient(-180deg, #fff 0, #e2e2e2 100%);
+    padding: 0 20px;
+    margin-bottom: 100px;
+    border-radius: 0;
+}
+
+.header h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 40px;
+    padding-bottom: 19px;
+}
+
+.header .dropdown-toggle:hover + .dropdown-menu {
+    display: block;
+}
+
+@media screen and (max-width: 768px) {
+    /* Remove the padding we set earlier */
+    .header {
+        padding-left: 0;
+        padding-right: 0;
+        margin-bottom: 30px;
+    }
+}

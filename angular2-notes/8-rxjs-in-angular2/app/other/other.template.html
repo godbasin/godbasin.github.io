@@ -1,0 +1,15 @@
+<!--插入头部组件，注入指令后生效-->
+<my-header></my-header>
+<div class="container">
+    <h3>RxJS相关</h3>
+    <table class="table">
+        <tbody>
+            <tr *ngFor="let item of rxjsDate">
+                <td>
+                    <h4>{{ item.name }} : </h4>
+                    <h5>{{ item.content }}</h5>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,37 @@
+<!--插入头部组件，注入指令后生效-->
+<my-header></my-header>
+<div class="container-fluid row">
+    <aside class="col-md-2  col-md-offset-1" id="according">
+        <div class="panel-group" class="according" role="tablist" aria-multiselectable="true">
+            <!--
+                *ng-for 中的*是Angular2中template语法的缩写，如果是全部的话，应该为
+                <div ng-for #menu="$implicit" [ng-for-of]="asidemenus" #i="index"></div>
+            -->
+            <div class="panel panel-default list-group" *ngFor="let menu of asidemenus; let i = index">
+                <div class="panel-heading" role="tab">
+                    <ul class="panel-title ">
+                        <li data-toggle="collapse" (click)="toggleContent(i)">
+                            {{ menu.title }}
+                        </li>
+                    </ul>
+                </div>
+                <div class="panel-collapse">
+                    <ul class="list-group">
+                        <!--@menuState属性动画效果-->
+                        <li *ngFor="let item of menu.menus; let j = index;" @menuState="menu.show" class="list-group-item" role="button" (click)="changeState(item.click)">{{ item.text }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </aside>
+    <article class="col-md-7">
+        <section class="index-content">
+            <p [hidden]="!(loading === 'init' || loading === 'name')">昵称：被删</p>
+            <p [hidden]="!(loading === 'init' || loading === 'email')">邮箱：wangbeishan@163.com</p>
+            <p [hidden]="!(loading === 'init' || loading === 'github')">github: <a href="https://github.com/godbasin">github.com/godbasin</a></p>
+            <div [hidden]="!(loading === 'sethead')">这里是设置头像页面</div>
+            <div [hidden]="!(loading === 'setinfo')">这里是修改资料页面</div>
+            <div [hidden]="!(loading === 'other')">这里是其他页面</div>
+        </section>
+    </article>
+</div>
