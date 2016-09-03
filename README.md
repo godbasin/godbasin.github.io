@@ -2,7 +2,7 @@
 ---      
 ### 被删前端博客                    
 
-
+> [《Vue使用笔记2--vue-router与创建登录组件》](https://godbasin.github.io/2016/09/04/vue-notes-2-create-login/)                   
 > [《Vue使用笔记1--使用vue-cli搭建Vue项目》](https://godbasin.github.io/2016/09/03/vue-notes-1-build-vue-project/)                   
 > [《React使用笔记8--组件间的通信》](https://godbasin.github.io/2016/08/28/react-notes-8-conmunicate-in-react/)                                             
 > [《React使用笔记7--关于Refs和React表单》](https://godbasin.github.io/2016/08/27/react-notes-7-form-and-ref/)                              
