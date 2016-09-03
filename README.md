@@ -1,7 +1,13 @@
 # [godbasin.github.io](https://godbasin.github.io)      
 ---      
 ### 被删前端博客                    
-                            
+
+
+> [《Vue使用笔记1--使用vue-cli搭建Vue项目》](https://godbasin.github.io/2016/09/03/vue-notes-1-build-vue-project/)                   
+> [《React使用笔记8--组件间的通信》](https://godbasin.github.io/2016/08/28/react-notes-8-conmunicate-in-react/)                                             
+> [《React使用笔记7--关于Refs和React表单》](https://godbasin.github.io/2016/08/27/react-notes-7-form-and-ref/)                              
+> [《React使用笔记6--使用flux"单向流动"你的应用》](https://godbasin.github.io/2016/08/21/react-notes-6-use-flux/)               
+> [《React使用笔记5--理解jsx以及制作index页面》](https://godbasin.github.io/2016/08/20/react-notes-5-fullfill-index/)                     
 > [《React使用笔记4--创建头部组件》](https://godbasin.github.io/2016/08/14/react-notes-4-create-header/)               
 > [《React使用笔记3--组件的State/Props与生命周期》](https://godbasin.github.io/2016/08/13/react-notes-3-props-state-lifecycle/)                 
 > [《React使用笔记2--创建登录组件》](https://godbasin.github.io/2016/08/12/react-notes-2-create-login/)                 
