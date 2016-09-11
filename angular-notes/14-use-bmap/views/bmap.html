@@ -1,0 +1,29 @@
+<!--添加头部菜单模块-->
+<header app-header></header>
+<div class="container bmap">
+	<h2>百度地图的使用</h2>
+	<section>
+		<h3>位置设置</h3>
+		<p>输入搜索位置，或点击地图获取位置，或手动输入经纬度</p>
+		<article>
+			<header>
+				<input type="text" class="form-control" ng-model="search" placeholder="输入关键词搜索位置" />
+				<a class="btn btn-primary" ng-click="location.searchText = search;">搜索</a>
+			</header>
+			<!--插入地图服务指令set-location-->
+			<div set-location search-text="{{ location.searchText }}" location="location" location-str="{{ location.locationStr }}"></div>
+			<div>
+				<p>经度<input type="number" class="form-control" ng-model="location.longitude" /></p>
+				<p>维度<input type="number" class="form-control" ng-model="location.latitude" /></p>
+				<a ng-click="location.locationStr = location.longitude + ' ' + location.latitude;" class="btn btn-default">设置</a>
+			</div>
+		</article>
+	</section>
+	<section>
+		<h3>标志路径</h3>
+		<article>
+			<div track-location></div>
+		</article>
+	</section>
+
+</div>

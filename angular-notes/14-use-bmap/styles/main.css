@@ -1,0 +1,127 @@
+/* Space out content a bit */
+body {
+  padding-bottom: 20px;
+}
+
+/* Everything but the jumbotron gets side spacing for mobile first views */
+.header,
+.marketing,
+.footer {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+/* Custom page header */
+.header {
+  box-shadow: 0 1px 1px 1px rgba(0,0,0,.1);
+  background-image: linear-gradient(-180deg,#fff 0,#e2e2e2 100%);
+  padding: 0 20px;
+  margin-bottom: 100px;
+}
+/* Make the masthead heading the same height as the navigation */
+.header h3 {
+  margin-top: 0;
+  margin-bottom: 0;
+  line-height: 40px;
+  padding-bottom: 19px;
+}
+
+/* Custom page footer */
+.footer {
+  padding-top: 19px;
+  color: #777;
+  border-top: 1px solid #e5e5e5;
+}
+
+/* Customize container */
+@media (min-width: 768px) {
+  .container {
+    max-width: 730px;
+  }
+}
+.container-narrow > hr {
+  margin: 30px 0;
+}
+
+/* Main marketing message and sign up button */
+.jumbotron {
+  text-align: center;
+  border-bottom: 1px solid #e5e5e5;
+}
+.jumbotron .btn {
+  font-size: 21px;
+  padding: 14px 24px;
+}
+
+/* Supporting marketing content */
+.marketing {
+  margin: 40px 0;
+}
+.marketing p + h4 {
+  margin-top: 28px;
+}
+
+#accordion{
+	text-align: center;
+	text-decoration: none;
+	line-height: 30px;
+	overflow: hidden;
+}
+#accordion ul,
+#accordion li{
+	list-style: none;
+	padding-left: 0;
+}
+#accordion .list-group{
+	margin-bottom: 0;
+}
+#accordion .panel{
+	margin: 0;
+	cursor: pointer;
+	border-radius: 0;
+}
+.index-content{
+	width: 90%;
+	margin: 0 auto;
+	min-height: 200px;
+	border: solid 1px #999;
+	border-radius: 5px;
+	padding: 20px;
+	box-sizing: border-box;
+}
+.file-input > input{
+	display: none;
+}
+/* Responsive: Portrait tablets and up */
+@media screen and (max-width: 768px) {
+  /* Remove the padding we set earlier */
+  .header,
+  .marketing,
+  .footer {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  /* Space out the masthead */
+  .header {
+    margin-bottom: 30px;
+  }
+  /* Remove the bottom border on the jumbotron for visual effect */
+  .jumbotron {
+    border-bottom: 0;
+  }
+}
+.bmap{
+	border: solid 1px #999;
+	width: 900px !important;
+	max-width: 900px !important;
+}
+.bmap > section{
+	border-top: solid 1px #999;
+}
+.bmap input{
+	width: 200px;
+	display: inline-block;
+}
+.l-map{
+    width: 100%;height: 400px; margin:0;font-family:"微软雅黑";
+}
