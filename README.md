@@ -2,7 +2,7 @@
 ---      
 ### 被删前端博客                    
 
-
+> [《Angular使用笔记14-在Angular中使用百度地图》](https://godbasin.github.io/2016/09/16/angular-note-14-use-bmap/)       
 > [《Vue使用笔记4--Vue事件、过渡和制作index页面》](https://godbasin.github.io/2016/09/11/vue-notes-4-fullfill-index/)                       
 > [《Vue使用笔记3--创建头部组件》](https://godbasin.github.io/2016/09/10/vue-notes-3-create-header/)                         
 > [《Vue使用笔记2--vue-router与创建登录组件》](https://godbasin.github.io/2016/09/04/vue-notes-2-create-login/)                   
