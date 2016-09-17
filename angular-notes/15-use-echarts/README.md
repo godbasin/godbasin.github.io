@@ -1,6 +1,6 @@
-# angular-note-9-session-commit      
+# angular-note-15-use-echarts      
 ---
-### Angular使用笔记9-使用sessionStorage判断是否已登录            
+### Angular使用笔记15-在Angular中使用Echarts            
 
-> 教程查看博客> [《Angular使用笔记9-使用sessionStorage判断是否已登录》](https://godbasin.github.io/2016/07/24/angular-note-9-session-commit/)                         
-> [此处查看页面效果](http://o9grhhyar.bkt.clouddn.com/9-session-commit/index.html#/index)
+> 教程查看博客[《Angular使用笔记15-在Angular中使用Echarts》](https://godbasin.github.io/2016/09/17/angular-note-15-use-echarts/)                         
+> [《Angular使用笔记15-在Angular中使用Echarts》](https://godbasin.github.io/2016/09/17/angular-note-15-use-echarts/)
