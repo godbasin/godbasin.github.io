@@ -2,6 +2,8 @@
 ---      
 ### 被删前端博客                    
 
+
+> [《Angular使用笔记15-在Angular中使用Echarts》](https://godbasin.github.io/2016/09/17/angular-note-15-use-echarts/)                  
 > [《Angular使用笔记14-在Angular中使用百度地图》](https://godbasin.github.io/2016/09/16/angular-note-14-use-bmap/)       
 > [《Vue使用笔记4--Vue事件、过渡和制作index页面》](https://godbasin.github.io/2016/09/11/vue-notes-4-fullfill-index/)                       
 > [《Vue使用笔记3--创建头部组件》](https://godbasin.github.io/2016/09/10/vue-notes-3-create-header/)                         
