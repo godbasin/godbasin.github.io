@@ -1,14 +1,19 @@
-# [godbasin.github.io](https://godbasin.github.io)      
+# [godbasin.github.io](https://godbasin.github.io)   
+被删前端博客   
 ---      
-### 被删前端博客                    
 
+### Angular2笔记                  
+> [《Angular2使用笔记1--搭建Angular2项目》](https://godbasin.github.io/2016/09/25/angular2-notes-1-create-angular2-project/)    
+> [《Angular2使用笔记2--创建登录页面》](https://godbasin.github.io/2016/10/05/angular2-notes-2-create-login/)    
 
-> [《Angular使用笔记15-在Angular中使用Echarts》](https://godbasin.github.io/2016/09/17/angular-note-15-use-echarts/)                  
-> [《Angular使用笔记14-在Angular中使用百度地图》](https://godbasin.github.io/2016/09/16/angular-note-14-use-bmap/)       
+### Vue笔记   
 > [《Vue使用笔记4--Vue事件、过渡和制作index页面》](https://godbasin.github.io/2016/09/11/vue-notes-4-fullfill-index/)                       
 > [《Vue使用笔记3--创建头部组件》](https://godbasin.github.io/2016/09/10/vue-notes-3-create-header/)                         
 > [《Vue使用笔记2--vue-router与创建登录组件》](https://godbasin.github.io/2016/09/04/vue-notes-2-create-login/)                   
-> [《Vue使用笔记1--使用vue-cli搭建Vue项目》](https://godbasin.github.io/2016/09/03/vue-notes-1-build-vue-project/)                   
+> [《Vue使用笔记1--使用vue-cli搭建Vue项目》](https://godbasin.github.io/2016/09/03/vue-notes-1-build-vue-project/)    
+
+
+### React笔记               
 > [《React使用笔记8--组件间的通信》](https://godbasin.github.io/2016/08/28/react-notes-8-conmunicate-in-react/)                                             
 > [《React使用笔记7--关于Refs和React表单》](https://godbasin.github.io/2016/08/27/react-notes-7-form-and-ref/)                              
 > [《React使用笔记6--使用flux"单向流动"你的应用》](https://godbasin.github.io/2016/08/21/react-notes-6-use-flux/)               
@@ -17,6 +22,10 @@
 > [《React使用笔记3--组件的State/Props与生命周期》](https://godbasin.github.io/2016/08/13/react-notes-3-props-state-lifecycle/)                 
 > [《React使用笔记2--创建登录组件》](https://godbasin.github.io/2016/08/12/react-notes-2-create-login/)                 
 > [《React使用笔记1--使用webpack搭建React项目》](https://godbasin.github.io/2016/08/06/react-notes-1-build-react-project/)                                     
+          
+###  Angular笔记
+> [《Angular使用笔记15-在Angular中使用Echarts》](https://godbasin.github.io/2016/09/17/angular-note-15-use-echarts/)                  
+> [《Angular使用笔记14-在Angular中使用百度地图》](https://godbasin.github.io/2016/09/16/angular-note-14-use-bmap/)  
 > [《Angular使用笔记13-对指令Directive进行单元测试》](https://godbasin.github.io/2016/08/05/angular-note-13-unit-test-directive/)                                     
 > [《Angular使用笔记12-Karma的一些配置项》](https://godbasin.github.io/2016/07/31/angular-note-12-karma-config/)               
 > [《Angular使用笔记11-使用Karma和Jasmine进行单元测试》](https://godbasin.github.io/2016/07/30/angular-note-11-karma-jasmine-test-create/)               
@@ -28,10 +37,12 @@
 > [《Angular使用笔记5--作用域简单分析以及制作index页面》](https://godbasin.github.io/2016/07/16/angular-note-5-fullfill-index/)                           
 > [《Angular使用笔记4--制作头部指令》](https://godbasin.github.io/2016/07/10/angular-note-4-make-header-directive/)                                                   
 > [《Angular使用笔记3--公用信息的管理》](https://godbasin.github.io/2016/07/09/angular-note-3-common-info-manage/)                                                         
-> [《Angular使用笔记2--创建登录页面》](https://godbasin.github.io/2016/07/08/angular-note-2-create-login/)                       
+> [《Angular使用笔记2--创建登录页面》](https://godbasin.github.io/2016/07/08/angular-note-2-create-login/)                                              
+> [《Angular使用笔记1--搭建Angular项目》](https://godbasin.github.io/2016/07/01/angular-note-1-create-angular-project/)  
+
+### 其他      
 > [《谈谈js的闭包》](https://godbasin.github.io/2016/07/03/js-closure/)                         
-> [《谈谈js的this》](https://godbasin.github.io/2016/07/02/js-this/)                         
-> [《Angular使用笔记1--搭建Angular项目》](https://godbasin.github.io/2016/07/01/angular-note-1-create-angular-project/)                                          
+> [《谈谈js的this》](https://godbasin.github.io/2016/07/02/js-this/)                           
 > [《CSS的display有关》](https://godbasin.github.io/2016/06/26/about-display/)                         
 > [《CSS的position和z-index有关》](https://godbasin.github.io/2016/06/25/about-position/)                          
 > [《我的前端入门之路》](https://godbasin.github.io/2016/06/24/front-end-getting-started/)                                      
