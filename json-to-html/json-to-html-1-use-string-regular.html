@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <style>
+        body {
+            background: #000;
+            color: #fff;
+        }
+        
+        .json {
+            padding: 5px;
+            text-align: left;
+            font-size: 14px;
+            color: #d4d4d4;
+        }
+        
+        .json .string {
+            color: rgba(206, 145, 120, 1);
+        }
+        
+        .json .number {
+            color: rgba(181, 206, 168, 1);
+        }
+        
+        .json .boolean {
+            color: rgba(215, 186, 125, 1);
+        }
+        
+        .json .null {
+            color: rgba(86, 156, 214, 1);
+        }
+        
+        .json .key {
+            color: rgba(156, 220, 254, 1);
+        }
+    </style>
+</head>
+
+<body class="nav-md">
+    <h1>数组不换行</h1>
+    <div id="app1"></div>
+    <h1>数组换行</h1>
+    <div id="app2"></div>
+    <script>
+        function JsonToHtml1(data) {
+            // 若传入数值为json，则转换为字符串
+            var str = typeof data === 'string' ? str : JSON.stringify(data);
+            //将一些需要添加颜色的值匹配出来
+            str = str.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, match => {
+                var cls = 'number';
+                if (/^"/.test(match)) {
+                    if (/:$/.test(match)) {
+                        cls = 'key';
+                    } else {
+                        cls = 'string';
+                    }
+                } else if (/true|false/.test(match)) {
+                    cls = 'boolean';
+                } else if (/null/.test(match)) {
+                    cls = 'null';
+                }
+                return '<span class="' + cls + '">' + match + '</span>';
+            });
+            // 下面将进行换行匹配，包括,后、{后、}前
+            var indent = 0, // 缩进数
+                line = '</br>', // 换行
+                indentChar = '&nbsp;&nbsp;&nbsp;&nbsp;', // 缩进量
+                inArray = false,
+                inObject = true; // 是否在对象里
+            // 将需要换行的元素匹配出来
+            // 这里需要注意，逗号,后若有{则不需要换行，此时我们需要将其匹配出来
+            str = str.replace(/((,(\t)*[^\{])|(,(\t)*\{)|\}|\{|\]|\[)/g, match => {
+                var str = '';
+                if (match === ']') {
+                    inArray = false;
+                    return match;
+                } else if (match === '[') {
+                    inArray = true;
+                    inObject = false;
+                    return match;
+                }
+                // 若为{或者,{，则换行后缩进增加
+                if (match === '{' || /,(\t)*\{/.test(match)) {
+                    indent++;
+                    inObject = true;
+                    // 若为}，则换行后缩进减少
+                } else if (match === '}') {
+                    indent--;
+                    inObject = false;
+                }
+                // 转换缩进
+                for (var i = 0, tab = ''; i < indent; i++) {
+                    tab += indentChar;
+                }
+                // 若为}，则先换行后进行缩进
+                if (match === '}') {
+                    str = line + tab + match;
+                    // 若为,后不跟{，则在,后进行换行缩进
+                } else if (/,(\t)*[^\{]/.test(match)) {
+                    str = (inArray && !inObject) ? match : (',' + line + tab + match.substring(1));
+                    // 其余情况，则在最后进行换行缩进    
+                } else {
+                    str = match + line + tab;
+                }
+                return str;
+            });
+            return ('<div class="json">' + str + '</div>');
+        }
+
+        function JsonToHtml2(data) {
+            // 若传入数值为json，则转换为字符串
+            var str = typeof data === 'string' ? str : JSON.stringify(data);
+            //将一些需要添加颜色的值匹配出来
+            str = str.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, match => {
+                var cls = 'number';
+                if (/^"/.test(match)) {
+                    if (/:$/.test(match)) {
+                        cls = 'key';
+                    } else {
+                        cls = 'string';
+                    }
+                } else if (/true|false/.test(match)) {
+                    cls = 'boolean';
+                } else if (/null/.test(match)) {
+                    cls = 'null';
+                }
+                return '<span class="' + cls + '">' + match + '</span>';
+            });
+            // 下面将进行换行匹配，包括,后、{后、}前
+            var indent = 0, // 缩进数
+                line = '</br>', // 换行
+                indentChar = '&nbsp;&nbsp;&nbsp;&nbsp;', // 缩进量
+                inArray = false; // 是否在数组里
+            // 将需要换行的元素匹配出来
+            // 这里需要注意，逗号,后若有{则不需要换行，此时我们需要将其匹配出来
+            str = str.replace(/((,(\t)*[^\{])|(,(\t)*\{)|(\[(\t)*\{)|(\}(\t)*\])|\}|\{|\[|\])/g, match => {
+                var str = '';
+                // 若为{或者,{，则换行后缩进增加
+                if (match === '{' || match === '[' || /,(\t)*\{/.test(match) || /\[(\t)*\{/.test(match)) {
+                    indent++;
+                    // 若为}，则换行后缩进减少
+                } else if (match === '}' || match === ']' || /\}(\t)*\]/.test(match)) {
+                    indent--;
+                }
+                // 转换缩进
+                for (var i = 0, tab = ''; i < indent; i++) {
+                    tab += indentChar;
+                }
+                // 若为}，则先换行后进行缩进
+                if (match === '}' || match === ']' || /\}\]/.test(match)) {
+                    str = line + tab + match;
+                    // 若为,后不跟{，则在,后进行换行缩进
+                } else if (/,(\t)*[^\{]/.test(match)) {
+                    str = ',' + line + tab + match.substring(1);
+                    // 其余情况，则在最后进行换行缩进    
+                } else {
+                    str = match + line + tab;
+                }
+                return str;
+            });
+            return ('<div class="json">' + str + '</div>');
+        }
+
+        var jsonExample = {
+            "type": "capture",
+            "total": 111,
+            "data": [{
+                "time": "2016-10-10 22:22:22",
+                "trackId": "trackId",
+                "taskSerial": "taskSerial",
+                "videoSerial": "videoSerial",
+                "appear": {
+                    "head": null,
+                    "list": ["abc", "abc", "abc"]
+                }
+            }, {
+                "time": "2016-10-10 22:22:22",
+                "trackId": "trackId",
+                "taskSerial": "taskSerial",
+                "videoSerial": "videoSerial",
+                "appear": {
+                    "head": true,
+                    "list": ["abc", "abc", "abc"]
+                }
+            }]
+        };
+        document.getElementById('app1').innerHTML = JsonToHtml1(jsonExample);
+        document.getElementById('app2').innerHTML = JsonToHtml2(jsonExample);
+    </script>
+</body>
+
+</html>
