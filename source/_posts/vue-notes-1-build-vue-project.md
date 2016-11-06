@@ -12,7 +12,7 @@ tags: 笔记
 
 ### 直接使用Vue源码
 - 下载[Vue生产版本](http://cn.vuejs.org/js/vue.min.js)或[Vue开发版本](http://cn.vuejs.org/js/vue.js)
-- 用<script>标签引入，Vue会被注册为一个全局变量
+- 用`<script>`标签引入，Vue会被注册为一个全局变量
 
 ### 使用脚手架vue-cli搭建
 当我们真正开发一个应用的时候，我们不可避免的会用到一大堆的工具，模块化、预处理器、热模块加载、代码校验和测试。

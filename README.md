@@ -5,6 +5,12 @@
 ### Angular2笔记                  
 > [《Angular2使用笔记1--搭建Angular2项目》](https://godbasin.github.io/2016/09/25/angular2-notes-1-create-angular2-project/)    
 > [《Angular2使用笔记2--创建登录页面》](https://godbasin.github.io/2016/10/05/angular2-notes-2-create-login/)    
+> [《Angular2使用笔记3--创建头部组件》](https://godbasin.github.io/2016/10/07/angular2-notes-3-create-header/)    
+> [《Angular2使用笔记4--路由和导航》](https://godbasin.github.io/2016/10/16/angular2-notes-4-route-component/)   
+> [《Angular2使用笔记5--动画和制作index页面》](https://godbasin.github.io/2016/10/29/angular2-notes-5-animation-and-create-index/)   
+> [《Angular2使用笔记6--使用服务类》](https://godbasin.github.io/2016/10/30/angular2-notes-6-use-service-class/)   
+> [《Angular2使用笔记7--Angular2中的基础概念》](https://godbasin.github.io/2016/11/05/angular2-notes-7-basic-concept-in-angular2/)   
+> [《Angular2使用笔记8--在Angular2中使用Observable对象》](https://godbasin.github.io/2016/11/06/angular2-notes-8-rxjs-in-angular2/)
 
 ### Vue笔记   
 > [《Vue使用笔记4--Vue事件、过渡和制作index页面》](https://godbasin.github.io/2016/09/11/vue-notes-4-fullfill-index/)                       
