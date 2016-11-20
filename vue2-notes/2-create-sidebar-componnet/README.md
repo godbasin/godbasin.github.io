@@ -1,18 +1,6 @@
-# vue2-test
+# vue2-notes-2-create-sidebar-componnet      
+---
+### Vue2使用笔记2--创建左侧菜单栏Sidebar               
 
-> A Vue.js project
-
-## Build Setup
-
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-```
-
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+> 教程查看博客[《Vue2使用笔记2--创建左侧菜单栏Sidebar》](https://godbasin.github.io/2016/11/20/vue2-notes-2-create-sidebar-componnet/) 
+> [此处查看页面效果](http://ofyya1gfg.bkt.clouddn.com/2-create-sidebar-componnet/index.html#/App)
