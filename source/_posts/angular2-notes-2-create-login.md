@@ -85,7 +85,7 @@ Angular 2应用使用标准的CSS来设置样式。这意味着我们可以把�
 
 - 添加样式的方式
   - 元数据中的样式：给@Component装饰器添加一个styles数组型属性
-  - 模板内联样式：放到<style>标签中来直接在 HTML 模板中嵌入样式
+  - 模板内联样式：放到`<style>`标签中来直接在 HTML 模板中嵌入样式
   - 元数据中的样式表URL：给组件的@Component装饰器中添加一个styleUrls属性来从外部CSS文件中加载样式
   - 模板中的link 标签：在组件的HTML模板中嵌入<link>标签
   - CSS@imports：利用标准的CSS@import规则来把其它CSS文件导入到我们的CSS文件中

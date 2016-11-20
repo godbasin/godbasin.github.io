@@ -2,15 +2,22 @@
 被删前端博客   
 ---      
 
-### Angular2笔记                  
-> [《Angular2使用笔记1--搭建Angular2项目》](https://godbasin.github.io/2016/09/25/angular2-notes-1-create-angular2-project/)    
-> [《Angular2使用笔记2--创建登录页面》](https://godbasin.github.io/2016/10/05/angular2-notes-2-create-login/)    
-> [《Angular2使用笔记3--创建头部组件》](https://godbasin.github.io/2016/10/07/angular2-notes-3-create-header/)    
-> [《Angular2使用笔记4--路由和导航》](https://godbasin.github.io/2016/10/16/angular2-notes-4-route-component/)   
-> [《Angular2使用笔记5--动画和制作index页面》](https://godbasin.github.io/2016/10/29/angular2-notes-5-animation-and-create-index/)   
-> [《Angular2使用笔记6--使用服务类》](https://godbasin.github.io/2016/10/30/angular2-notes-6-use-service-class/)   
+### Vue2笔记
+> [《Vue2使用笔记2--创建左侧菜单栏Sidebar》](https://godbasin.github.io/2016/11/20/vue2-notes-2-create-sidebar-componnet/) 
+> [《Vue2使用笔记1--vue-cli+vue-router搭建应用》](https://godbasin.github.io/2016/11/19/vue2-notes-1-build-vue2-project/) 
+
+### Angular2笔记    
+> [《Angular2使用笔记9--使用Subject创建Websocket服务》](https://godbasin.github.io/2016/11/12/angular2-notes-9-websocket-service-with-rxjs/) 
+> [《Angular2使用笔记8--在Angular2中使用Observable对象》](https://godbasin.github.io/2016/11/06/angular2-notes-8-rxjs-in-angular2/) 
 > [《Angular2使用笔记7--Angular2中的基础概念》](https://godbasin.github.io/2016/11/05/angular2-notes-7-basic-concept-in-angular2/)   
-> [《Angular2使用笔记8--在Angular2中使用Observable对象》](https://godbasin.github.io/2016/11/06/angular2-notes-8-rxjs-in-angular2/)
+> [《Angular2使用笔记6--使用服务类》](https://godbasin.github.io/2016/10/30/angular2-notes-6-use-service-class/)                 
+> [《Angular2使用笔记5--动画和制作index页面》](https://godbasin.github.io/2016/10/29/angular2-notes-5-animation-and-create-index/)   
+> [《Angular2使用笔记4--路由和导航》](https://godbasin.github.io/2016/10/16/angular2-notes-4-route-component/)   
+> [《Angular2使用笔记3--创建头部组件》](https://godbasin.github.io/2016/10/07/angular2-notes-3-create-header/)   
+> [《Angular2使用笔记2--创建登录页面》](https://godbasin.github.io/2016/10/05/angular2-notes-2-create-login/)  
+> [《Angular2使用笔记1--搭建Angular2项目》](https://godbasin.github.io/2016/09/25/angular2-notes-1-create-angular2-project/)    
+  
+
 
 ### Vue笔记   
 > [《Vue使用笔记4--Vue事件、过渡和制作index页面》](https://godbasin.github.io/2016/09/11/vue-notes-4-fullfill-index/)                       
@@ -46,7 +53,9 @@
 > [《Angular使用笔记2--创建登录页面》](https://godbasin.github.io/2016/07/08/angular-note-2-create-login/)                                              
 > [《Angular使用笔记1--搭建Angular项目》](https://godbasin.github.io/2016/07/01/angular-note-1-create-angular-project/)  
 
-### 其他      
+### 其他     
+> [《将json输出为html(二)：js数据类型判断实现》](https://godbasin.github.io/2016/11/13/json-to-html-2-use-object/)  
+> [《将json输出为html(一)：字符串正则匹配》](https://godbasin.github.io/2016/11/13/json-to-html-1-use-string-regular/)                                                
 > [《谈谈js的闭包》](https://godbasin.github.io/2016/07/03/js-closure/)                         
 > [《谈谈js的this》](https://godbasin.github.io/2016/07/02/js-this/)                           
 > [《CSS的display有关》](https://godbasin.github.io/2016/06/26/about-display/)                         
