@@ -3,6 +3,8 @@
 ---      
 
 ### Vue2笔记
+> [《Vue2使用笔记4--vue-router使用》](https://godbasin.github.io/2016/11/27/vue2-notes-4-vue-router/) 
+> [《Vue2使用笔记3--父子组件的通信》](https://godbasin.github.io/2016/11/26/vue2-notes-3-parent-child-component/) 
 > [《Vue2使用笔记2--创建左侧菜单栏Sidebar》](https://godbasin.github.io/2016/11/20/vue2-notes-2-create-sidebar-componnet/) 
 > [《Vue2使用笔记1--vue-cli+vue-router搭建应用》](https://godbasin.github.io/2016/11/19/vue2-notes-1-build-vue2-project/) 
 
