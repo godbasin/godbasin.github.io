@@ -1,0 +1,8 @@
+{
+    "presets": [
+        "latest", "react", {
+            "ignore": ["/node_modules"]
+        }
+    ],
+    "plugins": []
+}

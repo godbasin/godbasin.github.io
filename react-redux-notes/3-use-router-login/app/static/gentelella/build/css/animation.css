@@ -1,0 +1,28 @@
+.slide-enter {
+    max-height: 0;
+    overflow: hidden;
+}
+
+.slide-enter.slide-enter-active {
+    max-height: 100px;
+    transition: all 300ms ease-in-out;
+}
+
+.slide-leave {
+    max-height: 100px;
+}
+
+.slide-leave.slide-leave-active {
+    max-height: 0;
+    overflow: hidden;
+    transition: all 300ms ease-in-out;
+}
+
+.fade-enter {
+    opacity: 0.01;
+    transition: opacity 100ms ease-in;
+}
+
+.fade-enter.fade-enter-active {
+    opacity: 1;
+}

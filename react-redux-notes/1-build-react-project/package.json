@@ -1,0 +1,22 @@
+{
+    "dependencies": {
+        "react": "^15.3.2",
+        "react-dom": "^15.3.2",
+        "react-router": "^3.0.0",
+        "webpack": "^1.13.3"
+    },
+    "scripts": {
+        "dev": "webpack-dev-server --port 3333 --devtool eval --progress --colors --hot --content-base dist --host 0.0.0.0"
+    },
+    "devDependencies": {
+        "babel-core": "^6.18.2",
+        "babel-loader": "^6.2.7",
+        "babel-preset-latest": "^6.16.0",
+        "babel-preset-react": "^6.16.0",
+        "css-loader": "^0.25.0",
+        "html-webpack-plugin": "^2.24.1",
+        "less-loader": "^2.2.3",
+        "style-loader": "^0.13.1",
+        "webpack-dev-server": "^1.16.2"
+    }
+}
