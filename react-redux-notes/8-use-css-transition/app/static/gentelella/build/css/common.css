@@ -1,0 +1,87 @@
+/*show json*/
+
+.json {
+    padding: 5px;
+    text-align: left;
+    font-size: 14px;
+    color: #d4d4d4;
+}
+
+.json .string {
+    color: rgba(206, 145, 120, 1);
+}
+
+.json .number {
+    color: rgba(181, 206, 168, 1);
+}
+
+.json .boolean {
+    color: rgba(215, 186, 125, 1);
+}
+
+.json .null {
+    color: rgba(86, 156, 214, 1);
+}
+
+.json .key {
+    color: rgba(156, 220, 254, 1);
+}
+
+.text-align-left {
+    text-align: left !important;
+}
+
+.text-align-right {
+    text-align: left !important;
+}
+
+.float-right {
+    float: right;
+}
+
+.float-left {
+    float: left;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+
+/* 单元格连续纯字母数字强制换行显示 */
+
+.wordwrap {
+    word-wrap: break-word;
+    word-break: break-all;
+    overflow: hidden;
+}
+
+
+/* 超长文字单元格省略号显示 */
+
+.ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+}
+
+.componnet-add-body {
+    min-height: 400px;
+    padding: 40px 15px !important;
+}
+
+.component-detail-body {
+    font-size: 16px;
+}
+
+.component-detail-body>form:first-of-type {
+    border-right: solid 1px #d4d4d4;
+}
+
+.task-nav-tabs {
+    background: transparent !important;
+    width: auto !important;
+    margin: 21px 0 -10px !important;
+    display: inline-block !important;
+}
