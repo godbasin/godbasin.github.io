@@ -3,6 +3,7 @@
 ---      
 
 ### React-Redux笔记  
+> [《React-Redux使用笔记5--创建Top组件》](https://godbasin.github.io/2017/01/08/react-redux-notes-5-create-top/)  
 > [《React-Redux使用笔记4--使用Redux管理状态》](https://godbasin.github.io/2017/01/02/react-redux-notes-4-use-redux/)  
 > [《React-Redux使用笔记3--使用router完成简单登陆功能》](https://godbasin.github.io/2017/01/01/react-redux-notes-3-use-router-login/)  
 > [《React-Redux使用笔记2--完善打包生产代码流程》](https://godbasin.github.io/2016/12/25/react-redux-notes-2-complete-publish/)  
