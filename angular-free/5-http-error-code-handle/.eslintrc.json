@@ -1,0 +1,90 @@
+{
+    "env": {
+        "browser": true,
+        "node": true,
+        "es6": true
+    },
+    "parserOptions": {
+        "ecmaVersion": 7
+    },
+    "extends": "eslint:recommended",
+    "rules": {
+        "space-before-blocks": "warn",
+        "no-trailing-spaces": "warn",
+        "array-bracket-spacing": "warn",
+        "use-isnan": "error",
+        "no-fallthrough": [
+            "error", {
+                "commentPattern": ".*我要玩火.*"
+            }
+        ],
+        "array-callback-return": "error",
+        /* selected from https://github.com/airbnb/javascript/blob/master/README.md */
+        "eqeqeq": [
+            "error",
+            "smart"
+        ],
+        "no-new-object": "warn",
+        "object-shorthand": "warn",
+        "quote-props": "off",
+        "no-array-constructor": "warn",
+        "quotes": [
+            1,
+            "single"
+        ],
+        "prefer-template": "off",
+        "no-useless-escape": "warn",
+        "no-loop-func": "warn",
+        "no-param-reassign": "warn",
+        "arrow-spacing": "warn",
+        "arrow-parens": "off",
+        "no-confusing-arrow": "error",
+        "no-useless-constructor": "warn",
+        "no-dupe-class-members": "warn",
+        "no-duplicate-imports": "warn",
+        "no-iterator": "warn",
+        "one-var": "off",
+        "no-case-declarations": "warn",
+        "no-unneeded-ternary": "warn",
+        "brace-style": "warn",
+        "keyword-spacing": "warn",
+        "space-infix-ops": "warn",
+        "newline-per-chained-call": "warn",
+        "radix": "warn",
+        "camelcase": "error",
+        "new-cap": "warn",
+        "no-undef": "error",
+        "semi": "warn",
+        "no-self-compare": "error",
+        "no-self-assign": "error",
+        "no-useless-call": "error",
+        "no-unreachable": "error",
+        "no-useless-rename": "error",
+        /* 关闭推荐的部分选项 */
+        "no-console": "off",
+        "no-unused-vars": "warn",
+        "no-eq-null": "off"
+    },
+    "globals": {
+        "angular": true,
+        "app": true,
+        "$": true,
+        "require": true,
+        "module": true,
+        "jQuery": true,
+        "CommonPar": true,
+        "CommonFun": true,
+        "UserInfo": true,
+        "MozWebSocket": true,
+        "SockJS": true,
+        "describe": true,
+        "beforeEach": true,
+        "it": true,
+        "expect": true,
+        "inject": true,
+        "beforeAll": true,
+        "makeToast": true,
+        "echarts": true,
+        "BMap": true
+    }
+}
