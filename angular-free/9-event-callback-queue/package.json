@@ -1,0 +1,38 @@
+{
+  "name": "angular-free",
+  "version": "0.0.0",
+  "dependencies": {
+    "angular": "1.5.8",
+    "angular-route": "1.5.8",
+    "angular-ui-router": "^0.3.2",
+    "tslib": "^1.2.0"
+  },
+  "scripts": {
+    "webpack": "webpack --config webpack.config.js --watch --watch-polling -d",
+    "webpack-dev-server": "webpack-dev-server --config webpackServer.config.js  --hot --port 9999"
+  },
+  "devDependencies": {
+    "@types/angular": "^1.5.20",
+    "@types/angular-ui-router": "^1.1.35",
+    "babel-cli": "^6.18.0",
+    "babel-core": "^6.18.0",
+    "babel-loader": "^6.2.7",
+    "babel-polyfill": "^6.16.0",
+    "babel-preset-latest": "^6.16.0",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "css-loader": "^0.25.0",
+    "file-loader": "^0.9.0",
+    "less": "^2.7.1",
+    "less-loader": "^2.2.3",
+    "style-loader": "^0.13.1",
+    "ts-loader": "^1.2.2",
+    "tslint": "^4.0.2",
+    "typescript": "^2.1.4",
+    "webpack": "^1.13.3",
+    "webpack-dev-server": "^1.16.2"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "main": "main.js"
+}

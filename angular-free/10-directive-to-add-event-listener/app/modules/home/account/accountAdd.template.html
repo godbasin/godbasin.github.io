@@ -1,0 +1,9 @@
+<div>
+    <div select-date-interval></div>
+    <a class="btn btn-default" ng-click="VM.openImageDialog()">点击上传图片</a>
+     <!--展示上传图片以及名字-->
+    <div ng-repeat="image in VM.images">
+        <img ng-src="{{ image.url }}" />
+        <p>{{ image.name }}</p>
+    </div>
+</div>

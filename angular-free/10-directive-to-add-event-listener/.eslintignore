@@ -1,0 +1,9 @@
+node_modules
+app/bower_components
+app/node_modules
+dist
+app/scripts/service/mock*.js
+app/js/lib
+app/scripts/js/jquery.js
+test
+app/entry
