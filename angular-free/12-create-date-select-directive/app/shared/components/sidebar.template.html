@@ -1,0 +1,44 @@
+<div class="col-md-3 left_col menu_fixed">
+    <div class="left_col scroll-view">
+        <div class="navbar nav_title" style="border: 0;">
+            <a class="site_title"><i class="fa fa-paw"></i> <span>管理系统</span></a>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <!-- menu profile quick info -->
+        <div class="profile">
+            <div class="profile_pic"></div>
+            <div class="profile_info">
+                <h2><span>欢迎回来, </span> 老大</h2>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <!-- sidebar menu -->
+        <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+            <div class="menu_section">
+                <br />
+                <h2>通用设置</h2>
+                <br />
+                <ul class="nav side-menu">
+                    <!--父菜单遍历，若href激活或者起子菜单激活则为激活状态-->
+                    <li ng-repeat="menu in menus" ng-class="(menu.href === $state.current.name || menu.show) ? 'active' : ''" ng-click="toggleMenu(menu)">
+                        <!--若有子菜单，则添加侧边下拉图标-->
+                        <a><i class="fa" ng-class="menu.icon"></i> {{menu.text}} <span class="fa" ng-show="menu.childMenus && menu.childMenus.length" ng-class="menu.class ? 'fa-chevron-down' : 'fa-chevron-right'"></span></a>
+                        <!--若有子菜单，则遍历加载-->
+                        <ul class="nav child_menu slide" ng-click="$event.stopPropagation();" ng-show="menu.show">
+                            <!--ui-serf-active用于匹配子元素ui-sref的href时激活class-->
+                            <li ng-repeat="childMenu in menu.childMenus" class="slide-item" ui-sref-active="current-page">
+                                <!--ui-sref可用于跳转-->
+                                <a ui-sref="{{ childMenu.href }}">{{ childMenu.text }}</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    <!-- /sidebar menu -->
+    </div>
+</div>

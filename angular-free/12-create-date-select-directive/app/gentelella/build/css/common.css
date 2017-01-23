@@ -1,0 +1,61 @@
+.fade-enter-active {
+    transition: opacity .4s
+}
+
+.fade-enter-leave {
+    transition: opacity 0s
+}
+
+.fade-enter,
+.fade-leave {
+    opacity: 0
+}
+
+
+/*show json*/
+
+.json {
+    padding: 5px;
+    text-align: left;
+    font-size: 14px;
+    color: #d4d4d4;
+}
+
+.json .string {
+    color: rgba(206, 145, 120, 1);
+}
+
+.json .number {
+    color: rgba(181, 206, 168, 1);
+}
+
+.json .boolean {
+    color: rgba(215, 186, 125, 1);
+}
+
+.json .null {
+    color: rgba(86, 156, 214, 1);
+}
+
+.json .key {
+    color: rgba(156, 220, 254, 1);
+}
+
+
+/* 单元格连续纯字母数字强制换行显示 */
+
+.wordwrap {
+    word-wrap: break-word;
+    word-break: break-all;
+    overflow: hidden;
+}
+
+
+/* 超长文字单元格省略号显示 */
+
+.ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+}
