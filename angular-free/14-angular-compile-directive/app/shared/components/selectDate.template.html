@@ -1,0 +1,28 @@
+<div select="select" on-focus-lost="isShown = false">
+    <p ng-click="init();toggle();" ng-class="isShown ? 'active' : ''"><span class="btn-calendar-icon"></span>{{ (data && data.chosenDate | date) || text || '请选择日期' }}</p>
+    <aside class="calendar">
+        <header>
+            <p>{{ readingDate.split('-')[0] }}年</p>
+            <a class="next-year" ng-click="nextYear()"><i class="fa fa-angle-double-right"></i></a>
+            <a class="next-month" ng-click="nextMonth()"><i class="fa fa-angle-right"></i></a>
+            <!-- <a class="today" ng-click="render(yC,mC,dC)"></a> -->
+            <p class="month">{{ readingDate.split('-')[1] | number }}月</p>
+            <a class="last-month" ng-click="lastMonth()"><i class="fa fa-angle-left"></i></a>
+            <a class="last-year" ng-click="lastYear()"><i class="fa fa-angle-double-left"></i></a>
+        </header>
+        <section>
+            <aside>
+                <p>日</p>
+                <p>一</p>
+                <p>二</p>
+                <p>三</p>
+                <p>四</p>
+                <p>五</p>
+                <p>六</p>
+            </aside>
+            <article>
+                <p ng-repeat="day in readingDays track by $index" ng-class="isDayChosen(day) ? 'chosen' : isDayActive(day) ? 'active' : ''" ng-click="(isDayActive(day) || isDayChosen(day)) ? chooseDay(day) : ''">{{ day }}</p>
+            </article>
+        </section>
+    </aside>
+</div>

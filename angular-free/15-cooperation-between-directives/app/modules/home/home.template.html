@@ -1,0 +1,22 @@
+<div class="container body">
+    <div class="main_container">
+        <!--添加Sidebar组件-->
+        <div sidebar></div>
+
+        <div class="right_col" role="main">
+            <!--嵌套路由视图-->
+            <div ui-view></div>
+        </div>
+        
+        <footer>
+            <div class="pull-right">
+                <a href="https://github.com/godbasin">@godbasin</a>
+            </div>
+            <div class="clearfix"></div>
+        </footer>
+    </div>
+</div>
+<script>
+    $('body').attr('class', 'nav-md');
+    $('.right_col').css('min-height', $(window).height());
+</script>
