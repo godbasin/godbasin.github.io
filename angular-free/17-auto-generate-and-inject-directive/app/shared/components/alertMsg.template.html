@@ -1,0 +1,12 @@
+<aside ng-show="params" class="alert-module confirm-msg" ng-click="close()">
+    <section ng-click="$event.stopPropagation()">
+        <header ng-show="params.title">{{ params.title }}</header>
+        <article>
+            <p ng-show="params.text">{{params.text}}</p>
+        </article>
+        <footer>
+            <a class="button-2" ng-click="submit()">{{params.confirmText || '确定'}}</a>
+            <a class="button-2 secondary" ng-click="close()">{{params.cancelText || '取消'}}</a>
+        </footer>
+    </section>
+</aside>
