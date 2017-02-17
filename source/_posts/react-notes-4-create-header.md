@@ -78,7 +78,7 @@ const Index = React.createClass({
 ```
 
 此时我们可以在/index路由页面看到头部了。
-接下来会运用到react有关的Props/State和生命周期，大家如果不是很清楚可以翻上一篇[《React使用笔记3--组件的State/Props与生命周期》](https://godbasin.github.io/2016/08/13/react-notes-3-props-state-lifecycle/)进行预热。
+接下来会运用到react有关的Props/State和生命周期，大家如果不是很清楚可以翻上一篇[《React使用笔记3--组件的State/Props与生命周期》](/2016/08/13/react-notes-3-props-state-lifecycle/)进行预热。
 
 ### 添加属性Props
 由于菜单的内容不变，我们可以将其写成Props属性。

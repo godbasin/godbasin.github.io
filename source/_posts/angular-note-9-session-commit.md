@@ -8,7 +8,7 @@ tags: 笔记
 本文记录使用sessionStorage判断是否已登录并进行跳转的过程。
 <!--more-->
 
-前面篇章我们已经讲述过公用信息的获取和设置方法，具体可以查看[《Angular使用笔记3--公用信息的管理》](https://godbasin.github.io/2016/07/09/angular-note-3-common-info-manage/)。
+前面篇章我们已经讲述过公用信息的获取和设置方法，具体可以查看[《Angular使用笔记3--公用信息的管理》](/2016/07/09/angular-note-3-common-info-manage/)。
 在这里我们使用sessionStorage来记录会话，如果没登录则自行跳转至登录页面。
 ## sessionStorage
 -----

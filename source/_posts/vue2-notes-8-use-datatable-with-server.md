@@ -179,8 +179,8 @@ Products.vue组件的html模板不需要调整，需要调整的是相关的组�
 ### json展示
 这里我们需要将json数据展示为html，本骚年写过两个方法进行实现，大家可以参考之前的文章。
 传送门：
-- [《将json输出为html(一)：字符串正则匹配》](https://godbasin.github.io/2016/11/13/json-to-html-1-use-string-regular/)
-- [《将json输出为html(二)：js数据类型判断实现》](https://godbasin.github.io/2016/11/13/json-to-html-2-use-object/)
+- [《将json输出为html(一)：字符串正则匹配》](/2016/11/13/json-to-html-1-use-string-regular/)
+- [《将json输出为html(二)：js数据类型判断实现》](/2016/11/13/json-to-html-2-use-object/)
 
 
 ### 页面效果

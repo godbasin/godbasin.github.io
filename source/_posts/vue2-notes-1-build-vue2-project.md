@@ -69,7 +69,7 @@ npm run build
 
 ### 参考
 [Vue2.0中文文档](https://vuefe.cn/guide/)
-[《Vue使用笔记1--使用vue-cli搭建Vue项目》](https://godbasin.github.io/2016/09/03/vue-notes-1-build-vue-project/)
+[《Vue使用笔记1--使用vue-cli搭建Vue项目》](/2016/09/03/vue-notes-1-build-vue-project/)
 
 ## 添加路由
 ---

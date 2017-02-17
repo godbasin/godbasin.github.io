@@ -119,7 +119,7 @@ function mouseDown(e) {
 ## 定位当前位置是否有特定元素
 -----
 - 使用鼠标定位获取相关布局或者控件对象
-这里可参考上一篇文章：[《js判断某个位置是否特定元素》](https://godbasin.github.io/2016/06/19/position-object/)
+这里可参考上一篇文章：[《js判断某个位置是否特定元素》](/2016/06/19/position-object/)
 
 - 获取当前鼠标位置
 ``` javascript

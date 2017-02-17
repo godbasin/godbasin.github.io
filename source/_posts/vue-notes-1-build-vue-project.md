@@ -198,7 +198,7 @@ export default { //输出组件
 
 ## Vue简单介绍
 -----
-这里我们简单介绍一下Vue，以及稍微比较前面讲过的[Angular](https://godbasin.github.io/2016/07/01/angular-note-1-create-angular-project/)和[React](https://godbasin.github.io/2016/08/06/react-notes-1-build-react-project/)。
+这里我们简单介绍一下Vue，以及稍微比较前面讲过的[Angular](/2016/07/01/angular-note-1-create-angular-project/)和[React](/2016/08/06/react-notes-1-build-react-project/)。
 
 ### Vue概述
 Vue.js是一个构建数据驱动的web界面的库。Vue.js的目标是通过尽可能简单的API实现响应的数据绑定和组合的视图组件。

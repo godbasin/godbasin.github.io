@@ -12,7 +12,7 @@ tags: 笔记
 ### $http
 - $http是一个用于读取web服务器上数据的服务
 - $http.get()从web服务器上读取静态JSON数据
-- $http的post使用会与ajax不一样哦，需要设置Content-Type值，具体可以查看[《Angular使用笔记2--创建登录页面》](https://godbasin.github.io/2016/07/08/angular-note-2-create-login/)里的解决办法
+- $http的post使用会与ajax不一样哦，需要设置Content-Type值，具体可以查看[《Angular使用笔记2--创建登录页面》](/2016/07/08/angular-note-2-create-login/)里的解决办法
 
 ### Promise对象
 Javascript采用回调函数(callback)来处理异步编程。从同步编程到异步回调编程有一个适应的过程，但是如果出现多层回调嵌套，也就是我们常说的厄运的回调金字塔(Pyramid of Doom)。

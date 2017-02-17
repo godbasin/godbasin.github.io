@@ -69,7 +69,7 @@ tags: 逻辑实现
 - 将json转化为object，然后通过js判断数据类型进行格式化
 
 这里我们使用第二种方法实现。
-第一种实现可以参考上一篇[《将json输出为html(一)：字符串正则匹配》](https://godbasin.github.io/2016/11/13/json-to-html-1-use-string-regular/)。
+第一种实现可以参考上一篇[《将json输出为html(一)：字符串正则匹配》](/2016/11/13/json-to-html-1-use-string-regular/)。
 
 ### 字符串匹配
 - 判断数据类型并进行处理

@@ -4,7 +4,7 @@ date: 2016-06-26 20:03:10
 categories: CSS炒饭
 tags: 分享
 ---
-上一篇主要讲[CSS的position和z-index](https://godbasin.github.io/2016/06/25/about-position/)，刚好想到了display。
+上一篇主要讲[CSS的position和z-index](/2016/06/25/about-position/)，刚好想到了display。
 本文主要讲述块状元素和内联元素的说明，并补充float浮动相关。
 <!--more-->
 ## CSS display属性

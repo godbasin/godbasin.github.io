@@ -8,7 +8,7 @@ tags: 笔记
 本文在Angular2中使用Subject创建Websocket服务的过程。
 <!--more-->
 
-关于RxJS的Observable相关的请移步上一篇[《在Angular2中使用Observable对象》](https://godbasin.github.io/2016/11/06/angular2-notes-8-rxjs-in-angular2/)。
+关于RxJS的Observable相关的请移步上一篇[《在Angular2中使用Observable对象》](/2016/11/06/angular2-notes-8-rxjs-in-angular2/)。
 
 ## 认识Subject
 -----

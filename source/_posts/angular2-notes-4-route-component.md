@@ -125,7 +125,7 @@ export const routes: RouterConfig = [
 ```
 
 ### 路由器链接
-该属性我们在上一节中也有用过，具体看[《Angular2使用笔记3--创建头部组件》](https://godbasin.github.io/2016/10/07/angular2-notes-3-create-header/)。
+该属性我们在上一节中也有用过，具体看[《Angular2使用笔记3--创建头部组件》](/2016/10/07/angular2-notes-3-create-header/)。
 - RouterLink绑定
   - A标签中，有一个绑定RouterLink指令的属性绑定
   - 可以通过提供查询字符串参数为RouterLink提供更多情境信息

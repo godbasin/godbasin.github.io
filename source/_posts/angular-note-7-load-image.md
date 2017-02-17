@@ -102,7 +102,7 @@ scope: {
 	text: "@text",
 },
 ```
-有关作用域可以参照[《Angular使用笔记5--作用域简单分析以及制作index页面》](https://godbasin.github.io/2016/07/16/angular-note-5-fullfill-index/)
+有关作用域可以参照[《Angular使用笔记5--作用域简单分析以及制作index页面》](/2016/07/16/angular-note-5-fullfill-index/)
 
 ### 设置link函数
 link函数里面主要为绑定click事件的处理。

@@ -104,7 +104,7 @@ Angular在每个JavaScript事件周期中一次性处理所有的数据绑定，
 属性型指令修改一个现有元素的外观或行为。
 
 ### 服务
-上一节[《Angular2使用笔记6--使用服务类》](https://godbasin.github.io/2016/10/30/angular2-notes-6-use-service-class/)我们也讲了服务类的创建、注入和使用等等。
+上一节[《Angular2使用笔记6--使用服务类》](/2016/10/30/angular2-notes-6-use-service-class/)我们也讲了服务类的创建、注入和使用等等。
 
 服务分为很多种，包括：值、函数，以及应用所需的特性。
 
@@ -114,7 +114,7 @@ Angular在每个JavaScript事件周期中一次性处理所有的数据绑定，
 
 ### 依赖注入
 依赖注入我们前面也提到过两遍了呢。
-大家不嫌弃的话也可以查看[《Angular2使用笔记3--创建头部组件》](https://godbasin.github.io/2016/10/07/angular2-notes-3-create-header/)和[《Angular2使用笔记6--使用服务类》](https://godbasin.github.io/2016/10/30/angular2-notes-6-use-service-class/)。
+大家不嫌弃的话也可以查看[《Angular2使用笔记3--创建头部组件》](/2016/10/07/angular2-notes-3-create-header/)和[《Angular2使用笔记6--使用服务类》](/2016/10/30/angular2-notes-6-use-service-class/)。
 
 “依赖注入”是提供类的新实例的一种方式，还负责处理好类所需的全部依赖。大多数依赖都是服务。
 Angular也使用依赖注入提供我们需要的组件以及这些组件所需的服务。

@@ -36,7 +36,7 @@ import ReactDOM from 'react-dom'; //react-dom
 ```
 
 - findDOMNode()仅在挂载的组件上有效（也就是说，组件已经被放进了DOM中）。如果你尝试在一个未被挂载的组件上调用这个函数（例如在创建组件的render()函数中调用findDOMNode()），将会抛出异常。
-- 从 render() 中返回的内容并不是实际渲染出来的子组件实例。从 render() 返回的仅仅是子组件层级树实例在特定时间的一个描述。可参考[组件的生命周期](https://godbasin.github.io/2016/08/13/react-notes-3-props-state-lifecycle/)。
+- 从 render() 中返回的内容并不是实际渲染出来的子组件实例。从 render() 返回的仅仅是子组件层级树实例在特定时间的一个描述。可参考[组件的生命周期](/2016/08/13/react-notes-3-props-state-lifecycle/)。
 
 ### Ref优点
 Refs是一种给指定的子组件实例发送消息的很好的方式，从某种程度上来看，通过props和state来做这件事倒显得不太方便。
@@ -159,7 +159,7 @@ changeInput: function(name, event) { //通过event获取当前事件，总是最
 ```
 
 - 在flux中通过单向数据流处理
-上一节我们[将react通过flux进行了改造](https://godbasin.github.io/2016/08/21/react-notes-6-use-flux/)，现在我们需要将以上的方法调整来符合flux的单向数据流。具体方法步骤就不介绍了，大家可以到代码中查看。
+上一节我们[将react通过flux进行了改造](/2016/08/21/react-notes-6-use-flux/)，现在我们需要将以上的方法调整来符合flux的单向数据流。具体方法步骤就不介绍了，大家可以到代码中查看。
 
 ## 结束语
 -----
