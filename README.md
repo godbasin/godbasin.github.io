@@ -2,6 +2,15 @@
 被删前端博客   
 ---      
 
+### Angular1-free    
+> [《玩转Angular1(7)--异步提交表单（文件）服务》](https://godbasin.github.io/2017/02/26/angular-free-7-async-form-submit/)   
+> [《玩转Angular1(6)--ui-router与嵌套路由》](https://godbasin.github.io/2017/02/25/angular-free-6-ui-router-in-angular/)   
+> [《玩转Angular1(5)--$http服务封装为异常处理服务》](https://godbasin.github.io/2017/02/24/angular-free-5-http-error-code-handle/)  
+> [《玩转Angular1(4)--使用class写控制器》](https://godbasin.github.io/2017/02/19/angular-free-4-create-controller-with-class/)  
+> [《玩转Angular1(3)--在Angular中使用Typescript》](https://godbasin.github.io/2017/02/12/angular-free-3-typescript-in-angular/)  
+> [《玩转Angular1(2)--搭建angular项目》](https://godbasin.github.io/2017/02/11/angular-free-2-create-an-angular-project/)  
+> [《玩转Angular1(1)--webpack/babel环境配置》](https://godbasin.github.io/2017/02/05/angular-free-1-webpack-and-babel-config/)  
+
 ### BOX2DJS-tutorial  
 > [1. 基本概念](https://godbasin.github.io/2017/02/17/box2d-tutorial-1-0-basic-catalog)   
   [1.1 有关物理引擎](https://godbasin.github.io/2017/02/17/box2d-tutorial-1-1-physical-engine)   
@@ -42,11 +51,6 @@
   [7.1 碰撞类(collision)](https://godbasin.github.io/2017/02/17/box2d-tutorial-7-1-common-api)   
   [7.2 基础类(common)](https://godbasin.github.io/2017/02/17/box2d-tutorial-7-2-collisions-api)  
   [7.3 动力学类(dynamics)](https://godbasin.github.io/2017/02/17/box2d-tutorial-7-3-dynamics-api)   
-
-### Angular1-free    
-> [《玩转Angular1(3)--在Angular中使用Typescript》](https://godbasin.github.io/2017/02/12/angular-free-3-typescript-in-angular/)  
-> [《玩转Angular1(2)--搭建angular项目》](https://godbasin.github.io/2017/02/11/angular-free-2-create-an-angular-project/)  
-> [《玩转Angular1(1)--webpack/babel环境配置》](https://godbasin.github.io/2017/02/05/angular-free-1-webpack-and-babel-config/)  
 
 ### React-Redux笔记  
 > [《React-Redux使用笔记8--使用CSS过渡动画》](https://godbasin.github.io/2017/01/26/react-redux-notes-8-use-css-transition/)  
