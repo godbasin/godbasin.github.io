@@ -3,6 +3,13 @@
 ---      
 
 ### Angular1-free    
+> [《玩转Angular1(14)--使用$compile编译指令》](https://godbasin.github.io/2017/03/19/angular-free-14-angular-compile-directive/)     
+> [《玩转Angular1(13)--服务与指令的配合使用》](https://godbasin.github.io/2017/03/18/angular-free-13-service-work-with-directive/)     
+> [《玩转Angular1(12)--创建日期选择组件》](https://godbasin.github.io/2017/03/12/angular-free-12-create-date-select-directive/)     
+> [《玩转Angular1(11)--组件的自我修养》](https://godbasin.github.io/2017/03/11/angular-free-11-how-to-be-a-directive/)     
+> [《玩转Angular1(10)--使用Directive指令来添加事件监听》](https://godbasin.github.io/2017/03/10/angular-free-10-directive-to-add-event-listener/)     
+> [《玩转Angular1(9)--按键事件队列KeyUp服务》](https://godbasin.github.io/2017/03/05/angular-free-9-event-callback-queue/)     
+> [《玩转Angular1(8)--$q.all与async/await》](https://godbasin.github.io/2017/03/04/angular-free-8-q-service-and-async-await/)   
 > [《玩转Angular1(7)--异步提交表单（文件）服务》](https://godbasin.github.io/2017/02/26/angular-free-7-async-form-submit/)   
 > [《玩转Angular1(6)--ui-router与嵌套路由》](https://godbasin.github.io/2017/02/25/angular-free-6-ui-router-in-angular/)   
 > [《玩转Angular1(5)--$http服务封装为异常处理服务》](https://godbasin.github.io/2017/02/24/angular-free-5-http-error-code-handle/)  
