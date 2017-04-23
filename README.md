@@ -1,8 +1,17 @@
 # [godbasin.github.io](https://godbasin.github.io)   
 被删前端博客   
 ---      
-
+### three.js笔记    
+> [《three.js笔记4--添加按键移动》](https://godbasin.github.io/2017/04/23/three-notes-4-add-keypress-move/)   
+> [《three.js笔记3--添加光源》](https://godbasin.github.io/2017/04/22/three-notes-3-add-light-source/)   
+> [《three.js笔记2--添加物体》](https://godbasin.github.io/2017/04/16/three-notes-2-add-objects/)     
+> [《three.js笔记1--初始化3D世界》](https://godbasin.github.io/2017/04/13/three-notes-1-init-3d-world/)     
+ 
 ### Angular1-free    
+> [《玩转Angular1(18)--使用mock本地数据模拟》](https://godbasin.github.io/2017/04/03/angular-free-18-use-angular-mock/)     
+> [《玩转Angular1(17)--脚本自动更新并注册指令》](https://godbasin.github.io/2017/03/31/angular-free-17-auto-generate-and-inject-directive/)     
+> [《玩转Angular1(16)--常用的angular方法》](https://godbasin.github.io/2017/03/25/angular-free-16-common-angular-function/)     
+> [《玩转Angular1(15)--指令们的相互协作》](https://godbasin.github.io/2017/03/24/angular-free-15-cooperation-between-directives/)     
 > [《玩转Angular1(14)--使用$compile编译指令》](https://godbasin.github.io/2017/03/19/angular-free-14-angular-compile-directive/)     
 > [《玩转Angular1(13)--服务与指令的配合使用》](https://godbasin.github.io/2017/03/18/angular-free-13-service-work-with-directive/)     
 > [《玩转Angular1(12)--创建日期选择组件》](https://godbasin.github.io/2017/03/12/angular-free-12-create-date-select-directive/)     
