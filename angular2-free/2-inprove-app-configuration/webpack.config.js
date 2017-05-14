@@ -15,17 +15,17 @@ var config = {
         rules: [
             {
                 test: /\.ts$/,
-                use: ["babel-loader", "ts-loader", 'angular2-template-loader?keepUrl=true'],
+                use: ["babel-loader", "ts-loader", "angular2-template-loader"],
                 exclude: /node_modules/
             },
             {
                 test: /\.(html|css)$/,
                 use: ['raw-loader'],
-                exclude: /\.async\.(html|css)$/
+                exclude: [path.resolve(__dirname, 'src/index.html')]
             },
             {
                 test: /\.async\.(html|css)$/,
-                loaders: ['file?name=[name].[ext]', 'extract']
+                loaders: ['file?name=[name].[ext]']
             },
             {
                 test: /\.css$/, // Only .css files
@@ -40,5 +40,6 @@ var config = {
     ],
     devtool: 'source-map'
 };
+
 
 module.exports = config;
