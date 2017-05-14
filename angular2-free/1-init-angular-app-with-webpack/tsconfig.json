@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+        "baseUrl": "src",
+        "target": "es5",
+        "module": "commonjs",
+        "sourceMap": true,
+        "noImplicitAny": false,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitReturns": true,
+        "importHelpers": true,
+        "noEmitHelpers": true,
+        "pretty": true,
+        "strictNullChecks": false,
+        "experimentalDecorators": true,
+        "lib": [
+            "dom",
+            "es7",
+            "es6"
+        ]
+    },
+    "exclude": [
+        "node_modules",
+        "src/assets",
+        "dist"
+    ]
+}
