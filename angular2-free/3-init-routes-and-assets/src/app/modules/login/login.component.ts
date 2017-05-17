@@ -10,7 +10,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   username: string = '';
   password: string = '';
 
-  constructor() {
+  constructor(private router: Router) {
   }
 
   ngOnInit() {
@@ -19,11 +19,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   // 登录事件
   onSubmit() {
-    if (!this.username || !this.password) {
-      alert('账户和密码不能为空');
-      return;
-    }
-    // this.router.navigate(['/home']);
+    this.router.navigate(['/home']);
   }
 
   ngOnDestroy(){

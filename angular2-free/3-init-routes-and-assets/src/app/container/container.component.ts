@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './container.component.html',
+  template: ' <router-outlet></router-outlet>',
   styleUrls: [
       '../../../node_modules/bootstrap/dist/css/bootstrap.min.css',
     '../../assets/css/common.css',

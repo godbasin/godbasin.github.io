@@ -5,7 +5,7 @@
     <div class="login_wrapper">
         <div class="animate form login_form">
             <section class="login_content">
-                <form (ngSubmit)="onSubmit">
+                <form (ngSubmit)="onSubmit()">
                     <h1>管理系统</h1>
                     <div>
                         <input type="text" class="form-control" placeholder="用户名" [(ngModel)]="username" name="username" required autofocus />
