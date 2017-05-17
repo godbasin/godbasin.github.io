@@ -32,7 +32,12 @@ var config = {
         new HtmlwebpackPlugin({
             template: path.resolve(__dirname, 'src/index.html'),
             inject: 'body'
-        })
+        }),
+        new webpack.ContextReplacementPlugin(
+            /angular(\\|\/)core(\\|\/)@angular/,
+            path.resolve(__dirname, 'src'),
+            {}
+        )
     ],
     devtool: 'source-map'
 };
