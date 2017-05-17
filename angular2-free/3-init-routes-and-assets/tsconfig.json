@@ -1,26 +1,23 @@
 {
-    "compilerOptions": {
-        "baseUrl": "src",
-        "target": "es5",
-        "module": "commonjs",
-        "sourceMap": true,
-        "noImplicitAny": false,
-        "noFallthroughCasesInSwitch": true,
-        "noImplicitReturns": true,
-        "importHelpers": true,
-        "noEmitHelpers": true,
-        "pretty": true,
-        "strictNullChecks": false,
-        "experimentalDecorators": true,
-        "lib": [
-            "dom",
-            "es7",
-            "es6"
-        ]
-    },
-    "exclude": [
-        "node_modules",
-        "src/assets",
-        "build"
-    ]
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es5",
+    "lib": [
+      "es2016",
+      "dom"
+    ],
+    "types": [
+      "jquery"
+    ],
+    "paths": {
+      "@shared/*": ["src/app/shared/*"]
+    }
+  }
 }
