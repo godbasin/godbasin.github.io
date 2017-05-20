@@ -3,12 +3,30 @@
 ---      
 
 ### 前端阶段性总结      
+> [《前端阶段性总结之「理解HTTP协议」》](https://godbasin.github.io/2017/05/20/front-end-notes-7-init-http/)     
+> [《前端阶段性总结之「网络协议基础」》](https://godbasin.github.io/2017/05/19/front-end-notes-6-network-protocol/)     
 > [《前端阶段性总结之「自动化和构建工具」》](https://godbasin.github.io/2017/05/14/front-end-notes-5-build-tool/)     
 > [《前端阶段性总结之「框架相关」》](https://godbasin.github.io/2017/05/12/front-end-notes-4-frame/)      
 > [《前端阶段性总结之「javascript新特性」》](https://godbasin.github.io/2017/05/07/front-end-notes-3-javascript-keep-moving/)      
 > [《前端阶段性总结之「深入javascript」》](https://godbasin.github.io/2017/05/06/front-end-notes-2-deep-into-javascript/)      
 > [《前端阶段性总结之「掌握javascript」》](https://godbasin.github.io/2017/05/01/front-end-notes-1-init-javascript/)      
 > [《前端阶段性总结之「总览整理」》](https://godbasin.github.io/2017/04/30/front-end-notes-0-about/)      
+
+### 其他     
+> [《图片居中新用法--巧妙使用background》](https://godbasin.github.io/2017/05/16/img-coutain-with-background/)   
+> [《将json输出为html(二)：js数据类型判断实现》](https://godbasin.github.io/2016/11/13/json-to-html-2-use-object/)  
+> [《将json输出为html(一)：字符串正则匹配》](https://godbasin.github.io/2016/11/13/json-to-html-1-use-string-regular/)                                                
+> [《谈谈js的闭包》](https://godbasin.github.io/2016/07/03/js-closure/)                         
+> [《谈谈js的this》](https://godbasin.github.io/2016/07/02/js-this/)                           
+> [《CSS的display有关》](https://godbasin.github.io/2016/06/26/about-display/)                         
+> [《CSS的position和z-index有关》](https://godbasin.github.io/2016/06/25/about-position/)                          
+> [《我的前端入门之路》](https://godbasin.github.io/2016/06/24/front-end-getting-started/)                                      
+> [《jQuery插件--图片裁剪》](https://godbasin.github.io/2016/06/22/picture-cut/)                                     
+> [《jQuery插件--图片居中对齐》](https://godbasin.github.io/2016/06/21/picture-align/)                                     
+> [《jQuery响应式瀑布流》](https://godbasin.github.io/2016/06/20/responsive-waterfall/)                                         
+> [《做一个拖放功能的自定义页面》](https://godbasin.github.io/2016/06/19/drag-and-drop/)                                  
+> [《js判断某个位置是否特定元素》](https://godbasin.github.io/2016/06/19/position-object/)                                  
+> [《前端在变，然而热情不变》](https://godbasin.github.io/2016/06/18/first-blog/)   
 
 ### three.js笔记    
 > [《three.js笔记5--添加鼠标移动视角》](https://godbasin.github.io/2017/04/29/three-notes-5-add-mouse-move/)   
@@ -145,20 +163,6 @@
 > [《Angular使用笔记3--公用信息的管理》](https://godbasin.github.io/2016/07/09/angular-note-3-common-info-manage/)                                                         
 > [《Angular使用笔记2--创建登录页面》](https://godbasin.github.io/2016/07/08/angular-note-2-create-login/)                                              
 > [《Angular使用笔记1--搭建Angular项目》](https://godbasin.github.io/2016/07/01/angular-note-1-create-angular-project/)  
-
-### 其他     
-> [《将json输出为html(二)：js数据类型判断实现》](https://godbasin.github.io/2016/11/13/json-to-html-2-use-object/)  
-> [《将json输出为html(一)：字符串正则匹配》](https://godbasin.github.io/2016/11/13/json-to-html-1-use-string-regular/)                                                
-> [《谈谈js的闭包》](https://godbasin.github.io/2016/07/03/js-closure/)                         
-> [《谈谈js的this》](https://godbasin.github.io/2016/07/02/js-this/)                           
-> [《CSS的display有关》](https://godbasin.github.io/2016/06/26/about-display/)                         
-> [《CSS的position和z-index有关》](https://godbasin.github.io/2016/06/25/about-position/)                          
-> [《我的前端入门之路》](https://godbasin.github.io/2016/06/24/front-end-getting-started/)                                      
-> [《jQuery插件--图片裁剪》](https://godbasin.github.io/2016/06/22/picture-cut/)                                     
-> [《jQuery插件--图片居中对齐》](https://godbasin.github.io/2016/06/21/picture-align/)                                     
-> [《jQuery响应式瀑布流》](https://godbasin.github.io/2016/06/20/responsive-waterfall/)                                         
-> [《做一个拖放功能的自定义页面》](https://godbasin.github.io/2016/06/19/drag-and-drop/)                                  
-> [《js判断某个位置是否特定元素》](https://godbasin.github.io/2016/06/19/position-object/)                                  
-> [《前端在变，然而热情不变》](https://godbasin.github.io/2016/06/18/first-blog/)               
+            
 ###
 > [《关于我》](https://godbasin.github.io/about/)
