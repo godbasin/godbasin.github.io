@@ -2,6 +2,12 @@
 被删前端博客   
 ---      
 
+### Angular2相关   
+> [《从Angular2-beta到Angular4-release框架升级总结》](https://godbasin.github.io/2017/05/21/angular2-beta-to-release/)    
+
+### Webpack相关
+> [《正确的Webpack配置姿势，快速启动各式框架》](https://godbasin.github.io/2017/05/21/webpack-common-setting/)        
+
 ### 前端阶段性总结      
 > [《前端阶段性总结之「理解HTTP协议」》](https://godbasin.github.io/2017/05/20/front-end-notes-7-init-http/)     
 > [《前端阶段性总结之「网络协议基础」》](https://godbasin.github.io/2017/05/19/front-end-notes-6-network-protocol/)     
@@ -12,21 +18,24 @@
 > [《前端阶段性总结之「掌握javascript」》](https://godbasin.github.io/2017/05/01/front-end-notes-1-init-javascript/)      
 > [《前端阶段性总结之「总览整理」》](https://godbasin.github.io/2017/04/30/front-end-notes-0-about/)      
 
-### 其他     
-> [《图片居中新用法--巧妙使用background》](https://godbasin.github.io/2017/05/16/img-coutain-with-background/)   
+### CSS相关     
+> [《图片居中新用法--巧妙使用background》](https://godbasin.github.io/2017/05/16/img-coutain-with-background/)           
+> [《CSS的display有关》](https://godbasin.github.io/2016/06/26/about-display/)                         
+> [《CSS的position和z-index有关》](https://godbasin.github.io/2016/06/25/about-position/)      
+> [《js判断某个位置是否特定元素》](https://godbasin.github.io/2016/06/19/position-object/)                                  
+
+
+### js相关    
 > [《将json输出为html(二)：js数据类型判断实现》](https://godbasin.github.io/2016/11/13/json-to-html-2-use-object/)  
 > [《将json输出为html(一)：字符串正则匹配》](https://godbasin.github.io/2016/11/13/json-to-html-1-use-string-regular/)                                                
 > [《谈谈js的闭包》](https://godbasin.github.io/2016/07/03/js-closure/)                         
-> [《谈谈js的this》](https://godbasin.github.io/2016/07/02/js-this/)                           
-> [《CSS的display有关》](https://godbasin.github.io/2016/06/26/about-display/)                         
-> [《CSS的position和z-index有关》](https://godbasin.github.io/2016/06/25/about-position/)                          
-> [《我的前端入门之路》](https://godbasin.github.io/2016/06/24/front-end-getting-started/)                                      
+> [《谈谈js的this》](https://godbasin.github.io/2016/07/02/js-this/)            
+
+### jQuery相关
 > [《jQuery插件--图片裁剪》](https://godbasin.github.io/2016/06/22/picture-cut/)                                     
 > [《jQuery插件--图片居中对齐》](https://godbasin.github.io/2016/06/21/picture-align/)                                     
 > [《jQuery响应式瀑布流》](https://godbasin.github.io/2016/06/20/responsive-waterfall/)                                         
-> [《做一个拖放功能的自定义页面》](https://godbasin.github.io/2016/06/19/drag-and-drop/)                                  
-> [《js判断某个位置是否特定元素》](https://godbasin.github.io/2016/06/19/position-object/)                                  
-> [《前端在变，然而热情不变》](https://godbasin.github.io/2016/06/18/first-blog/)   
+> [《做一个拖放功能的自定义页面》](https://godbasin.github.io/2016/06/19/drag-and-drop/)           
 
 ### three.js笔记    
 > [《three.js笔记5--添加鼠标移动视角》](https://godbasin.github.io/2017/04/29/three-notes-5-add-mouse-move/)   
@@ -34,7 +43,7 @@
 > [《three.js笔记3--添加光源》](https://godbasin.github.io/2017/04/22/three-notes-3-add-light-source/)   
 > [《three.js笔记2--添加物体》](https://godbasin.github.io/2017/04/16/three-notes-2-add-objects/)     
 > [《three.js笔记1--初始化3D世界》](https://godbasin.github.io/2017/04/13/three-notes-1-init-3d-world/)     
- 
+
 ### Angular1-free    
 > [《玩转Angular1(18)--使用mock本地数据模拟》](https://godbasin.github.io/2017/04/03/angular-free-18-use-angular-mock/)     
 > [《玩转Angular1(17)--脚本自动更新并注册指令》](https://godbasin.github.io/2017/03/31/angular-free-17-auto-generate-and-inject-directive/)     
@@ -164,5 +173,8 @@
 > [《Angular使用笔记2--创建登录页面》](https://godbasin.github.io/2016/07/08/angular-note-2-create-login/)                                              
 > [《Angular使用笔记1--搭建Angular项目》](https://godbasin.github.io/2016/07/01/angular-note-1-create-angular-project/)  
             
-###
-> [《关于我》](https://godbasin.github.io/about/)
+## 关于我  
+> [《关于我》](https://godbasin.github.io/about/)    
+
+> [《我的前端入门之路》](https://godbasin.github.io/2016/06/24/front-end-getting-started/)              
+> [《前端在变，然而热情不变》](https://godbasin.github.io/2016/06/18/first-blog/)     
