@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "@types/node": "^7.0.18",
+    "angular-router-loader": "^0.6.0",
     "angular2-template-loader": "~0.6.2",
     "babel-core": "~6.24.1",
     "babel-loader": "~7.0.0",
