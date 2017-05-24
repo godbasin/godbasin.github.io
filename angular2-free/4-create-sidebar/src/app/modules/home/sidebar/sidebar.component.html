@@ -21,9 +21,10 @@
                 <br />
                 <h2>通用设置</h2>
                 <br />
-                <ul class="nav side-menu" id="sidebar-menu">
+                <ul class="nav side-menu metismenu" id="sidebar-menu">
                     <li class="topper-menu" *ngFor="let menu of menus;" [ngClass]="menu.link && isActive(menu.link) ? 'active' : ''">
-                        <a [routerLink]="menu.link"><i class="fa" [ngClass]="menu.icon"></i> {{menu.text}} <span class="fa" *ngIf="menu.childMenus && menu.childMenus.length" [ngClass]="isChildMenuActived(menu) ? 'fa-chevron-down' : 'fa-chevron-right'"></span></a>
+                        <a *ngIf="menu.link" [routerLink]="menu.link"><i class="fa" [ngClass]="menu.icon"></i> {{menu.text}}</a>
+                        <a *ngIf="!menu.link" class="has-arrow"><i class="fa" [ngClass]="menu.icon"></i> {{menu.text}}</a>
                         <ul class="nav child_menu slide">
                             <li *ngFor="let childMenu of menu.childMenus;" class="slide-item" routerLinkActive="current-page">
                                 <a [routerLink]="childMenu.link">{{ childMenu.text }}</a>

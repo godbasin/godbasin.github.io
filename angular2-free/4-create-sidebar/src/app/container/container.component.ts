@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
   template: ' <router-outlet></router-outlet>',
   styleUrls: [
     '../../../node_modules/bootstrap/dist/css/bootstrap.min.css',
+    '../../../node_modules/metismenu/dist/metisMenu.min.css',
     '../../assets/css/custom.css',
     '../../assets/css/common.css',
   ],

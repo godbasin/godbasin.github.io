@@ -38,6 +38,11 @@ var config = {
             template: path.resolve(__dirname, 'src/index.html'),
             inject: 'body'
         }),
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false
+            }
+        }),
         new webpack.ContextReplacementPlugin(
             /angular(\\|\/)core(\\|\/)@angular/,
             path.resolve(__dirname, 'src'),
