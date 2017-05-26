@@ -1,0 +1,4 @@
+<date-time-picker [(ngModel)]="dateTime" (ngModelChange)="onChange($event)" ngDefaultControl></date-time-picker>
+<select2 [(ngModel)]="selection" [options]="selections" (select)="onSelect($event)" ngDefaultControl></select2>
+<h1>时间选择model: {{dateTime}}</h1>
+<h1>select2选择model: {{selection}}</h1>

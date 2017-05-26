@@ -14,7 +14,7 @@
             "es6"
         ],
         "paths": {
-            "shared/*": "src/app/shared/*"
+            "shared/*": ["src/app/shared/*"]
         }
     },
     "exclude": [
