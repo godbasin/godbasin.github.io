@@ -1,0 +1,25 @@
+<h2>动态生成的表单</h2>
+<form class="form-horizontal" [formGroup]="dynamicForm" (ngSubmit)="submit()" style="border: solid 1px #ccc; padding: 20px 0;">
+    <div *ngFor="let control of config" class="form-group">
+        <div class="form-group">
+            <label class="col-md-2 control-label">{{control.label}}</label>
+            <div class="col-md-6">
+                <input *ngIf="control.type === 'input'" class="form-control" [formControlName]="control.key" />
+                <select *ngIf="control.type === 'select'" class="form-control" [formControlName]="control.key">
+                    <option *ngFor="let op of control.options" [value]="op.id">{{op.text}}</option>
+                </select>
+            </div>
+        </div>
+        <div *ngIf="formErrors[control.key]" class="alert alert-danger col-md-6 col-md-offset-2">
+            <p>{{ formErrors[control.key] }}</p>
+        </div>
+    </div>
+    <div class="col-md-offset-2">
+        {{dynamicForm.value | json}}
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button [disabled]="!dynamicForm.valid" type="submit" class="btn btn-info">提交</button>
+        </div>
+    </div>
+</form>
