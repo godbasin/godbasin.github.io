@@ -1,0 +1,25 @@
+.ng-valid[required], .ng-valid.required  {
+    border-left: 5px solid #42A948; /* green */
+}
+
+.ng-invalid:not(form)  {
+    border-left: 5px solid #a94442; /* red */
+}
+
+/* 单元格连续纯字母数字强制换行显示 */
+
+.wordwrap {
+    word-wrap: break-word;
+    word-break: break-all;
+    overflow: hidden;
+}
+
+
+/* 超长文字单元格省略号显示 */
+
+.ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+}

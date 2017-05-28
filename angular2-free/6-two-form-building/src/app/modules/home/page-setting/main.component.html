@@ -1,0 +1,12 @@
+<div>
+    <h1>自定义input组件</h1>
+    <date-time-picker [(ngModel)]="dateTime" (ngModelChange)="onChange($event)" ngDefaultControl></date-time-picker>
+    <select2 [(ngModel)]="selection" [options]="selections" (select)="onSelect($event)" ngDefaultControl></select2>
+    <h2>时间选择model: {{dateTime}}</h2>
+    <h2>select2选择model: {{selection}}</h2>
+</div>
+<div style="margin-top: 30px;">
+    <h1>表单验证</h1>
+    <template-driven-form></template-driven-form>
+    <reactive-form></reactive-form>
+</div>
