@@ -2,7 +2,20 @@
 被删前端博客   
 ---      
 
+### 最新  
+> [《玩转Angular2--改善应用配置》](https://godbasin.github.io/2017/05/29/angular2-free-2-inprove-app-configuration/)    
+> [《玩转Angular1--用Webpack启动Angular2应用》](https://godbasin.github.io/2017/05/28/angular2-free-1-init-angular-app-with-webpack/)    
+> [《谈谈Angular2的依赖注入》](https://godbasin.github.io/2017/05/28/di-in-angular/)    
+> [《ES6/ES7好玩实用的特性介绍》](https://godbasin.github.io/2017/05/26/es6-es7-interesting-feature/)    
+> [《从Angular2-beta到Angular4-release框架升级总结》](https://godbasin.github.io/2017/05/21/angular2-beta-to-release/)    
+> [《正确的Webpack配置姿势，快速启动各式框架》](https://godbasin.github.io/2017/05/21/webpack-common-setting/)          
+
+### Angular2-free   
+> [《玩转Angular2--改善应用配置》](https://godbasin.github.io/2017/05/29/angular2-free-2-inprove-app-configuration/)    
+> [《玩转Angular1--用Webpack启动Angular2应用》](https://godbasin.github.io/2017/05/28/angular2-free-1-init-angular-app-with-webpack/)    
+
 ### Angular2相关   
+> [《谈谈Angular2的依赖注入》](https://godbasin.github.io/2017/05/28/di-in-angular/)    
 > [《从Angular2-beta到Angular4-release框架升级总结》](https://godbasin.github.io/2017/05/21/angular2-beta-to-release/)    
 
 ### Webpack相关
@@ -26,6 +39,7 @@
 
 
 ### js相关    
+> [《ES6/ES7好玩实用的特性介绍》](https://godbasin.github.io/2017/05/26/es6-es7-interesting-feature/)    
 > [《将json输出为html(二)：js数据类型判断实现》](https://godbasin.github.io/2016/11/13/json-to-html-2-use-object/)  
 > [《将json输出为html(一)：字符串正则匹配》](https://godbasin.github.io/2016/11/13/json-to-html-1-use-string-regular/)                                                
 > [《谈谈js的闭包》](https://godbasin.github.io/2016/07/03/js-closure/)                         
