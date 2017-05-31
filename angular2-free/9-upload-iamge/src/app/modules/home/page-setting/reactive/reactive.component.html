@@ -1,0 +1,24 @@
+<h2>响应式</h2>
+<form class="form-horizontal" [formGroup]="reactiveForm" (ngSubmit)="submit()" style="border: solid 1px #ccc; padding: 20px 0;">
+    <div class="form-group">
+        <label class="col-md-2 control-label">name</label>
+        <div class="col-md-6">
+            <input class="form-control" formControlName="name" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">email</label>
+        <div class="col-md-6">
+            <input class="form-control" formControlName="email" />
+        </div>
+    </div>
+    <div *ngIf="formErrors.name || formErrors.email" class="alert alert-danger col-md-6 col-md-offset-2">
+        <p>{{ formErrors.name }}</p>
+        <p>{{ formErrors.email }}</p>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button [disabled]="!reactiveForm.valid" type="submit" class="btn btn-info">提交</button>
+        </div>
+    </div>
+</form>

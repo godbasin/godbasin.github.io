@@ -1,0 +1,29 @@
+<h2>动态生成的表单</h2>
+<form class="form-horizontal" [formGroup]="dynamicForm" (ngSubmit)="submit()" style="border: solid 1px #ccc; padding: 20px 0;">
+    <div *ngFor="let control of config" class="form-group">
+        <div class="form-group">
+            <label class="col-md-2 control-label">{{control.label}}</label>
+            <div class="col-md-6">
+                <input *ngIf="control.type === 'text' || control.type === 'number'" [type]="control.type" class="form-control" [formControlName]="control.key" />
+                <select2 *ngIf="control.type === 'select'" [options]="control.options" [formControlName]="control.key"></select2>
+                <radio-group *ngIf="control.type === 'radio'" [options]="control.options" [formControlName]="control.key"></radio-group>
+                <checkbox-group *ngIf="control.type === 'checkbox'" [options]="control.options" [formControlName]="control.key"></checkbox-group>
+                <date-time-picker *ngIf="control.type === 'date'" accuracy="day" [formControlName]="control.key"></date-time-picker>
+                <date-time-picker *ngIf="control.type === 'date-hour'" accuracy="hour" [formControlName]="control.key"></date-time-picker>
+                <date-time-picker *ngIf="control.type === 'date-time'" accuracy="day" [formControlName]="control.key"></date-time-picker>
+                <upload-image *ngIf="control.type === 'upload-image'" [limit]="control.limit" [formControlName]="control.key"></upload-image>
+            </div>
+        </div>
+        <div *ngIf="formErrors[control.key]" class="alert alert-danger col-md-6 col-md-offset-2">
+            <p>{{ formErrors[control.key] }}</p>
+        </div>
+    </div>
+    <div class="col-md-offset-2">
+        {{dynamicForm.value | json}}
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button [disabled]="!dynamicForm.valid" type="submit" class="btn btn-info">提交</button>
+        </div>
+    </div>
+</form>
