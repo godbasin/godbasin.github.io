@@ -1,0 +1,19 @@
+<span class="btn btn-info btn-file">
+    <i class="fa fa-upload fa-fw"></i>
+    {{btnName}} 
+    <input type="file" accept="image/*" multiple="multiple" (change)="upLoad()">
+</span>
+
+<p *ngIf="help" class="help-block">{{help}}</p>
+
+<div *ngFor="let img of imagesArr">
+    <div class="upload-image-show img-contain" [ngStyle]="{'background-image': 'url(' + img.url + ')'}"></div>
+    <p>{{img.name}}</p>
+</div>
+
+<div *ngIf="checkErrArr.length" style="color: red;">
+    <div *ngFor="let errArr of checkErrArr">
+        <p><strong>{{errArr.name}}</strong></p>
+        <p *ngFor="let err of errArr.checkErr">{{err}}</p>
+    </div>
+</div>

@@ -1,0 +1,22 @@
+<h2>模型驱动</h2>
+<form class="form-horizontal" #form="ngForm" (ngSubmit)="submit()" style="border: solid 1px #ccc; padding: 20px 0;">
+    <div class="form-group">
+        <label class="col-md-2 control-label">name</label>
+        <div class="col-md-6">
+            <input class="form-control" type="text"
+                   [(ngModel)]="model.name" name="name"
+                   required maxlength="8" minlength="3"
+                   #name="ngModel" />
+        </div>
+    </div>
+    <div class="alert alert-danger col-md-6 col-md-offset-2" *ngIf="name.errors && (name.dirty || name.touched)">
+        <p [hidden]="!name.errors.required">必填</p>
+        <p [hidden]="!name.errors.minlength">不小于3个字符</p>
+        <p [hidden]="!name.errors.maxlength">不大于8个字符</p>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button [disabled]="!form.valid" type="submit" class="btn btn-info">提交</button>
+        </div>
+    </div>
+</form>
