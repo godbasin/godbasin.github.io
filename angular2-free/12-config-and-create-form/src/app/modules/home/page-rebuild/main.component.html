@@ -1,0 +1,11 @@
+<div style="margin-top: 30px;">
+    <h1>自定义表单生成</h1>
+    <div>
+        <h2>输入json</h2>
+        <textarea [(ngModel)]="json"></textarea>
+        <h2><a class="btn btn-success" (click)="buildForm()" >生成表单</a></h2>
+    </div>
+    <div>
+        <dynamic-form *ngIf="isShown" [config]="customControl"></dynamic-form>
+    </div>
+</div>

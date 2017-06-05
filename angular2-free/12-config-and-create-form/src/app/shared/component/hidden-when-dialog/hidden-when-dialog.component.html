@@ -1,0 +1,49 @@
+<select class="form-control" [(ngModel)]="model.condition" style="width: 80px; display: inline-block;">
+    <option value="||">||</option>
+    <option value="&&">&&</option>
+</select>
+<a class="btn btn-info" (click)="setValidations()" >配置校验选项</a>
+<div class="row" *ngIf="(model && model.validations && model.validations.length)">
+    <div class="col-md-6">
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>key</th>
+                <th>validate</th>
+                <th>param</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let op of model.validations; let i = index">
+                <td>{{i+1}}</td>
+                <td>{{op.key}}</td>
+                <td>{{op.validate}}</td>
+                <td>{{op.param}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal" [hidden]="!isShown">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="isShown = false;"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">自定义校验配置</h4>
+            </div>
+            <div class="modal-body">
+                <a class="btn btn-info" (click)="addControl()" >添加校验</a>
+                <div *ngFor="let form of validationsForm; let i = index;">
+                    <h2>选项{{i + 1}} <a class="btn btn-danger" (click)="validationsForm.splice(i, 1);" >移除校验</a></h2>
+                    <dynamic-form [config]="validationControl" [(model)]="validationsForm[i]"></dynamic-form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" (click)="isShown = false;">取消</button>
+                <button type="button" class="btn btn-primary" [disabled]="!isValid()" (click)="saveValidations()">保存</button>
+            </div>
+        </div>
+    </div>
+</div>

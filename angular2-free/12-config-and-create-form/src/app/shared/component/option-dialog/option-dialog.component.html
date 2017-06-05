@@ -1,0 +1,47 @@
+<a class="btn btn-info" (click)="setOptions()" >配置表单选项</a>
+<div class="row" [hidden]="!(model && model.length)">
+    <div class="col-md-6">
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>id</th>
+                <th>text</th>
+                <th *ngIf="type === 'withInput'">withInput</th>
+                <th *ngIf="type === 'withInput'">InputType</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let op of model; let i = index">
+                <td>{{i+1}}</td>
+                <td>{{op.id}}</td>
+                <td>{{op.text}}</td>
+                <td *ngIf="type === 'withInput'">{{op.withInput === true ? 'true' : 'false'}}</td>
+                <td *ngIf="type === 'withInput'">{{op.withInput ? op.type : ''}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal" [hidden]="!isShown">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="isShown = false;"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">自定义选项配置</h4>
+            </div>
+            <div class="modal-body">
+                <a class="btn btn-info" (click)="addControl()" >添加选项</a>
+                <div *ngFor="let form of optionsForm; let i = index;">
+                    <h2>选项{{i + 1}} <a class="btn btn-danger" (click)="optionsForm.splice(i, 1);" >移除选项</a></h2>
+                    <dynamic-form [config]="optionControl" [(model)]="optionsForm[i]"></dynamic-form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" (click)="isShown = false;">取消</button>
+                <button type="button" class="btn btn-primary" [disabled]="!isValid()" (click)="saveOptions()">保存</button>
+            </div>
+        </div>
+    </div>
+</div>

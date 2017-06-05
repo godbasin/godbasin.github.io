@@ -1,0 +1,130 @@
+.ng-valid[required]:not(upload-image):not(checkbox-with-input):not(radio-with-input),
+.ng-valid.required:not(upload-image):not(checkbox-with-input):not(radio-with-input)  {
+    border-left: 5px solid #42A948; /* green */
+}
+
+.ng-invalid:not(form):not(select2):not(checkbox-with-input):not(radio-with-input),
+select2.ng-invalid .select2.select2-container{
+    border-left: 5px solid #a94442; /* red */
+}
+
+.form-check{
+    line-height: 40px;
+    margin-right: 20px;
+}
+.form-check input{
+    margin-right: 5px;
+}
+
+.form-inline-input{
+    width: 100px;
+    display: inline-block;
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-file input[type="file"] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: #fff;
+    cursor: inherit;
+    display: block;
+}
+
+
+
+/* 单元格连续纯字母数字强制换行显示 */
+
+.wordwrap {
+    word-wrap: break-word;
+    word-break: break-all;
+    overflow: hidden;
+}
+
+.modal{
+    display: block;
+}
+.modal[hidden]{
+    display: none;
+}
+.modal-body{
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+/* 超长文字单元格省略号显示 */
+
+.ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+}
+
+/*图片背景居中*/
+.img-contain{
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+.img-cover{
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.upload-image-show{
+    width: 200px;
+    height: 100px;
+    border: dashed 2px #ccc;
+}
+.help-block {
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    color: #737373;
+}
+
+/*json-to-html*/
+.json {
+    padding: 5px;
+    text-align: left;
+    font-size: 14px;
+    color: #d4d4d4;
+    background: #000;
+}
+
+.json .string:not(.key) {
+    color: rgba(206, 145, 120, 1);
+    margin-left: 5px;
+}
+
+.json .number {
+    color: rgba(181, 206, 168, 1);
+    margin-left: 5px;
+}
+
+.json .boolean {
+    color: rgba(215, 186, 125, 1);
+    margin-left: 5px;
+}
+
+.json .null {
+    color: rgba(86, 156, 214, 1);
+    margin-left: 5px;
+}
+
+.json .key {
+    color: rgba(156, 220, 254, 1);
+    margin-left: 5px;
+}
