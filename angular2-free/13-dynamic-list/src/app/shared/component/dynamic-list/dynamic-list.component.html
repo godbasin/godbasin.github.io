@@ -1,0 +1,42 @@
+<a class="btn btn-info" *ngIf="hasFunction('add')" (click)="edit(-1)">新建</a>
+<div class="row" *ngIf="(listConfig && listConfig.content && listConfig.content.length)">
+    <div class="col-md-6">
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th *ngFor="let li of listConfig.content">{{li.title}}</th>
+                <th *ngIf="hasFunction('edit') || hasFunction('remove')">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let data of dataModel; let i = index;">
+                <td>{{i+1}}</td>
+                <td *ngFor="let li of listConfig.content">{{data[li.key]}}</td>
+                <td *ngIf="hasFunction('edit') || hasFunction('remove')">
+                    <a class="btn btn-default" *ngIf="hasFunction('edit')" (click)="edit(i)">编辑</a>
+                    <a class="btn btn-danger" *ngIf="hasFunction('remove')" (click)="dataModel.splice(i, 1)">删除</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal" *ngIf="hasFunction('edit') || hasFunction('add')" [hidden]="!isShown">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="isShown = false;"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">{{isEdit > -1 ? '编辑' : '新建'}}</h4>
+            </div>
+            <div class="modal-body">
+                <dynamic-form *ngIf="isShown" [config]="formConfig" [(model)]="formModel"></dynamic-form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" (click)="isShown = false;">取消</button>
+                <button type="button" class="btn btn-primary" [disabled]="!formModel.valid" (click)="save()">保存</button>
+            </div>
+        </div>
+    </div>
+</div>

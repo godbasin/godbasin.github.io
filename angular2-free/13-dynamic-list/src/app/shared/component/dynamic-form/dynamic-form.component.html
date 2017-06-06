@@ -1,0 +1,33 @@
+<form class="form-horizontal" [formGroup]="dynamicForm" (ngSubmit)="submit()" style="border: solid 1px #ccc; padding: 20px 0;">
+    <div *ngFor="let control of config" class="form-group">
+        <div *ngIf="!isHidden(control)">
+            <div class="form-group">
+                <label class="col-md-2 control-label">{{control.label}}</label>
+                <div class="col-md-6">
+                    <input *ngIf="control.type === 'text' || control.type === 'number'" [type]="control.type" class="form-control" [formControlName]="control.key" />
+                    <select *ngIf="!control.setOptions && control.type === 'select'" class="form-control" [formControlName]="control.key">
+                        <option *ngFor="let op of control.options" [value]="op.id">{{op.text}}</option>
+                    </select>
+                    <select2 *ngIf="!control.setOptions && control.type === 'select2'" [options]="control.options" [formControlName]="control.key"></select2>
+                    <radio-group *ngIf="!control.setOptions && control.type === 'radio'" [options]="control.options" [formControlName]="control.key"></radio-group>
+                    <radio-with-input *ngIf="!control.setOptions && control.type === 'radio-with-input'"  [options]="control.options" [formControlName]="control.key"></radio-with-input>
+                    <checkbox-group *ngIf="!control.setOptions && control.type === 'checkbox'" [options]="control.options" [formControlName]="control.key"></checkbox-group>
+                    <checkbox-with-input *ngIf="!control.setOptions && control.type === 'checkbox-with-input'" [options]="control.options" [formControlName]="control.key"></checkbox-with-input>
+                    <date-time-picker *ngIf="control.type === 'date'" accuracy="day" [formControlName]="control.key"></date-time-picker>
+                    <date-time-picker *ngIf="control.type === 'date-hour'" accuracy="hour" [formControlName]="control.key"></date-time-picker>
+                    <date-time-picker *ngIf="control.type === 'date-time'" accuracy="day" [formControlName]="control.key"></date-time-picker>
+                    <upload-image *ngIf="control.type === 'upload-image'" [limit]="control.limit" [formControlName]="control.key"></upload-image>
+                    <option-dialog *ngIf="control.setOptions && optionsType(control.type)" [type]="optionsType(control.type)" [formControlName]="control.key"></option-dialog>
+                    <hidden-when-dialog *ngIf="control.type === 'hidden-when-dialog'" [formControlName]="control.key"></hidden-when-dialog>
+                    <p *ngIf="control.description">{{control.description}}</p>
+                </div>
+            </div>
+            <div *ngIf="formErrors[control.key]" class="alert alert-danger col-md-6 col-md-offset-2">
+                <p>{{ formErrors[control.key] }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-offset-2">
+        {{dynamicForm.value | json}}
+    </div>
+</form>

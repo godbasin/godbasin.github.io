@@ -1,0 +1,9 @@
+<div style="margin-top: 30px;">
+    <h1>自定义表单配置</h1><a class="btn btn-info" (click)="addControl()" >添加表单选项</a>
+    <div *ngFor="let form of customForms; let i = index;">
+        <h2>表单控件{{i + 1}}</h2>
+        <dynamic-form [config]="customControl" [model]="form"></dynamic-form>
+    </div>
+    <h1><a class="btn btn-success" (click)="formJson()" >生成JSON</a></h1>
+    <json-to-html [hidden]="!json" [(ngModel)]="json"></json-to-html>
+</div>
