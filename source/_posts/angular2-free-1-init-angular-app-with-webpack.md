@@ -1,5 +1,5 @@
 ---
-title: 玩转Angular1--用Webpack启动Angular2应用
+title: 玩转Angular2(1)--用Webpack启动Angular2应用
 date: 2017-05-28 22:12:26
 categories: angular2火锅
 tags: 笔记

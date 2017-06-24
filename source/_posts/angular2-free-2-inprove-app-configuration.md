@@ -1,5 +1,5 @@
 ---
-title: 玩转Angular2--改善应用配置
+title: 玩转Angular2(2)--改善应用配置
 date: 2017-05-29 13:41:47
 categories: angular2火锅
 tags: 笔记
