@@ -2,17 +2,23 @@
 被删前端博客   
 ---      
 
-### 最新  
+### 最新   
+> [《算法导论之js实现--计数排序》](https://godbasin.github.io/2017/07/08/counting-sort/)      
+> [《算法导论之js实现--冒泡排序》](https://godbasin.github.io/2017/07/02/bubble-sort/)      
+> [《谈谈Angular--从Angular1到Angular4》](https://godbasin.github.io/2017/07/01/about-angular-from-1-to-4/)      
+> [《玩转Angular2(13)--动态列表配置》](https://godbasin.github.io/2017/06/30/angular2-free-13-dynamic-list/)    
+> [《玩转Angular2(12)--配置以及生成表单》](https://godbasin.github.io/2017/06/25/angular2-free-12-config-and-create-form/)    
 > [《玩转Angular2(11)--使用动态表单制作选项配置对话框》](https://godbasin.github.io/2017/06/24/angular2-free-11-option-dialog/)    
 > [《玩转Angular2(10)--向表单添加条件控制》](https://godbasin.github.io/2017/06/23/angular2-free-10-add-conditions/)    
 > [《玩转Angular2(9)--图片上传控件》](https://godbasin.github.io/2017/06/11/angular2-free-9-upload-iamge/)    
-> [《玩转Angular2(8)--表单的radio和checkbox》](https://godbasin.github.io/2017/06/10/angular2-free-8-radio-and-checkbox/)    
-> [《玩转Angular2(7)--创建动态表单》](https://godbasin.github.io/2017/06/09/angular2-free-7-dynamic-form/)    
-> [《玩转Angular2(6)--模型驱动和模板驱动的表单》](https://godbasin.github.io/2017/06/04/angular2-free-6-two-form-building/)    
-> [《玩转Angular2(5)--自定义input表单控件》](https://godbasin.github.io/2017/06/03/angular2-free-5-custom-input-component/)    
 
+### 非科班恶补算法   
+> [《算法导论之js实现--计数排序》](https://godbasin.github.io/2017/07/08/counting-sort/)      
+> [《算法导论之js实现--冒泡排序》](https://godbasin.github.io/2017/07/02/bubble-sort/)      
 
 ### Angular2-free   
+> [《玩转Angular2(13)--动态列表配置》](https://godbasin.github.io/2017/06/30/angular2-free-13-dynamic-list/)    
+> [《玩转Angular2(12)--配置以及生成表单》](https://godbasin.github.io/2017/06/25/angular2-free-12-config-and-create-form/)    
 > [《玩转Angular2(11)--使用动态表单制作选项配置对话框》](https://godbasin.github.io/2017/06/24/angular2-free-11-option-dialog/)    
 > [《玩转Angular2(10)--向表单添加条件控制》](https://godbasin.github.io/2017/06/23/angular2-free-10-add-conditions/)    
 > [《玩转Angular2(9)--图片上传控件》](https://godbasin.github.io/2017/06/11/angular2-free-9-upload-iamge/)    
@@ -26,6 +32,7 @@
 > [《玩转Angular2(1)--用Webpack启动Angular2应用》](https://godbasin.github.io/2017/05/28/angular2-free-1-init-angular-app-with-webpack/)    
 
 ### Angular2相关   
+> [《谈谈Angular--从Angular1到Angular4》](https://godbasin.github.io/2017/07/01/about-angular-from-1-to-4/)      
 > [《谈谈Angular2的依赖注入》](https://godbasin.github.io/2017/05/28/di-in-angular/)    
 > [《从Angular2-beta到Angular4-release框架升级总结》](https://godbasin.github.io/2017/05/21/angular2-beta-to-release/)    
 
