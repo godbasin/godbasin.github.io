@@ -3,16 +3,23 @@
 ---      
 
 ### 最新   
+> [《算法导论之js实现--n×n矩阵计算》](https://godbasin.github.io/2017/08/04/n-n-matrix/)      
+> [《算法导论之js实现--分治法求最大子数组》](https://godbasin.github.io/2017/07/30/find-maximum-subarray/)      
+> [《算法导论之js实现--快速选择》](https://godbasin.github.io/2017/07/29/quick-select/)      
+> [《算法导论之js实现--堆排序》](https://godbasin.github.io/2017/07/23/heap-sort/)      
+> [《算法导论之js实现--快速排序》](https://godbasin.github.io/2017/07/16/quick-sort/)      
+> [《算法导论之js实现--归并排序》](https://godbasin.github.io/2017/07/15/merge-sort/)      
+> [《算法导论之js实现--插入排序》](https://godbasin.github.io/2017/07/09/insertion-sort/)      
 > [《算法导论之js实现--计数排序》](https://godbasin.github.io/2017/07/08/counting-sort/)      
-> [《算法导论之js实现--冒泡排序》](https://godbasin.github.io/2017/07/02/bubble-sort/)      
-> [《谈谈Angular--从Angular1到Angular4》](https://godbasin.github.io/2017/07/01/about-angular-from-1-to-4/)      
-> [《玩转Angular2(13)--动态列表配置》](https://godbasin.github.io/2017/06/30/angular2-free-13-dynamic-list/)    
-> [《玩转Angular2(12)--配置以及生成表单》](https://godbasin.github.io/2017/06/25/angular2-free-12-config-and-create-form/)    
-> [《玩转Angular2(11)--使用动态表单制作选项配置对话框》](https://godbasin.github.io/2017/06/24/angular2-free-11-option-dialog/)    
-> [《玩转Angular2(10)--向表单添加条件控制》](https://godbasin.github.io/2017/06/23/angular2-free-10-add-conditions/)    
-> [《玩转Angular2(9)--图片上传控件》](https://godbasin.github.io/2017/06/11/angular2-free-9-upload-iamge/)    
 
 ### 非科班恶补算法   
+> [《算法导论之js实现--n×n矩阵计算》](https://godbasin.github.io/2017/08/04/n-n-matrix/)      
+> [《算法导论之js实现--分治法求最大子数组》](https://godbasin.github.io/2017/07/30/find-maximum-subarray/)     
+> [《算法导论之js实现--快速选择》](https://godbasin.github.io/2017/07/29/quick-select/)      
+> [《算法导论之js实现--堆排序》](https://godbasin.github.io/2017/07/23/heap-sort/)      
+> [《算法导论之js实现--快速排序》](https://godbasin.github.io/2017/07/16/quick-sort/)      
+> [《算法导论之js实现--归并排序》](https://godbasin.github.io/2017/07/15/merge-sort/)      
+> [《算法导论之js实现--插入排序》](https://godbasin.github.io/2017/07/09/insertion-sort/)      
 > [《算法导论之js实现--计数排序》](https://godbasin.github.io/2017/07/08/counting-sort/)      
 > [《算法导论之js实现--冒泡排序》](https://godbasin.github.io/2017/07/02/bubble-sort/)      
 
