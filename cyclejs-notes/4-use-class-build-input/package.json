@@ -1,0 +1,39 @@
+{
+  "name": "cyclejs-demo",
+  "version": "1.0.0",
+  "description": "cycle.js demo",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack-dev-server --config webpackdev.config.js --port 3333 --host 0.0.0.0 --devtool eval --progress --colors --hot --content-base dist",
+    "build": "webpack --config webpack.config.js"
+  },
+  "keywords": [
+    "cycle.js"
+  ],
+  "author": "godbasin <wangbeishan@163.com> (https://github.com/godbasin)",
+  "license": "MIT",
+  "dependencies": {
+    "@cycle/dom": "^18.0.0",
+    "@cycle/run": "^3.1.0",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "cyclic-router": "^4.0.5",
+    "snabbdom-jsx": "^0.3.1",
+    "switch-path": "^1.2.0",
+    "xstream": "^10.9.0"
+  },
+  "devDependencies": {
+    "@types/node": "^8.0.19",
+    "babel-core": "^6.25.0",
+    "babel-loader": "^7.1.1",
+    "babel-preset-latest": "^6.24.1",
+    "html-webpack-plugin": "^2.29.0",
+    "loglevel": "^1.4.1",
+    "source-map-loader": "^0.2.1",
+    "ts-loader": "^2.3.2",
+    "tslib": "^1.7.1",
+    "tslint": "^5.5.0",
+    "typescript": "^2.4.2",
+    "webpack": "^3.3.0",
+    "webpack-dev-server": "^2.5.1"
+  }
+}

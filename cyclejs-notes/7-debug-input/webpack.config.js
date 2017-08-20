@@ -11,13 +11,22 @@ var config = {
         filename: './bundle.js'
     },
     resolve: {
-        extensions: ['.ts', '.tsx', '.js']
+        extensions: ['.ts', '.tsx', '.js'],
+        alias: {
+            utils: path.resolve(__dirname, 'src', 'utils'),
+            components: path.resolve(__dirname, 'src', 'components'),
+        }
     },
     module: {
         rules: [
+            {
+                test: /\.ts$/,
+                loader: 'ts-loader',
+                exclude: /node_modules/
+            },
             // 为webpack指定loaders
             {
-                test: /\.tsx?$/,
+                test: /\.tsx$/,
                 use: ['babel-loader', 'ts-loader'],
                 exclude: /node_modules/
             }
