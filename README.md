@@ -3,17 +3,29 @@
 ---      
 
 ### 最新     
-> [《webpack多页面配置7--source map和代码压缩》](https://godbasin.github.io/2017/08/20/webpack-multi-project-7-source-map-and-uglifyjs/)      
-> [《webpack多页面配置6--热加载刷新》](https://godbasin.github.io/2017/08/19/webpack-multi-project-6-hot-reload/)      
-> [《webpack多页面配置5--开发服务启动》](https://godbasin.github.io/2017/08/13/webpack-multi-project-5-dev-server/)      
-> [《webpack多页面配置4--页面打包实现》](https://godbasin.github.io/2017/08/12/webpack-multi-project-4-build/)      
-> [《webpack多页面配置3--打包相关node模块介绍》](https://godbasin.github.io/2017/08/11/webpack-multi-project-3-node-packages/)      
-> [《webpack多页面配置2--拿取页面目录名》](https://godbasin.github.io/2017/08/06/webpack-multi-project-2-page-utils/)      
-> [《webpack多页面配置1--基础webpack配置》](https://godbasin.github.io/2017/08/05/webpack-multi-project-1-init-project/)      
-> [《算法导论之js实现--n×n矩阵计算》](https://godbasin.github.io/2017/08/04/n-n-matrix/)      
-> [《算法导论之js实现--分治法求最大子数组》](https://godbasin.github.io/2017/07/30/find-maximum-subarray/)          
+> [《前端思维转变--从事件驱动到数据驱动》](https://godbasin.github.io/2017/09/29/data-driven-or-event-driven/)      
+> [《Cycle.js学习笔记6--合流》](https://godbasin.github.io/2017/09/24/cyclejs-notes-6-merge-streams/)      
+> [《Cycle.js学习笔记5--关于框架设计和抽象》](https://godbasin.github.io/2017/09/16/cyclejs-notes-5-design-and-abstraction/)      
+> [《Cycle.js学习笔记4--使用Class和装饰器》](https://godbasin.github.io/2017/09/08/cyclejs-notes-4-use-class-build-input/)      
+> [《Cycle.js学习笔记3--切换到Typescript》](https://godbasin.github.io/2017/09/03/cyclejs-notes-3-use-typescript/)      
+> [《关于Typescript》](https://godbasin.github.io/2017/09/01/about-typescript/)      
+> [《Cycle.js学习笔记2--使用cyclic-router来启动路由》](https://godbasin.github.io/2017/08/27/cyclejs-notes-2-use-cyclic-router/)      
+> [《Cycle.js学习笔记1--用Webpack启动应用》](https://godbasin.github.io/2017/08/26/cyclejs-notes-1-init-app-with-webpack/)      
+> [《webpack多页面配置8--静态资源loader们》](https://godbasin.github.io/2017/08/25/webpack-multi-project-8-certain-loaders/)      
+
+### 前端杂谈
+> [《前端思维转变--从事件驱动到数据驱动》](https://godbasin.github.io/2017/09/29/data-driven-or-event-driven/)      
+
+### Cycle.js笔记      
+> [《Cycle.js学习笔记6--合流》](https://godbasin.github.io/2017/09/24/cyclejs-notes-6-merge-streams/)      
+> [《Cycle.js学习笔记5--关于框架设计和抽象》](https://godbasin.github.io/2017/09/16/cyclejs-notes-5-design-and-abstraction/)      
+> [《Cycle.js学习笔记4--使用Class和装饰器》](https://godbasin.github.io/2017/09/08/cyclejs-notes-4-use-class-build-input/)      
+> [《Cycle.js学习笔记3--切换到Typescript》](https://godbasin.github.io/2017/09/03/cyclejs-notes-3-use-typescript/)      
+> [《Cycle.js学习笔记2--使用cyclic-router来启动路由》](https://godbasin.github.io/2017/08/27/cyclejs-notes-2-use-cyclic-router/)      
+> [《Cycle.js学习笔记1--用Webpack启动应用》](https://godbasin.github.io/2017/08/26/cyclejs-notes-1-init-app-with-webpack/)      
 
 ### webpack多页面配置      
+> [《webpack多页面配置8--静态资源loader们》](https://godbasin.github.io/2017/08/25/webpack-multi-project-8-certain-loaders/)      
 > [《webpack多页面配置7--source map和代码压缩》](https://godbasin.github.io/2017/08/20/webpack-multi-project-7-source-map-and-uglifyjs/)      
 > [《webpack多页面配置6--热加载刷新》](https://godbasin.github.io/2017/08/19/webpack-multi-project-6-hot-reload/)      
 > [《webpack多页面配置5--开发服务启动》](https://godbasin.github.io/2017/08/13/webpack-multi-project-5-dev-server/)      
@@ -52,6 +64,9 @@
 > [《谈谈Angular--从Angular1到Angular4》](https://godbasin.github.io/2017/07/01/about-angular-from-1-to-4/)      
 > [《谈谈Angular2的依赖注入》](https://godbasin.github.io/2017/05/28/di-in-angular/)    
 > [《从Angular2-beta到Angular4-release框架升级总结》](https://godbasin.github.io/2017/05/21/angular2-beta-to-release/)    
+
+### Typescript相关      
+> [《关于Typescript》](https://godbasin.github.io/2017/09/01/about-typescript/)      
 
 ### Webpack相关
 > [《正确的Webpack配置姿势，快速启动各式框架》](https://godbasin.github.io/2017/05/21/webpack-common-setting/)        
