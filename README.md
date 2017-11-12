@@ -3,20 +3,33 @@
 ---      
 
 ### 最新     
+> [《纯前端的进军3--进程间通信》](https://godbasin.github.io/2017/11/12/advance-from-pure-front-ender-3-interprocess-communication/)   
+> [《纯前端的进军2--多线程与IO》](https://godbasin.github.io/2017/11/05/advance-from-pure-front-ender-2-progress-and-io/)   
+> [《纯前端的进军1--线程与进程》](https://godbasin.github.io/2017/10/28/advance-from-pure-front-ender-1-thread-and-progress/)   
+> [《前端模板引擎》](https://godbasin.github.io/2017/10/21/template-engine/)   
+> [《对话抽象》](https://godbasin.github.io/2017/10/14/dialogue-abstraction/)   
+> [《Cycle.js学习笔记8--双向绑定Input值》](https://godbasin.github.io/2017/10/07/cyclejs-notes-8-two-way-binding/)      
+> [《Cycle.js学习笔记7--定位Input组件值获取bug》](https://godbasin.github.io/2017/10/03/cyclejs-notes-7-debug-input/)      
 > [《前端思维转变--从事件驱动到数据驱动》](https://godbasin.github.io/2017/09/29/data-driven-or-event-driven/)      
 > [《Cycle.js学习笔记6--合流》](https://godbasin.github.io/2017/09/24/cyclejs-notes-6-merge-streams/)      
 > [《Cycle.js学习笔记5--关于框架设计和抽象》](https://godbasin.github.io/2017/09/16/cyclejs-notes-5-design-and-abstraction/)      
 > [《Cycle.js学习笔记4--使用Class和装饰器》](https://godbasin.github.io/2017/09/08/cyclejs-notes-4-use-class-build-input/)      
 > [《Cycle.js学习笔记3--切换到Typescript》](https://godbasin.github.io/2017/09/03/cyclejs-notes-3-use-typescript/)      
 > [《关于Typescript》](https://godbasin.github.io/2017/09/01/about-typescript/)      
-> [《Cycle.js学习笔记2--使用cyclic-router来启动路由》](https://godbasin.github.io/2017/08/27/cyclejs-notes-2-use-cyclic-router/)      
-> [《Cycle.js学习笔记1--用Webpack启动应用》](https://godbasin.github.io/2017/08/26/cyclejs-notes-1-init-app-with-webpack/)      
-> [《webpack多页面配置8--静态资源loader们》](https://godbasin.github.io/2017/08/25/webpack-multi-project-8-certain-loaders/)      
 
-### 前端杂谈
+### 前端杂谈    
+> [《前端模板引擎》](https://godbasin.github.io/2017/10/21/template-engine/)   
+> [《对话抽象》](https://godbasin.github.io/2017/10/14/dialogue-abstraction/)   
 > [《前端思维转变--从事件驱动到数据驱动》](https://godbasin.github.io/2017/09/29/data-driven-or-event-driven/)      
 
+### 纯前端的进军    
+> [《纯前端的进军3--进程间通信》](https://godbasin.github.io/2017/11/12/advance-from-pure-front-ender-3-interprocess-communication/)   
+> [《纯前端的进军2--多线程与IO》](https://godbasin.github.io/2017/11/05/advance-from-pure-front-ender-2-progress-and-io/)   
+> [《纯前端的进军1--线程与进程》](https://godbasin.github.io/2017/10/28/advance-from-pure-front-ender-1-thread-and-progress/)
+
 ### Cycle.js笔记      
+> [《Cycle.js学习笔记8--双向绑定Input值》](https://godbasin.github.io/2017/10/07/cyclejs-notes-8-two-way-binding/)      
+> [《Cycle.js学习笔记7--定位Input组件值获取bug》](https://godbasin.github.io/2017/10/03/cyclejs-notes-7-debug-input/)      
 > [《Cycle.js学习笔记6--合流》](https://godbasin.github.io/2017/09/24/cyclejs-notes-6-merge-streams/)      
 > [《Cycle.js学习笔记5--关于框架设计和抽象》](https://godbasin.github.io/2017/09/16/cyclejs-notes-5-design-and-abstraction/)      
 > [《Cycle.js学习笔记4--使用Class和装饰器》](https://godbasin.github.io/2017/09/08/cyclejs-notes-4-use-class-build-input/)      
