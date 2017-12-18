@@ -1,0 +1,17 @@
+{
+  "name": "Test 5",
+  "children": [
+    {
+      "name": "Test 5: A"
+    },
+    {
+      "name": "Test 5: B"
+    },
+    {
+      "name": "Test 5: C"
+    },
+    {
+      "name": "Test 5: D"
+    }
+  ]
+}
