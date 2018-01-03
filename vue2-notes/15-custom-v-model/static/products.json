@@ -1,0 +1,174 @@
+{
+    "draw": 1,
+    "recordsTotal": 9,
+    "recordsFiltered": 9,
+    "data": [{
+            "activateDate": "2016-10-26 17:11:57",
+            "activeDate": "2016-10-01",
+            "expiresDate": "",
+            "graphicsId": 32,
+            "isActivate": 1,
+            "options": {
+                "cap_track": true,
+                "counter_threads": 64,
+                "limit_cores": 64
+            },
+            "productId": 1,
+            "productName": "test",
+            "registerDate": "2016-10-26 17:00:36",
+            "state": 1,
+            "terminalId": 1,
+            "terminalName": "Test",
+            "uuid": "12321321321-limit3"
+        },
+        {
+            "activateDate": "2016-10-26 17:53:56",
+            "activeDate": "2016-10-01",
+            "expiresDate": "",
+            "graphicsId": 33,
+            "isActivate": 1,
+            "options": {
+                "cap_track": true,
+                "counter_threads": 64
+            },
+            "productId": 1,
+            "productName": "test",
+            "registerDate": "2016-10-26 17:53:30",
+            "state": 1,
+            "terminalId": 1,
+            "terminalName": "Test",
+            "uuid": "12321321321-limit4"
+        },
+        {
+            "activateDate": "2016-10-27 13:05:57",
+            "activeDate": "2016-10-01",
+            "expiresDate": "2016-10-30",
+            "graphicsId": 34,
+            "isActivate": 1,
+            "options": {
+                "cap_track": true,
+                "counter_threads": 8,
+                "limit_cores": 8
+            },
+            "productId": 1,
+            "productName": "test",
+            "registerDate": "2016-10-27 13:05:46",
+            "state": 1,
+            "terminalId": 1,
+            "terminalName": "Test",
+            "uuid": "a890024cbssed0tfda180a00880s16ft"
+        },
+        {
+            "activateDate": "2016-10-27 13:31:37",
+            "activeDate": "2016-10-01",
+            "expiresDate": "2016-10-30",
+            "graphicsId": 35,
+            "isActivate": 1,
+            "options": {
+                "cap_track": true,
+                "counter_threads": 8,
+                "limit_cores": 8
+            },
+            "productId": 1,
+            "productName": "test",
+            "registerDate": "2016-10-27 13:31:37",
+            "state": 1,
+            "terminalId": 1,
+            "terminalName": "Test",
+            "uuid": "a890024cbssed0tfda180a00880s16ff"
+        }, {
+            "activateDate": "2016-10-26 16:57:49",
+            "activeDate": "2016-10-01",
+            "expiresDate": "2016-10-30",
+            "graphicsId": 30,
+            "isActivate": 1,
+            "options": {
+                "cap_track": true,
+                "counter_threads": 64,
+                "limit_cores": 64
+            },
+            "productId": 1,
+            "productName": "test",
+            "registerDate": "2016-10-26 16:57:13",
+            "state": 1,
+            "terminalId": 1,
+            "terminalName": "Test",
+            "uuid": "12321321321-limit"
+        },
+        {
+            "activateDate": "2016-10-26 17:01:27",
+            "activeDate": "2016-10-01",
+            "expiresDate": "2016-10-31",
+            "graphicsId": 31,
+            "isActivate": 1,
+            "options": {
+                "cap_track": true,
+                "counter_threads": 64,
+                "limit_cores": 64
+            },
+            "productId": 1,
+            "productName": "test",
+            "registerDate": "2016-10-26 16:59:19",
+            "state": 1,
+            "terminalId": 1,
+            "terminalName": "Test",
+            "uuid": "12321321321-limit2"
+        },
+        {
+            "activateDate": "2016-10-26 17:11:57",
+            "activeDate": "2016-10-01",
+            "expiresDate": "",
+            "graphicsId": 32,
+            "isActivate": 1,
+            "options": {
+                "cap_track": true,
+                "counter_threads": 64,
+                "limit_cores": 64
+            },
+            "productId": 1,
+            "productName": "test",
+            "registerDate": "2016-10-26 17:00:36",
+            "state": 1,
+            "terminalId": 1,
+            "terminalName": "Test",
+            "uuid": "12321321321-limit3"
+        },
+        {
+            "activateDate": "2016-10-26 17:53:56",
+            "activeDate": "2016-10-01",
+            "expiresDate": "",
+            "graphicsId": 33,
+            "isActivate": 1,
+            "options": {
+                "cap_track": true,
+                "counter_threads": 64
+            },
+            "productId": 1,
+            "productName": "test",
+            "registerDate": "2016-10-26 17:53:30",
+            "state": 1,
+            "terminalId": 1,
+            "terminalName": "Test",
+            "uuid": "12321321321-limit4"
+        },
+        {
+            "activateDate": "2016-10-27 13:05:57",
+            "activeDate": "2016-10-01",
+            "expiresDate": "2016-10-30",
+            "graphicsId": 34,
+            "isActivate": 1,
+            "options": {
+                "cap_track": true,
+                "counter_threads": 8,
+                "limit_cores": 8
+            },
+            "productId": 1,
+            "productName": "test",
+            "registerDate": "2016-10-27 13:05:46",
+            "state": 1,
+            "terminalId": 1,
+            "terminalName": "Test",
+            "uuid": "a890024cbssed0tfda180a00880s16ft"
+        }
+    ]
+}
