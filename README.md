@@ -3,6 +3,14 @@
 ---      
 
 ### 最新     
+> [《Vue2使用笔记13--添加Promise弹窗》](https://godbasin.github.io/2018/01/14/vue2-notes-13-dialog-component/)     
+> [《Vue2使用笔记12--使用vuex》](https://godbasin.github.io/2018/01/13/vue2-notes-12-use-vuex/)     
+> [《Vue2使用笔记11--菜单鉴权》](https://godbasin.github.io/2018/01/07/vue2-notes-11-access-menu/)     
+> [《Vue2使用笔记10--路由鉴权》](https://godbasin.github.io/2018/01/06/vue2-notes-10-access-route/)     
+> [《D3.js-Tree实战笔记2--简单的Tree demo》](https://godbasin.github.io/2018/01/01/d3-tree-notes-2-init-a-d3-tree/)   
+> [《D3.js-Tree实战笔记1--拜见D3.js》](https://godbasin.github.io/2017/12/31/d3-tree-notes-1-svg-and-d3/)   
+> [《async/await的使用》](https://godbasin.github.io/2017/12/23/async-await/)   
+> [《纯前端的进军7--node.js》](https://godbasin.github.io/2017/12/16/advance-from-pure-front-ender-7-node-js/)   
 > [《纯前端的进军6--套接字（Socket）与socket.io》](https://godbasin.github.io/2017/12/09/advance-from-pure-front-ender-6-socket-and-socket-io/)   
 > [《纯前端的进军5--HTTP与Websocket》](https://godbasin.github.io/2017/12/02/advance-from-pure-front-ender-5-http-and-websocket/)   
 > [《纯前端的进军4--网络进程通信和TCP/IP协议》](https://godbasin.github.io/2017/11/17/advance-from-pure-front-ender-4-network-progress-and-tcp-ip/)   
@@ -10,15 +18,30 @@
 > [《纯前端的进军2--多线程与IO》](https://godbasin.github.io/2017/11/05/advance-from-pure-front-ender-2-progress-and-io/)   
 > [《纯前端的进军1--线程与进程》](https://godbasin.github.io/2017/10/28/advance-from-pure-front-ender-1-thread-and-progress/)   
 > [《前端模板引擎》](https://godbasin.github.io/2017/10/21/template-engine/)   
-> [《对话抽象》](https://godbasin.github.io/2017/10/14/dialogue-abstraction/)   
-> [《Cycle.js学习笔记8--双向绑定Input值》](https://godbasin.github.io/2017/10/07/cyclejs-notes-8-two-way-binding/)      
-> [《Cycle.js学习笔记7--定位Input组件值获取bug》](https://godbasin.github.io/2017/10/03/cyclejs-notes-7-debug-input/)      
-> [《前端思维转变--从事件驱动到数据驱动》](https://godbasin.github.io/2017/09/29/data-driven-or-event-driven/)      
 
 ### 前端杂谈    
 > [《前端模板引擎》](https://godbasin.github.io/2017/10/21/template-engine/)   
 > [《对话抽象》](https://godbasin.github.io/2017/10/14/dialogue-abstraction/)   
 > [《前端思维转变--从事件驱动到数据驱动》](https://godbasin.github.io/2017/09/29/data-driven-or-event-driven/)      
+
+### Vue2笔记    
+> [《Vue2使用笔记13--添加Promise弹窗》](https://godbasin.github.io/2018/01/14/vue2-notes-13-dialog-component/)     
+> [《Vue2使用笔记12--使用vuex》](https://godbasin.github.io/2018/01/13/vue2-notes-12-use-vuex/)     
+> [《Vue2使用笔记11--菜单鉴权》](https://godbasin.github.io/2018/01/07/vue2-notes-11-access-menu/)     
+> [《Vue2使用笔记10--路由鉴权》](https://godbasin.github.io/2018/01/06/vue2-notes-10-access-route/)     
+> [《Vue2使用笔记9--监视路由》](https://godbasin.github.io/2016/12/17/vue2-notes-9-watch-router/)     
+> [《Vue2使用笔记8--vue与datatables(二)：服务端渲染》](https://godbasin.github.io/2016/12/11/vue2-notes-8-use-datatable-with-server/)     
+> [《Vue2使用笔记7--vue与datatables(一):浏览器渲染》](https://godbasin.github.io/2016/12/10/vue2-notes-7-use-datatable-with-html/)     
+> [《Vue2使用笔记6--vue与各种插件和谐相处地创建表单》](https://godbasin.github.io/2016/12/04/vue2-notes-6-form-with-some-plugins/)      
+> [《Vue2使用笔记5--transition过渡效果使用》](https://godbasin.github.io/2016/12/03/vue2-notes-5-transition-animation/)      
+> [《Vue2使用笔记4--vue-router使用》](https://godbasin.github.io/2016/11/27/vue2-notes-4-vue-router/)     
+> [《Vue2使用笔记3--父子组件的通信》](https://godbasin.github.io/2016/11/26/vue2-notes-3-parent-child-component/)     
+> [《Vue2使用笔记2--创建左侧菜单栏Sidebar》](https://godbasin.github.io/2016/11/20/vue2-notes-2-create-sidebar-componnet/)     
+> [《Vue2使用笔记1--vue-cli+vue-router搭建应用》](https://godbasin.github.io/2016/11/19/vue2-notes-1-build-vue2-project/)     
+
+### D3.js-Tree实战笔记      
+> [《D3.js-Tree实战笔记2--简单的Tree demo》](https://godbasin.github.io/2018/01/01/d3-tree-notes-2-init-a-d3-tree/)   
+> [《D3.js-Tree实战笔记1--拜见D3.js》](https://godbasin.github.io/2017/12/31/d3-tree-notes-1-svg-and-d3/)   
 
 ### 纯前端的进军    
 > [《纯前端的进军6--套接字（Socket）与socket.io》](https://godbasin.github.io/2017/12/09/advance-from-pure-front-ender-6-socket-and-socket-io/)   
@@ -103,6 +126,7 @@
 
 
 ### js相关    
+> [《async/await的使用》](https://godbasin.github.io/2017/12/23/async-await/)   
 > [《ES6/ES7好玩实用的特性介绍》](https://godbasin.github.io/2017/05/26/es6-es7-interesting-feature/)    
 > [《将json输出为html(二)：js数据类型判断实现》](https://godbasin.github.io/2016/11/13/json-to-html-2-use-object/)  
 > [《将json输出为html(一)：字符串正则匹配》](https://godbasin.github.io/2016/11/13/json-to-html-1-use-string-regular/)                                                
@@ -191,18 +215,7 @@
 > [《React-Redux使用笔记4--使用Redux管理状态》](https://godbasin.github.io/2017/01/02/react-redux-notes-4-use-redux/)  
 > [《React-Redux使用笔记3--使用router完成简单登陆功能》](https://godbasin.github.io/2017/01/01/react-redux-notes-3-use-router-login/)  
 > [《React-Redux使用笔记2--完善打包生产代码流程》](https://godbasin.github.io/2016/12/25/react-redux-notes-2-complete-publish/)  
-> [《React-Redux使用笔记1--使用webpack搭建React开发环境》](https://godbasin.github.io/2016/12/24/react-redux-notes-1-build-react-project/)   
-
-### Vue2笔记
-> [《Vue2使用笔记9--监视路由》](https://godbasin.github.io/2016/12/17/vue2-notes-9-watch-router/)     
-> [《Vue2使用笔记8--vue与datatables(二)：服务端渲染》](https://godbasin.github.io/2016/12/11/vue2-notes-8-use-datatable-with-server/)     
-> [《Vue2使用笔记7--vue与datatables(一):浏览器渲染》](https://godbasin.github.io/2016/12/10/vue2-notes-7-use-datatable-with-html/)     
-> [《Vue2使用笔记6--vue与各种插件和谐相处地创建表单》](https://godbasin.github.io/2016/12/04/vue2-notes-6-form-with-some-plugins/)      
-> [《Vue2使用笔记5--transition过渡效果使用》](https://godbasin.github.io/2016/12/03/vue2-notes-5-transition-animation/)      
-> [《Vue2使用笔记4--vue-router使用》](https://godbasin.github.io/2016/11/27/vue2-notes-4-vue-router/)     
-> [《Vue2使用笔记3--父子组件的通信》](https://godbasin.github.io/2016/11/26/vue2-notes-3-parent-child-component/)     
-> [《Vue2使用笔记2--创建左侧菜单栏Sidebar》](https://godbasin.github.io/2016/11/20/vue2-notes-2-create-sidebar-componnet/)     
-> [《Vue2使用笔记1--vue-cli+vue-router搭建应用》](https://godbasin.github.io/2016/11/19/vue2-notes-1-build-vue2-project/)      
+> [《React-Redux使用笔记1--使用webpack搭建React开发环境》](https://godbasin.github.io/2016/12/24/react-redux-notes-1-build-react-project/)    
 
 ### Angular2笔记    
 > [《Angular2使用笔记9--使用Subject创建Websocket服务》](https://godbasin.github.io/2016/11/12/angular2-notes-9-websocket-service-with-rxjs/)  
