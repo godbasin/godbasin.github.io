@@ -1,6 +1,6 @@
-# vue2-notes-16-custom-directive      
+# vue2-notes-17-lazyload-chunk      
 ---
-### Vue2使用笔记16--自定义指令               
+### Vue2使用笔记17--路由懒加载               
 
-> 教程查看博客[《Vue2使用笔记16--自定义指令》](https://godbasin.github.io/2016/12/17/vue2-notes-16-custom-directive/)           
-> [此处查看页面效果](http://ofyya1gfg.bkt.clouddn.com/16-custom-directive/index.html#/app/add/service)
+> 教程查看博客[《Vue2使用笔记17--路由懒加载》](https://godbasin.github.io/2018/01/28/vue2-notes-17-lazyload-chunk/)           
+> [此处查看页面效果](http://ofyya1gfg.bkt.clouddn.com/17-lazyload-chunk/index.html#/app/logs)
