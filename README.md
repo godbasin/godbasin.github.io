@@ -3,6 +3,8 @@
 ---      
 
 ### 最新     
+> [《一步一步走向应用开发——SQL与NoSQL》](https://godbasin.github.io/2018/07/22/application-development-2-sql-and-nosql/)   
+> [《一步一步走向应用开发——认识数据库》](https://godbasin.github.io/2018/07/15/application-development-with-learning-database/)   
 > [《前端构建大型应用》](https://godbasin.github.io/2018/07/07/build-application/)   
 > [《数据抽离与数据管理》](https://godbasin.github.io/2018/06/17/component-communication-with-data-model/)   
 > [《组件配置化》](https://godbasin.github.io/2018/06/09/component-with-configuration/)   
@@ -13,6 +15,11 @@
 > [《前端入门6--认识浏览器》](https://godbasin.github.io/2018/05/08/front-end-6-browser-render/)   
 > [《前端入门5--Javascript》](https://godbasin.github.io/2018/05/05/front-end-5-javascript/)   
 > [《前端入门4--DOM和BOM》](https://godbasin.github.io/2018/04/29/front-end-4-dom-bom/)   
+
+
+### 一步一步走向应用开发    
+> [《一步一步走向应用开发——SQL与NoSQL》](https://godbasin.github.io/2018/07/22/application-development-2-sql-and-nosql/)   
+> [《一步一步走向应用开发——认识数据库》](https://godbasin.github.io/2018/07/15/application-development-with-learning-database/)   
 
 ### 前端杂谈    
 > [《前端构建大型应用》](https://godbasin.github.io/2018/07/07/build-application/)   
