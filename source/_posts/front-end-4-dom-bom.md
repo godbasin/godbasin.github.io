@@ -16,11 +16,11 @@ tags: 分享
 
 ## DOM 解析
 我们常见的`HTML`元素，在浏览器中会被解析成节点：
-![image](http://o905ne85q.bkt.clouddn.com/ct_htmltree.gif)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/ct_htmltree.gif)
 
 在控制台，我们也能比较清晰地看到这样的层级关系：
 
-![image](http://o905ne85q.bkt.clouddn.com/%7BEA4AA8AF-DB12-4B48-8A6A-E71099D1A942%7D.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/%7BEA4AA8AF-DB12-4B48-8A6A-E71099D1A942%7D.png)
 
 **节点树中的节点彼此拥有层级关系。**
 父（`parent`）、子（`child`）和同胞（`sibling`）等术语用于描述这些关系。父节点拥有子节点。同级的子节点被称为同胞（兄弟或姐妹）。
@@ -109,7 +109,7 @@ $("#my-list").delegate("button", "click", function(){
 一个`DOM`节点元素，其实是很复杂的，包含了很多的属性和方法。
 
 我们来简单打印一下一个`DOM`元素：
-![image](http://o905ne85q.bkt.clouddn.com/1512633321%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1512633321%281%29.png)
 
 看到右边的滚动条了没，有如此之多的属性。
 

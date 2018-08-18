@@ -163,7 +163,7 @@ CSS `background-image`属性用于为一个元素设置一个或者多个背景�
       height: 300px;
       border: solid 2px red;
       background-color: white;
-      background-image: url('http://o905ne85q.bkt.clouddn.com/5df2bea83bbf3a90ca130c70.jpg')
+      background-image: url('https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/5df2bea83bbf3a90ca130c70.jpg')
     }
   .img-contain{
 	background-position: center;
@@ -189,7 +189,7 @@ CSS `background-image`属性用于为一个元素设置一个或者多个背景�
 
 具体效果如下：
 
-![image](http://o905ne85q.bkt.clouddn.com/1494939946%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1494939946%281%29.png)
 
 大家也可以查看这里[js-bin](http://jsbin.com/godesow/1/edit?html,output)。
 

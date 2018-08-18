@@ -121,7 +121,7 @@ config = {
 ```
 
 打包后，生成的文件如下：
-![image](http://o905ne85q.bkt.clouddn.com/1515581250%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1515581250%281%29.png)
 
 大家会发现，除了我们上面单独打包的文件，还有：
 
@@ -131,7 +131,7 @@ config = {
   使用 CommonsChunkPlugin 打包生成的文件。允许我们从不同的 bundle 中提取所有的公共模块，并且将他们加入公共 bundle 中。
 
 在最终打包的页面中，我们能看到，当我们点击某个模块的时候，才会异步请求对应的 bundle 文件：
-![image](http://o905ne85q.bkt.clouddn.com/1515582002%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1515582002%281%29.png)
 
 ## 结束语
 

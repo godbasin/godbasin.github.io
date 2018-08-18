@@ -69,7 +69,7 @@ initFloor();
 ```
 
 如图：
-![image](http://o905ne85q.bkt.clouddn.com/1486885952%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1486885952%281%29.png)
 
 ### 添加正方体
 这里我们简单设计一个生成正方体的函数，当传入路径时则设置为材质的纹理贴图：
@@ -107,7 +107,7 @@ cube4.position.set(1, 1, 3);
 ```
 
 如图：
-![image](http://o905ne85q.bkt.clouddn.com/1486887050%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1486887050%281%29.png)
 
 这里小伙伴们或许觉得奇怪，为什么正方体是黑色的呢，明明都已经添加材质纹理了呀。
 

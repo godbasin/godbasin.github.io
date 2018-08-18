@@ -11,7 +11,7 @@ tags: 逻辑实现
 [responsive-waterfall](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/responsive-waterfall)
 
 最终效果图如下，改变浏览器大小效果更棒哦[点击查看页面](http://o922dcmwp.bkt.clouddn.com/index.html)
-![image](http://o905ne85q.bkt.clouddn.com/responsive-waterfall.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/responsive-waterfall.png)
 
 以下我们将每个瀑布流盒子简称为box
 

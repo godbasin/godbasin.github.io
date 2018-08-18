@@ -101,7 +101,7 @@ initLight();
 ```
 
 如图：
-![image](http://o905ne85q.bkt.clouddn.com/1486894019%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1486894019%281%29.png)
 
 可见添加光源之后，我们就可以看到我们的物体了，包括贴上图片材质的cube酱们。
 
@@ -132,7 +132,7 @@ light.shadow.camera.far = 500      // default
 ```
 
 如图：
-![image](http://o905ne85q.bkt.clouddn.com/1486894379%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1486894379%281%29.png)
 
 可见我们光源照射到cube酱们的阴影投射到了地板上。
 
@@ -151,7 +151,7 @@ scene.add(helper);
 ```
 
 如图：
-![image](http://o905ne85q.bkt.clouddn.com/1486894648%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1486894648%281%29.png)
 
 ### 完整代码
 ``` javascript

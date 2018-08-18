@@ -97,7 +97,7 @@ npm install --save react-redux
 
 ### 改造项目结构
 上了Redux后本骚年的目录结构如图：
-![image](http://o905ne85q.bkt.clouddn.com/A99.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/A99.tmp.png)
 可以看到，这里除了增加了Redux相关的actions、store相关文件，也将原有目录组织重新调整了一下。
 - containers/AppContainer.jsx为整个应用外壳
 - routes会根据应用路由管理

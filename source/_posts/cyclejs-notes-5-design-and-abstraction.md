@@ -17,7 +17,7 @@ tags: 笔记
 
 首先来看配图：
 
-![image](http://o905ne85q.bkt.clouddn.com/8JS%60Y%7B$TBJ1H%29%7B_~O6DI907.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/8JS%60Y%7B$TBJ1H%29%7B_~O6DI907.png)
 
 先不管为什么官方文档要放这么一张逼死强迫症的缺个顶部的图片，这图片主要讲了一个轮回：
 - 人 => 机：通过操作对机器进行输入，例如从键盘输入内容、用鼠标点击某些元素等

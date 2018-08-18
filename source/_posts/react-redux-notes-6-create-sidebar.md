@@ -316,9 +316,9 @@ export class SidebarList extends Component {
 ```
 
 现在我们的页面大概效果如图：
-![image](http://o905ne85q.bkt.clouddn.com/7BED.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/7BED.tmp.png)
 切换后：
-![image](http://o905ne85q.bkt.clouddn.com/91E3.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/91E3.tmp.png)
 
 
 ## 结束语

@@ -28,7 +28,7 @@ var move = 0.1; // 用于步长（照相机移动距离）
 ```
 
 其中theta(θ)角度如图：
-![image](http://o905ne85q.bkt.clouddn.com/1486987535%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1486987535%281%29.png)
 
 ### 添加监听事件
 ``` javascript
@@ -78,7 +78,7 @@ function handleMousemove(e) {
 
 ### 绑定视角更新（照相机焦点处理）
 至于照相机焦点的更新，我们设置焦距为far，这里初始化为20000，根据theta角度我们可以计算得到：
-![image](http://o905ne85q.bkt.clouddn.com/1486987997%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1486987997%281%29.png)
 
 即照相机焦点的坐标等于：
 `焦点的x轴坐标 = 照相机x轴坐标 + 焦距far × sin(theta)`
@@ -95,7 +95,7 @@ function renderCameraLookat() {
 当我们照相机拥有了视觉角度之后，我们的移动方向也不再是x、y这样的简单方向了。
 
 如图：
-![image](http://o905ne85q.bkt.clouddn.com/1486988752%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1486988752%281%29.png)
 
 我们步长为move，则我们移动的计算公式为：
 

@@ -49,7 +49,7 @@ it('should have 1 navbar-header and 1 navbar-collapse', function () {
 bower install jasmine-jquery --save
 ```
 注意：安装jasmine-jquery对jquery的版本有一定要求（jasmine-jquery依赖jquery），可能导致安装失败，提示如下：
-![image](http://o905ne85q.bkt.clouddn.com/2B17.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/2B17.tmp.png)
 这里我们将bower文件中的jquery版本修改一下：
 ``` cmd
 "jquery": ">=2.0.0",
@@ -103,7 +103,7 @@ it('should show asidemenus when click .dropdown-toggle', function () {
 ## 使用ng-html2js测试指令
 -----
 当我们的指令中模板使用templateUrl时，我们进行测试会得到以下结果：
-![image](http://o905ne85q.bkt.clouddn.com/430D.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/430D.tmp.png)
 这时候我们可以使用ng-html2js进行处理。
 
 ### 安装配置
@@ -146,7 +146,7 @@ plugins: [
 beforeEach(module('views'));
 ```
 现在运行我们的测试，可以看到测试结果如下：
-![image](http://o905ne85q.bkt.clouddn.com/7334.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/7334.tmp.png)
 完成！
 
 ## 结束语

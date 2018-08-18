@@ -80,8 +80,8 @@ export default (ngModule) => {
 ```
 
 效果图：
-![image](http://o905ne85q.bkt.clouddn.com/1485252152%281%29.png)
-![image](http://o905ne85q.bkt.clouddn.com/1485252279%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1485252152%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1485252279%281%29.png)
 
 ## 结束语
 ---

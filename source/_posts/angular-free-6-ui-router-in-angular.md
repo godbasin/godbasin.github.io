@@ -38,7 +38,7 @@ angularUI也为我们封装了一个独立的路由模块ui-router,它靠状态s
 ---
 像其他几个框架讲解一样，我们依然使用Sidebar组件进行应用程序主界面的侧边栏。
 如图：
-![image](http://o905ne85q.bkt.clouddn.com/1485074649%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1485074649%281%29.png)
 
 这里我们在维护公用组件的时候，放置在`app/shared/components`文件夹里。
 

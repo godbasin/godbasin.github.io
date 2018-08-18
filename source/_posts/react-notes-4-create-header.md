@@ -49,7 +49,7 @@ import { Button } from 'react-bootstrap';
 ## 创建头部菜单
 -----
 该头部菜单与前一个AngularJS使用笔记中完全一致。如图：
-![image](http://o905ne85q.bkt.clouddn.com/C902.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/C902.tmp.png)
 
 ### 添加头部组件
 - 在components文件夹中添加header.jsx文件

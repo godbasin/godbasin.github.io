@@ -184,7 +184,7 @@ Products.vue组件的html模板不需要调整，需要调整的是相关的组�
 
 
 ### 页面效果
-![image](http://o905ne85q.bkt.clouddn.com/FB2B.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/FB2B.tmp.png)
 
 ## 结束语
 -----

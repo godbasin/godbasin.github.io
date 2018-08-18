@@ -53,7 +53,7 @@ npm run server:dev:hmr
 # https://github.com/cnpm/cnpm
 ```
 安装和启动服务过后，我们可以看到页面效果如下:
-![image](http://o905ne85q.bkt.clouddn.com/4D9F.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/4D9F.tmp.png)
 
 ### 目录组织
 使用Angular2 Webpack Starter搭建后，我们能看到详细的目录组织如下：

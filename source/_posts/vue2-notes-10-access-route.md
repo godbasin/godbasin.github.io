@@ -223,7 +223,7 @@ export default function accessCompute(permissionMap, accessKey) {
 
 * 进入服务管理->新建(无权限)
 
-![image](http://o905ne85q.bkt.clouddn.com/%7BE4F2FDE9-E812-4894-B398-4FF7130D5BF3%7D.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/%7BE4F2FDE9-E812-4894-B398-4FF7130D5BF3%7D.png)
 
 ## 结束语
 

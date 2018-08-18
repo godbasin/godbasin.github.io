@@ -278,7 +278,7 @@ image.src = url; // 添加图片地址
 
 这里本骚年还传入了些设定，最终效果图如下：
 
-![image](http://o905ne85q.bkt.clouddn.com/1496243776%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1496243776%281%29.png)
 
 ## 结束语
 -----

@@ -130,7 +130,7 @@ Vue.transition('stagger', {
 ## 制作index页面
 -----
 页面结构如下：
-![image](http://o905ne85q.bkt.clouddn.com/F3A2.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/F3A2.tmp.png)
 
 ### 添加模板
 这里使用了上一节创建的头部组件，在component属性中引入。

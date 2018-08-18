@@ -203,11 +203,11 @@ babel-loader的配置通常使用.babelrc文件进行配置：
 ### 项目代码
 关于代码其实很简单，从angular-cli里偷过来一个`app-root`的模块组件，然后拼到项目里，最终长这么一个样：
 
-![image](http://o905ne85q.bkt.clouddn.com/@IA9G2NI16PS9O$ERF%25%28E%29Q.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/@IA9G2NI16PS9O$ERF%25%28E%29Q.png)
 
 打包之后生成的dist目录长这样：
 
-![image](http://o905ne85q.bkt.clouddn.com/3B8D%25PM%7DFA$%25B2G58~%25%28H%5B4.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/3B8D%25PM%7DFA$%25B2G58~%25%28H%5B4.png)
 
 其实这里大家可以看到这样使用file-loader的话，对应的文件并不会一起打包进去bundle.js文件里，这样有好处也有不好的地方。
 

@@ -59,7 +59,7 @@ tags: 笔记
 ## 制作index页面
 -----
 页面结构如下：
-![image](http://o905ne85q.bkt.clouddn.com/F3A2.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/F3A2.tmp.png)
 
 ### 添加index控制器
 - 在scripts文件夹内添加一个indexCtrl.js文件，并添加控制器

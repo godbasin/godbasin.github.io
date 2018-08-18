@@ -11,7 +11,7 @@ tags: 自制插件
 [picture-cut](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/picture-cut)
 
 最终效果图如下[点击查看页面](http://o92md66rk.bkt.clouddn.com/index.html)
-![image](http://o905ne85q.bkt.clouddn.com/picture-cut.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/picture-cut.png)
 
 ## 插件介绍
 -----

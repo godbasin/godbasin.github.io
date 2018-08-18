@@ -81,7 +81,7 @@ if(menu.menus){ //判断是否有子菜单
 ## 制作index页面
 -----
 页面结构如下：
-![image](http://o905ne85q.bkt.clouddn.com/F3A2.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/F3A2.tmp.png)
 
 ### 添加props属性值
 菜单内容等使用pros属性保存（不会发生改变）。

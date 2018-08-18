@@ -28,7 +28,7 @@ bower install echarts --save
 ```
 
 安装后我们可在bower_components文件夹中看到echarts，如图：
-![image](http://o905ne85q.bkt.clouddn.com/E400.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/E400.tmp.png)
 
 - 引入echarts文件
 我们在index.html文件中引入两个文件：
@@ -205,7 +205,7 @@ bower install echarts --save
 
 ### 最终效果
 如图：
-![image](http://o905ne85q.bkt.clouddn.com/365E.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/365E.tmp.png)
 
 ## 结束语
 -----

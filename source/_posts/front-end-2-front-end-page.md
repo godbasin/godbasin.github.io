@@ -21,7 +21,7 @@ tags: 分享
 ### 右键菜单
 在定位某个元素的时候，我们也可以在该元素上右键选择“检查”，菜单如下：
 
-![image](http://o905ne85q.bkt.clouddn.com/1510044313%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1510044313%281%29.png)
 
 - 查看网页源代码
 
@@ -48,7 +48,7 @@ tags: 分享
 **控制台菜单**
 我们来看控制台：
 
-![image](http://o905ne85q.bkt.clouddn.com/1510045324%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1510045324%281%29.png)
 
 这是控制台的菜单，这边简单做介绍（从左往右）：
 1. 检查元素（箭头带个框框）：与右键选择元素检查相似，后面讲。
@@ -63,7 +63,7 @@ tags: 分享
 **Element 查看元素**
 我们看看元素的查看，这里很方便的是，当我们选中 Element 里面某个元素，Chrome 便会突显出来，并且伴有常用的元素信息，宽高、padding、margin 等等。
 
-![image](http://o905ne85q.bkt.clouddn.com/%7B521323E8-144E-4B2D-8567-9488ACB1EB4C%7D.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/%7B521323E8-144E-4B2D-8567-9488ACB1EB4C%7D.png)
 
 同时，我们也可以看到下方的 Style，里面会有当前元素匹配中的一些 CSS 样式，我们也可以尝试在这里调整，调整成想要的样式之后，再贴进我们的代码里。
 
@@ -72,14 +72,14 @@ tags: 分享
 
 看看百度的页面，还藏了招聘信息：
 
-![image](http://o905ne85q.bkt.clouddn.com/1510045732%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1510045732%281%29.png)
 
 当然现在好像越来越流行了，有时候有趣得网站也会藏些解码游戏在里面。
 
 **Network**
 我们在搜索框里面输入内容，便能看到百度页面发起的请求：
 
-![image](http://o905ne85q.bkt.clouddn.com/1510046804%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1510046804%281%29.png)
 
 我们能在这里查看请求的内容、状态、服务端返回的内容等等。
 

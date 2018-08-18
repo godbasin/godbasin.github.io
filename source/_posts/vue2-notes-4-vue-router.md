@@ -154,7 +154,7 @@ methods: {
 - 使用`<router-link></router-link>`可在组件模板中设定超链接进行挑战，在Sidebar组件中也已实现
 
 ### 页面最终效果
-![image](http://o905ne85q.bkt.clouddn.com/1E1E.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1E1E.tmp.png)
 
 ### 参考
 [Vue2.0中文文档](https://vuefe.cn/guide/)

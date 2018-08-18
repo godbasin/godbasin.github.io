@@ -83,7 +83,7 @@ tags: 笔记
 ## 制作头部菜单栏
 -----
 头部菜单栏包括，主菜单，侧边下拉菜单和时钟。如图：
-![image](http://o905ne85q.bkt.clouddn.com/753B.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/753B.tmp.png)
 
 ### 添加index页面
 - 在views文件夹内添加一个index.html
@@ -185,7 +185,7 @@ controller: function($scope, $element, $timeout) {
 
 ### 最终效果
 如图：
-![image](http://o905ne85q.bkt.clouddn.com/C902.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/C902.tmp.png)
 
 ## 结束语
 -----

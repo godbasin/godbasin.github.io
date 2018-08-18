@@ -20,7 +20,7 @@ tags: 笔记
   - 1.对框架的目录组织有个大概的了解
   - 2.可选择自动引入Bootstrap或者SASS
   - 3.可选择自动引入需要使用的Angular模块，如下
-![image](http://o905ne85q.bkt.clouddn.com/CF95.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/CF95.tmp.png)
   - 4.对首次使用AngularJS的小伙伴们来说，可以直观看到如何启用ng-app，以及路由ng-route的使用方式
   - 5.启动一个基于Node的http服务，通过一系列的Grunt任务来监视你的文件的更改情况，一旦发现文件被改动了，'live reloading'就会自动刷新应用，并更新到浏览器上
   - 6.可使用grunt命令自动执行规范代码、跑测试、压缩JS和CSS代码（减少网络请求）、优化图片还有编译使用了预处理的代码
@@ -38,20 +38,20 @@ tags: 笔记
 ## 目录组织
 -----
 搭建好初始化的项目，目录组织如下：
-![image](http://o905ne85q.bkt.clouddn.com/5C4E.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/5C4E.tmp.png)
 当然，涉及angular项目的文件在app目录下，其他主要用于自动化构建、生成的环境和管理包引用。
 现在我们查看一下app目录下文件：
-![image](http://o905ne85q.bkt.clouddn.com/E558.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/E558.tmp.png)
 
 当然项目发展文件数量肯定多很多的呢，在js文件成倍增长的时候，该怎么去管理呢？
 
 ### 按照功能分类
 - 将directive/controller/service/filter等不同功能的js放置不同的文件夹管理
-![image](http://o905ne85q.bkt.clouddn.com/1350.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1350.tmp.png)
 
 ### 按模块分类
 - 将每个模块的文件放置在一个文件夹内管理
-![image](http://o905ne85q.bkt.clouddn.com/14A2.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/14A2.tmp.png)
 
 本骚年用的是按照功能划分的，这种方式相对本骚年来说比较容易管理。
 或者你们如果有更好的管理目录组织方式，当然也欢迎分享啦。

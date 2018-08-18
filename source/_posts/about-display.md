@@ -124,7 +124,7 @@ CSS
 div { border: solid 1px red; width: 50px; height: 50px; } 
 .float { float: left; }
 ```
-![image](http://o905ne85q.bkt.clouddn.com/KSQKV%7D%253L%25Z6XE_C4FWXCRI.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/KSQKV%7D%253L%25Z6XE_C4FWXCRI.png)
 
 - float与inline-block
   - 当一个元素浮动之后，会影响内联框（通常是文本）的排列和布局
@@ -135,7 +135,7 @@ CSS(给div添加display=inline-block)
 ``` css
 div { border: solid 1px red; width: 50px; height: 50px; display: display: inline-block;} 
 ```
-![image](http://o905ne85q.bkt.clouddn.com/O1%297R8%7BZ%7DAH%25C0F%28U%25M%7D8XX.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/O1%297R8%7BZ%7DAH%25C0F%28U%25M%7D8XX.png)
 
 - float撑开父元素的方法
 本属于普通流中的元素浮动之后，包含框内部由于不存在其他普通流元素了，也就表现出高度为0（高度塌陷）

@@ -107,7 +107,7 @@ Node引入模块，经历的三个步骤：路径分析、文件定位、编译�
 
 Node.js对原生模块和文件模块都进行了缓存，于是在第二次require时，是不会有重复开销的。
 require方法中的文件查找策略：
-![images](http://o905ne85q.bkt.clouddn.com/image1.jpg)
+![images](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/image1.jpg)
 
 1. 从文件模块缓存中加载
 尽管原生模块与文件模块的优先级不同，但是都不会优先于从文件模块的缓存中加载已经存在的模块。

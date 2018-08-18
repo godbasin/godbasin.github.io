@@ -53,7 +53,7 @@ Angular2动画是由状态和状态之间的转场效果所定义的。
 ## 制作index页面
 -----
 页面结构如下：
-![image](http://o905ne85q.bkt.clouddn.com/F3A2.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/F3A2.tmp.png)
 
 ### 添加index组件相关文件
 - 添加index文件夹，用于管理Index组件的相关文件

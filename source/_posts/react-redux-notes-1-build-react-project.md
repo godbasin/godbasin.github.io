@@ -55,7 +55,7 @@ Webpack将项目中的所有静态资源都当做模块，模块之间可以互�
 
 ### 初始化项目结构
 项目代码结构如下：
-![image](http://o905ne85q.bkt.clouddn.com/703C.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/703C.tmp.png)
 其中入口文件为`app/index.js`，模板文件为`templates/index.js`。
 
 ### webpack设置

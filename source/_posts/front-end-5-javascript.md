@@ -34,7 +34,7 @@ tags: 分享
 
 ### EventLoop
 参考偷来的图：
-![image](http://o905ne85q.bkt.clouddn.com/bg2014100802.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/bg2014100802.png)
 图中，主线程运行的时候，产生堆（`heap`）和栈（`stack`），栈中的代码调用各种外部`API`，它们在“任务队列”中加入各种事件（`click`，`load`，`done`）。只要栈中的代码执行完毕，主线程就会去读取“任务队列”，依次执行那些事件所对应的回调函数。
 执行栈中的代码（同步任务），总是在读取“任务队列”（异步任务）之前执行。
 
@@ -140,7 +140,7 @@ var g = new Graph();
  隐式原型的作用：构成原型链，同样用于实现基于原型的继承。
 
  附上一张从别人那扒来珍藏多年的图：
-![image](http://o905ne85q.bkt.clouddn.com/e83bca5f1d1e6bf359d1f75727968c11_hd.jpg)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/e83bca5f1d1e6bf359d1f75727968c11_hd.jpg)
 
 ## 作用域和闭包
 **作用域链使得我们在函数内部可以直接读取外部以及全局变量。**

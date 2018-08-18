@@ -94,7 +94,7 @@ module.exports = function(config) {
 
 ### 优化测试报告
 上一节我们已经简单说过控制器的单元测试了，运行结果如下：
-![image](http://o905ne85q.bkt.clouddn.com/F184.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/F184.tmp.png)
 这样的结果显示并不是很清晰，我们下面将使用mocha的测试报告，这里使用插件[karma-mocha-reporter](https://github.com/litixsoft/karma-mocha-reporter)。
 - 安装依赖
 
@@ -117,7 +117,7 @@ plugins: [
 ```
 
 现在运行我们的测试，可以看到测试结果如下：
-![image](http://o905ne85q.bkt.clouddn.com/36EE.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/36EE.tmp.png)
 这样的测试报告会比之前的清晰多了呢。
 
 ### 测试覆盖率
@@ -154,9 +154,9 @@ plugins: [
 ],
 ```
 运行`grunt test`进行测试之后，会自动生成代码覆盖率测试报告：
-![image](http://o905ne85q.bkt.clouddn.com/40E2.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/40E2.tmp.png)
 生成的目录如下：
-![image](http://o905ne85q.bkt.clouddn.com/80EB.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/80EB.tmp.png)
 
 ### 添加Chrome浏览器测试
 如果需要增加对不同浏览器的测试，需要按照对应的插件，以及进行一些配置。
@@ -184,7 +184,7 @@ plugins: [
 ],
 ```
 测试中，chrome浏览器会自动打开并运行测试，完毕之后自动关闭。我们可以看到coverage中也新增了Chrome的测试覆盖率报告。
-![image](http://o905ne85q.bkt.clouddn.com/4B40.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/4B40.tmp.png)
 
 ## 结束语
 -----

@@ -226,9 +226,9 @@ export const listConfig: IListConfig = {
 这里我们需要主要的是，若希望编辑或创建的对象在列表中能展示，需要两者的key值一致。
 效果图如下：
 
-![image](http://o905ne85q.bkt.clouddn.com/1496746103%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1496746103%281%29.png)
 
-![image](http://o905ne85q.bkt.clouddn.com/1496746132%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1496746132%281%29.png)
 
 
 ## 结束语

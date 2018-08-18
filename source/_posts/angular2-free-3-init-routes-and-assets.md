@@ -227,7 +227,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 ---
 ### 目录
 如图：
-![image](http://o905ne85q.bkt.clouddn.com/1495034687%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1495034687%281%29.png)
 
 ### 其他配置文件调整
 - package.json
@@ -274,7 +274,7 @@ new webpack.ContextReplacementPlugin(
 
 登录页面也还是我们熟悉的：
 
-![image](http://o905ne85q.bkt.clouddn.com/1495970476%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1495970476%281%29.png)
 
 ## 结束语
 -----

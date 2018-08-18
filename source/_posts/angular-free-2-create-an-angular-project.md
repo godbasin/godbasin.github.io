@@ -219,7 +219,7 @@ export default (ngModule, angular) => {
 ### login.template.html
 关于文件组织的管理，后面或许我们可以讨论一下，目前的话，我们将模块相关的模板和逻辑、控制器等根据路由在`modules`文件夹下进行管理，而剩余公用的部分则在`shared`文件夹下进行分类。
 目前的文件如图：
-![image](http://o905ne85q.bkt.clouddn.com/1484902174%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1484902174%281%29.png)
 
 我们的login则作为单独的路由，自己有一个`login`文件夹，现在里面只有一个模板文件`login.template.html`：
 
@@ -259,7 +259,7 @@ export default (ngModule, angular) => {
 
 到这里，我们的项目已经基本搭建ok了呢。此时通过命令`npm run webpack`和`npm run webpack-dev-server`就可以启用环境啦，在[http://localhost:9999](http://localhost:9999)就能看到效果了。
 如图：
-![image](http://o905ne85q.bkt.clouddn.com/1484902936%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1484902936%281%29.png)
 
 ## 打包
 ---

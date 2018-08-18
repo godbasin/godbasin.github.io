@@ -41,7 +41,7 @@ tags: 笔记
 
 为了动态获取时，能有效生成子节点，我们来看看一个 tree node 里面包含了哪些属性：
 
-![image](http://o905ne85q.bkt.clouddn.com/1513514218%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1513514218%281%29.png)
 
 由于`d3.tree()`能自动计算生成 x 和 y 位置，而 id、x0、y0 等则是批量处理生成，故我们主要需要添加的属性有：
 
@@ -165,7 +165,7 @@ function click(d) {
 ```
 
 最终我们效果将会如图：
-![image](http://o905ne85q.bkt.clouddn.com/1513505937%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1513505937%281%29.png)
 
 # 结束语
 

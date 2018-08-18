@@ -22,7 +22,7 @@ Socket是通信的基石，是支持TCP/IP协议的网络通信的基本操作�
 
 Socket是应用层与TCP/IP协议族通信的中间软件抽象层，它是一组接口。在设计模式中，Socket其实就是一个门面模式，它把复杂的TCP/IP协议族隐藏在Socket接口后面，对用户来说，一组简单的接口就是全部，让Socket去组织数据，以符合指定的协议。
 
-![images](http://o905ne85q.bkt.clouddn.com/05225723-2ffa89aad91f46099afa530ef8660b20.jpg)
+![images](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/05225723-2ffa89aad91f46099afa530ef8660b20.jpg)
 
 扯回第一节[《node.js聊天室1--网络进程通信和TCP/IP协议》]()中的进程通信，两个进程如果需要进行通讯最基本的一个前提能能够唯一的标示一个进程，在本地进程通讯中我们可以使用PID来唯一标示一个进程，但PID只在本地唯一。
 
@@ -48,7 +48,7 @@ Socket是应用层与TCP/IP协议族通信的中间软件抽象层，它是一�
 
 以使用TCP协议通讯的Socket为例，其交互流程大概是这样子的：
 
-![images](http://o905ne85q.bkt.clouddn.com/05232335-fb19fc7527e944d4845ef40831da4ec2.png)
+![images](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/05232335-fb19fc7527e944d4845ef40831da4ec2.png)
 
 先从服务器端说起。服务器端先初始化Socket，然后与端口绑定(bind)，对端口进行监听(listen)，调用accept阻塞，等待客户端连接。在这时如果有个客户端初始化一个Socket，然后连接服务器(connect)，如果连接成功，这时客户端与服务器端的连接就建立了。客户端发送数据请求，服务器端接收请求并处理请求，然后把回应数据发送给客户端，客户端读取数据，最后关闭连接，一次交互结束。
 

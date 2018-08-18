@@ -11,7 +11,7 @@ tags: 笔记
 ## 创建头部菜单
 -----
 该头部菜单与前几个框架的使用笔记中完全一致。如图：
-![image](http://o905ne85q.bkt.clouddn.com/C902.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/C902.tmp.png)
 
 ### 添加头部组件相关文件
 - 添加header文件夹，用于管理Header组件的相关文件
@@ -184,7 +184,7 @@ import { Header } from './header';
 ```
 
 此时算是完成了一个组件的创建以及使用，如图：
-![image](http://o905ne85q.bkt.clouddn.com/15D3.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/15D3.tmp.png)
 
 ### 参考
 - [依赖注入--烹饪宝典](https://angular.cn/docs/ts/latest/cookbook/dependency-injection.html)

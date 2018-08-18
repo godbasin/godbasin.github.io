@@ -218,7 +218,7 @@ export class Other {
 ```
 
 页面如下：
-![image](http://o905ne85q.bkt.clouddn.com/E597.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/E597.tmp.png)
 
 ### 倒退为承诺(Promise)
 Angular的http客户端API返回的是Observable<Response>类型的对象，但我们也可以把它转成Promise。

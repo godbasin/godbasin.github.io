@@ -186,11 +186,11 @@ ETag值，该值在服务端和服务端代表该文件唯一的字符串对比�
 
 第一次请求：
 
-![image](http://o905ne85q.bkt.clouddn.com/015343_psx2_568818.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/015343_psx2_568818.png)
 
 再次请求：
 
-![image](http://o905ne85q.bkt.clouddn.com/015353_P04w_568818.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/015353_P04w_568818.png)
 
 ### 参考
 - [《浅谈浏览器http的缓存机制》](http://www.cnblogs.com/vajoy/p/5341664.html)

@@ -12,7 +12,7 @@ tags: 原创部件
 已经没有在维护了，也基本没优化，但还是挺有意思的一个项目
 
 最终效果图如下[点击查看页面](http://o907xb1mi.bkt.clouddn.com/index.html)
-![image](http://o905ne85q.bkt.clouddn.com/dd_custom_pages.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/dd_custom_pages.png)
 
 
 ## 基本页面搭建

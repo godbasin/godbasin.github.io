@@ -159,7 +159,7 @@ new Vue({
 
 * 页面效果
 
-![image](http://o905ne85q.bkt.clouddn.com/1514893996%281%29.jpg)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1514893996%281%29.jpg)
 
 ## 结束语
 

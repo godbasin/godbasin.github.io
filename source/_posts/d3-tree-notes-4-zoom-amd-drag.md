@@ -130,10 +130,10 @@ var zoom = d3
 ```
 
 效果如图，缩放前：
-![image](http://o905ne85q.bkt.clouddn.com/1513511660%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1513511660%281%29.png)
 
 放大后：
-![image](http://o905ne85q.bkt.clouddn.com/1513511993%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1513511993%281%29.png)
 
 ## 根据节点数量和层级调整间距
 

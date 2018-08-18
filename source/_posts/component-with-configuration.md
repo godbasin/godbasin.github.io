@@ -66,7 +66,7 @@ const QUERY_DAY_NUM = 7;
 
 下面的组件，我们同样拿这样一个卡片组件来作为例子吧。
 
-![image](http://o905ne85q.bkt.clouddn.com/1524133892%281%29.jpg)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1524133892%281%29.jpg)
 
 
 ## 可配置的数据

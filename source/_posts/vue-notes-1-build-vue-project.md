@@ -30,11 +30,11 @@ $ cd vue-test
 $ npm install
 ```
 安装过程会询问是否需要添加一些相关的依赖（编码规范、测试等），如图
-![image](http://o905ne85q.bkt.clouddn.com/8EC6.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/8EC6.tmp.png)
 
 - 目录组织
 如图，生成目录组织如下（这里木有显示.开头的文件）：
-![image](http://o905ne85q.bkt.clouddn.com/9B08.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/9B08.tmp.png)
 
 ``` bash
 ├── build/                      # webpack配置参数文件
@@ -67,7 +67,7 @@ $ npm install
 npm run dec
 ```
 效果如下：
-![image](http://o905ne85q.bkt.clouddn.com/A221.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/A221.tmp.png)
 
 - 打包生成
 
@@ -78,7 +78,7 @@ npm run build
   - 注意，打包生成的文件为绝对定位，需在服务环境下才能打开。如果需要生成相对定位的文件，可以进行如下操作：
 
   - 1.打开config文件夹下的index.js文件
-![image](http://o905ne85q.bkt.clouddn.com/7BB8.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/7BB8.tmp.png)
 
   - 2.修改build中assetsPublicPath为''（原本为'/'）
 
@@ -104,7 +104,7 @@ module.exports = {
 
 
   - 生成的文件将放置在dist文件夹，如图：
-![image](http://o905ne85q.bkt.clouddn.com/3B27.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/3B27.tmp.png)
 
   - 运行单元测试
 

@@ -244,7 +244,7 @@ export const customForms: ICustomControl[] = [
 
 可以看到最终效果图：
 
-![image](http://o905ne85q.bkt.clouddn.com/1495985927%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1495985927%281%29.png)
 
 ## 结束语
 -----

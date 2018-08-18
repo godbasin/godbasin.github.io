@@ -19,7 +19,7 @@ tags: 笔记
 
 ### 实例生命周期
 这里简单放个图吧，左侧的红色框框代表具体的生命周期钩子。
-![image](http://o905ne85q.bkt.clouddn.com/lifecycle.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/lifecycle.png)
 [官方文档](http://cn.vuejs.org/api/#选项-生命周期钩子)里面有详细的生命周期钩子哦，大家有需要的话可以具体去研究一下。
 
 ### Vue组件
@@ -64,7 +64,7 @@ tags: 笔记
 ## 创建头部菜单
 -----
 该头部菜单与前面的使用笔记中一致。如图：
-![image](http://o905ne85q.bkt.clouddn.com/C902.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/C902.tmp.png)
 由于Vue中木有找到类似React-Bootstrap一样的库，故这里先直接用bootstrap的样式css文件。
 
 ### 添加头部组件

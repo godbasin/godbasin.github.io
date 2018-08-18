@@ -146,11 +146,11 @@ methods: {
 ### 页面效果
 - 新建
 
-![image](http://o905ne85q.bkt.clouddn.com/280.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/280.tmp.png)
 
 - 编辑
 
-![image](http://o905ne85q.bkt.clouddn.com/EEE6.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/EEE6.tmp.png)
 
 ## 结束语
 -----

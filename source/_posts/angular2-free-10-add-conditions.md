@@ -145,8 +145,8 @@ export const customForms: ICustomControl[] = [
 
 效果如下：
 
-![iamge](http://o905ne85q.bkt.clouddn.com/1496326365%281%29.png)
-![iamge](http://o905ne85q.bkt.clouddn.com/1496326383%281%29.png)
+![iamge](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1496326365%281%29.png)
+![iamge](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1496326383%281%29.png)
 
 ## 带输入的选择
 ---
@@ -235,7 +235,7 @@ export class CheckboxWithTextComponent implements OnInit {
 
 结合上面，最终我们的效果图如下：
 
-![image](http://o905ne85q.bkt.clouddn.com/1496325904%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1496325904%281%29.png)
 
 ## 结束语
 -----

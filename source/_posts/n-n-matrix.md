@@ -12,7 +12,7 @@ n×n矩阵计算的javascript实现。
 ### n×n矩阵
 若`A = (a[i][j])`和`B = (b[i][j])`为n × n的方阵，则对`i, j = 1, 2, ..., n`，定义乘积`C = A · B`中的元素`c[i][j]`为：
 
-![image](http://o905ne85q.bkt.clouddn.com/1487758346%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1487758346%281%29.png)
 
 ### 基本js实现
 ``` javascript
@@ -50,7 +50,7 @@ squareMatrixMultiply(AMatrix, BMatrix);
 ### 直接的递归分治算法
 - 思路
 
-![image](http://o905ne85q.bkt.clouddn.com/1487758627%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1487758627%281%29.png)
 
 - js实现
 
@@ -169,11 +169,11 @@ squareMatrixMultiplyRecursive(AMatrix, BMatrix);
 - 思路
 
 2×2矩阵计算：
-![image](http://o905ne85q.bkt.clouddn.com/latex.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/latex.png)
 
 传统的矩阵乘法运算方式，`C[i][j] = A[i][1]·B[1][j] + A[i][2]·B[2][j]`，总共使用8个分块乘法和4个分块加法。
 Strassen演算使用7个分块乘法和18个分块加法：
-![image](http://o905ne85q.bkt.clouddn.com/latex%20%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/latex%20%281%29.png)
 
 - js实现
 

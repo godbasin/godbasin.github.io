@@ -35,11 +35,11 @@ tags: 分享
 2. 安装一些插件。
 像本骚年前段时间安装的一个 VSCode 插件：
 
-![image](http://o905ne85q.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20171108125834.jpg)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20171108125834.jpg)
 
 还有比较出名的当然是 Atom 的 power mode 啦：
 
-![image](http://o905ne85q.bkt.clouddn.com/68747470733a2f2f636c6f75642e67697468756275736572636f6e74656e742e636f6d2f6173736574732f3638383431352f31313631353536352f31306631363435362d396336352d313165352d386166342d3236356630316663383361302e676966.gif)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/68747470733a2f2f636c6f75642e67697468756275736572636f6e74656e742e636f6d2f6173736574732f3638383431352f31313631353536352f31306631363435362d396336352d313165352d386166342d3236356630316663383361302e676966.gif)
 
 嘛，喜欢的事情要做得开心才对啦。除了编辑器，一台好的电脑、机械键盘、耳机等都是写码必备的提高幸福指数的装备啦。
 
@@ -53,7 +53,7 @@ tags: 分享
 ## 盒子模型
 我们能从控制台的 Element 模块里，找到这样的盒子模型：
 
-![image](http://o905ne85q.bkt.clouddn.com/1510119051%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1510119051%281%29.png)
 
 盒模型(box model)是 CSS 中的一个重要概念，它是元素大小的呈现方式。
 

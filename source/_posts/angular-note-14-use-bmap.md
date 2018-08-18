@@ -198,7 +198,7 @@ var map = new BMap.Map("container");
 
 ### 最终效果
 如图：
-![image](http://o905ne85q.bkt.clouddn.com/F7EE.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/F7EE.tmp.png)
 
 ## 结束语
 -----

@@ -130,7 +130,7 @@ import AccountAddCtrl from './modules/home/account/accountAdd.controller';
 ```
 
 效果如图：
-![image](http://o905ne85q.bkt.clouddn.com/1485080178%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1485080178%281%29.png)
 
 
 ## 异步表单提交
@@ -238,7 +238,7 @@ class AccountAddCtrl {
 ```
 
 效果如图：
-![image](http://o905ne85q.bkt.clouddn.com/1485080798%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1485080798%281%29.png)
 
 这样，我们就实现了在angular中封装图片上传，并经过$http服务进行异步表单提交的功能了。
 

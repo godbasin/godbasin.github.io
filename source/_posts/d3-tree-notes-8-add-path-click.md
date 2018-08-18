@@ -54,7 +54,7 @@ var linkEnter = link
 从上面我们可以知道，绑定事件时，使用this可以获取到当前元素。所以需要注意的是，这里如果使用可箭头函数，可能就拿不到想要的数据了喔。
 
 最终效果如图：
-![image](http://o905ne85q.bkt.clouddn.com/1514014266%281%29.jpg)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1514014266%281%29.jpg)
 
 # 结束语
 

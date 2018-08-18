@@ -296,7 +296,7 @@ router.events.filter(event => event instanceof NavigationEnd).subscribe(event =>
 更多有关路由的我们上节也说过，可以点击回顾[《玩转Angular2(3)--启用路由和添加静态资源》](https://godbasin.github.io/2017/05/30/angular2-free-3-init-routes-and-assets/)。
 
 最终效果图：
-![image](http://o905ne85q.bkt.clouddn.com/1495970603%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1495970603%281%29.png)
 
 ## 结束语
 -----

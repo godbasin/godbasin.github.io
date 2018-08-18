@@ -236,7 +236,7 @@ this.reactiveForm.valueChanges
 
 最终效果图：
 
-![image](http://o905ne85q.bkt.clouddn.com/1495970774%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1495970774%281%29.png)
 
 ## 结束语
 -----

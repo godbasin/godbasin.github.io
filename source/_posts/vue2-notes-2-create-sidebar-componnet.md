@@ -16,7 +16,7 @@ tags: 笔记
 ### 一些改变
 这里本骚年只是简述一下接触到的一些改变：
 - [生命周期的改变](https://vuefe.cn/guide/instance.html#生命周期图示)
-![image](http://o905ne85q.bkt.clouddn.com/f847b38a-63fe-11e6-9c29-38e58d46f036.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/f847b38a-63fe-11e6-9c29-38e58d46f036.png)
 如图，大概最重要的是ready和mounted钩子函数的改变吧。
 
 - 组件间通信
@@ -191,7 +191,7 @@ export default {
 ```
 
 ### 页面最终效果
-![image](http://o905ne85q.bkt.clouddn.com/9063.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/9063.tmp.png)
 
 ### 参考
 [Vue2.0中文文档](https://vuefe.cn/guide/)

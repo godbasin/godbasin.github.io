@@ -176,10 +176,10 @@ Keep-Alive功能使客户端到服务器端的连接持续有效，当出现对�
 浏览器是依靠请求和响应中的的头信息来控制缓存的，主要涉及`Expires`与`Cache-Control`、`Last-Modified/If-Modified-Since`、`ETag/If-None-Match`这几个。
 
 第一次请求：
-![image](http://o905ne85q.bkt.clouddn.com/015343_psx2_568818.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/015343_psx2_568818.png)
 
 再次请求：
-![image](http://o905ne85q.bkt.clouddn.com/015353_P04w_568818.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/015353_P04w_568818.png)
 
 ## HTTP与跨域
 ### 浏览器同源政策
@@ -207,13 +207,13 @@ Keep-Alive功能使客户端到服务器端的连接持续有效，当出现对�
 
 ## 浏览器查看请求
 我们又来看浏览器的控制台了：
-![image](http://o905ne85q.bkt.clouddn.com/1513065617%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1513065617%281%29.png)
 
 ### Network面板
 Network面板可以记录页面上的网络请求的详情信息，从发起网页页面请求Request后分析HTTP请求后得到的各个请求资源信息（包括状态、资源类型、大小、所用时间、Request和Response等），可以根据这个进行网络性能优化。
 
 该面板主要包括5大块窗格，如图：
-![image](http://o905ne85q.bkt.clouddn.com/7f5c083982ec4c8378100687072118b9.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/7f5c083982ec4c8378100687072118b9.png)
 - **Controls**：控制Network的外观和功能。
 - **Filters**：控制Requests Table具体显示哪些内容。
 - **Overview**：显示获取到资源的时间轴信息。

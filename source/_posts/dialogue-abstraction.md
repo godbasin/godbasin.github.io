@@ -100,7 +100,7 @@ function 单体(输入){
 - 人 => 机：通过操作对机器进行输入，例如从键盘输入内容、用鼠标点击某些元素等
 - 机 => 人：机器拿到输入内容，根据程序进行计算，可通过显示器、声音设备进行输出
 
-![image](http://o905ne85q.bkt.clouddn.com/human-machine.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/human-machine.png)
 
 以上的过程我们可以抽象为两两单体之间的交互：
 
@@ -146,7 +146,7 @@ function 交互介质(单体输出){
 
 这个模型与单体模型完全一致，也就是说，交互介质也是单体的一种，这时候我们人机交互过程图调整为：
 
-![image](http://o905ne85q.bkt.clouddn.com/conmunitation.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/conmunitation.png)
 
 也就是说，`群体 = 单体 + ... + 单体`这条公式是正确的，我们可以将群体直接视为多个单体的简单相加。
 

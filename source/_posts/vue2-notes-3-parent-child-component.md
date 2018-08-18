@@ -203,7 +203,7 @@ methods: {
 ```
 
 ### 页面最终效果
-![image](http://o905ne85q.bkt.clouddn.com/EC9E.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/EC9E.tmp.png)
 
 ### 参考
 [Vue2.0中文文档](https://vuefe.cn/guide/)

@@ -170,7 +170,7 @@ app.controller('OtherCtrl', ['$scope', '$filter',  function($scope, $filter) {
 ```
 ### 最终效果
 如图：
-![image](http://o905ne85q.bkt.clouddn.com/511E.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/511E.tmp.png)
 
 ## 结束语
 -----

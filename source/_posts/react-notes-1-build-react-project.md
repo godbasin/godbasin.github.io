@@ -88,7 +88,7 @@ $ npm install style-loader css-loader url-loader babel-loader less-loader file-l
 React的目录组织相对自由，但自由通常也会带来不好维护的问题呢，所以建议大家好好管理文件哦。
 ### 本骚年目录组织
 如下：
-![image](http://o905ne85q.bkt.clouddn.com/C315.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/C315.tmp.png)
 - build用于存放最终生成的代码
 - components用于存放React的组件
 - images/less不用说当然是用来存放图片和样式文件的
@@ -229,7 +229,7 @@ entry: [
 ```
 - 至此，我们初步搭建了个React的项目
 效果如下：
-![image](http://o905ne85q.bkt.clouddn.com/3867.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/3867.tmp.png)
 
 ## 结束语
 -----

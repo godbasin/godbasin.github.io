@@ -195,7 +195,7 @@ export default BasicService
 
 ### 文件结构
 现在我们的文件结构如图：
-![image](http://o905ne85q.bkt.clouddn.com/4202.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/4202.tmp.png)
 
 虽然乍一看很复杂，但是其实逻辑很简单：
 - 最外层
@@ -212,7 +212,7 @@ export default BasicService
 至此，我们大致完成了路由的嵌套匹配展示。
 
 效果如图：
-![image](http://o905ne85q.bkt.clouddn.com/B28A.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/B28A.tmp.png)
 
 ## 结束语
 -----

@@ -14,32 +14,32 @@ tags: 晒猫
 
 在怀里乖乖躺着的猪：
 
-<img src="http://o905ne85q.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180811213631.jpg" width="400" />
-<img src="http://o905ne85q.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180811213635.jpg" width="400" />
+<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180811213631.jpg" width="400" />
+<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180811213635.jpg" width="400" />
 
 开始的时候这家伙不会用猫砂盆，到处撒野，睡醒第二天之后突然就整整齐齐地上厕所了。
 
 一天要睡20个小时的猪：
 
-<img src="http://o905ne85q.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180811213601.jpg" width="400" />
-<img src="http://o905ne85q.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180811213621.jpg" width="400" />
-<img src="http://o905ne85q.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180811213617.jpg" width="400" />
-<img src="http://o905ne85q.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180811213642.jpg" width="400" />
-<img src="http://o905ne85q.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180811213638.jpg" width="400" />
+<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180811213601.jpg" width="400" />
+<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180811213621.jpg" width="400" />
+<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180811213617.jpg" width="400" />
+<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180811213642.jpg" width="400" />
+<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180811213638.jpg" width="400" />
 
 活泼好动的猪：
 
-<img src="http://o905ne85q.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180811213625.jpg" width="400" />
-<img src="http://o905ne85q.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180811213544.jpg" width="400" />
-<img src="http://o905ne85q.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180811213628.jpg" width="400" />
-<img src="http://o905ne85q.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180811213605.jpg" width="400" />
-<img src="http://o905ne85q.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180811213609.jpg" width="400" />
+<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180811213625.jpg" width="400" />
+<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180811213544.jpg" width="400" />
+<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180811213628.jpg" width="400" />
+<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180811213605.jpg" width="400" />
+<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180811213609.jpg" width="400" />
 
 
 
 开了美颜的猪：
 
-<img src="http://o905ne85q.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180811213614.jpg" width="400" />
+<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180811213614.jpg" width="400" />
 
 由于周末都忙着撸猫，怎么撸都撸不厌，最近就当作歇息期吧~~适当的时候给自己一个喘息的机会，也是人生中必不可少的一部分呢~
 

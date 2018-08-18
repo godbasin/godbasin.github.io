@@ -338,7 +338,7 @@ Gentelella模板中还使用了一些其他的插件，像[select2](http://selec
 </script>
 ```
 ### 页面效果
-![image](http://o905ne85q.bkt.clouddn.com/EB7E.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/EB7E.tmp.png)
 
 ## 结束语
 -----

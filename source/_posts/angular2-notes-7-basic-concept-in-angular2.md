@@ -11,7 +11,7 @@ tags: 笔记
 ## Angular应用中的构造块
 -----
 首先我们来看一张图。
-![image](http://o905ne85q.bkt.clouddn.com/overview2.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/overview2.png)
 使用Angular2的小伙伴们肯定很熟悉，这是张架构图，展现了 Angular 应用中的8个主要构造块。
 
 ### 模块

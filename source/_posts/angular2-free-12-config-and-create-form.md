@@ -494,15 +494,15 @@ export class JsonToHtmlComponent implements AfterViewInit {
 
 这样，我们就能实现表单的创建和生成啦。效果图如下：
 
-![image](http://o905ne85q.bkt.clouddn.com/1496674116%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1496674116%281%29.png)
 
-![image](http://o905ne85q.bkt.clouddn.com/1496674140%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1496674140%281%29.png)
 
-![image](http://o905ne85q.bkt.clouddn.com/1496674168%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1496674168%281%29.png)
 
-![image](http://o905ne85q.bkt.clouddn.com/1496674345%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1496674345%281%29.png)
 
-![image](http://o905ne85q.bkt.clouddn.com/1496674356%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1496674356%281%29.png)
 
 ## 结束语
 -----

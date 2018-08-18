@@ -16,7 +16,7 @@ tags: 分享
 
 这次我们拿知乎的内容卡片来说吧，上图：
 
-![image](http://o905ne85q.bkt.clouddn.com/1524128850.jpg)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1524128850.jpg)
 
 可以看到，这里我们每个卡片，内容都稍微有些不一样。但毫无疑问，它们拥有相同的功能，可通过一个组件来控制内容的展示。
 
@@ -34,7 +34,7 @@ tags: 分享
 
 同样的，我们拿右侧的一个快捷导航模块来看：
 
-![image](http://o905ne85q.bkt.clouddn.com/1524131302%281%29.jpg)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1524131302%281%29.jpg)
 
 一般来说，从功能划分的话，我们会把外面那层封装成一整个组件：
 
@@ -76,7 +76,7 @@ Emmmmmmm。。好像这样也看不出来区别把？似乎也没有简化到什
 
 同样拿之前的内容卡片来看：
 
-![image](http://o905ne85q.bkt.clouddn.com/1524133892%281%29.jpg)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1524133892%281%29.jpg)
 
 这是个独立的卡片：
 1. 它拥有自己的数据，包括标题、文字、图片、点赞数、评论数、日期等。

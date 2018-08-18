@@ -222,7 +222,7 @@ export const customForms: ICustomControl[] = [
 
 效果图如下：
 
-![image](http://o905ne85q.bkt.clouddn.com/1496128414%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1496128414%281%29.png)
 
 ### 默认值加载获取
 为了检验我们的初始值能否正确加载，我们添加默认值：
@@ -245,7 +245,7 @@ export const customFormsDefault = {
 
 效果图如下：
 
-![image](http://o905ne85q.bkt.clouddn.com/1496128243%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1496128243%281%29.png)
 
 ## 结束语
 -----

@@ -162,7 +162,7 @@ export default [
 
 由于使用了路由嵌套，为了方便理解和管理，我们对相关的文件也调整了下位置:
 
-![image](http://o905ne85q.bkt.clouddn.com/1514790077%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1514790077%281%29.png)
 
 至于每个文件夹里的`index.vue`，则是一个简单的路由内容展示：
 
@@ -265,11 +265,11 @@ checkMenuActived(name) {
 
 * 作为 owner 角色进入看到菜单：
 
-![image](http://o905ne85q.bkt.clouddn.com/1514791214%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1514791214%281%29.png)
 
 * 作为 maintainer 角色进入看到菜单：
 
-![image](http://o905ne85q.bkt.clouddn.com/1514791290%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1514791290%281%29.png)
 
 ## 结束语
 

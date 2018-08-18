@@ -30,7 +30,7 @@ TCP/IP提供点对点的链接机制，将数据应该如何封装、定址、�
   - 四次挥手
   > 可以参考[《TCP三次握手四次挥手详解》](http://www.cnblogs.com/zmlctt/p/3690998.html)
 
-![images](http://o905ne85q.bkt.clouddn.com/0_131271823564Rx.gif)
+![images](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/0_131271823564Rx.gif)
 
 ### DNS域名系统
 让用户电脑和服务器（网页存放电脑）连接起来并不是靠域名进行，网络上计算机之间实现连接是通过每台计算机在网络中拥有的惟一的IP地址来完成的。

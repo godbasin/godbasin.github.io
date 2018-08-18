@@ -202,7 +202,7 @@ ReactDOM.render(<Router history={history} >
 ```
 
 页面效果图：
-![image](http://o905ne85q.bkt.clouddn.com/5147.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/5147.tmp.png)
 
 ## 结束语
 -----

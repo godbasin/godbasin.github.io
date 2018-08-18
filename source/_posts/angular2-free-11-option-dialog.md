@@ -260,9 +260,9 @@ export class OptionDialogComponent implements OnInit {
 
 到这里，我们的选项配置功能开发完毕。效果图如下：
 
-![image](http://o905ne85q.bkt.clouddn.com/OFB3FN9YKFUX841~~R%29@F%5DV.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/OFB3FN9YKFUX841~~R%29@F%5DV.png)
 
-![image](http://o905ne85q.bkt.clouddn.com/TL%7B$@AU%5BH%60XZ%5DPO0YVR%5DWPT.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/TL%7B$@AU%5BH%60XZ%5DPO0YVR%5DWPT.png)
 
 ## 结束语
 -----

@@ -101,7 +101,7 @@ UNIX中有五种IO模型，下面用两个阶段说明：
 五种IO模型的比较：
 前4种模型的主要区别在于第一阶段，因为它们的第二阶段是一样的：都是阻塞于recvfrom调用，将数据从内核拷贝到用户进程缓冲区。
 
-![images](http://o905ne85q.bkt.clouddn.com/20160718170600861)
+![images](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/20160718170600861)
 
 ### 参考
 - [《单线程和多线程的简单理解》](http://www.jianshu.com/p/7d9686cfcfbf)

@@ -37,7 +37,7 @@ Flux是一种架构思想，专门解决软件的结构问题。它跟MVC架构�
   - Store中没有赋值接口---所有数据变更都是由dispatcher发送到store，新的数据随着Store触发的change事件传回view
 
 ### Flux数据流
-![image](http://o905ne85q.bkt.clouddn.com/bg2016011503.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/bg2016011503.png)
 - store在dispatcher中注册，并提供相应的回调。回调会接收action并把它当成自己的一个参数。
 - 通过调用action来响应用户交互。
 - 当action被触发，回调函数会使用switch语句来解析action中的type参数，并在合适的type下提供钩子来执行内部方法。
@@ -54,7 +54,7 @@ Flux是一种架构思想，专门解决软件的结构问题。它跟MVC架构�
 
 ### 目录组织
 使用flux之后，目录组织如下：
-![image](http://o905ne85q.bkt.clouddn.com/FCB5.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/FCB5.tmp.png)
 这里再简单描述一下新增和改变的文件：
 - actions: 存放Flux的Action文件
 - components: 存放Flux的Views文件（包括Controller-Views）

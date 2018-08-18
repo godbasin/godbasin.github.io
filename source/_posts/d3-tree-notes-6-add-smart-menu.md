@@ -82,7 +82,7 @@ var nodeEnter = node
 ```
 
 最终效果如图：
-![image](http://o905ne85q.bkt.clouddn.com/1513575655%281%29.jpg)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1513575655%281%29.jpg)
 
 # 结束语
 

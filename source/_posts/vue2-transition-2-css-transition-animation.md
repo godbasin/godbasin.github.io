@@ -117,10 +117,10 @@ new Vue({
 文字很多，读起来有点费力气，是时候贴上官网的这个图了：
 
 2.1.8版本前：
-![image](http://o905ne85q.bkt.clouddn.com/transition.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/transition.png)
 
 2.1.8版及以上：
-![image](http://o905ne85q.bkt.clouddn.com/transition2.1.8.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/transition2.1.8.png)
 
 ### 实现逻辑
 上一节[《Vue2动画1--transition组件》]()我们简单介绍了一些实现原理相关的函数和事件，这里我们再详细分析下。

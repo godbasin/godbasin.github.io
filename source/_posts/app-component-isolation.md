@@ -14,11 +14,11 @@ tags: 分享
 ## 什么是区块
 我们来看看常用的应用吧，首先是知乎：
 
-![image](http://o905ne85q.bkt.clouddn.com/1524064559%281%29.jpg)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1524064559%281%29.jpg)
 
 简单划分下：
 
-![image](http://o905ne85q.bkt.clouddn.com/1524064840%281%29.jpg)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1524064840%281%29.jpg)
 
 大致我们可以分为三大块：
 - 头部：快速导航栏
@@ -27,7 +27,7 @@ tags: 分享
 
 其实论坛类、博客类的页面大多如此，看看微博：
 
-![image](http://o905ne85q.bkt.clouddn.com/1524065227%281%29.jpg)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1524065227%281%29.jpg)
 
 除此之外，还有视频类、电商类等各种角色的网站，大家有空也可以去看看，思考下里面是怎么划分的。
 
@@ -57,7 +57,7 @@ tags: 分享
 **1. 视觉和交互上是一个完整的组件。**
 这里挑了个视频网站，如图：
 
-![image](http://o905ne85q.bkt.clouddn.com/1524109540%281%29.jpg)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1524109540%281%29.jpg)
 
 通常我们第一眼看上去可区分出独立的视图和功能的，则可以列为这种组件的划分。或许也可以成为区块，是为视觉和交互上完整的组件。
 
@@ -65,7 +65,7 @@ tags: 分享
 
 还是这个网站，我们看：
 
-![image](http://o905ne85q.bkt.clouddn.com/1524108519%281%29.jpg)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1524108519%281%29.jpg)
 
 这里，我们能看到这种卡片形式的内容，存在页面中的各个地方。
 
@@ -88,15 +88,15 @@ tags: 分享
 
 ### 组件内维护自身的数据和状态
 这个比较好理解，以上面的小卡片为例子：
-![image](http://o905ne85q.bkt.clouddn.com/1524111302%281%29.jpg)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1524111302%281%29.jpg)
 
 这个小卡片，它维护着自己的数据：封面图、描述、头像、作者。还有一个初始的状态，就是目前我们看到的样子。
 这些内容保存在组件自己的scope里，每个卡片组件都拥有自己的数据和状态。
 
 ### 组件内维护自身的事件
 我们在把鼠标放在卡片上，随着鼠标的位置，顶部会有个小小的进度条，同时封面图会改变，如图：
-![image](http://o905ne85q.bkt.clouddn.com/1524111149%281%29.png)
-![image](http://o905ne85q.bkt.clouddn.com/1524111141%281%29.jpg)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1524111149%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1524111141%281%29.jpg)
 
 每个小卡片都有自己mousemove事件。当然，这里面维护了一个鼠标位置的状态，同时根据鼠标位置来控制图片的展示。
 
@@ -107,7 +107,7 @@ tags: 分享
 可以通过配置的方式，来控制组件的展示和功能。
 
 我们看这个小卡片：
-![image](http://o905ne85q.bkt.clouddn.com/1524115436%281%29.jpg)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1524115436%281%29.jpg)
 
 和上面的不一样，左下角展示的是视频时长，而不是头像和名字，这种我们可以通过配置的方式来控制。
 

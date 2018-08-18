@@ -127,7 +127,7 @@ new Vue({
 
 可以看看[这里的demo](https://jsfiddle.net/41fuumkz/6/)。
 
-![image](http://o905ne85q.bkt.clouddn.com/transition2.1.8.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/transition2.1.8.png)
 
 ### 初始渲染
 Vue 的动画提供了一个初始渲染的开关，指的是第一次展示（而不是第一次切换）的时候是否需要动画效果。

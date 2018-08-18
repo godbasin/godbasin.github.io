@@ -27,7 +27,7 @@ alert(['123', '123', 32, {1: 123}])
 ```
 
 会得到这样的结果：
-![image](http://o905ne85q.bkt.clouddn.com/1512982774%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1512982774%281%29.png)
 
 ### console
 `console`的使用，大概是本骚年最常用的一个吧。
@@ -65,7 +65,7 @@ console.log({data, list, state})
 
 ### DevTools
 我们先看看Chrome提供的开发者工具：
-![image](http://o905ne85q.bkt.clouddn.com/1512990373%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1512990373%281%29.png)
 
 跟上次一样，我们从左往右讲起：
 1. 箭头按钮：用于在页面选择一个元素来审查和查看它的相关信息。
@@ -85,7 +85,7 @@ console.log({data, list, state})
 ### 打断点
 **1. 代码断点**
 常用的浏览器代码断点，在`Sources`面板`js`文件行号处设置断点，如图我们下了个断点：
-![image](http://o905ne85q.bkt.clouddn.com/1512993498%281%29.jpg)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1512993498%281%29.jpg)
 
 这里我们在请求发起的位置打了个断点，每次我们在搜索输入框输入的时候，都会发送请求，触发debug模式。
 
@@ -130,7 +130,7 @@ console.log({data, list, state})
 
 常见的有上面的问题，除此之外，大部分都是没使用合理的`style`了吧。
 
-![image](http://o905ne85q.bkt.clouddn.com/1512998012%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1512998012%281%29.png)
 如上图，一般我们会在选中对应的元素后，从上往下来找到生效（或不生效）的样式，同时也可以定位到对应的源文件。
 
 这里面如果是本地环境调试的话，在`source map`的支持下，我们甚至可以直接在浏览器中修改源文件，保存生效。具体配置和操作可以参考[将预处理代码映射到源代码](https://developers.google.cn/web/tools/chrome-devtools/javascript/source-maps?hl=zh-cn)。

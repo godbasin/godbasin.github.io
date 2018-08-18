@@ -129,7 +129,7 @@ export default {
 
 说是页面效果，其实就是多了个登录之后的用户名显示而已：
 
-![image](http://o905ne85q.bkt.clouddn.com/1514884155%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1514884155%281%29.png)
 
 ## 结束语
 

@@ -255,9 +255,9 @@ sessionStorage.removeItem('username')
 ```
 
 调整后的功能终于符合逻辑了呢，现在我们的页面大概效果如图：
-![image](http://o905ne85q.bkt.clouddn.com/EEDD.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/EEDD.tmp.png)
 切换后：
-![image](http://o905ne85q.bkt.clouddn.com/AC5E.tmp.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/AC5E.tmp.png)
 
 ## 结束语
 -----

@@ -80,7 +80,7 @@ link
 ## path 方向调整
 
 如果按照这样的方式，我们会发现我们的文字反了：
-![image](http://o905ne85q.bkt.clouddn.com/1513586990%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1513586990%281%29.png)
 
 像一个个蝙蝠，倒挂着在那。这是因为 pathText 是有方向的，而我们在添加 path 元素的时候，使用的贝塞尔曲线为子节点到父节点的方向，故我们需要进行调整：
 
@@ -98,7 +98,7 @@ function diagonalReverse(s = {}, d = {}) {
 然后把之前`diagonal`改为`diagonalReverse`，就可以实现想要的效果了。
 
 最终效果如图：
-![image](http://o905ne85q.bkt.clouddn.com/1513586680%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1513586680%281%29.png)
 
 # 结束语
 

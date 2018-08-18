@@ -90,10 +90,10 @@ function CameraMove(direction, distance) {
 这时候，我们就能通过上下左右或者是WASD按键控制照相机的移动。
 
 如图：
-![image](http://o905ne85q.bkt.clouddn.com/1486894019%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1486894019%281%29.png)
 
 移动后：
-![image](http://o905ne85q.bkt.clouddn.com/1486906651%281%29.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1486906651%281%29.png)
 
 ### 完整代码
 ``` javascript

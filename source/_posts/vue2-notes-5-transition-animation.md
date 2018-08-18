@@ -30,7 +30,7 @@ Vue 在插入、更新或者移除 DOM 时，提供多种不同方式的应用�
   - 如果没有找到JavaScript钩子并且也没有检测到CSS过渡/动画，DOM操作（插入/删除）在下一帧中立即执行
 
 ### 过渡的-CSS-类名
-![image](http://o905ne85q.bkt.clouddn.com/transition.png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/transition.png)
 有4个(CSS)类名在enter/leave的过渡中切换
 - v-enter
   - 定义进入过渡的开始状态
