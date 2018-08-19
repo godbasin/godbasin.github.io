@@ -27,7 +27,7 @@ SVG 与 Flash 类似，都是用于二维矢量图形，二者的区别在于，
 SVG 里面的元素类型，也与 HTML 一样丰富，可以参考[SVG 元素参考 | MDN](https://developer.mozilla.org/zh-CN/docs/Web/SVG/Element)，这里只先介绍使用比较多的几个，剩下的等遇到的时候再讲吧。
 
 我们找后面将使用到的一个 Tree Demo 来讲吧，在控制台能看到这些元素：
-![image](http://o9bc2k1st.bkt.clouddn.com/1513414198%281%29.png)
+![image](https://about-position-1255459943.file.myqcloud.com/1513414198%281%29.png)
 
 **svg**
 我们常常看到两种：

@@ -32,7 +32,7 @@ tags: 分享
 
 ### static与文档流
 
-如图，[查看页面效果](http://o9bc2k1st.bkt.clouddn.com/position-static.html)
+如图，[查看页面效果](https://about-position-1255459943.file.myqcloud.com/position-static.html)
 ``` css
 a, p, div { border: solid 1px red; }
 .static { position: static; left: 100px; top: 100px; }
@@ -42,7 +42,7 @@ a, p, div { border: solid 1px red; }
 
 ### relative与文档流
 relative保持原有文档流，但相对本身的原始位置发生位移，且占空间
-如图，[查看页面效果](http://o9bc2k1st.bkt.clouddn.com/position-relative.html)
+如图，[查看页面效果](https://about-position-1255459943.file.myqcloud.com/position-relative.html)
 ``` css
 a, p, div { border: solid 1px red; }
 .relative { position: relative; left: 100px; top: 100px; }
@@ -54,7 +54,7 @@ a, p, div { border: solid 1px red; }
 - relative元素占有原本位置，因此下一个元素会排到该元素后方
 - relative元素占位不会随着定位的改变而改变。也就是说relative在文档流中占有的位置与其原本位置（position=static）相同
 这里有个需要注意的地方： 虽然relative元素占位与static相同，但会溢出父元素，撑开整个页面（document）。
-如图，[查看页面效果](http://o9bc2k1st.bkt.clouddn.com/position-relative-occupation.html)
+如图，[查看页面效果](https://about-position-1255459943.file.myqcloud.com/position-relative-occupation.html)
 ![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/LHRK4@9K$YE1%25KMB%29G9%60~%7B8.png)
 可以relative元素撑开父元素看到页面底部有滚动条。
 此时给父元素设置overflow: hidden;则可以隐藏溢出部分，如图
@@ -83,11 +83,11 @@ absolute脱离文档流，相对于其包含块来定位，且不占位
 
 所以我们可以给父元素加上position=relative的样式，如图
 ![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/~NPVE%7D%7DZFR3$PH%609%5DFJQF2Y.png)
-此时absolute元素则相对于父元素进行定位，[查看页面效果](http://o9bc2k1st.bkt.clouddn.com/position-absolute.html)。
+此时absolute元素则相对于父元素进行定位，[查看页面效果](https://about-position-1255459943.file.myqcloud.com/position-absolute.html)。
 
 ### 无定位的absolute
 在使用absolute进行定位时，若我们只是将元素设置为position: absolute，而不对其进行定位（top, bottom, left, right），会是怎样的情况呢？
-如图，[查看页面效果](http://o9bc2k1st.bkt.clouddn.com/position-absolute-without-position.html)
+如图，[查看页面效果](https://about-position-1255459943.file.myqcloud.com/position-absolute-without-position.html)
 ![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/CG_14%7DVI%28TDCYFK%7BE$8SC%287.png)
 可见：
 - 未设置定位的absolute元素，其定位与其原本位置（position=static）相同
@@ -106,7 +106,7 @@ fixed脱离文档流，相对于浏览器窗口来定位，且不占位
 - fixed元素脱离文档流
 - fixed元素不占位
 
-接来下我们将页面填充满，如图，[查看页面效果](http://o9bc2k1st.bkt.clouddn.com/position-fixed-absolute.html)
+接来下我们将页面填充满，如图，[查看页面效果](https://about-position-1255459943.file.myqcloud.com/position-fixed-absolute.html)
 ![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/K4OGL%5BF5~XP9NLRW%254X%7B55X.png)
 当我们进行页面滚动的时候，fixed元素位置没有发生变化，可见：
 
@@ -124,14 +124,14 @@ fixed脱离文档流，相对于浏览器窗口来定位，且不占位
 -
 
 ### z-index在同级元素下的效果
-如图，[查看页面效果](http://o9bc2k1st.bkt.clouddn.com/position-z-index-same-level.html)
+如图，[查看页面效果](https://about-position-1255459943.file.myqcloud.com/position-z-index-same-level.html)
 ![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/%60X74TE9%7D%28OFY%7BUK$MAW%5B%7B5O.png)
 可见：
 - 当同级元素不设置z-index或者z-index相等时，后面的元素会叠在前面的元素上方
 - 当同级元素z-index不同时，z-index大的元素会叠在z-index小的元素上方
 
 ### z-index在不同级元素下的效果
-如图，[查看页面效果](http://o9bc2k1st.bkt.clouddn.com/position-z-index-diff-level-1.html)
+如图，[查看页面效果](https://about-position-1255459943.file.myqcloud.com/position-z-index-diff-level-1.html)
 ![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/Q%7BFVVGE6NSP8WB~_3P7SZ$G.png)
 仔细看会发现个很有意思的现象，parent1和parent2为同级元素，parent2叠在parent1上方，但是parent2子元素却位于parent1子元素的下方。
 parent1和parent2的position均为relative，是不是有些难以理解？这是因为：
@@ -139,7 +139,7 @@ parent1和parent2的position均为relative，是不是有些难以理解？这�
 - 自由的z-index元素可以与其他自由的定位元素来比较z-index的值，决定其堆叠顺序
 
 在这里，parent1和parent2均无设置z-index值，故在这里子元素的堆叠顺序是由自己的z-index值决定的。
-接下来我们为两个parent均加上z-index，如图，[查看页面效果](http://o9bc2k1st.bkt.clouddn.com/position-z-index-diff-level-2.html)
+接下来我们为两个parent均加上z-index，如图，[查看页面效果](https://about-position-1255459943.file.myqcloud.com/position-z-index-diff-level-2.html)
 ![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/PMVG4833%60U%29JC9%5BWK5W%601NC.png)
 
 经测试，在parent2的z-index大于或者等于parent1的z-index的时候，parent2以及它的子元素均位于parent1以及其子元素的上方。
@@ -151,7 +151,7 @@ parent1和parent2的position均为relative，是不是有些难以理解？这�
 - 父元素的z-index值为子元素定义了堆叠顺序，即子元素依赖于父元素z-index值来获得页面中的堆叠顺序
 
 现在我们将parent2的z-index值取消，留下parent1的z-index值为2。
-如图，[查看页面效果](http://o9bc2k1st.bkt.clouddn.com/position-z-index-diff-level-3.html)
+如图，[查看页面效果](https://about-position-1255459943.file.myqcloud.com/position-z-index-diff-level-3.html)
 ![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/G%5D6CTV7PXO%28UD7B%5B%7B%60%28U693.png)
 可见：
 - 自由的z-index元素可以与父元素的同级兄弟定位元素来比较z-index的值，决定其堆叠顺序
@@ -163,7 +163,7 @@ parent1和parent2的position均为relative，是不是有些难以理解？这�
 接下来我们给这几个子元素加上z-index值，如图
 ![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/FMC%60R%25%25LLKVM9OQ1~5~%29GQ3.png)
 这时候我们会有种想法，会不会fixed元素和absolute元素的堆叠规则一样呢？
-现在我们将fixed元素移到parent元素外面，且parent元素z-index值依然为空，如图，[查看页面效果](http://o9bc2k1st.bkt.clouddn.com/position-z-index-fixed.html)
+现在我们将fixed元素移到parent元素外面，且parent元素z-index值依然为空，如图，[查看页面效果](https://about-position-1255459943.file.myqcloud.com/position-z-index-fixed.html)
 ![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/A%284RG%7BTP~2$%29%29ZE5Y2HW%7BOD.png)
 可见：
 - 尽管fixed定位方式与absolute不一致，它们的堆叠规则是一致的

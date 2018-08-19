@@ -16,7 +16,7 @@ tags: 笔记
 ## Tree 图与服务
 
 首先我们来看个简单的图：
-![image](http://o9bc2k1st.bkt.clouddn.com/1513409805%281%29.png)
+![image](https://about-position-1255459943.file.myqcloud.com/1513409805%281%29.png)
 
 没错，这就是个简单的树状图。 本骚年此次要解决的问题包括：
 
@@ -45,7 +45,7 @@ D3 之前也有稍微看过，对比 Echarts 的使用简单，它似乎更适�
 决定好要使用 D3 之后，看了下，D3 最新版本为 v4，而网上很多的 demo 都是基于 v3 的，但是作为一个对自己有要求的程序员，怎么可以容忍使用旧版本呢！
 
 其实真相是这样的：
-![image](http://o9bc2k1st.bkt.clouddn.com/1513412297%281%29.png)
+![image](https://about-position-1255459943.file.myqcloud.com/1513412297%281%29.png)
 
 Sign~
 
