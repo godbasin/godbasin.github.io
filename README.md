@@ -3,6 +3,7 @@
 ---      
 
 ### 最新     
+> [《小程序的诞生》](https://godbasin.github.io/2018/08/25/wxapp-generate/)   
 > [《认识小程序云开发》](https://godbasin.github.io/2018/08/18/wxapp-cloud/)   
 > [《养喵停更》](https://godbasin.github.io/2018/08/11/my-kitty/)   
 > [《SQL 与 NoSQL》](https://godbasin.github.io/2018/07/22/application-development-sql-and-nosql/)   
@@ -18,7 +19,8 @@
 > [《前端入门5--Javascript》](https://godbasin.github.io/2018/05/05/front-end-5-javascript/)   
 > [《前端入门4--DOM和BOM》](https://godbasin.github.io/2018/04/29/front-end-4-dom-bom/)   
 
-### 小程序
+### 小程序    
+> [《小程序的诞生》](https://godbasin.github.io/2018/08/25/wxapp-generate/)   
 > [《认识小程序云开发》](https://godbasin.github.io/2018/08/18/wxapp-cloud/)   
 
 ### 一步一步走向应用开发    
