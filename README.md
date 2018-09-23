@@ -3,6 +3,9 @@
 ---      
 
 ### 最新     
+> [《关于小程序的基础库》](https://godbasin.github.io/2018/09/23/wxapp-basic-lib/)   
+> [《小程序页面管理与跳转》](https://godbasin.github.io/2018/09/08/wxapp-page-and-navigate/)   
+> [《小程序的底层框架》](https://godbasin.github.io/2018/09/02/wxapp-technology-architecture/)   
 > [《小程序的诞生》](https://godbasin.github.io/2018/08/25/wxapp-generate/)   
 > [《认识小程序云开发》](https://godbasin.github.io/2018/08/18/wxapp-cloud/)   
 > [《养喵停更》](https://godbasin.github.io/2018/08/11/my-kitty/)   
@@ -13,13 +16,11 @@
 > [《组件配置化》](https://godbasin.github.io/2018/06/09/component-with-configuration/)   
 > [《一个组件的自我修养》](https://godbasin.github.io/2018/06/02/component-with-itself/)   
 > [《页面区块化与应用组件化》](https://godbasin.github.io/2018/05/26/app-component-isolation/)   
-> [《前端入门8--Ajax和http》](https://godbasin.github.io/2018/05/19/front-end-8-http-and-ajax/)   
-> [《前端入门7--代码调试》](https://godbasin.github.io/2018/05/13/front-end-7-debug/)   
-> [《前端入门6--认识浏览器》](https://godbasin.github.io/2018/05/08/front-end-6-browser-render/)   
-> [《前端入门5--Javascript》](https://godbasin.github.io/2018/05/05/front-end-5-javascript/)   
-> [《前端入门4--DOM和BOM》](https://godbasin.github.io/2018/04/29/front-end-4-dom-bom/)   
 
 ### 小程序    
+> [《关于小程序的基础库》](https://godbasin.github.io/2018/09/23/wxapp-basic-lib/)   
+> [《小程序页面管理与跳转》](https://godbasin.github.io/2018/09/08/wxapp-page-and-navigate/)   
+> [《小程序的底层框架》](https://godbasin.github.io/2018/09/02/wxapp-technology-architecture/)   
 > [《小程序的诞生》](https://godbasin.github.io/2018/08/25/wxapp-generate/)   
 > [《认识小程序云开发》](https://godbasin.github.io/2018/08/18/wxapp-cloud/)   
 
