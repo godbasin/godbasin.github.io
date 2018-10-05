@@ -3,6 +3,7 @@
 ---      
 
 ### 最新     
+> [《解剖小程序的 setData》](https://godbasin.github.io/2018/10/05/wxapp-set-data/)   
 > [《关于小程序的基础库》](https://godbasin.github.io/2018/09/23/wxapp-basic-lib/)   
 > [《小程序页面管理与跳转》](https://godbasin.github.io/2018/09/08/wxapp-page-and-navigate/)   
 > [《小程序的底层框架》](https://godbasin.github.io/2018/09/02/wxapp-technology-architecture/)   
@@ -18,6 +19,7 @@
 > [《页面区块化与应用组件化》](https://godbasin.github.io/2018/05/26/app-component-isolation/)   
 
 ### 小程序    
+> [《解剖小程序的 setData》](https://godbasin.github.io/2018/10/05/wxapp-set-data/)   
 > [《关于小程序的基础库》](https://godbasin.github.io/2018/09/23/wxapp-basic-lib/)   
 > [《小程序页面管理与跳转》](https://godbasin.github.io/2018/09/08/wxapp-page-and-navigate/)   
 > [《小程序的底层框架》](https://godbasin.github.io/2018/09/02/wxapp-technology-architecture/)   
