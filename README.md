@@ -312,3 +312,8 @@
 
 > [《我的前端入门之路》](https://godbasin.github.io/2016/06/24/front-end-getting-started/)              
 > [《前端在变，然而热情不变》](https://godbasin.github.io/2016/06/18/first-blog/)     
+
+### 
+### 乞讨码
+<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/2code2.jpg" width="200" height="200" />
+**码生艰难，写文不易，给我家猪囤点猫粮了喵~**
