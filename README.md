@@ -3,6 +3,7 @@
 ---      
 
 ### 最新     
+> [《理解小程序的安全与管控》](https://godbasin.github.io/2018/11/04/wxapp-manage-and-security/)   
 > [《解剖小程序的 setData》](https://godbasin.github.io/2018/10/05/wxapp-set-data/)   
 > [《关于小程序的基础库》](https://godbasin.github.io/2018/09/23/wxapp-basic-lib/)   
 > [《小程序页面管理与跳转》](https://godbasin.github.io/2018/09/08/wxapp-page-and-navigate/)   
@@ -19,6 +20,7 @@
 > [《页面区块化与应用组件化》](https://godbasin.github.io/2018/05/26/app-component-isolation/)   
 
 ### 小程序    
+> [《理解小程序的安全与管控》](https://godbasin.github.io/2018/11/04/wxapp-manage-and-security/)   
 > [《解剖小程序的 setData》](https://godbasin.github.io/2018/10/05/wxapp-set-data/)   
 > [《关于小程序的基础库》](https://godbasin.github.io/2018/09/23/wxapp-basic-lib/)   
 > [《小程序页面管理与跳转》](https://godbasin.github.io/2018/09/08/wxapp-page-and-navigate/)   
@@ -315,5 +317,6 @@
 
 ### 
 ### 乞讨码
-<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/2code2.jpg" width="200" height="200" />
+![image](./img/2code.jpg)  
+
 **码生艰难，写文不易，给我家猪囤点猫粮了喵~**
