@@ -40,7 +40,7 @@ XSS 在双线程的设计中就被过滤了，而 CSRF 会在后面讲到。
 
 一起来回顾下小程序的双线程长什么样子：
 
-![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1537414306(1).png)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1537414306%281%29.png)
 
 客户端系统有 JavaScript 的解释引擎，则可以创建一个单独的线程去执行 JavaScript，这个环境下只执行有关小程序业务逻辑的代码。界面渲染相关的任务呢，就丢到 webview 线程里面，通过逻辑层代码去控制渲染哪些界面。
 
@@ -54,7 +54,7 @@ XSS 在双线程的设计中就被过滤了，而 CSRF 会在后面讲到。
 ### WebView的飞速发展
 当年随着公众号的出现和繁荣，WebView 的使用频率也越来越高。不少的企业或是小商家、外包公司开始做 H5 页面，各式各样的 H5 活动页、小商城、小测试、小游戏满天飞。
  
-![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1537444454(1).jpg)
+![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1537444454%281%29.jpg)
 
 当微信中的 WebView 逐渐成为移动 Web 的一个重要入口时，微信就有相关的 JS API 了。
 
