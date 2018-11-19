@@ -3,6 +3,7 @@
 ---      
 
 ### 最新     
+> [《小程序的登录与静默续期》](https://godbasin.github.io/2018/11/17/wxapp-login/)   
 > [《理解小程序的安全与管控》](https://godbasin.github.io/2018/11/04/wxapp-manage-and-security/)   
 > [《解剖小程序的 setData》](https://godbasin.github.io/2018/10/05/wxapp-set-data/)   
 > [《关于小程序的基础库》](https://godbasin.github.io/2018/09/23/wxapp-basic-lib/)   
@@ -15,11 +16,9 @@
 > [《认识数据库》](https://godbasin.github.io/2018/07/15/application-development-with-learning-database/)   
 > [《前端构建大型应用》](https://godbasin.github.io/2018/07/07/build-application/)   
 > [《数据抽离与数据管理》](https://godbasin.github.io/2018/06/17/component-communication-with-data-model/)   
-> [《组件配置化》](https://godbasin.github.io/2018/06/09/component-with-configuration/)   
-> [《一个组件的自我修养》](https://godbasin.github.io/2018/06/02/component-with-itself/)   
-> [《页面区块化与应用组件化》](https://godbasin.github.io/2018/05/26/app-component-isolation/)   
 
 ### 小程序    
+> [《小程序的登录与静默续期》](https://godbasin.github.io/2018/11/17/wxapp-login/)   
 > [《理解小程序的安全与管控》](https://godbasin.github.io/2018/11/04/wxapp-manage-and-security/)   
 > [《解剖小程序的 setData》](https://godbasin.github.io/2018/10/05/wxapp-set-data/)   
 > [《关于小程序的基础库》](https://godbasin.github.io/2018/09/23/wxapp-basic-lib/)   
@@ -317,6 +316,6 @@
 
 ### 
 ### 乞讨码
-![image](https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/2code2.jpg)  
+![image](./img/2code.jpg)  
 
 **码生艰难，写文不易，给我家猪囤点猫粮了喵~**
