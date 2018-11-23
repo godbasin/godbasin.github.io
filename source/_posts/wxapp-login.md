@@ -48,53 +48,78 @@ tags: 教程
 ### 加锁的登录
 在某些情况下，我们或许多个地方会同时触发登录逻辑（如多个接口同时拉取，发现登录态过期的情况）。一般来说，我们会简单地给请求加个锁来解决：
 1. 使用`isLogining`来标志是否请求中。
-2. 添加回调`callback`，方便后续其他接口请求，返回登录态过期时静默续期后重新发起。
+2. 方法返回Promise，登录态过期时静默续期后重新发起。
 3. 使用`sessionId`来记录业务侧的登录态。
 
 ``` js
+// session 参数 key（后台吐回）
+export const SESSION_KEY = 'sessionId';
+
 let isLogining = false;
-let sessionId = wx.getStorageSync("sessionId") || "";
-let tryLoginCount = 0;
-function doLogin(callback = () => {}) {
-  if (sessionId) {
-    // 缓存中有 sessionId
-    callback();
-  } else if (isLogining) {
-    // 正在登录中，请求轮询稍后，避免重复调用登录接口
-    setTimeout(function() {
-      doLogin(callback);
-    }, 500);
-  } else {
-    isLogining = true;
-    wx.login({
-      success: function(res) {
-        if (res.code) {
-          wx.request({
-            // 发起请求，给服务器 code 换取新的业务登录态
-          })
-            .then(res => {
-              isLogining = false;
-              // 保存登录态
-              sessionId = res.sessionId;
-              wx.setStorage({ key: "sessionId", data: sessionId });
-              // 登录/登录态续期成功，执行回调
-              callback();
-            })
-            .catch(err => {
-              // 登录失败，解除锁，防止死锁
-              isLogining = false;
-            });
-        } else {
-          // 登录失败，解除锁，防止死锁
-          isLogining = false;
-        }
-      },
-      fail: function(res) {
-        // 登录失败，解除锁，防止死锁
-        isLogining = false;
-      }
-    });
-  }
+export function doLogin() {
+	return new Promise((resolve, reject) => {
+		const session = wx.getStorageSync(SESSION_KEY);
+		if (session) {
+			// 缓存中有 session
+			resolve();
+		} else if (isLogining) {
+			// 正在登录中，请求轮询稍后，避免重复调用登录接口
+			setTimeout(() => {
+				doLogin()
+					.then(res => {
+						resolve(res);
+					})
+					.catch(err => {
+						reject(err);
+					});
+			}, 500);
+		} else {
+			isLogining = true;
+			wx.login({
+				success: (res) => {
+					if (res.code) {
+						const reqData = {
+							code: res.code
+						}
+						wx.request({
+							url: API.login,
+							data: reqData,
+							// method: "POST",
+							success: (resp) => {
+								const data = resp.data;
+								isLogining = false;
+								// 保存登录态
+								if (data.return_code === 0) {
+									wx.setStorageSync(SESSION_KEY, data[SESSION_KEY]);
+									resolve();
+								} else {
+									wx.showToast({
+										title: data.return_msg,
+										icon: "none"
+									});
+									reject(data.return_msg);
+								}
+							},
+							fail: err => {
+								// 登录失败，解除锁，防止死锁
+								isLogining = false;
+								reject(err);
+							}
+						});
+					} else {
+						// 登录失败，解除锁，防止死锁
+						isLogining = false;
+						reject();
+					}
+				},
+				fail: (err) => {
+					// 登录失败，解除锁，防止死锁
+					isLogining = false;
+					reject(err);
+				}
+			});
+		}
+	});
 }
 ```
 
@@ -105,42 +130,66 @@ function doLogin(callback = () => {}) {
 
 这里我们：
 1. 使用`isCheckingSession`来标志是否查询中。
-2. 添加回调`callback`。
+2. 返回 Promise。
 3. 使用`isSessionFresh`来标志`session_key`是否有效。
 
 ``` js
+import { doLogin } from "./doLogin";
+import { SESSION_KEY } from "./doLogin";
+
 let isCheckingSession = false;
 let isSessionFresh = false;
-function checkSession(callback = () => {}) {
-  if (isCheckingSession) {
-    setTimeout(function() {
-      checkSession(callback);
-    }, 500);
-  } else if (!isSessionFresh && sessionId) {
-    isCheckingSession = true;
-    wx.checkSession({
-      success: function(res) {
-        //session_key 未过期，并且在本生命周期一直有效
-        isSessionFresh = true;
-            doLogin(callback);
-      },
-      fail: function(res) {
-        // session_key 已经失效，需要重新执行登录流程
-        sessionId = "";
-        wx.removeStorage({
-          key: "sessionId",
-          complete: function() {
-            doLogin(callback);
-          }
+
+export function checkSession(): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const session = wx.getStorageSync(SESSION_KEY);
+    if (isCheckingSession) {
+      setTimeout(() => {
+        checkSession()
+          .then(res => {
+            resolve(res);
+          })
+          .catch(err => {
+            reject(err);
+          });
+      }, 500);
+    } else if (!isSessionFresh && session) {
+      isCheckingSession = true;
+      wx.checkSession({
+        success: () => {
+          // session_key 未过期，并且在本生命周期一直有效
+          isSessionFresh = true;
+          resolve();
+        },
+        fail: () => {
+          // session_key 已经失效，需要重新执行登录流程
+          wx.removeStorage({
+            key: "skey",
+            complete: () => {
+              doLogin()
+                .then(() => {
+                  resolve();
+                })
+                .catch(err => {
+                  reject(err);
+                });
+            }
+          });
+        },
+        complete: () => {
+          isCheckingSession = false;
+        }
+      });
+    } else {
+      doLogin()
+        .then(res => {
+          resolve(res);
+        })
+        .catch(err => {
+          reject(err);
         });
-      },
-      complete: function() {
-        isCheckingSession = false;
-      }
-    });
-  } else {
-    doLogin(callback); //重新登录
-  }
+    }
+  });
 }
 ```
 
@@ -151,38 +200,60 @@ function checkSession(callback = () => {}) {
 3. 使用`tryLoginCount`来标志重试次数，`TRY_LOGIN_LIMIT`来标志重试次数上限，避免进入死循环。
 
 ``` js
+import { doLogin } from "./doLogin";
+import { SESSION_KEY } from "./doLogin";
+import { checkSession } from "./checkSession";
+
+// 会话过期错误码，需要重新登录
+export const LOGIN_FAIL_CODES = [10000];
+
 const TRY_LOGIN_LIMIT = 3;
-function request(obj = {}) {
-  checkSession(() => {
-    const { data, method, header, dataType, fail, success } = obj;
-    const tryLoginCount = obj.tryLoginCount || 0;
-    // 如果需要通过 data 把登录态 sessionId 带上
-    const dataWithSession = { ...data, sessionId };
-    wx.request({
-      url,
-      data: dataWithSession,
-      method,
-      header,
-      dataType,
-      success: function(res) {
-        if (res.statusCode == 200) {
-          // 登陆态失效特定错误码判断，且重试次数未达到上限
-          if (LOGIN_FAIL_CODE && tryLoginCount < TRY_LOGIN_LIMIT) {
-            doLogin(() => {
-              obj.tryLoginCount = ++tryLoginCount;
-              request(obj);
-            });
-          } else {
-            success(res);
+
+export function request(obj: any = {}): Promise<object> {
+  return new Promise((resolve, reject) => {
+    checkSession()
+      .then(() => {
+        let session = wx.getStorageSync(SESSION_KEY);
+        const { url, data, method, header, dataType } = obj;
+        let tryLoginCount = obj.tryLoginCount || 0;
+        // 如果需要通过 data 把登录态 sessionId 带上
+        const dataWithSession = { ...data, [SESSION_KEY]: session, appid: APPID };
+        wx.request({
+          url,
+          data: dataWithSession,
+          method,
+          header,
+          dataType,
+          success: (res: any) => {
+            if (res.statusCode === 200) {
+              const data: ICommonResponse = res.data;
+              // 登陆态失效特定错误码判断，且重试次数未达到上限
+              if (LOGIN_FAIL_CODES.indexOf(data.return_code) > -1 && tryLoginCount < TRY_LOGIN_LIMIT) {
+                doLogin().then(() => {
+                  obj.tryLoginCount = ++tryLoginCount;
+                  request(obj)
+                    .then(res => {
+                      resolve(res);
+                    })
+                    .catch(err => {
+                      reject(err);
+                    });
+                });
+              } else {
+                resolve(res);
+              }
+            } else {
+              reject(res);
+            }
+          },
+          fail: function(err) {
+            reject(err);
           }
-        } else {
-          fail(res);
-        }
-      },
-      fail: function(res) {
-        fail(res);
-      }
-    });
+        });
+      })
+      .catch(err => {
+        reject(err);
+      });
   });
 }
 ```
