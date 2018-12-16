@@ -3,6 +3,7 @@
 ---      
 
 ### 最新     
+> [《选择这件事》](https://godbasin.github.io/2018/12/16/work-1-choice/)   
 > [《小程序上Typescript啦》](https://godbasin.github.io/2018/11/30/wxapp-typescript/)   
 > [《小程序多页面接口数据缓存》](https://godbasin.github.io/2018/11/24/wxapp-multi-request/)   
 > [《小程序的登录与静默续期》](https://godbasin.github.io/2018/11/17/wxapp-login/)   
@@ -19,10 +20,15 @@
 > [《前端构建大型应用》](https://godbasin.github.io/2018/07/07/build-application/)   
 > [《数据抽离与数据管理》](https://godbasin.github.io/2018/06/17/component-communication-with-data-model/)   
 
-### 小程序    
+### 工作杂谈    
+> [《选择这件事》](https://godbasin.github.io/2018/12/16/work-1-choice/)   
+
+### 小程序应用    
 > [《小程序上Typescript啦》](https://godbasin.github.io/2018/11/30/wxapp-typescript/)   
 > [《小程序多页面接口数据缓存》](https://godbasin.github.io/2018/11/24/wxapp-multi-request/)   
 > [《小程序的登录与静默续期》](https://godbasin.github.io/2018/11/17/wxapp-login/)   
+
+### 深入理解小程序    
 > [《理解小程序的安全与管控》](https://godbasin.github.io/2018/11/04/wxapp-manage-and-security/)   
 > [《解剖小程序的 setData》](https://godbasin.github.io/2018/10/05/wxapp-set-data/)   
 > [《关于小程序的基础库》](https://godbasin.github.io/2018/09/23/wxapp-basic-lib/)   
