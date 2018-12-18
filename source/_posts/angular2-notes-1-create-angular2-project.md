@@ -127,4 +127,4 @@ npm run e2e
 Angular2使用的最大感受就是，遇见未来。
 即使angular 1和2已经是完全的改革，但是2的一些理念和标准真的很棒呢。
 [此处查看项目代码（仅包含src部分）](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/angular2-notes/1-create-angular2-project)
-[此处查看页面效果](http://oc8qsv1w6.bkt.clouddn.com/1-create-angular2-project/index.html)
+[此处查看页面效果](http://angular2-notes.godbasin.com/1-create-angular2-project/index.html)

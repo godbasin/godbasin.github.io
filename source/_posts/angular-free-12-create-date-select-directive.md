@@ -408,4 +408,4 @@ export default (ngModule) => {
 -----
 这节主要简单日期组件的创建，以及一些设计思想。其实把组件做成可配置，这样的想法也是很棒的，多亏了团队的小朋友们，发散的思维给大家都带来了很棒的收获呢。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/angular-free/12-create-date-select-directive)
-[此处查看页面效果](http://ok2o5vt7c.bkt.clouddn.com/angular-free-12-create-date-select-directive/index.html)
+[此处查看页面效果](http://angular-free.godbasin.com/angular-free-12-create-date-select-directive/index.html)

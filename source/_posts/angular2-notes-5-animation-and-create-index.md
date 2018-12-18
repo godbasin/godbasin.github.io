@@ -216,4 +216,4 @@ export const routes: RouterConfig = [
 -----
 不得不说，angular2中的动画效果跟Vue过渡也是很相像的呢。这些贴心的设定，很多时候都能帮我们减轻不少的负担呢。
 [此处查看项目代码（仅包含src部分）](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/angular2-notes/5-animation-and-create-index)
-[此处查看页面效果](http://oc8qsv1w6.bkt.clouddn.com/5-animation-and-create-index/index.html#/index)
+[此处查看页面效果](http://angular2-notes.godbasin.com/5-animation-and-create-index/index.html#/index)

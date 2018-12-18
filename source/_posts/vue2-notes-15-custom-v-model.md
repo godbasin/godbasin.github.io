@@ -200,4 +200,4 @@ npm install jquery --save
 之前一直以为，Vue中并没有自定义表单的功能。不过如果说Angular里面能使用的飞天入地，相比Vue里面也应该会有才对。
 优秀的东西都可以拿来借鉴，其实合作共赢也是个不错的选择，当然竞争也是很激烈滴~
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/vue2-notes/15-custom-v-model)
-[此处查看页面效果](http://ofyya1gfg.bkt.clouddn.com/15-custom-v-model/index.html#/app/logs)
+[此处查看页面效果](http://vue2-notes.godbasin.com/15-custom-v-model/index.html#/app/logs)

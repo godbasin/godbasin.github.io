@@ -168,4 +168,4 @@ new Vue({
 组件封装和配置化，乃是程序员必备技能。提高开发效率，同时锻炼逻辑思维抽象能力，你值得拥有。
 这里我们的Datetimepicker是基于input来实现的，但其实还能用v-model来改善，这块后面会说到。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/vue2-notes/14-sealed-component)
-[此处查看页面效果](http://ofyya1gfg.bkt.clouddn.com/14-sealed-component/index.html#/app/logs)
+[此处查看页面效果](http://vue2-notes.godbasin.com/14-sealed-component/index.html#/app/logs)

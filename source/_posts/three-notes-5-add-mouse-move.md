@@ -364,4 +364,4 @@ function renderCameraLookat() {
 -----
 这节主要讲了给第一人称（照相机）添加鼠标移动控制视觉方向，并调整移动计算的基本过程。有兴趣的小伙伴，也可以自行完成上下移动视觉的部分。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/three-notes/5-add-mouse-move)
-[此处查看页面效果](http://ol96662w7.bkt.clouddn.com/three-notes-5-add-mouse-move/index.html)
+[此处查看页面效果](http://three-notes.godbasin.com/three-notes-5-add-mouse-move/index.html)

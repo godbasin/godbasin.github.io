@@ -138,4 +138,4 @@ import { HeaderService } from './header.service';
 -----
 angular2中，不管是组件类，还是是服务类，这样的创建、输出、获取等等模块化的操作还是很棒的。
 [此处查看项目代码（仅包含src部分）](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/angular2-notes/6-use-service-class)
-[此处查看页面效果](http://oc8qsv1w6.bkt.clouddn.com/6-use-service-class/index.html#/index)
+[此处查看页面效果](http://angular2-notes.godbasin.com/6-use-service-class/index.html#/index)

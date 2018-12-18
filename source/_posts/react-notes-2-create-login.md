@@ -199,4 +199,4 @@ module.exports = Login;
 -----
 从Angular转React中遇到不少问题呢，毕竟两者很多概念和使用方法都很不一样，使用过程中也是大开眼界了呀。
 [此处查看项目代码（仅包含app部分）](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/react-notes/2-create-login)
-[此处查看页面效果](http://o9j9owc7b.bkt.clouddn.com/2-create-login/index.html)
+[此处查看页面效果](http://react-notes.godbasin.com/2-create-login/index.html)

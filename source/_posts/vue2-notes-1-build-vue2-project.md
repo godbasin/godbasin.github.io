@@ -250,4 +250,4 @@ new Vue({
 -----
 其实使用了这么多的框架，Vue的确是做的很不错的一个呢，从Vue1.x到Vue2.x也是有很多优秀的转变呢。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/vue2-notes/1-build-vue2-project)
-[此处查看页面效果](http://ofyya1gfg.bkt.clouddn.com/1-build-vue2-project/index.html)
+[此处查看页面效果](http://vue2-notes.godbasin.com/1-build-vue2-project/index.html)

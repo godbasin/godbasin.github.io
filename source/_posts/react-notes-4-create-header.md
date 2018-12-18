@@ -188,4 +188,4 @@ render() {
 不得不说框架之间的切换还是有很多问题呢，这时候需要的就是坚持不懈地学习和排除bug啦。
 当然本骚年本来还想用ES6装装逼的，奈何不熟练的使用后果就是很多报错，看来也还是要加强ES6语法呀。
 [此处查看项目代码（仅包含app部分）](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/react-notes/4-create-header)
-[此处查看页面效果](http://o9j9owc7b.bkt.clouddn.com/4-create-header/index.html?#/index)
+[此处查看页面效果](http://react-notes.godbasin.com/4-create-header/index.html?#/index)

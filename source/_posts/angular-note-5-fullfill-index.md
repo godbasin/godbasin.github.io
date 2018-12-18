@@ -115,4 +115,4 @@ app.controller('IndexCtrl', ['$scope', function($scope) {
 -----
 AngularJS中用得最爽的莫过于模板引擎的数据和事件绑定了，当你熟悉了angular之后你会喜欢上他的哦。
 [此处查看项目代码（仅包含app部分）](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/angular-notes/5-fullfill-index)
-[此处查看页面效果](http://o9grhhyar.bkt.clouddn.com/5-fullfill-index/index.html#/index)
+[此处查看页面效果](http://angular-notes.godbasin.com/5-fullfill-index/index.html#/index)

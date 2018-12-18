@@ -81,4 +81,4 @@ $scope.usermenus = [{
 -----
 至此，我们大概完成了一个较完整的项目，当然实际中工程远大于本骚年所介绍的，遇到的问题也远比这些复杂。但没关系，困难都是一步步克服的，相信大家能很好地解决掉他们。
 [此处查看项目代码（仅包含app部分）](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/angular-notes/8-create-filter)
-[此处查看页面效果](http://o9grhhyar.bkt.clouddn.com/9-session-commit/index.html#/index)
+[此处查看页面效果](http://angular-notes.godbasin.com/9-session-commit/index.html#/index)

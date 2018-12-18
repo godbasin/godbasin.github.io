@@ -211,4 +211,4 @@ render();
 -----
 这节主要讲了在初始化完毕后的3D世界中添加物体，由于Lambert材质的物体为漫反射物体，故我们需要在添加光源之后才能看到它们的效果。下一节将介绍光源的添加。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/three-notes/2-add-objets)
-[此处查看页面效果](http://ol96662w7.bkt.clouddn.com/three-notes-2-add-objects/index.html)
+[此处查看页面效果](http://three-notes.godbasin.com/three-notes-2-add-objects/index.html)

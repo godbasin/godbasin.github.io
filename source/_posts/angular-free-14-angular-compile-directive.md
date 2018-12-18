@@ -196,4 +196,4 @@ this.AlertMsg(this.$scope,{ text: '确认？', needConfirm: true }).then(() => {
 ---
 这节主要简单介绍angular的$compile服务，以及在服务中动态编译创建指令的实现过程。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/angular-free/14-angular-compile-directive)
-[此处查看页面效果](http://ok2o5vt7c.bkt.clouddn.com/angular-free-14-angular-compile-directive/index.html)
+[此处查看页面效果](http://angular-free.godbasin.com/angular-free-14-angular-compile-directive/index.html)

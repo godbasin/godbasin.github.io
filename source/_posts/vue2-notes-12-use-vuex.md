@@ -138,4 +138,4 @@ export default {
 这里我们简单使用了Vuex，添加了个保存用户信息的userStore，在业务中我们常常会遇到很多不同的功能数据。
 而对于Store的管理，很多时候也是需要思考的地方。不过在项目还没有很大的时候，够用就好啦。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/vue2-notes/12-use-vuex)
-[此处查看页面效果](http://ofyya1gfg.bkt.clouddn.com/12-use-vuex/index.html#/app/add/service)
+[此处查看页面效果](http://vue2-notes.godbasin.com/12-use-vuex/index.html#/app/add/service)

@@ -191,4 +191,4 @@ function updateChart(source) {
 本节我们添加了鼠标操作，包括滚轮缩放和拖动，主要依靠 d3-zoom 模块来实现。同时，考虑文字重叠，也进行了些处理。
 细心的小伙伴们或许会发现 d3-drag 模块，骚年还没用到，不过或许区别在于整体的拖动和单个元素的拖动吧。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/d3-tree-notes/4-zoom-amd-drag)
-[此处查看页面效果](http://p13oygsq6.bkt.clouddn.com/4-zoom-amd-drag/index.html)
+[此处查看页面效果](http://d3.godbasin.com/4-zoom-amd-drag/index.html)

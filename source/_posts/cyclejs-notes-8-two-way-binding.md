@@ -198,4 +198,4 @@ export function LoginComponent(sources) {
 -----
 这节主要简单（真的很简单）介绍了驱动Driver，并成功地完成了之前没有完成的部分，完成Input的输入，并将Input的输入和输出衔接在一起，对外呈现出一种双向绑定的方式。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/cyclejs-notes/8-two-way-binding)
-[此处查看页面效果](http://otnjb9qi5.bkt.clouddn.com/8-two-way-binding/index.html)
+[此处查看页面效果](http://cyclejs-notes.godbasin.com/8-two-way-binding/index.html)

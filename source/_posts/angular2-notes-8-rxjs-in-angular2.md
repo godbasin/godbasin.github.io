@@ -248,4 +248,4 @@ this.otherService.getDatas().then(
 从刚开始接触http服务，到ajax，然后是Promise，如今发现还有个Observable。
 不得不说，前端发展真的很快呢，不断地幻化，然后大步往前。这种不断自我演进的属性真的捕获了本骚年的心呢。
 [此处查看项目代码（仅包含src部分）](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/angular2-notes/8-rxjs-in-angular2)
-[此处查看页面效果](http://oc8qsv1w6.bkt.clouddn.com/8-rxjs-in-angular2/index.html#/other)
+[此处查看页面效果](http://angular2-notes.godbasin.com/8-rxjs-in-angular2/index.html#/other)

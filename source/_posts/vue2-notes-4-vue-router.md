@@ -164,4 +164,4 @@ methods: {
 -----
 大家是不是觉得左侧的下拉菜单实现路由跟踪特别麻烦呢，其实这也是本骚年偷了个小懒，不想改动样式代码直接使用gentelella的样式。大家也可以想一下其他的一些实现方法的呀。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/vue2-notes/4-vue-router)
-[此处查看页面效果](http://ofyya1gfg.bkt.clouddn.com/4-vue-router/index.html#/App)
+[此处查看页面效果](http://vue2-notes.godbasin.com/4-vue-router/index.html#/App)

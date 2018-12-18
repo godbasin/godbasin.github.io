@@ -277,4 +277,4 @@ checkMenuActived(name) {
 
 本节我们将菜单的显示关联至路由，后面我们每添加一个页面，就可以自动生成菜单啦。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/vue2-notes/11-access-menu)
-[此处查看页面效果](http://ofyya1gfg.bkt.clouddn.com/11-access-menu/index.html#/app/add/service)
+[此处查看页面效果](http://vue2-notes.godbasin.com/11-access-menu/index.html#/app/add/service)

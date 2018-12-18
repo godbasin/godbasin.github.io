@@ -246,4 +246,4 @@ class AccountAddCtrl {
 -----
 这节主要简单介绍了在angular中封装上传本地图片服务，以及异步提交表单（包括图片）服务的过程。当然，大家也可以在这个基础上进行拓展，把服务灵活处理，接受图片或者其他文件，单个或者多个文件，等等功能。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/angular-free/7-async-form-submit)
-[此处查看页面效果](http://ok2o5vt7c.bkt.clouddn.com/angular-free-7-async-form-submit/index.html#/home/accountsadd)
+[此处查看页面效果](http://angular-free.godbasin.com/angular-free-7-async-form-submit/index.html#/home/accountsadd)

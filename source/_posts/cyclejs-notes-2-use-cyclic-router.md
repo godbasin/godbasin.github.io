@@ -129,4 +129,4 @@ return {
 -----
 这节主要讲了使用cyclic-router来搭建路由，实现路由匹配和页面跳转等功能。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/cyclejs-notes/2-use-cyclic-router)
-[此处查看页面效果](http://otnjb9qi5.bkt.clouddn.com/2-use-cyclic-router/index.html)
+[此处查看页面效果](http://cyclejs-notes.godbasin.com/2-use-cyclic-router/index.html)

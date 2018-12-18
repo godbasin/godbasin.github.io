@@ -179,4 +179,4 @@ $scope.loadphoto = function(url){
 -----
 用file API实现图片预览已经成为一种流行方式了，可能如今对兼容性要求也没有很高的，当然对自己要求高的小伙伴们可以把兼容也做了，哈哈。
 [此处查看项目代码（仅包含app部分）](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/angular-notes/7-load-image)
-[此处查看页面效果](http://o9grhhyar.bkt.clouddn.com/7-load-image/index.html#/index)
+[此处查看页面效果](http://angular-notes.godbasin.com/7-load-image/index.html#/index)

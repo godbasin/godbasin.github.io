@@ -509,6 +509,6 @@ export class JsonToHtmlComponent implements AfterViewInit {
 项目中表单配置部分大致的实现也是差不多告一段落啦，后面可能更多的是补充和优化而已。
 而其实项目还可以多种拓展呢，像这样的添加配置像（validations和hiddenWhen）也可以通过抽象做成更加通用的功能。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/angular2-free/12-config-and-create-form)
-[此处查看页面效果](http://oqntc49tn.bkt.clouddn.com/12-config-and-create-form/index.html#/home/page-setting)
+[此处查看页面效果](http://angular2-free.godbasin.com/12-config-and-create-form/index.html#/home/page-setting)
 
 完整项目也可查看[angular-custom-app项目](https://github.com/godbasin/angular-custom-app)。

@@ -252,4 +252,4 @@ export const customFormsDefault = {
 目前我们能很方便地拓展需要的动态表单，来做一些配置化的东西。
 而当我们真正在项目中使用的时候，或许还需要考虑从接口获取数据（初始值）的情况，不过解决办法也有很多，大家多去实践吧。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/angular2-free/8-radio-and-checkbox)
-[此处查看页面效果](http://oqntc49tn.bkt.clouddn.com/8-radio-and-checkbox/index.html#/home/page-setting)
+[此处查看页面效果](http://angular2-free.godbasin.com/8-radio-and-checkbox/index.html#/home/page-setting)

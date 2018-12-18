@@ -148,4 +148,4 @@ import { html } from 'snabbdom-jsx';
 -----
 这节主要讲了我们把Typescript迁到我们项目里，其中还有jsx相关的配置调整，顺利把项目跑起来啦。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/cyclejs-notes/3-use-typescript)
-[此处查看页面效果](http://otnjb9qi5.bkt.clouddn.com/3-use-typescript/index.html)
+[此处查看页面效果](http://cyclejs-notes.godbasin.com/3-use-typescript/index.html)

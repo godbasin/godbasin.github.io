@@ -251,4 +251,4 @@ export const customForms: ICustomControl[] = [
 本节我们将之前的响应式表单进行改造，做成了动态表单，通过配置去生成我们需要的表单，包括校验等等。
 这里只是个基本雏形，后面若需要完善，例如表单的初始化状态加载，或是其他类型表单的拓展，也是需要花些心思的呢。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/angular2-free/7-dynamic-form)
-[此处查看页面效果](http://oqntc49tn.bkt.clouddn.com/7-dynamic-form/index.html#/home/page-setting)
+[此处查看页面效果](http://angular2-free.godbasin.com/7-dynamic-form/index.html#/home/page-setting)

@@ -269,4 +269,4 @@ export class OptionDialogComponent implements OnInit {
 使用自己搭建的基本架构，来进行二次开发的感觉其实挺棒的。
 后面我们的这个选项配置再作为基础架构的一部分，来实现更多的功能，才是项目设计的有意思之处吧。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/angular2-free/11-option-dialog)
-[此处查看页面效果](http://oqntc49tn.bkt.clouddn.com/11-option-dialog/index.html#/home/page-setting)
+[此处查看页面效果](http://angular2-free.godbasin.com/11-option-dialog/index.html#/home/page-setting)

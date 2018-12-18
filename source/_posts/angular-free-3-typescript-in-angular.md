@@ -146,4 +146,4 @@ interface Ojbect{
 -----
 这节主要简单介绍了在angular中使用typescript，以及项目的一些配置和调整。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/angular-free/3-typescript-in-angular)
-[此处查看页面效果](http://ok2o5vt7c.bkt.clouddn.com/angular-free-3-typescript-in-angular/index.html)
+[此处查看页面效果](http://angular-free.godbasin.com/angular-free-3-typescript-in-angular/index.html)

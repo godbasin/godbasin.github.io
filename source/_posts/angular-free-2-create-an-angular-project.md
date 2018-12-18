@@ -296,4 +296,4 @@ cp app/index.html build/index.html
 -----
 这节主要讲了简单搭建个angular项目的一些较详细的步骤。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/angular-free/2-create-an-angular-project)
-[此处查看页面效果](http://ok2o5vt7c.bkt.clouddn.com/2-create-an-angular-project/index.html)
+[此处查看页面效果](http://angular-free.godbasin.com/2-create-an-angular-project/index.html)

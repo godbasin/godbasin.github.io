@@ -242,4 +242,4 @@ export class CheckboxWithTextComponent implements OnInit {
 这里我们只针对简单的条件进行表单校验，并且这里只能匹配一些简单绑定的值，像多选等因为绑定的值为对象，暂无法进行条件判断。
 一些复杂的控制功能或许需要我们通过其他方式进行吧，毕竟很多时候更广的通用性也会增加设计的复杂度、消耗使用的简便性。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/angular2-free/10-add-conditions)
-[此处查看页面效果](http://oqntc49tn.bkt.clouddn.com/10-add-conditions/index.html#/home/page-setting)
+[此处查看页面效果](http://angular2-free.godbasin.com/10-add-conditions/index.html#/home/page-setting)

@@ -200,4 +200,4 @@ export default {
 -----
 突然发现，调用别人写好的页面模板，还是好方便呀。省去了码样式的时间，当然最重要的还是模板好看哈哈，这里表扬一下[gentelella](https://github.com/puikinsh/gentelella)才行。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/vue2-notes/2-create-sidebar-componnet)
-[此处查看页面效果](http://ofyya1gfg.bkt.clouddn.com/2-create-sidebar-componnet/index.html#/App)
+[此处查看页面效果](http://vue2-notes.godbasin.com/2-create-sidebar-componnet/index.html#/App)

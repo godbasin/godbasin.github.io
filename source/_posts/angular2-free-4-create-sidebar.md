@@ -303,4 +303,4 @@ router.events.filter(event => event instanceof NavigationEnd).subscribe(event =>
 这节主要讲了一些基础环境配置的调整，以及制作路由自动定位左侧菜单的过程，主要涉及的可能还是路由相关。
 看菜单列表的内容，大家猜猜本骚年接下来想要做什么？就不告诉你，哈哈。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/angular2-free/4-create-sidebar)
-[此处查看页面效果](http://oqntc49tn.bkt.clouddn.com/4-create-sidebar/index.html#/home/page-setting)
+[此处查看页面效果](http://angular2-free.godbasin.com/4-create-sidebar/index.html#/home/page-setting)

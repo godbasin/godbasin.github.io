@@ -153,4 +153,4 @@ export default (ngModule) => {
 -----
 这节主要简单介绍了使用Directive指令来添加事件监听的过程，当然这也只是指令的一种简单用法（组内的小朋友想到的），不过很多时候，的确方便很多呢。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/angular-free/10-directive-to-add-event-listener)
-[此处查看页面效果](http://ok2o5vt7c.bkt.clouddn.com/angular-free-10-directive-to-add-event-listener/index.html)
+[此处查看页面效果](http://angular-free.godbasin.com/angular-free-10-directive-to-add-event-listener/index.html)

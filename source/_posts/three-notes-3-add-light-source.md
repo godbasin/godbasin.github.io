@@ -247,4 +247,4 @@ render()
 -----
 这节主要讲了光源的几个分类（环境光、平行光、点光源、聚光灯），并记录往场景中添加光源，然后产生阴影的基本过程。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/three-notes/3-add-light-source)
-[此处查看页面效果](http://ol96662w7.bkt.clouddn.com/three-notes-3-add-light-source/index.html)
+[此处查看页面效果](http://three-notes.godbasin.com/three-notes-3-add-light-source/index.html)

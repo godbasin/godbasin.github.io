@@ -231,7 +231,7 @@ window.onload = function() {
 ```
 
 [此处查看项目代码（仅包含src部分）](https://github.com/godbasin/box2djs-tutorial/tree/master/6-practice/6-3-add-bound/6-3-add-bound)  
-[此处查看页面效果](http://old7pzwup.bkt.clouddn.com/6-3-add-bound/index.html)  
+[此处查看页面效果](http://box2d-tutorial.godbasin.com/6-3-add-bound/index.html)  
 
 
 ### [返回总目录](/2017/02/17/box2d-tutorial-0-catalog/)  

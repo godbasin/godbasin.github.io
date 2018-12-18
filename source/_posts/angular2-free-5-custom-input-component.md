@@ -365,4 +365,4 @@ export class DateTimePickerComponent extends CustomInputComponent implements Aft
 这节我们讲了自定义表单相关的一些概念，以及自定义一个时间选择input表单的实现过程。
 很多时候我们都需要对不同的input自行封装，所以也可以单独抽象出来Class方便继承，又或者封装成指令等方式都是可以的。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/angular2-free/5-custom-input-component)
-[此处查看页面效果](http://oqntc49tn.bkt.clouddn.com/5-custom-input-component/index.html#/home/page-setting)
+[此处查看页面效果](http://angular2-free.godbasin.com/5-custom-input-component/index.html#/home/page-setting)

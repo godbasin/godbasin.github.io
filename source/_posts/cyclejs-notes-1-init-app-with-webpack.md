@@ -248,4 +248,4 @@ export function App(sources) {
 -----
 这节主要讲了webpack/babel一些相关配置，项目已经搭建起来了，但是很多东西我们还不完全理解，像Driver、xstream等等，后面大概也需要讲讲了呢。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/cyclejs-notes/1-init-app-with-webpack)
-[此处查看页面效果](http://otnjb9qi5.bkt.clouddn.com/1-init-app-with-webpack/index.html)
+[此处查看页面效果](http://cyclejs-notes.godbasin.com/1-init-app-with-webpack/index.html)

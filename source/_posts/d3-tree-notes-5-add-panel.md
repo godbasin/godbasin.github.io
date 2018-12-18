@@ -110,4 +110,4 @@ var nodeEnter = node
 跳开固有的逻辑看事物，会有不同的想法和看到不同的景色噢。
 
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/d3-tree-notes/5-add-panel)
-[此处查看页面效果](http://p13oygsq6.bkt.clouddn.com/5-add-panel/index.html)
+[此处查看页面效果](http://d3.godbasin.com/5-add-panel/index.html)

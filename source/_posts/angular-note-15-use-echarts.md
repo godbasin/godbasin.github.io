@@ -211,4 +211,4 @@ bower install echarts --save
 -----
 在实例中本骚年还创建了另外一个地图服务，用于展示路径，感兴趣的小伙伴也可以自行查看相关的代码呀。
 [此处查看项目代码（仅包含app部分）](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/angular-notes/15-use-echarts)
-[此处查看页面效果](http://o9grhhyar.bkt.clouddn.com/15-use-echarts/index.html#/echarts)
+[此处查看页面效果](http://angular-notes.godbasin.com/15-use-echarts/index.html#/echarts)

@@ -220,4 +220,4 @@ SetAlertMsg({ text: '确认？' }).then(() => {
 ---
 这节主要简单介绍服务和组件配合着使用的过程，当然其实要实现这样的设计，还有一些其他的方法，小伙伴们也可以去想一下啦。还可以把弹窗模块进行拓展，加入可配置输入框、选择框等等去做呢。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/angular-free/13-service-work-with-directive)
-[此处查看页面效果](http://ok2o5vt7c.bkt.clouddn.com/angular-free-13-service-work-with-directive/index.html)
+[此处查看页面效果](http://angular-free.godbasin.com/angular-free-13-service-work-with-directive/index.html)

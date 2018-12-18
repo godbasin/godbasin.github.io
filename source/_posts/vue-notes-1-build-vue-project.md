@@ -233,4 +233,4 @@ Vue.js拥抱数据驱动的视图概念。
 -----
 认识了Vue之后，发现它结合了其他框架优秀的地方，并且使得项目的快速搭建变得更加简单。当然每个框架都各有千秋，具体的使用要结合项目具体分析才行哦。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/vue-notes/1-build-vue-project)
-[此处查看页面效果](http://o9zkatzym.bkt.clouddn.com/1-build-vue-project/index.html)
+[此处查看页面效果](http://vue-notes.godbasin.com/1-build-vue-project/index.html)

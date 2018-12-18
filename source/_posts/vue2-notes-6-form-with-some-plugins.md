@@ -344,4 +344,4 @@ Gentelella模板中还使用了一些其他的插件，像[select2](http://selec
 -----
 这里只是用到最简单的css过渡，但是vue的过渡效果以及过渡状态还是很牛逼的，大家有兴趣的可以去看看[官方文档](https://vuefe.cn/guide/transitions.html)然后多尝试一下呢，酷酷的。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/vue2-notes/6-form-with-some-plugins)
-[此处查看页面效果](http://ofyya1gfg.bkt.clouddn.com/6-form-with-some-plugins/index.html#/app/add/service)
+[此处查看页面效果](http://vue2-notes.godbasin.com/6-form-with-some-plugins/index.html#/app/add/service)

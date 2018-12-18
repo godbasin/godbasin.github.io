@@ -139,4 +139,4 @@ config = {
 
 关于代码的打包和分割，不仅能减轻应用运行的负荷，还能在一定程度上方便我们进行维护。如果说我们需要远程定位一些问题，分块的打包还是有帮助的呢。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/vue2-notes/17-lazyload-chunk)
-[此处查看页面效果](http://ofyya1gfg.bkt.clouddn.com/17-lazyload-chunk/index.html#/app/logs)
+[此处查看页面效果](http://vue2-notes.godbasin.com/17-lazyload-chunk/index.html#/app/logs)

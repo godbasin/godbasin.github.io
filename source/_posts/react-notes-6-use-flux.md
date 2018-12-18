@@ -226,4 +226,4 @@ module.exports = AppDispatcher;
 -----
 虽然说使用Flux会使得代码量增加了不少，但这样的架构模式也不失为一种管理应用逻辑的方法呢，使用之后应用结构也清晰很多了。
 [此处查看项目代码（仅包含app部分）](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/react-notes/6-use-flux)
-[此处查看页面效果](http://o9j9owc7b.bkt.clouddn.com/6-use-flux/index.html)
+[此处查看页面效果](http://react-notes.godbasin.com/6-use-flux/index.html)

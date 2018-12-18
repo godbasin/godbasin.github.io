@@ -218,4 +218,4 @@ export default BasicService
 -----
 嵌套的路由，能将整个应用的结构变得更加清晰简洁。并且在开发过程中，我们的业务、路由、组件三者的逻辑紧密相关，也很易于维护和开发呢。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/react-redux-notes/7-inside-route)
-[此处查看页面效果](http://ohpt01s4n.bkt.clouddn.com/7-inside-route/index.html)
+[此处查看页面效果](http://react-redux-notes.godbasin.com/7-inside-route/index.html)

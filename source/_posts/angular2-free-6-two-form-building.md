@@ -243,4 +243,4 @@ this.reactiveForm.valueChanges
 讲到这里，我们的两种Angular表单--模型驱动和模板驱动，它们的简单使用和校验已经完成。
 而需要更复杂一些的功能，像多级`FormGroup`、动态表单等，后面我们或许也会讲到。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/angular2-free/6-two-form-building)
-[此处查看页面效果](http://oqntc49tn.bkt.clouddn.com/6-two-form-building/index.html#/home/page-setting)
+[此处查看页面效果](http://angular2-free.godbasin.com/6-two-form-building/index.html#/home/page-setting)

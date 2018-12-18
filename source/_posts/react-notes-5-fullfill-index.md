@@ -254,4 +254,4 @@ module.exports = Index;
 -----
 其实从AngularJS转React的时候，有很多模板引擎的使用方式不一致了，还是很不习惯的呢。相对Angular来说，React似乎教程更少呢，所以本骚年有些时候遇到bug也不是很懂，大家一起来探寻吧。
 [此处查看项目代码（仅包含app部分）](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/react-notes/5-fullfill-index)
-[此处查看页面效果](http://o9j9owc7b.bkt.clouddn.com/5-fullfill-index/index.html?#/index)
+[此处查看页面效果](http://react-notes.godbasin.com/5-fullfill-index/index.html?#/index)

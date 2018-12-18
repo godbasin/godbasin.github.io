@@ -209,4 +209,4 @@ const routerStates = [{
 -----
 这节主要简单介绍了使用ui-router代替ngRoute，并通过创建Sidebar组件以及添加路由、嵌套视图等，展示ui-router特性。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/angular-free/6-ui-router-in-angular)
-[此处查看页面效果](http://ok2o5vt7c.bkt.clouddn.com/angular-free-6-ui-router-in-angular/index.html)
+[此处查看页面效果](http://angular-free.godbasin.com/angular-free-6-ui-router-in-angular/index.html)

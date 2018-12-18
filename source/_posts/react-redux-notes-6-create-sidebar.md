@@ -325,4 +325,4 @@ export class SidebarList extends Component {
 -----
 本节我们通过新增一个Top组件，感受了一下在Redux状态管理下，新加状态的一些具体步骤，这样或许比上一节整体调整结构要稍微清晰一点点吧。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/react-redux-notes/6-create-sidebar)
-[此处查看页面效果](http://ohpt01s4n.bkt.clouddn.com/6-create-sidebar/index.html)
+[此处查看页面效果](http://react-redux-notes.godbasin.com/6-create-sidebar/index.html)

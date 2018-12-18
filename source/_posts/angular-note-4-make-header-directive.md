@@ -191,4 +191,4 @@ controller: function($scope, $element, $timeout) {
 -----
 AngularJS指令的使用过程中可能会出现一些莫名的问题，主要是因为对指令的了解不够深入，大家可以结合使用多去熟悉一下指令过程。
 [此处查看项目代码（仅包含app部分）](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/angular-notes/4-create-header)
-[此处查看页面效果](http://o9grhhyar.bkt.clouddn.com/4-create-header/index.html#/)
+[此处查看页面效果](http://angular-notes.godbasin.com/4-create-header/index.html#/)

@@ -195,4 +195,4 @@ import { Header } from './header';
 不得不说，使用angular2-webpack-starter快速搭建项目之后，对ng2的很多使用方法也比较了解了。
 毕竟ng2虽然有很详细的官方教程，但是要看完也是很需要耐心和恒心的呢，哈哈哈哈:)
 [此处查看项目代码（仅包含src部分）](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/angular2-notes/3-create-header)
-[此处查看页面效果](http://oc8qsv1w6.bkt.clouddn.com/3-create-header/index.html)
+[此处查看页面效果](http://angular2-notes.godbasin.com/3-create-header/index.html)

@@ -221,4 +221,4 @@ Sidebar组件中，下拉菜单过渡效果乍一看属于列表过渡。
 -----
 这里只是用到最简单的css过渡，但是vue的过渡效果以及过渡状态还是很牛逼的，大家有兴趣的可以去看看[官方文档](https://vuefe.cn/guide/transitions.html)然后多尝试一下呢，酷酷的。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/vue2-notes/5-transition-animation)
-[此处查看页面效果](http://ofyya1gfg.bkt.clouddn.com/5-transition-animation/index.html#/app/services)
+[此处查看页面效果](http://vue2-notes.godbasin.com/5-transition-animation/index.html#/app/services)

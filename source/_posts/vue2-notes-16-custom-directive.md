@@ -140,4 +140,4 @@ export default {
 自定义指令其实也是一个很有用的工具，不管在Angular还是在Vue中，我们对一些可复用性的逻辑封装起来使用，能提升不少的工作效率。
 像一些表单校验、输入控制等等，很多功能可以通过自定义指令来实现哒~
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/vue2-notes/16-custom-directive)
-[此处查看页面效果](http://ofyya1gfg.bkt.clouddn.com/16-custom-directive/index.html#/app/logs)
+[此处查看页面效果](http://vue2-notes.godbasin.com/16-custom-directive/index.html#/app/logs)

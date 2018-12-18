@@ -185,4 +185,4 @@ export class InputComponent {
 这节主要围绕上一次的无法获取到input更新值的问题，进行debug并解决。
 但目前还木有完全实现双向绑定，其中缺了一个就是`set value`的实现，这块我们后面可以跟driver驱动一起讲。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/cyclejs-notes/7-debug-input)
-[此处查看页面效果](http://otnjb9qi5.bkt.clouddn.com/7-debug-input/index.html)
+[此处查看页面效果](http://cyclejs-notes.godbasin.com/7-debug-input/index.html)

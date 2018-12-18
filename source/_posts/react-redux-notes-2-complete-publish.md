@@ -136,4 +136,4 @@ cp('-R', 'app/static/*', 'dist');
 -----
 至此，我们完成了打包代码的过程。其实我们也可以直接使用webpack来完成后续的打包流程，不过本骚年还没仔细去研究，这里就先使用shell脚本打包啦，后面如果有改进再更新哈。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/react-redux-notes/2-complete-publish)
-[此处查看页面效果](http://ohpt01s4n.bkt.clouddn.com/2-complete-publish/index.html)
+[此处查看页面效果](http://react-redux-notes.godbasin.com/2-complete-publish/index.html)

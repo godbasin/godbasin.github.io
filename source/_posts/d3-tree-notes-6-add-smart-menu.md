@@ -91,4 +91,4 @@ var nodeEnter = node
 本节简单介绍了给节点添加右键菜单的过程，当然，大多数都是smartMenu的工作。这里只介绍了最简单的配置方式，还有分块配置、多层子菜单配置，甚至看文档说明似乎支持移动端，这个插件挺好用的，小伙伴们可以研究下。
 
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/d3-tree-notes/6-add-smart-menu)
-[此处查看页面效果](http://p13oygsq6.bkt.clouddn.com/6-add-smart-menu/index.html)
+[此处查看页面效果](http://d3.godbasin.com/6-add-smart-menu/index.html)

@@ -235,4 +235,4 @@ entry: [
 -----
 自动化搭建可是个高效又酷酷的工程哦，而且在这过程中学到的也很多呢。
 [此处查看项目代码（仅包含app部分）](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/react-notes/1-build-react-project)
-[此处查看页面效果](http://o9j9owc7b.bkt.clouddn.com/1-build-react-project/index.html)
+[此处查看页面效果](http://react-notes.godbasin.com/1-build-react-project/index.html)

@@ -324,4 +324,4 @@ export default connect(connectState)(HomeContainer)
 -----
 其实，Redux和React之间没有关系。Redux 支持 React、Angular、Ember、jQuery甚至纯JavaScript，不过这两者搭配的效果也很棒棒的。关于Redux还有更多需要研究的，小伙伴们下来也可以多多琢磨呢。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/react-redux-notes/4-use-redux)
-[此处查看页面效果](http://ohpt01s4n.bkt.clouddn.com/4-use-redux/index.html)
+[此处查看页面效果](http://react-redux-notes.godbasin.com/4-use-redux/index.html)

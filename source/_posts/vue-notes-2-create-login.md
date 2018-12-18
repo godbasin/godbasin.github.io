@@ -198,4 +198,4 @@ export default {
 -----
 Vue中使用路由也折腾了一小会，不过vue的debug信息写得很详细哦，对哪里出问题了有个比较清晰的了解呢。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/vue-notes/2-create-login)
-[此处查看页面效果](http://o9zkatzym.bkt.clouddn.com/2-create-login/index.html)
+[此处查看页面效果](http://vue-notes.godbasin.com/2-create-login/index.html)

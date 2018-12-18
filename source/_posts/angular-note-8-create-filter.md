@@ -176,4 +176,4 @@ app.controller('OtherCtrl', ['$scope', '$filter',  function($scope, $filter) {
 -----
 使用filter服务可以很方便转换各种的数据格式哦，而且也方便统一管理呢。
 [此处查看项目代码（仅包含app部分）](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/angular-notes/8-create-filter)
-[此处查看页面效果](http://o9grhhyar.bkt.clouddn.com/8-create-filter/index.html#/other)
+[此处查看页面效果](http://angular-notes.godbasin.com/8-create-filter/index.html#/other)

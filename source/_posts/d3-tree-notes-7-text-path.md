@@ -107,4 +107,4 @@ function diagonalReverse(s = {}, d = {}) {
 本节介绍了一个新的 svg 元素--textPath，可以通过绘制 path，然后给 text 添加 textPath 来绘制曲线文字。刚开始本骚年还以为是 d3 的能力，看来是小瞧了 svg 了呢，不过现在似乎 svg 使用越来越少了呢。Sign~
 
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/d3-tree-notes/7-text-path)
-[此处查看页面效果](http://p13oygsq6.bkt.clouddn.com/7-text-path/index.html)
+[此处查看页面效果](http://d3.godbasin.com/7-text-path/index.html)

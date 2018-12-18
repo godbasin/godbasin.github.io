@@ -231,4 +231,4 @@ export default function accessCompute(permissionMap, accessKey) {
 
 这里面还有一些东西没考虑，就是当我们的权限并不能简单地只用true和false来表示，很多时候会有更复杂的场景。同时，我们需要在路由守卫鉴权前拿到权限Map，针对具体场景来调整吧。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/vue2-notes/10-access-route)
-[此处查看页面效果](http://ofyya1gfg.bkt.clouddn.com/10-access-route/index.html#/app/add/service)
+[此处查看页面效果](http://vue2-notes.godbasin.com/10-access-route/index.html#/app/add/service)

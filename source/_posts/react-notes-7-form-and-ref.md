@@ -166,4 +166,4 @@ changeInput: function(name, event) { //通过event获取当前事件，总是最
 不像Angular的双向绑定，React是单向的数据绑定，故在获取表单值的时候需要另外进行处理呢。
 React中组件的props和refs属性在父子组件间的通信上有很大的作用哦。
 [此处查看项目代码（仅包含app部分）](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/react-notes/7-form-and-ref)
-[此处查看页面效果](http://o9j9owc7b.bkt.clouddn.com/7-form-and-ref/index.html)
+[此处查看页面效果](http://react-notes.godbasin.com/7-form-and-ref/index.html)

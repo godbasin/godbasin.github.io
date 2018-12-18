@@ -153,4 +153,4 @@ export * from './login.component';
 -----
 本骚年也是Angular2的初体验者，如果小伙伴们有好的资源请千万千万要分享呀。
 [此处查看项目代码（仅包含src部分）](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/angular2-notes/2-create-login)
-[此处查看页面效果](http://oc8qsv1w6.bkt.clouddn.com/2-create-login/index.html)
+[此处查看页面效果](http://angular2-notes.godbasin.com/2-create-login/index.html)

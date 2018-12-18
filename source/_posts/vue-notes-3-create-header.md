@@ -279,4 +279,4 @@ export default {
 -----
 Vue还是挺好用的呢，文档也写得很全很详细，虽然相应的插件、库等还是比较少，但不得不说从Angular重构还是挺多可以复用的代码呢。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/vue-notes/3-create-header)
-[此处查看页面效果](http://o9zkatzym.bkt.clouddn.com/3-create-header/index.html?#!/index)
+[此处查看页面效果](http://vue-notes.godbasin.com/3-create-header/index.html?#!/index)

@@ -208,4 +208,4 @@ ReactDOM.render(<Router history={history} >
 -----
 至此，我们初步完成了登陆界面以及登陆跳转，后面我们会进行登陆后页面的开发。当然这里的模板css和js本骚年使用了最简单粗暴的方法进行，其实大家也可以尝试使用import和require这些来进行注入哒。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/react-redux-notes/3-use-router-login)
-[此处查看页面效果](http://ohpt01s4n.bkt.clouddn.com/3-use-router-login/index.html)
+[此处查看页面效果](http://react-redux-notes.godbasin.com/3-use-router-login/index.html)

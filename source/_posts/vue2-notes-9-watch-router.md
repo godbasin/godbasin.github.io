@@ -156,4 +156,4 @@ methods: {
 -----
 当初对于多个路由匹配单个组件，本骚年还以为一定会有一些方法，在路由改变的时候进行销毁重建组件，后来找不到，最终也就监视路由进行处理。虽然有可能是本骚年太蠢没找到对应的方法调用，但是其实这种监视路由处理的方法或许更合理一些呢。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/vue2-notes/9-watch-router)
-[此处查看页面效果](http://ofyya1gfg.bkt.clouddn.com/9-watch-router/index.html#/app/add/service)
+[此处查看页面效果](http://vue2-notes.godbasin.com/9-watch-router/index.html#/app/add/service)

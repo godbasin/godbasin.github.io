@@ -215,4 +215,4 @@ babel-loader的配置通常使用.babelrc文件进行配置：
 -----
 这节主要讲了webpack/babel/Typescript一些相关配置，项目其实已经搭建起来了，但是目前看来并不是特别完善，后面我们可以做些改善和调整。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/angular2-free/1-init-angular-app-with-webpack)
-[此处查看页面效果](http://oqntc49tn.bkt.clouddn.com/1-init-angular-app-with-webpack/index.html)
+[此处查看页面效果](http://angular2-free.godbasin.com/1-init-angular-app-with-webpack/index.html)

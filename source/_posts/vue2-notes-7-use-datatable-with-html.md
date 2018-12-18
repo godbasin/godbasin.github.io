@@ -254,4 +254,4 @@ const SetTooltip = () => {
 -----
 这里我们使用了先使用vue自动加载相应数据生成html后（mounted），再调用dataTables来生成表格的方法。当然这种方法会有很大的限制，需要一次性加载所有数据，这在很多时候都是不实用的。后面我们会继续介绍dataTables的另外一种使用方法--服务端渲染。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/vue2-notes/7-use-datatable-with-html)
-[此处查看页面效果](http://ofyya1gfg.bkt.clouddn.com/7-use-datatable-with-html/index.html#/app/products)
+[此处查看页面效果](http://vue2-notes.godbasin.com/7-use-datatable-with-html/index.html#/app/products)

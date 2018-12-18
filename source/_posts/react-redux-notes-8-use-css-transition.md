@@ -125,4 +125,4 @@ import '../../../static/gentelella/build/css/animation.css'
 -----
 本节简单举例介绍了下React中CSS动画过渡效果，其实关于路由切换同时存在两个组件的问题，我们也可以调用底层API去处理，小伙伴们下去也可以自己研究一下呗。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/react-redux-notes/8-use-css-transition)
-[此处查看页面效果](http://ohpt01s4n.bkt.clouddn.com/8-use-css-transition/index.html)
+[此处查看页面效果](http://react-redux-notes.godbasin.com/8-use-css-transition/index.html)

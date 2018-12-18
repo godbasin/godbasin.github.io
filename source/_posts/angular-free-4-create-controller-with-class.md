@@ -183,4 +183,4 @@ export function Notify({ title = '', text = '', type = 'info', styling = 'bootst
 -----
 这节主要简单介绍了在angular中使用class创建控制器，以及添加项目的一些常用工具（服务）。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/angular-free/4-create-controller-with-class)
-[此处查看页面效果](http://ok2o5vt7c.bkt.clouddn.com/angular-free-4-create-controller-with-class/index.html)
+[此处查看页面效果](http://angular-free.godbasin.com/angular-free-4-create-controller-with-class/index.html)

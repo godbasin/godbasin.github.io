@@ -225,4 +225,4 @@ class KeyUp{
 -----
 这节主要简单介绍创建一个事件队列，来监听按键，并进行回调处理的KeyUp服务，并对外提供`EscKeyUp()`和`SpaceKeyUp()`方法。当然小伙伴们也可以拓展这些按键，又或者当队列为空的时候取消事件的监听等等。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/angular-free/9-event-callback-queue)
-[此处查看页面效果](http://ok2o5vt7c.bkt.clouddn.com/angular-free-9-event-callback-queue/index.html)
+[此处查看页面效果](http://angular-free.godbasin.com/angular-free-9-event-callback-queue/index.html)

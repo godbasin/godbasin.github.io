@@ -103,4 +103,4 @@ tags: 笔记
 -----
 自动化搭建对AngularJS应用整体上的了解很有帮助哦，不妨尝试一下啦。
 [此处查看项目代码（仅包含app部分）](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/angular-notes/1-create-angular-project)
-[此处查看页面效果](http://o9grhhyar.bkt.clouddn.com/1-create-angular-project/index.html#/)
+[此处查看页面效果](http://angular-notes.godbasin.com/1-create-angular-project/index.html#/)

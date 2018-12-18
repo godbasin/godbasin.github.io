@@ -174,4 +174,4 @@ function click(d) {
 本节我们添加了节点动态获取子节点的功能，同时给节点加上已读状态，同时处理好单击双击的事件冲突。
 我们在完成基本需求的同时，也需要主动改善用户体验，或是不合理的地方要主动提出来，因为说好的要把最棒的一面呈现世间的呢。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/d3-tree-notes/3-ajax-for-node)
-[此处查看页面效果](http://p13oygsq6.bkt.clouddn.com/3-ajax-for-node/index.html)
+[此处查看页面效果](http://d3.godbasin.com/3-ajax-for-node/index.html)

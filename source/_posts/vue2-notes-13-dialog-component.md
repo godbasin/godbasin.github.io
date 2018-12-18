@@ -231,4 +231,4 @@ export default {
 
 本节我们介绍了使用Promise方式实现弹窗的过程，这里面有个比较尴尬的问题就是，由于全局弹窗只有这么一个，所以如果有二次确认的过程（两个以上弹窗），这样子就不合适啦。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/vue2-notes/13-dialog-component)
-[此处查看页面效果](http://ofyya1gfg.bkt.clouddn.com/13-dialog-component/index.html)
+[此处查看页面效果](http://vue2-notes.godbasin.com/13-dialog-component/index.html)

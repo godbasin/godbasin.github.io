@@ -232,4 +232,4 @@ export default {
 -----
 这里我们没有用到bootstrap中的组件，毕竟用Vue过渡很简单的呢。不得不说，Vue的动画过渡做的真的不错，事件的封装也做的很方便呢。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/vue-notes/4-fullfill-index)
-[此处查看页面效果](http://o9zkatzym.bkt.clouddn.com/4-fullfill-index/index.html?#!/index)
+[此处查看页面效果](http://vue-notes.godbasin.com/4-fullfill-index/index.html?#!/index)

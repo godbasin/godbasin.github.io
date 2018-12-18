@@ -63,4 +63,4 @@ var linkEnter = link
 我也不知道为啥这节就这么点内容...只是觉得这个点可以记一下，但是又实在凑不上很多东西了，大家将就看看吧。
 
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/d3-tree-notes/8-add-path-click)
-[此处查看页面效果](http://p13oygsq6.bkt.clouddn.com/8-add-path-click/index.html)
+[此处查看页面效果](http://d3.godbasin.com/8-add-path-click/index.html)

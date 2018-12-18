@@ -280,4 +280,4 @@ new webpack.ContextReplacementPlugin(
 -----
 这节主要讲了路由相关的介绍和使用，以及添加静态资源，和调整一些配置使得项目得以启动的过程。项目里代码讲得不多，大家可以自行查看。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/angular2-free/3-init-routes-and-assets)
-[此处查看页面效果](http://oqntc49tn.bkt.clouddn.com/3-init-routes-and-assets/index.html)
+[此处查看页面效果](http://angular2-free.godbasin.com/3-init-routes-and-assets/index.html)

@@ -212,4 +212,4 @@ methods: {
 -----
 当然，父子组件间通信有很多实现方法。大家感兴趣的当然也可以尝试用中央事件总线或者是状态管理来实现啦。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/vue2-notes/3-parent-child-component)
-[此处查看页面效果](http://ofyya1gfg.bkt.clouddn.com/3-parent-child-component/index.html#/App)
+[此处查看页面效果](http://vue2-notes.godbasin.com/3-parent-child-component/index.html#/App)

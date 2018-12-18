@@ -190,4 +190,4 @@ Products.vue组件的html模板不需要调整，需要调整的是相关的组�
 -----
 这里我们使用了dataTables的另外一种使用方法--服务端渲染，这种方法虽然需要服务端按照相关约定进行调整，但是相比一次性加载所有的数据来说，还是方便很多的呢。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/vue2-notes/8-use-datatable-with-server)
-[此处查看页面效果](http://ofyya1gfg.bkt.clouddn.com/8-use-datatable-with-server/index.html#/app/products)
+[此处查看页面效果](http://vue2-notes.godbasin.com/8-use-datatable-with-server/index.html#/app/products)

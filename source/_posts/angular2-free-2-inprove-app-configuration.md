@@ -132,4 +132,4 @@ export class AppComponent {
 -----
 这节主要讲了使用`angular2-template-loader`替换之前的`file-loader`，来改善angular2中html文件的引入方式。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/angular2-free/2-inprove-app-configuration)
-[此处查看页面效果](http://oqntc49tn.bkt.clouddn.com/2-inprove-app-configuration/index.html)
+[此处查看页面效果](http://angular2-free.godbasin.com/2-inprove-app-configuration/index.html)

@@ -87,4 +87,4 @@ export default (ngModule) => {
 ---
 这节主要简单介绍在angular中使用多个指令配合工作，同时把组内小朋友的设计拿出来讲解。果然现在都是年轻人的世界呀，大家的想法都很有意思，看代码变成了工作中很有意思的一件事。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/angular-free/15-cooperation-between-directives)
-[此处查看页面效果](http://ok2o5vt7c.bkt.clouddn.com/angular-free-15-cooperation-between-directives/index.html)
+[此处查看页面效果](http://angular-free.godbasin.com/angular-free-15-cooperation-between-directives/index.html)

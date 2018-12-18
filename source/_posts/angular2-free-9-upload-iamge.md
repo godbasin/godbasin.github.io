@@ -285,4 +285,4 @@ image.src = url; // 添加图片地址
 上传图片控件和前面动态表单的结合大家可以自行实践，本骚年也将实现代码放到项目里了。
 不知道是不是FileReader的原因，上传文件变得好慢，或许是本骚年的使用方式不对。不知道大家有啥建议没呢？
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/angular2-free/9-upload-iamge)
-[此处查看页面效果](http://oqntc49tn.bkt.clouddn.com/9-upload-iamge/index.html#/home/page-setting)
+[此处查看页面效果](http://angular2-free.godbasin.com/9-upload-iamge/index.html#/home/page-setting)

@@ -239,4 +239,4 @@ function CameraMove(direction, distance) {
 -----
 这节主要讲了给第一人称（照相机）添加按键事件处理的基本过程。这里我们只考虑了前后左右的移动，包括视觉角度等的都没有进行计算和控制，后面章节我们会把这些方面也一并添加进去处理。
 [此处查看项目代码](https://github.com/godbasin/godbasin.github.io/tree/blog-codes/three-notes/4-add-keypress-move)
-[此处查看页面效果](http://ol96662w7.bkt.clouddn.com/three-notes-4-add-keypress-move/index.html)
+[此处查看页面效果](http://three-notes.godbasin.com/three-notes-4-add-keypress-move/index.html)
