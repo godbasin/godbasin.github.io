@@ -3,6 +3,7 @@
 ---      
 
 ### 最新     
+> [《小程序的奇技淫巧之 computed 计算属性》](https://godbasin.github.io/2018/12/23/wxapp-computed/)   
 > [《选择这件事》](https://godbasin.github.io/2018/12/16/work-1-choice/)   
 > [《小程序上Typescript啦》](https://godbasin.github.io/2018/11/30/wxapp-typescript/)   
 > [《小程序多页面接口数据缓存》](https://godbasin.github.io/2018/11/24/wxapp-multi-request/)   
@@ -24,6 +25,7 @@
 > [《选择这件事》](https://godbasin.github.io/2018/12/16/work-1-choice/)   
 
 ### 小程序应用    
+> [《小程序的奇技淫巧之 computed 计算属性》](https://godbasin.github.io/2018/12/23/wxapp-computed/)   
 > [《小程序上Typescript啦》](https://godbasin.github.io/2018/11/30/wxapp-typescript/)   
 > [《小程序多页面接口数据缓存》](https://godbasin.github.io/2018/11/24/wxapp-multi-request/)   
 > [《小程序的登录与静默续期》](https://godbasin.github.io/2018/11/17/wxapp-login/)   
