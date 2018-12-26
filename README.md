@@ -3,6 +3,7 @@
 ---      
 
 ### 最新     
+> [《小程序的奇技淫巧之 watch 观察属性》](https://godbasin.github.io/2018/12/26/wxapp-watch/)   
 > [《小程序的奇技淫巧之 computed 计算属性》](https://godbasin.github.io/2018/12/23/wxapp-computed/)   
 > [《选择这件事》](https://godbasin.github.io/2018/12/16/work-1-choice/)   
 > [《小程序上Typescript啦》](https://godbasin.github.io/2018/11/30/wxapp-typescript/)   
@@ -15,16 +16,12 @@
 > [《小程序的底层框架》](https://godbasin.github.io/2018/09/02/wxapp-technology-architecture/)   
 > [《小程序的诞生》](https://godbasin.github.io/2018/08/25/wxapp-generate/)   
 > [《认识小程序云开发》](https://godbasin.github.io/2018/08/18/wxapp-cloud/)   
-> [《养喵停更》](https://godbasin.github.io/2018/08/11/my-kitty/)   
-> [《SQL 与 NoSQL》](https://godbasin.github.io/2018/07/22/application-development-sql-and-nosql/)   
-> [《认识数据库》](https://godbasin.github.io/2018/07/15/application-development-with-learning-database/)   
-> [《前端构建大型应用》](https://godbasin.github.io/2018/07/07/build-application/)   
-> [《数据抽离与数据管理》](https://godbasin.github.io/2018/06/17/component-communication-with-data-model/)   
 
 ### 工作杂谈    
 > [《选择这件事》](https://godbasin.github.io/2018/12/16/work-1-choice/)   
 
 ### 小程序应用    
+> [《小程序的奇技淫巧之 watch 观察属性》](https://godbasin.github.io/2018/12/26/wxapp-watch/)   
 > [《小程序的奇技淫巧之 computed 计算属性》](https://godbasin.github.io/2018/12/23/wxapp-computed/)   
 > [《小程序上Typescript啦》](https://godbasin.github.io/2018/11/30/wxapp-typescript/)   
 > [《小程序多页面接口数据缓存》](https://godbasin.github.io/2018/11/24/wxapp-multi-request/)   
