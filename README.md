@@ -3,6 +3,8 @@
 ---      
 
 ### 最新     
+> [《如何发布 typescript npm 包》](https://godbasin.github.io/2019/01/05/ts-npm-package/)   
+> [《小程序 gulp 简单构建》](https://godbasin.github.io/2018/12/30/wxapp-gulp/)   
 > [《小程序的奇技淫巧之 watch 观察属性》](https://godbasin.github.io/2018/12/26/wxapp-watch/)   
 > [《小程序的奇技淫巧之 computed 计算属性》](https://godbasin.github.io/2018/12/23/wxapp-computed/)   
 > [《选择这件事》](https://godbasin.github.io/2018/12/16/work-1-choice/)   
@@ -21,6 +23,7 @@
 > [《选择这件事》](https://godbasin.github.io/2018/12/16/work-1-choice/)   
 
 ### 小程序应用    
+> [《小程序 gulp 简单构建》](https://godbasin.github.io/2018/12/30/wxapp-gulp/)   
 > [《小程序的奇技淫巧之 watch 观察属性》](https://godbasin.github.io/2018/12/26/wxapp-watch/)   
 > [《小程序的奇技淫巧之 computed 计算属性》](https://godbasin.github.io/2018/12/23/wxapp-computed/)   
 > [《小程序上Typescript啦》](https://godbasin.github.io/2018/11/30/wxapp-typescript/)   
@@ -35,6 +38,10 @@
 > [《小程序的底层框架》](https://godbasin.github.io/2018/09/02/wxapp-technology-architecture/)   
 > [《小程序的诞生》](https://godbasin.github.io/2018/08/25/wxapp-generate/)   
 > [《认识小程序云开发》](https://godbasin.github.io/2018/08/18/wxapp-cloud/)   
+
+### Typescript相关      
+> [《如何发布 typescript npm 包》](https://godbasin.github.io/2019/01/05/ts-npm-package/)   
+> [《关于Typescript》](https://godbasin.github.io/2017/09/01/about-typescript/)      
 
 ### 一步一步走向应用开发    
 > [《SQL 与 NoSQL》](https://godbasin.github.io/2018/07/22/application-development-sql-and-nosql/)   
@@ -154,9 +161,6 @@
 > [《谈谈Angular--从Angular1到Angular4》](https://godbasin.github.io/2017/07/01/about-angular-from-1-to-4/)      
 > [《谈谈Angular2的依赖注入》](https://godbasin.github.io/2017/05/28/di-in-angular/)    
 > [《从Angular2-beta到Angular4-release框架升级总结》](https://godbasin.github.io/2017/05/21/angular2-beta-to-release/)    
-
-### Typescript相关      
-> [《关于Typescript》](https://godbasin.github.io/2017/09/01/about-typescript/)      
 
 ### Webpack相关
 > [《正确的Webpack配置姿势，快速启动各式框架》](https://godbasin.github.io/2017/05/21/webpack-common-setting/)        
