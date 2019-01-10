@@ -3,6 +3,7 @@
 ---      
 
 ### 最新     
+> [《超实用小程序官方能力》](https://godbasin.github.io/2019/01/10/wxapp-official-functions/)   
 > [《如何发布 typescript npm 包》](https://godbasin.github.io/2019/01/05/ts-npm-package/)   
 > [《小程序 gulp 简单构建》](https://godbasin.github.io/2018/12/30/wxapp-gulp/)   
 > [《小程序的奇技淫巧之 watch 观察属性》](https://godbasin.github.io/2018/12/26/wxapp-watch/)   
@@ -23,6 +24,7 @@
 > [《选择这件事》](https://godbasin.github.io/2018/12/16/work-1-choice/)   
 
 ### 小程序应用    
+> [《超实用小程序官方能力》](https://godbasin.github.io/2019/01/10/wxapp-official-functions/)   
 > [《小程序 gulp 简单构建》](https://godbasin.github.io/2018/12/30/wxapp-gulp/)   
 > [《小程序的奇技淫巧之 watch 观察属性》](https://godbasin.github.io/2018/12/26/wxapp-watch/)   
 > [《小程序的奇技淫巧之 computed 计算属性》](https://godbasin.github.io/2018/12/23/wxapp-computed/)   
