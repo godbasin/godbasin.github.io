@@ -3,6 +3,9 @@
 ---      
 
 ### 最新     
+> [《小程序自定义组件知多少》](https://godbasin.github.io/2019/02/23/wxapp-component/)   
+> [《小程序开发月刊第二期（20190215）》](https://godbasin.github.io/2019/02/15/wxapp-latest-20190215/)   
+> [《小程序开发月刊第一期（20190114）》](https://godbasin.github.io/2019/01/14/wxapp-latest-20190114/)   
 > [《超实用小程序官方能力》](https://godbasin.github.io/2019/01/10/wxapp-official-functions/)   
 > [《如何发布 typescript npm 包》](https://godbasin.github.io/2019/01/05/ts-npm-package/)   
 > [《小程序 gulp 简单构建》](https://godbasin.github.io/2018/12/30/wxapp-gulp/)   
@@ -10,15 +13,6 @@
 > [《小程序的奇技淫巧之 computed 计算属性》](https://godbasin.github.io/2018/12/23/wxapp-computed/)   
 > [《选择这件事》](https://godbasin.github.io/2018/12/16/work-1-choice/)   
 > [《小程序上Typescript啦》](https://godbasin.github.io/2018/11/30/wxapp-typescript/)   
-> [《小程序多页面接口数据缓存》](https://godbasin.github.io/2018/11/24/wxapp-multi-request/)   
-> [《小程序的登录与静默续期》](https://godbasin.github.io/2018/11/17/wxapp-login/)   
-> [《理解小程序的安全与管控》](https://godbasin.github.io/2018/11/04/wxapp-manage-and-security/)   
-> [《解剖小程序的 setData》](https://godbasin.github.io/2018/10/05/wxapp-set-data/)   
-> [《关于小程序的基础库》](https://godbasin.github.io/2018/09/23/wxapp-basic-lib/)   
-> [《小程序页面管理与跳转》](https://godbasin.github.io/2018/09/08/wxapp-page-and-navigate/)   
-> [《小程序的底层框架》](https://godbasin.github.io/2018/09/02/wxapp-technology-architecture/)   
-> [《小程序的诞生》](https://godbasin.github.io/2018/08/25/wxapp-generate/)   
-> [《认识小程序云开发》](https://godbasin.github.io/2018/08/18/wxapp-cloud/)   
 
 ### 工作杂谈    
 > [《选择这件事》](https://godbasin.github.io/2018/12/16/work-1-choice/)   
@@ -33,6 +27,7 @@
 > [《小程序的登录与静默续期》](https://godbasin.github.io/2018/11/17/wxapp-login/)   
 
 ### 深入理解小程序    
+> [《小程序自定义组件知多少》](https://godbasin.github.io/2019/02/23/wxapp-component/)   
 > [《理解小程序的安全与管控》](https://godbasin.github.io/2018/11/04/wxapp-manage-and-security/)   
 > [《解剖小程序的 setData》](https://godbasin.github.io/2018/10/05/wxapp-set-data/)   
 > [《关于小程序的基础库》](https://godbasin.github.io/2018/09/23/wxapp-basic-lib/)   
@@ -40,6 +35,10 @@
 > [《小程序的底层框架》](https://godbasin.github.io/2018/09/02/wxapp-technology-architecture/)   
 > [《小程序的诞生》](https://godbasin.github.io/2018/08/25/wxapp-generate/)   
 > [《认识小程序云开发》](https://godbasin.github.io/2018/08/18/wxapp-cloud/)   
+
+### 小程序开发月刊  
+> [《小程序开发月刊第一期（20190114）》](https://godbasin.github.io/2019/01/14/wxapp-latest-20190114/)   
+> [《小程序开发月刊第二期（20190215）》](https://godbasin.github.io/2019/02/15/wxapp-latest-20190215/)   
 
 ### Typescript相关      
 > [《如何发布 typescript npm 包》](https://godbasin.github.io/2019/01/05/ts-npm-package/)   
