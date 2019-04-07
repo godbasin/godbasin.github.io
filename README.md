@@ -3,6 +3,8 @@
 ---      
 
 ### 最新     
+> [《小程序开发月刊第三期（20190315）》](https://godbasin.github.io/2019/03/15/wxapp-latest-20190315/)   
+> [《写文章这件事》](https://godbasin.github.io/2019/03/10/work-2-article/)   
 > [《小程序自定义组件知多少》](https://godbasin.github.io/2019/02/23/wxapp-component/)   
 > [《小程序开发月刊第二期（20190215）》](https://godbasin.github.io/2019/02/15/wxapp-latest-20190215/)   
 > [《小程序开发月刊第一期（20190114）》](https://godbasin.github.io/2019/01/14/wxapp-latest-20190114/)   
@@ -15,6 +17,7 @@
 > [《小程序上Typescript啦》](https://godbasin.github.io/2018/11/30/wxapp-typescript/)   
 
 ### 工作杂谈    
+> [《写文章这件事》](https://godbasin.github.io/2019/03/10/work-2-article/)   
 > [《选择这件事》](https://godbasin.github.io/2018/12/16/work-1-choice/)   
 
 ### 小程序应用    
@@ -39,6 +42,7 @@
 ### 小程序开发月刊  
 > [《小程序开发月刊第一期（20190114）》](https://godbasin.github.io/2019/01/14/wxapp-latest-20190114/)   
 > [《小程序开发月刊第二期（20190215）》](https://godbasin.github.io/2019/02/15/wxapp-latest-20190215/)   
+> [《小程序开发月刊第三期（20190315）》](https://godbasin.github.io/2019/03/15/wxapp-latest-20190315/)   
 
 ### Typescript相关      
 > [《如何发布 typescript npm 包》](https://godbasin.github.io/2019/01/05/ts-npm-package/)   
