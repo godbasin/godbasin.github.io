@@ -3,6 +3,8 @@
 ---      
 
 ### 最新     
+> [《9102全员学Vue--1.前端快速入门+Vue基本介绍》](https://godbasin.github.io/2019/06/27/vue-for-everyone-1/)   
+> [《小程序开发月刊第六期（20190617）》](https://godbasin.github.io/2019/06/17/wxapp-latest-20190617/)   
 > [《小程序开发月刊第五期（20190515）》](https://godbasin.github.io/2019/05/15/wxapp-latest-20190515/)   
 > [《小程序开发月刊第四期（20190415）》](https://godbasin.github.io/2019/04/15/wxapp-latest-20190415/)   
 > [《前端这几年--1.转岗之路》](https://godbasin.github.io/2019/04/13/about-front-end-1-begin-in/)   
@@ -12,12 +14,9 @@
 > [《小程序开发月刊第二期（20190215）》](https://godbasin.github.io/2019/02/15/wxapp-latest-20190215/)   
 > [《小程序开发月刊第一期（20190114）》](https://godbasin.github.io/2019/01/14/wxapp-latest-20190114/)   
 > [《超实用小程序官方能力》](https://godbasin.github.io/2019/01/10/wxapp-official-functions/)   
-> [《如何发布 typescript npm 包》](https://godbasin.github.io/2019/01/05/ts-npm-package/)   
-> [《小程序 gulp 简单构建》](https://godbasin.github.io/2018/12/30/wxapp-gulp/)   
-> [《小程序的奇技淫巧之 watch 观察属性》](https://godbasin.github.io/2018/12/26/wxapp-watch/)   
-> [《小程序的奇技淫巧之 computed 计算属性》](https://godbasin.github.io/2018/12/23/wxapp-computed/)   
-> [《选择这件事》](https://godbasin.github.io/2018/12/16/work-1-choice/)   
-> [《小程序上Typescript啦》](https://godbasin.github.io/2018/11/30/wxapp-typescript/)   
+
+### 全员学Vue
+> [《9102全员学Vue--1.前端快速入门+Vue基本介绍》](https://godbasin.github.io/2019/06/27/vue-for-everyone-1/)   
 
 ### 工作杂谈    
 > [《前端这几年--1.转岗之路》](https://godbasin.github.io/2019/04/13/about-front-end-1-begin-in/)   
@@ -49,6 +48,7 @@
 > [《小程序开发月刊第三期（20190315）》](https://godbasin.github.io/2019/03/15/wxapp-latest-20190315/)   
 > [《小程序开发月刊第四期（20190415）》](https://godbasin.github.io/2019/04/15/wxapp-latest-20190415/)   
 > [《小程序开发月刊第五期（20190515）》](https://godbasin.github.io/2019/05/15/wxapp-latest-20190515/)   
+> [《小程序开发月刊第六期（20190617）》](https://godbasin.github.io/2019/06/17/wxapp-latest-20190617/)   
 
 ### Typescript相关      
 > [《如何发布 typescript npm 包》](https://godbasin.github.io/2019/01/05/ts-npm-package/)   
