@@ -1,5 +1,5 @@
 ---
-title: 9102全员学Vue--1.如何理解Vue
+title: 9102全员学Vue--1.如何理解前端和Vue
 date: 2019-06-27 23:09:59
 categories: vue八宝粥
 tags: 教程
