@@ -2,7 +2,11 @@
 被删前端博客   
 ---      
 
+### 【置顶】被删的前端游乐场
+欢迎来[被删的前端游乐场](https://godbasin.github.io/front-end-playground)边学前端边撸猫噢~
+
 ### 最新     
+> [《被删的前端游乐场建成！》](https://godbasin.github.io/2019/07/27/front-end-playground/)   
 > [《9102全员学Vue--3.把页面拼成个Web应用》](https://godbasin.github.io/2019/07/21/vue-for-everyone-3/)   
 > [《小程序开发月刊第七期（20190715）》](https://godbasin.github.io/2019/07/15/wxapp-latest-20190715/)   
 > [《9102全员学Vue--2.怎么三两下拼出一个页面》](https://godbasin.github.io/2019/07/11/vue-for-everyone-2/)   
@@ -340,6 +344,7 @@
 > [《Angular使用笔记1--搭建Angular项目》](https://godbasin.github.io/2016/07/01/angular-note-1-create-angular-project/)  
             
 ## 关于我  
+> [《被删的前端游乐场建成！》](https://godbasin.github.io/2019/07/27/front-end-playground/)   
 > [《关于我》](https://godbasin.github.io/about/)    
 
 > [《我的前端入门之路》](https://godbasin.github.io/2016/06/24/front-end-getting-started/)              
