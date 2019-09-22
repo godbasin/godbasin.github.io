@@ -6,6 +6,8 @@
 欢迎来[被删的前端游乐场](https://godbasin.github.io/front-end-playground)边学前端边撸猫噢~
 
 ### 最新     
+> [《小程序开发月刊第九期（20190016）》](https://godbasin.github.io/2019/09/16/wxapp-latest-20190916/)   
+> [《小程序开发月刊第八期（20190815）》](https://godbasin.github.io/2019/08/15/wxapp-latest-20190815/)   
 > [《被删的前端游乐场建成！》](https://godbasin.github.io/2019/07/27/front-end-playground/)   
 > [《9102全员学Vue--3.把页面拼成个Web应用》](https://godbasin.github.io/2019/07/21/vue-for-everyone-3/)   
 > [《小程序开发月刊第七期（20190715）》](https://godbasin.github.io/2019/07/15/wxapp-latest-20190715/)   
@@ -17,11 +19,6 @@
 > [《小程序开发月刊第四期（20190415）》](https://godbasin.github.io/2019/04/15/wxapp-latest-20190415/)   
 > [《前端这几年--1.转岗之路》](https://godbasin.github.io/2019/04/13/about-front-end-1-begin-in/)   
 > [《小程序开发月刊第三期（20190315）》](https://godbasin.github.io/2019/03/15/wxapp-latest-20190315/)   
-> [《写文章这件事》](https://godbasin.github.io/2019/03/10/work-2-article/)   
-> [《小程序自定义组件知多少》](https://godbasin.github.io/2019/02/23/wxapp-component/)   
-> [《小程序开发月刊第二期（20190215）》](https://godbasin.github.io/2019/02/15/wxapp-latest-20190215/)   
-> [《小程序开发月刊第一期（20190114）》](https://godbasin.github.io/2019/01/14/wxapp-latest-20190114/)   
-> [《超实用小程序官方能力》](https://godbasin.github.io/2019/01/10/wxapp-official-functions/)   
 
 ### 全员学Vue
 > [《9102全员学Vue--1.如何理解前端和Vue》](https://godbasin.github.io/2019/06/27/vue-for-everyone-1/)   
@@ -60,6 +57,7 @@
 > [《小程序开发月刊第五期（20190515）》](https://godbasin.github.io/2019/05/15/wxapp-latest-20190515/)   
 > [《小程序开发月刊第六期（20190617）》](https://godbasin.github.io/2019/06/17/wxapp-latest-20190617/)   
 > [《小程序开发月刊第七期（20190715）》](https://godbasin.github.io/2019/07/15/wxapp-latest-20190715/)   
+> [《小程序开发月刊第八期（20190815）》](https://godbasin.github.io/2019/08/15/wxapp-latest-20190815/)   
 
 ### Typescript相关      
 > [《如何发布 typescript npm 包》](https://godbasin.github.io/2019/01/05/ts-npm-package/)   
