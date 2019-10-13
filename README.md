@@ -6,7 +6,8 @@
 欢迎来[被删的前端游乐场](https://godbasin.github.io/front-end-playground)边学前端边撸猫噢~
 
 ### 最新     
-> [《小程序开发月刊第九期（20190016）》](https://godbasin.github.io/2019/09/16/wxapp-latest-20190916/)   
+> [《前端这几年--3.关于成长和焦虑》](https://godbasin.github.io/2019/10/13/about-front-end-3-growth/)   
+> [《小程序开发月刊第九期（20190916）》](https://godbasin.github.io/2019/09/16/wxapp-latest-20190916/)   
 > [《小程序开发月刊第八期（20190815）》](https://godbasin.github.io/2019/08/15/wxapp-latest-20190815/)   
 > [《被删的前端游乐场建成！》](https://godbasin.github.io/2019/07/27/front-end-playground/)   
 > [《9102全员学Vue--3.把页面拼成个Web应用》](https://godbasin.github.io/2019/07/21/vue-for-everyone-3/)   
@@ -26,6 +27,8 @@
 > [《9102全员学Vue--3.把页面拼成个Web应用》](https://godbasin.github.io/2019/07/21/vue-for-everyone-3/)   
 
 ### 工作杂谈    
+> [《前端这几年--3.关于成长和焦虑》](https://godbasin.github.io/2019/10/13/about-front-end-3-growth/)   
+> [《前端这几年--2.工作原则和选择》](https://godbasin.github.io/2019/06/30/about-front-end-2-principle/)   
 > [《前端这几年--1.转岗之路》](https://godbasin.github.io/2019/04/13/about-front-end-1-begin-in/)   
 > [《写文章这件事》](https://godbasin.github.io/2019/03/10/work-2-article/)   
 > [《选择这件事》](https://godbasin.github.io/2018/12/16/work-1-choice/)   
