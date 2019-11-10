@@ -6,6 +6,9 @@
 欢迎来[被删的前端游乐场](https://godbasin.github.io/front-end-playground)边学前端边撸猫噢~
 
 ### 最新     
+> [《前端 CHANGELOG 生成指南》](https://godbasin.github.io/2019/11/10/change-log/)   
+> [《小程序的奇技淫巧 -- globalDataBehavior管理全局状态》](https://godbasin.github.io/2019/11/09/wxapp-global-data-behavior/)   
+> [《小程序开发月刊第十期（20191015）》](https://godbasin.github.io/2019/10/15/wxapp-latest-20191015/)   
 > [《前端这几年--3.关于成长和焦虑》](https://godbasin.github.io/2019/10/13/about-front-end-3-growth/)   
 > [《小程序开发月刊第九期（20190916）》](https://godbasin.github.io/2019/09/16/wxapp-latest-20190916/)   
 > [《小程序开发月刊第八期（20190815）》](https://godbasin.github.io/2019/08/15/wxapp-latest-20190815/)   
@@ -16,10 +19,6 @@
 > [《前端这几年--2.工作原则和选择》](https://godbasin.github.io/2019/06/30/about-front-end-2-principle/)   
 > [《9102全员学Vue--1.如何理解前端和Vue》](https://godbasin.github.io/2019/06/27/vue-for-everyone-1/)   
 > [《小程序开发月刊第六期（20190617）》](https://godbasin.github.io/2019/06/17/wxapp-latest-20190617/)   
-> [《小程序开发月刊第五期（20190515）》](https://godbasin.github.io/2019/05/15/wxapp-latest-20190515/)   
-> [《小程序开发月刊第四期（20190415）》](https://godbasin.github.io/2019/04/15/wxapp-latest-20190415/)   
-> [《前端这几年--1.转岗之路》](https://godbasin.github.io/2019/04/13/about-front-end-1-begin-in/)   
-> [《小程序开发月刊第三期（20190315）》](https://godbasin.github.io/2019/03/15/wxapp-latest-20190315/)   
 
 ### 全员学Vue
 > [《9102全员学Vue--1.如何理解前端和Vue》](https://godbasin.github.io/2019/06/27/vue-for-everyone-1/)   
@@ -34,6 +33,7 @@
 > [《选择这件事》](https://godbasin.github.io/2018/12/16/work-1-choice/)   
 
 ### 小程序应用    
+> [《小程序的奇技淫巧 -- globalDataBehavior管理全局状态》](https://godbasin.github.io/2019/11/09/wxapp-global-data-behavior/)   
 > [《超实用小程序官方能力》](https://godbasin.github.io/2019/01/10/wxapp-official-functions/)   
 > [《小程序 gulp 简单构建》](https://godbasin.github.io/2018/12/30/wxapp-gulp/)   
 > [《小程序的奇技淫巧之 watch 观察属性》](https://godbasin.github.io/2018/12/26/wxapp-watch/)   
@@ -61,6 +61,8 @@
 > [《小程序开发月刊第六期（20190617）》](https://godbasin.github.io/2019/06/17/wxapp-latest-20190617/)   
 > [《小程序开发月刊第七期（20190715）》](https://godbasin.github.io/2019/07/15/wxapp-latest-20190715/)   
 > [《小程序开发月刊第八期（20190815）》](https://godbasin.github.io/2019/08/15/wxapp-latest-20190815/)   
+> [《小程序开发月刊第九期（20190916）》](https://godbasin.github.io/2019/09/16/wxapp-latest-20190916/)   
+> [《小程序开发月刊第十期（20191015）》](https://godbasin.github.io/2019/10/15/wxapp-latest-20191015/)   
 
 ### Typescript相关      
 > [《如何发布 typescript npm 包》](https://godbasin.github.io/2019/01/05/ts-npm-package/)   
