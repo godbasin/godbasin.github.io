@@ -6,12 +6,12 @@
 欢迎来[被删的前端游乐场](https://godbasin.github.io/front-end-playground)边学前端边撸猫噢~
 
 ### 最新     
-> [《小程序的奇技淫巧 -- 页面跳转管理》](https://godbasin.github.io/2019/12/08/wxapp-navigate/)   
-> [《小程序的奇技淫巧 -- 日志能力》](https://godbasin.github.io/2019/12/07/wxapp-logs/)   
+> [《小程序奇技淫巧之页面跳转管理》](https://godbasin.github.io/2019/12/08/wxapp-navigate/)   
+> [《小程序奇技淫巧之日志能力》](https://godbasin.github.io/2019/12/07/wxapp-logs/)   
 > [《前端这几年--4.生命与健康》](https://godbasin.github.io/2019/11/30/about-front-end-4-health/)   
 > [《小程序开发月刊第11期（20191115）》](https://godbasin.github.io/2019/11/15/wxapp-latest-20191115/)   
 > [《前端 CHANGELOG 生成指南》](https://godbasin.github.io/2019/11/10/change-log/)   
-> [《小程序的奇技淫巧 -- globalDataBehavior管理全局状态》](https://godbasin.github.io/2019/11/09/wxapp-global-data-behavior/)   
+> [《小程序奇技淫巧之globalDataBehavior管理全局状态》](https://godbasin.github.io/2019/11/09/wxapp-global-data-behavior/)   
 > [《小程序开发月刊第十期（20191015）》](https://godbasin.github.io/2019/10/15/wxapp-latest-20191015/)   
 > [《前端这几年--3.关于成长和焦虑》](https://godbasin.github.io/2019/10/13/about-front-end-3-growth/)   
 > [《小程序开发月刊第九期（20190916）》](https://godbasin.github.io/2019/09/16/wxapp-latest-20190916/)   
@@ -38,7 +38,9 @@
 > [《选择这件事》](https://godbasin.github.io/2018/12/16/work-1-choice/)   
 
 ### 小程序应用    
-> [《小程序的奇技淫巧 -- globalDataBehavior管理全局状态》](https://godbasin.github.io/2019/11/09/wxapp-global-data-behavior/)   
+> [《小程序奇技淫巧之页面跳转管理》](https://godbasin.github.io/2019/12/08/wxapp-navigate/)   
+> [《小程序奇技淫巧之日志能力》](https://godbasin.github.io/2019/12/07/wxapp-logs/)   
+> [《小程序奇技淫巧之globalDataBehavior管理全局状态》](https://godbasin.github.io/2019/11/09/wxapp-global-data-behavior/)   
 > [《超实用小程序官方能力》](https://godbasin.github.io/2019/01/10/wxapp-official-functions/)   
 > [《小程序 gulp 简单构建》](https://godbasin.github.io/2018/12/30/wxapp-gulp/)   
 > [《小程序的奇技淫巧之 watch 观察属性》](https://godbasin.github.io/2018/12/26/wxapp-watch/)   

@@ -1,5 +1,5 @@
 ---
-title: 小程序的奇技淫巧 -- globalDataBehavior管理全局状态
+title: 小程序奇技淫巧之globalDataBehavior管理全局状态
 date: 2019-11-09 19:53:59
 categories: 小程序双皮奶
 tags: 教程
