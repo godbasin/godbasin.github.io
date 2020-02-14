@@ -6,6 +6,8 @@
 欢迎来[被删的前端游乐场](https://godbasin.github.io/front-end-playground)边学前端边撸猫噢~
 
 ### 最新     
+> [《小程序开发月刊第13期（20200214）》](https://godbasin.github.io/2020/02/14/wxapp-latest-20200214/)   
+> [《深入理解Vue.js与实战》上线啦](https://godbasin.github.io/2020/02/09/vue-ebook/)   
 > [《小程序开发月刊第12期（20191216）》](https://godbasin.github.io/2019/12/16/wxapp-latest-20191216/)   
 > [《小程序奇技淫巧之页面跳转管理》](https://godbasin.github.io/2019/12/08/wxapp-navigate/)   
 > [《小程序奇技淫巧之日志能力》](https://godbasin.github.io/2019/12/07/wxapp-logs/)   
@@ -19,6 +21,28 @@
 > [《小程序开发月刊第八期（20190815）》](https://godbasin.github.io/2019/08/15/wxapp-latest-20190815/)   
 > [《被删的前端游乐场建成！》](https://godbasin.github.io/2019/07/27/front-end-playground/)   
 > [《9102全员学Vue--3.把页面拼成个Web应用》](https://godbasin.github.io/2019/07/21/vue-for-everyone-3/)   
+
+### 深入理解Vue.js实战  
+> [前言 前端框架的出现](https://godbasin.github.io/vue-ebook/vue-ebook/0.html)  
+> **第一部分 Vue快速入门**  
+> [第1章 Vue 框架介绍](https://godbasin.github.io/vue-ebook/vue-ebook/1.html)  
+> [第2章 Vue 环境快速搭建](https://godbasin.github.io/vue-ebook/vue-ebook/2.html)  
+> [第3章 Vue 基础介绍](https://godbasin.github.io/vue-ebook/vue-ebook/3.html)  
+> [第4章 Vue 组件的使用](https://godbasin.github.io/vue-ebook/vue-ebook/4.html)  
+> [第5章 常用指令和自定义指令](https://godbasin.github.io/vue-ebook/vue-ebook/5.html)  
+> [第6章 Vue 动画](https://godbasin.github.io/vue-ebook/vue-ebook/6.html)  
+> [第7章 Vue Router 路由搭建应用](https://godbasin.github.io/vue-ebook/vue-ebook/7.html)  
+> [第8章 实战：Todo List 从组件到应用](https://godbasin.github.io/vue-ebook/vue-ebook/8.html)  
+> **第二部分 Vue的正确使用方式**  
+> [第9章 思维转变与大型项目管理](https://godbasin.github.io/vue-ebook/vue-ebook/9.html)  
+> [第10章 如何正确地进行抽象](https://godbasin.github.io/vue-ebook/vue-ebook/10.html)  
+> [第11章 全局数据管理与 Vuex](https://godbasin.github.io/vue-ebook/vue-ebook/11.html)  
+> [第12章 实战：三天开发一个管理端](https://godbasin.github.io/vue-ebook/vue-ebook/12.html)  
+> [第13章 实战：表单配置化实现](https://godbasin.github.io/vue-ebook/vue-ebook/13.html)  
+> [第14章 实战：使用 Webpack 或 Vue CLI 搭建多页应用](https://godbasin.github.io/vue-ebook/vue-ebook/14.html)  
+> [第15章 Vue 周边拓展](https://godbasin.github.io/vue-ebook/vue-ebook/15.html)  
+> [第16章 关于 Vue 3.0](https://godbasin.github.io/vue-ebook/vue-ebook/16.html)  
+> [后记 关于框架选型](https://godbasin.github.io/vue-ebook/vue-ebook/99.html)  
 
 ### 全员学Vue
 > [《9102全员学Vue--1.如何理解前端和Vue》](https://godbasin.github.io/2019/06/27/vue-for-everyone-1/)   
@@ -68,6 +92,7 @@
 > [《小程序开发月刊第十期（20191015）》](https://godbasin.github.io/2019/10/15/wxapp-latest-20191015/)   
 > [《小程序开发月刊第11期（20191115）》](https://godbasin.github.io/2019/11/15/wxapp-latest-20191115/)   
 > [《小程序开发月刊第12期（20191216）》](https://godbasin.github.io/2019/12/16/wxapp-latest-20191216/)   
+> [《小程序开发月刊第13期（20200214）》](https://godbasin.github.io/2020/02/14/wxapp-latest-20200214/)   
 
 ### Typescript相关      
 > [《如何发布 typescript npm 包》](https://godbasin.github.io/2019/01/05/ts-npm-package/)   
