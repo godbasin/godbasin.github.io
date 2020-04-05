@@ -6,6 +6,8 @@
 欢迎来[被删的前端游乐场](https://godbasin.github.io/front-end-playground)边学前端边撸猫噢~
 
 ### 最新     
+> [《前端这几年--7.情绪与保持清醒》](https://godbasin.github.io/2020/04/05/about-front-end-7/)   
+> [《前端面试这件事--5.其他内容概述》](https://godbasin.github.io/2020/04/04/interview-5-other-skills/)   
 > [《前端这几年--6.工作选择的困惑》](https://godbasin.github.io/2020/03/29/about-front-end-6/)   
 > [《前端面试这件事--4.项目经验概述》](https://godbasin.github.io/2020/03/28/interview-4-project-skills/)   
 > [《前端这几年--5.沉淀习惯养成》](https://godbasin.github.io/2020/03/22/about-front-end-5/)   
