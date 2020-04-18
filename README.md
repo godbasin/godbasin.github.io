@@ -6,6 +6,8 @@
 欢迎来[被删的前端游乐场](https://godbasin.github.io/front-end-playground)边学前端边撸猫噢~
 
 ### 最新     
+> [《前端这几年--8.工作中的矛盾》](https://godbasin.github.io/2020/04/18/about-front-end-8/)   
+> [《小程序开发月刊第15期（20200415）》](https://godbasin.github.io/2020/04/15/wxapp-latest-20200415/)   
 > [《前端这几年--7.情绪与保持清醒》](https://godbasin.github.io/2020/04/05/about-front-end-7/)   
 > [《前端面试这件事--5.其他内容概述》](https://godbasin.github.io/2020/04/04/interview-5-other-skills/)   
 > [《前端这几年--6.工作选择的困惑》](https://godbasin.github.io/2020/03/29/about-front-end-6/)   
@@ -47,6 +49,10 @@
 > [《前端这几年--2.工作原则和选择》](https://godbasin.github.io/2019/06/30/about-front-end-2-principle/)   
 > [《前端这几年--3.关于成长和焦虑》](https://godbasin.github.io/2019/10/13/about-front-end-3-growth/)   
 > [《前端这几年--4.生命与健康》](https://godbasin.github.io/2019/11/30/about-front-end-4-health/)   
+> [《前端这几年--5.沉淀习惯养成》](https://godbasin.github.io/2020/03/22/about-front-end-5/)   
+> [《前端这几年--6.工作选择的困惑》](https://godbasin.github.io/2020/03/29/about-front-end-6/)   
+> [《前端这几年--7.情绪与保持清醒》](https://godbasin.github.io/2020/04/05/about-front-end-7/)   
+> [《前端这几年--8.工作中的矛盾》](https://godbasin.github.io/2020/04/18/about-front-end-8/)   
 > [《写文章这件事》](https://godbasin.github.io/2019/03/10/work-2-article/)   
 > [《选择这件事》](https://godbasin.github.io/2018/12/16/work-1-choice/)   
 
@@ -54,6 +60,8 @@
 > [《前端面试这件事--1.面试准备》](https://godbasin.github.io/2020/03/07/interview-1-ready/)   
 > [《前端面试这件事--2.面试流程》](https://godbasin.github.io/2020/03/15/interview-2-stage/)   
 > [《前端面试这件事--3.专业知识概述》](https://godbasin.github.io/2020/03/21/interview-3-basic-skills/)   
+> [《前端面试这件事--4.项目经验概述》](https://godbasin.github.io/2020/03/28/interview-4-project-skills/)   
+> [《前端面试这件事--5.其他内容概述》](https://godbasin.github.io/2020/04/04/interview-5-other-skills/)   
 
 ### 小程序应用    
 > [《小程序奇技淫巧之页面跳转管理》](https://godbasin.github.io/2019/12/08/wxapp-navigate/)   
@@ -97,6 +105,7 @@
 > [《小程序开发月刊第12期（20191216）》](https://godbasin.github.io/2019/12/16/wxapp-latest-20191216/)   
 > [《小程序开发月刊第13期（20200214）》](https://godbasin.github.io/2020/02/14/wxapp-latest-20200214/)   
 > [《小程序开发月刊第14期（20200314）》](https://godbasin.github.io/2020/03/14/wxapp-latest-20200314/)   
+> [《小程序开发月刊第15期（20200415）》](https://godbasin.github.io/2020/04/15/wxapp-latest-20200415/)   
 
 ### Typescript相关      
 > [《如何发布 typescript npm 包》](https://godbasin.github.io/2019/01/05/ts-npm-package/)   
