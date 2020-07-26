@@ -6,6 +6,12 @@
 欢迎来[被删的前端游乐场](https://godbasin.github.io/front-end-playground)边学前端边撸猫噢~
 
 ### 最新     
+> [《前端面试这件事--6.Javascript相关》](https://godbasin.github.io/2020/07/26/interview-6-javascript/)   
+> [《VSCode 源码解读：事件系统设计》](https://godbasin.github.io/2020/07/05/vscode-event/)   
+> [《响应式编程在前端领域的应用》](https://godbasin.github.io/2020/07/04/reactive-programing/)   
+> [《谈谈依赖和解耦》](https://godbasin.github.io/2020/06/26/module-seperate/)   
+> [《大型前端项目要怎么跟踪和分析函数调用链》](https://godbasin.github.io/2020/06/21/trace-stash/)   
+> [《多人协作如何进行冲突处理》](https://godbasin.github.io/2020/06/14/operation-transform/)   
 > [《前端这几年--8.工作中的矛盾》](https://godbasin.github.io/2020/04/18/about-front-end-8/)   
 > [《小程序开发月刊第15期（20200415）》](https://godbasin.github.io/2020/04/15/wxapp-latest-20200415/)   
 > [《前端这几年--7.情绪与保持清醒》](https://godbasin.github.io/2020/04/05/about-front-end-7/)   
@@ -14,13 +20,6 @@
 > [《前端面试这件事--4.项目经验概述》](https://godbasin.github.io/2020/03/28/interview-4-project-skills/)   
 > [《前端这几年--5.沉淀习惯养成》](https://godbasin.github.io/2020/03/22/about-front-end-5/)   
 > [《前端面试这件事--3.专业知识概述》](https://godbasin.github.io/2020/03/21/interview-3-basic-skills/)   
-> [《前端面试这件事--2.面试流程》](https://godbasin.github.io/2020/03/15/interview-2-stage/)   
-> [《小程序开发月刊第14期（20200314）》](https://godbasin.github.io/2020/03/14/wxapp-latest-20200314/)   
-> [《前端面试这件事--1.面试准备》](https://godbasin.github.io/2020/03/07/interview-1-ready/)   
-> [《小程序开发月刊第13期（20200214）》](https://godbasin.github.io/2020/02/14/wxapp-latest-20200214/)   
-> [《深入理解Vue.js实战》上线啦](https://godbasin.github.io/2020/02/09/vue-ebook/)   
-> [《小程序开发月刊第12期（20191216）》](https://godbasin.github.io/2019/12/16/wxapp-latest-20191216/)   
-> [《小程序奇技淫巧之页面跳转管理》](https://godbasin.github.io/2019/12/08/wxapp-navigate/)   
 
 ### 深入理解Vue.js实战  
 > [前言 前端框架的出现](https://godbasin.github.io/vue-ebook/vue-ebook/0.html)  
@@ -43,6 +42,21 @@
 > [第15章 Vue 周边拓展](https://godbasin.github.io/vue-ebook/vue-ebook/15.html)  
 > [第16章 关于 Vue 3.0](https://godbasin.github.io/vue-ebook/vue-ebook/16.html)  
 > [后记 关于框架选型](https://godbasin.github.io/vue-ebook/vue-ebook/99.html)  
+
+### 前端杂谈    
+> [《VSCode 源码解读：事件系统设计》](https://godbasin.github.io/2020/07/05/vscode-event/)   
+> [《响应式编程在前端领域的应用》](https://godbasin.github.io/2020/07/04/reactive-programing/)   
+> [《谈谈依赖和解耦》](https://godbasin.github.io/2020/06/26/module-seperate/)   
+> [《大型前端项目要怎么跟踪和分析函数调用链》](https://godbasin.github.io/2020/06/21/trace-stash/)   
+> [《多人协作如何进行冲突处理》](https://godbasin.github.io/2020/06/14/operation-transform/)   
+> [《前端构建大型应用》](https://godbasin.github.io/2018/07/07/build-application/)   
+> [《数据抽离与数据管理》](https://godbasin.github.io/2018/06/17/component-communication-with-data-model/)   
+> [《组件配置化》](https://godbasin.github.io/2018/06/09/component-with-configuration/)   
+> [《一个组件的自我修养》](https://godbasin.github.io/2018/06/02/component-with-itself/)   
+> [《页面区块化与应用组件化》](https://godbasin.github.io/2018/05/26/app-component-isolation/)   
+> [《前端模板引擎》](https://godbasin.github.io/2017/10/21/template-engine/)   
+> [《对话抽象》](https://godbasin.github.io/2017/10/14/dialogue-abstraction/)   
+> [《前端思维转变--从事件驱动到数据驱动》](https://godbasin.github.io/2017/09/29/data-driven-or-event-driven/)      
 
 ### 工作杂谈    
 > [《前端这几年--1.转岗之路》](https://godbasin.github.io/2019/04/13/about-front-end-1-begin-in/)   
@@ -114,16 +128,6 @@
 ### 一步一步走向应用开发    
 > [《SQL 与 NoSQL》](https://godbasin.github.io/2018/07/22/application-development-sql-and-nosql/)   
 > [《认识数据库》](https://godbasin.github.io/2018/07/15/application-development-with-learning-database/)   
-
-### 前端杂谈    
-> [《前端构建大型应用》](https://godbasin.github.io/2018/07/07/build-application/)   
-> [《数据抽离与数据管理》](https://godbasin.github.io/2018/06/17/component-communication-with-data-model/)   
-> [《组件配置化》](https://godbasin.github.io/2018/06/09/component-with-configuration/)   
-> [《一个组件的自我修养》](https://godbasin.github.io/2018/06/02/component-with-itself/)   
-> [《页面区块化与应用组件化》](https://godbasin.github.io/2018/05/26/app-component-isolation/)   
-> [《前端模板引擎》](https://godbasin.github.io/2017/10/21/template-engine/)   
-> [《对话抽象》](https://godbasin.github.io/2017/10/14/dialogue-abstraction/)   
-> [《前端思维转变--从事件驱动到数据驱动》](https://godbasin.github.io/2017/09/29/data-driven-or-event-driven/)      
 
 ### 前端入门    
 > [《前端入门8--Ajax和http》](https://godbasin.github.io/2018/05/19/front-end-8-http-and-ajax/)   
