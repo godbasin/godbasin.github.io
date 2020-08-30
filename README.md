@@ -5,7 +5,12 @@
 ### 【置顶】被删的前端游乐场
 欢迎来[被删的前端游乐场](https://godbasin.github.io/front-end-playground)边学前端边撸猫噢~
 
+如果你访问不了我的博客，可以[来这里看](http://www.godbasin.com)哦~
+
 ### 最新     
+> [《前端这几年--10.我的工作历险记》](https://godbasin.github.io/2020/08/30/about-front-end-10/)   
+> [《前端这几年--9.提升工作效率》](https://godbasin.github.io/2020/08/30/about-front-end-9/)   
+> [《补齐Web前端性能分析的工具盲点》](https://godbasin.github.io/2020/08/29/front-end-performance-analyze/)   
 > [《在线文档的网络层设计思考》](https://godbasin.github.io/2020/08/23/online-doc-network/)   
 > [《VSCode 源码解读：IPC通信机制》](https://godbasin.github.io/2020/08/15/vscode-ipc/)   
 > [《前端面试这件事--6.Javascript相关》](https://godbasin.github.io/2020/07/26/interview-6-javascript/)   
@@ -17,11 +22,6 @@
 > [《前端这几年--8.工作中的矛盾》](https://godbasin.github.io/2020/04/18/about-front-end-8/)   
 > [《小程序开发月刊第15期（20200415）》](https://godbasin.github.io/2020/04/15/wxapp-latest-20200415/)   
 > [《前端这几年--7.情绪与保持清醒》](https://godbasin.github.io/2020/04/05/about-front-end-7/)   
-> [《前端面试这件事--5.其他内容概述》](https://godbasin.github.io/2020/04/04/interview-5-other-skills/)   
-> [《前端这几年--6.工作选择的困惑》](https://godbasin.github.io/2020/03/29/about-front-end-6/)   
-> [《前端面试这件事--4.项目经验概述》](https://godbasin.github.io/2020/03/28/interview-4-project-skills/)   
-> [《前端这几年--5.沉淀习惯养成》](https://godbasin.github.io/2020/03/22/about-front-end-5/)   
-> [《前端面试这件事--3.专业知识概述》](https://godbasin.github.io/2020/03/21/interview-3-basic-skills/)   
 
 ### 深入理解Vue.js实战  
 > [前言 前端框架的出现](https://godbasin.github.io/vue-ebook/vue-ebook/0.html)  
@@ -46,6 +46,7 @@
 > [后记 关于框架选型](https://godbasin.github.io/vue-ebook/vue-ebook/99.html)  
 
 ### 前端杂谈    
+> [《补齐Web前端性能分析的工具盲点》](https://godbasin.github.io/2020/08/29/front-end-performance-analyze/)   
 > [《在线文档的网络层设计思考》](https://godbasin.github.io/2020/08/23/online-doc-network/)   
 > [《VSCode 源码解读：IPC通信机制》](https://godbasin.github.io/2020/08/15/vscode-ipc/)   
 > [《VSCode 源码解读：事件系统设计》](https://godbasin.github.io/2020/07/05/vscode-event/)   
