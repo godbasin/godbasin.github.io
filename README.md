@@ -8,6 +8,7 @@
 如果你访问不了我的博客，可以[来这里看](http://www.godbasin.com)哦~
 
 ### 最新     
+> [《前端这几年--写文章这件事》](https://godbasin.github.io/2021/01/10/about-writing/)   
 > [《前端知识库--1.掌握浏览器的加载和渲染流程》](https://godbasin.github.io/2020/12/19/how-browser-works/)   
 > [《如何设计一个任务管理器》](https://godbasin.github.io/2020/11/01/task-runner-design/)   
 > [《在线Excel项目到底有多刺激》](https://godbasin.github.io/2020/10/10/why-spreadsheet-app-excited/)   
