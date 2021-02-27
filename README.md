@@ -8,6 +8,7 @@
 如果你访问不了我的博客，可以[来这里看](http://www.godbasin.com)哦~
 
 ### 最新     
+> [《在线文档的网络层开发思考--职责驱动设计》](https://godbasin.github.io/2021/01/23/network-design-responsibility-driven-design/)   
 > [《前端这几年--写文章这件事》](https://godbasin.github.io/2021/01/10/about-writing/)   
 > [《前端知识库--1.掌握浏览器的加载和渲染流程》](https://godbasin.github.io/2020/12/19/how-browser-works/)   
 > [《如何设计一个任务管理器》](https://godbasin.github.io/2020/11/01/task-runner-design/)   
@@ -22,8 +23,6 @@
 > [《VSCode 源码解读：事件系统设计》](https://godbasin.github.io/2020/07/05/vscode-event/)   
 > [《响应式编程在前端领域的应用》](https://godbasin.github.io/2020/07/04/reactive-programing/)   
 > [《谈谈依赖和解耦》](https://godbasin.github.io/2020/06/26/module-seperate/)   
-> [《大型前端项目要怎么跟踪和分析函数调用链》](https://godbasin.github.io/2020/06/21/trace-stash/)   
-> [《多人协作如何进行冲突处理》](https://godbasin.github.io/2020/06/14/operation-transform/)   
 
 ### 深入理解Vue.js实战  
 > [前言 前端框架的出现](https://godbasin.github.io/vue-ebook/vue-ebook/0.html)  
@@ -51,6 +50,7 @@
 > [《前端知识库--1.掌握浏览器的加载和渲染流程》](https://godbasin.github.io/2020/12/19/how-browser-works/)   
 
 ### 前端杂谈    
+> [《在线文档的网络层开发思考--职责驱动设计》](https://godbasin.github.io/2021/01/23/network-design-responsibility-driven-design/)   
 > [《如何设计一个任务管理器》](https://godbasin.github.io/2020/11/01/task-runner-design/)   
 > [《前端监控体系搭建》](https://godbasin.github.io/2020/10/07/monitor-and-report/)   
 > [《补齐Web前端性能分析的工具盲点》](https://godbasin.github.io/2020/08/29/front-end-performance-analyze/)   
@@ -81,6 +81,7 @@
 > [《前端这几年--8.工作中的矛盾》](https://godbasin.github.io/2020/04/18/about-front-end-8/)   
 > [《前端这几年--9.提升工作效率》](https://godbasin.github.io/2020/08/30/about-front-end-9/)   
 > [《前端这几年--10.我的工作历险记》](https://godbasin.github.io/2020/08/30/about-front-end-10/)   
+> [《前端这几年--写文章这件事》](https://godbasin.github.io/2021/01/10/about-writing/)   
 > [《写文章这件事》](https://godbasin.github.io/2019/03/10/work-2-article/)   
 > [《选择这件事》](https://godbasin.github.io/2018/12/16/work-1-choice/)   
 
