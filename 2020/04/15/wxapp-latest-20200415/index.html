@@ -1,0 +1,1183 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  
+    <title>小程序开发月刊第15期（20200415） | Here. There.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="被删">
+    
+    <meta name="description" content="又一个月过去了，大家也快习惯了带着口罩上班，饭堂也在慢慢恢复菜单供打包，捡树枝活动异常火热，我们来看看小程序又更新了哪些能力吧~">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Here. There." type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?3d902de4a19cf2bf179534ffd2dd7b7f";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+</html>
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/sun.png" alt="Here. There." title="Here. There."/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Here. There.">Here. There.</a></h1>
+				<h2 class="blog-motto">Love ice cream. Love sunshine. Love life. Love the world. Love myself. Love you.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="https://github.com/godbasin/godbasin.github.io">所有文章</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">分类</a></li>
+					
+						<li><a href="https://godbasin.github.io/front-end-playground">前端游乐场</a></li>
+					
+						<li><a href="/about">关于我</a></li>
+					
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2020/04/15/wxapp-latest-20200415/" title="小程序开发月刊第15期（20200415）" itemprop="url">小程序开发月刊第15期（20200415）</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://godbasin.github.io" title="被删">被删</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2020-04-15T12:46:50.000Z" itemprop="datePublished">2020-04-15</time>
+    更新日期:<time datetime="2020-04-18T05:17:30.603Z" itemprop="dateModified">2020-04-18</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#小程序-latest"><span class="toc-number">1.</span> <span class="toc-text">小程序 latest</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#小程序能力"><span class="toc-number">1.1.</span> <span class="toc-text">小程序能力</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#关于收回小程序”用户实名信息授权”接口的相关说明"><span class="toc-number">1.1.1.</span> <span class="toc-text">关于收回小程序”用户实名信息授权”接口的相关说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#小程序测速功能上线"><span class="toc-number">1.1.2.</span> <span class="toc-text">小程序测速功能上线</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#小程序·云开发"><span class="toc-number">1.2.</span> <span class="toc-text">小程序·云开发</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开发者工具"><span class="toc-number">1.3.</span> <span class="toc-text">开发者工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#代码编译和上传-CI-模块"><span class="toc-number">1.3.1.</span> <span class="toc-text">代码编译和上传 CI 模块</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#小程序教程"><span class="toc-number">2.</span> <span class="toc-text">小程序教程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#社区精选文章"><span class="toc-number">2.1.</span> <span class="toc-text">社区精选文章</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#最新踩坑-amp-amp-Tips"><span class="toc-number">2.2.</span> <span class="toc-text">最新踩坑 &amp;&amp; Tips</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#iOS-下Promise-finally-异常"><span class="toc-number">2.2.1.</span> <span class="toc-text">iOS 下Promise.finally()异常</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#wx-chooseContact-拉起通信录接口异常"><span class="toc-number">2.2.2.</span> <span class="toc-text">wx.chooseContact()拉起通信录接口异常</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结束语"><span class="toc-number">2.3.</span> <span class="toc-text">结束语</span></a></li></ol></li></ol>
+		</div>
+		
+		<p>又一个月过去了，大家也快习惯了带着口罩上班，饭堂也在慢慢恢复菜单供打包，捡树枝活动异常火热，我们来看看小程序又更新了哪些能力吧~<br><a id="more"></a></p>
+<h1 id="小程序-latest"><a href="#小程序-latest" class="headerlink" title="小程序 latest"></a>小程序 latest</h1><h2 id="小程序能力"><a href="#小程序能力" class="headerlink" title="小程序能力"></a>小程序能力</h2><h3 id="关于收回小程序”用户实名信息授权”接口的相关说明"><a href="#关于收回小程序”用户实名信息授权”接口的相关说明" class="headerlink" title="关于收回小程序”用户实名信息授权”接口的相关说明"></a>关于收回小程序”用户实名信息授权”接口的相关说明</h3><p>小程序将回收小程序“用户实名信息授权”接口，计划于2020年05月31日下线。对于以往已经接入了本接口的小程序，但依然有业务场景有相关需求，平台侧建设了替代接口方案——实名信息校验接口，提供给满足一定条件的业务方，相关接口：</p>
+<ol>
+<li>实名信息校验接口。</li>
+</ol>
+<ul>
+<li>本接口可实现：在用户同意情况下，校验用户（或业务方）输入的实名信息是否正确（仅支持身份证信息）。对于接入微信城市服务的业务，或满足以下地址中的文档说明的范围，可以申请城市服务实名信息校验接口。</li>
+<li><a href="https://developers.weixin.qq.com/community/business/doc/000e06614ac74068f3d9237eb5440d" target="_blank" rel="noopener">申请方式地址</a></li>
+<li><a href="https://developers.weixin.qq.com/miniprogram/dev/framework/cityservice/cityservice-checkrealnameinfo.html" target="_blank" rel="noopener">接口文档地址</a></li>
+</ul>
+<ol start="2">
+<li>地址组件接口。</li>
+</ol>
+<ul>
+<li>本接口可实现：拉起微信原生的地址选择及编辑界面，可以编辑已有地址，也可以在编辑完成后，返回用户选择的地址。</li>
+<li><a href="https://developers.weixin.qq.com/miniprogram/dev/api/open-api/address/wx.chooseAddress.html" target="_blank" rel="noopener">接口文档地址</a></li>
+</ul>
+<ol start="3">
+<li>快速填写组件接口。</li>
+</ol>
+<ul>
+<li>本接口可实现： 小程序开发者可以获取用户首次填写过的表单的信息，并快速快速填充本次需要填写的表单。减少用户输入的压力。</li>
+<li><a href="https://developers.weixin.qq.com/community/business/doc/0004c23556c43074dde973aeb5bc0d" target="_blank" rel="noopener">接口介绍、开放范围及申请指引</a></li>
+<li><a href="https://developers.weixin.qq.com/miniprogram/dev/framework/cityservice/cityservice-auto-fill.html" target="_blank" rel="noopener">接口文档地址</a></li>
+</ul>
+<h3 id="小程序测速功能上线"><a href="#小程序测速功能上线" class="headerlink" title="小程序测速功能上线"></a>小程序测速功能上线</h3><p>“小程序测速”功能可以简单方便地统计小程序内某一事件的实时耗时情况，并可根据地域、运营商、操作系统、网络类型、机型等关键维度进行交叉分析。对于更复杂的用户场景，还可以使用自定义维度进行分析。从基础库2.9.2开始，开发者通过“测速上报”接口上报某一指标的耗时情况后，可在小程序管理后台”开发 -运维中心 -小程序测速” 查看各指标耗时趋势，并支持分钟级数据实时查看。</p>
+<ul>
+<li><a href="https://developers.weixin.qq.com/miniprogram/dev/framework/performanceReport/" target="_blank" rel="noopener">《小程序测速》使用指南</a></li>
+</ul>
+<h2 id="小程序·云开发"><a href="#小程序·云开发" class="headerlink" title="小程序·云开发"></a>小程序·云开发</h2><blockquote>
+<p>暂无更新</p>
+</blockquote>
+<h2 id="开发者工具"><a href="#开发者工具" class="headerlink" title="开发者工具"></a>开发者工具</h2><h3 id="代码编译和上传-CI-模块"><a href="#代码编译和上传-CI-模块" class="headerlink" title="代码编译和上传 CI 模块"></a>代码编译和上传 CI 模块</h3><blockquote>
+<p>该部分内容上期更新补充过，但官方更新时间属于本期，因此再发一次。</p>
+</blockquote>
+<p>为助力开发者进行小程序开发的自动化，实现功能的持续集成，小程序团队抽离了开发者工具中的代码编译以及上传能力，新增 <a href="https://www.npmjs.com/package/miniprogram-ci" target="_blank" rel="noopener">miniprogram-ci</a> 模块。该模块可以极大地方便开发者将小程序代码上传和预览操作同已有系统相结合。<br>miniprogram-ci 是从微信开发者工具中抽离的关于小程序/小游戏项目代码的编译模块，目前提供以下能力：</p>
+<ol>
+<li>上传代码，对应小程序开发者工具的上传</li>
+<li>预览代码，对应小程序开发者工具的预览</li>
+<li>构建 npm，对应小程序开发者工具的: 菜单-工具-构建npm</li>
+<li>代理，配置 miniprogram-ci 的网络请求代理方式</li>
+<li>支持 node 脚本调用方式和 命令行 调用方式<br>使用 miniprogram-ci 模块前需要在微信公众平台-开发-开发设置中下载对应的代码上传密钥和配置 IP 白名单。</li>
+</ol>
+<ul>
+<li><a href="https://developers.weixin.qq.com/miniprogram/dev/devtools/ci.html" target="_blank" rel="noopener">参考文档地址</a></li>
+</ul>
+<p>更多的内容可以查看：</p>
+<ul>
+<li><a href="https://developers.weixin.qq.com/miniprogram/dev/devtools/stable.html" target="_blank" rel="noopener">稳定版 Stable Build 更新日志</a></li>
+<li><a href="https://developers.weixin.qq.com/miniprogram/dev/devtools/nightly.html" target="_blank" rel="noopener">开发版 Nightly Build 更新日志</a></li>
+</ul>
+<h1 id="小程序教程"><a href="#小程序教程" class="headerlink" title="小程序教程"></a>小程序教程</h1><h2 id="社区精选文章"><a href="#社区精选文章" class="headerlink" title="社区精选文章"></a>社区精选文章</h2><ul>
+<li><a href="https://developers.weixin.qq.com/community/develop/article/doc/000224ac24882059eb2a0775f51013" target="_blank" rel="noopener">网页端管理系统在小程序上的实现</a></li>
+</ul>
+<p>往期内容可以查看<a href="https://developers.weixin.qq.com/community/develop/article" target="_blank" rel="noopener">文章分享</a></p>
+<blockquote>
+<p>最近社区的精选文章都木有怎么更新来着。</p>
+</blockquote>
+<h2 id="最新踩坑-amp-amp-Tips"><a href="#最新踩坑-amp-amp-Tips" class="headerlink" title="最新踩坑 &amp;&amp; Tips"></a>最新踩坑 &amp;&amp; Tips</h2><h3 id="iOS-下Promise-finally-异常"><a href="#iOS-下Promise-finally-异常" class="headerlink" title="iOS 下Promise.finally()异常"></a>iOS 下<code>Promise.finally()</code>异常</h3><p><code>Promise.finally()</code>在iOS下会出现故障，安卓下表现良好，若使用需要注意。</p>
+<ul>
+<li><a href="https://developers.weixin.qq.com/community/develop/doc/000caaefe54f70567a4933aaa56000" target="_blank" rel="noopener">参考</a></li>
+</ul>
+<h3 id="wx-chooseContact-拉起通信录接口异常"><a href="#wx-chooseContact-拉起通信录接口异常" class="headerlink" title="wx.chooseContact()拉起通信录接口异常"></a><code>wx.chooseContact()</code>拉起通信录接口异常</h3><p>小程序中调用过<code>wx.chooseContact()</code> api后，再调用其他 api 都会失败。</p>
+<ul>
+<li>出现异常版本：iOS 13.3.1 + 微信 7.0.12</li>
+</ul>
+<h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><p>本期木有结束语，祝各位的大头菜都涨涨涨。</p>
+  
+	</div>
+	<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/2code2.jpg" width="200" height="200" style="display:block;margin: 0 auto;" />
+	<p style="text-align: center;margin-top: 10px;margin-bottom: 20px;">码生艰难，写文不易，给我家猪囤点猫粮了喵~</p>
+	<div class="article-content">
+		<p style="margin-top:50px;">
+			查看Github有更多内容噢：<a href="https://github.com/godbasin">https://github.com/godbasin</a>
+			<br>
+			更欢迎来<a href="https://godbasin.github.io/front-end-playground">被删的前端游乐场</a>边撸猫边学前端噢
+			<br>
+			如果你想要关注日常生活中的我，欢迎关注“牧羊的猪”公众号噢
+		</p>
+	</div>
+	<div class="author-right">
+  		<p>作者：被删</p>
+  		<p>出处：<a href="https://godbasin.github.io">https://godbasin.github.io</a></p>
+  		<p>本文版权归作者所有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利。</p>
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/教程/">教程</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/小程序双皮奶/">小程序双皮奶</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  
+<!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a href="http://www.jiathis.com/share?uid=2134021" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config = {data_track_clickback:'true'};
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js?uid=2134021" charset="utf-8"></script>
+<!-- JiaThis Button END -->   
+
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2020/04/18/about-front-end-8/" title="前端这几年--8.工作中的矛盾">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  前端这几年--8.工作中的矛盾</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2020/04/05/about-front-end-7/"  title="前端这几年--7.情绪与保持清醒">
+ <strong>NEXT:</strong><br/> 
+ <span>前端这几年--7.情绪与保持清醒
+</span>
+</a>
+</div>
+
+</nav>
+
+	<!-- 如果不是首页且没使用 `comments: false` 关闭评论，则尝试加载评论 -->
+
+    <!-- 配置中启用多说时，导入相应代码 -->
+    
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#小程序-latest"><span class="toc-number">1.</span> <span class="toc-text">小程序 latest</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#小程序能力"><span class="toc-number">1.1.</span> <span class="toc-text">小程序能力</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#关于收回小程序”用户实名信息授权”接口的相关说明"><span class="toc-number">1.1.1.</span> <span class="toc-text">关于收回小程序”用户实名信息授权”接口的相关说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#小程序测速功能上线"><span class="toc-number">1.1.2.</span> <span class="toc-text">小程序测速功能上线</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#小程序·云开发"><span class="toc-number">1.2.</span> <span class="toc-text">小程序·云开发</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开发者工具"><span class="toc-number">1.3.</span> <span class="toc-text">开发者工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#代码编译和上传-CI-模块"><span class="toc-number">1.3.1.</span> <span class="toc-text">代码编译和上传 CI 模块</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#小程序教程"><span class="toc-number">2.</span> <span class="toc-text">小程序教程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#社区精选文章"><span class="toc-number">2.1.</span> <span class="toc-text">社区精选文章</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#最新踩坑-amp-amp-Tips"><span class="toc-number">2.2.</span> <span class="toc-text">最新踩坑 &amp;&amp; Tips</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#iOS-下Promise-finally-异常"><span class="toc-number">2.2.1.</span> <span class="toc-text">iOS 下Promise.finally()异常</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#wx-chooseContact-拉起通信录接口异常"><span class="toc-number">2.2.2.</span> <span class="toc-text">wx.chooseContact()拉起通信录接口异常</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结束语"><span class="toc-number">2.3.</span> <span class="toc-text">结束语</span></a></li></ol></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  	
+	<div class="archiveslist">
+		<p class="asidetitle">最近文章</p>
+			<ul class="archive-list">
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/03/13/angular-design-0-prestart/" title="Angular框架解读--预热篇">Angular框架解读--预热篇...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/02/27/network-design-dependency-decoupling/" title="在线文档的网络层开发思考--依赖关系梳理">在线文档的网络层开发思考--依赖关系...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/01/23/network-design-responsibility-driven-design/" title="在线文档的网络层开发思考--职责驱动设计">在线文档的网络层开发思考--职责驱动...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/01/10/about-writing/" title="前端这几年--写文章这件事">前端这几年--写文章这件事...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/11/01/task-runner-design/" title="如何设计一个任务管理器">如何设计一个任务管理器</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/10/10/why-spreadsheet-app-excited/" title="在线Excel项目到底有多刺激">在线Excel项目到底有多刺激...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/10/07/monitor-and-report/" title="前端监控体系搭建">前端监控体系搭建</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/08/30/about-front-end-10/" title="前端这几年--10.我的工作历险记">前端这几年--10.我的工作历险记...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/08/30/about-front-end-9/" title="前端这几年--9.提升工作效率">前端这几年--9.提升工作效率...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/08/29/front-end-performance-analyze/" title="补齐Web前端性能分析的工具盲点">补齐Web前端性能分析的工具盲点...</a>
+				</li>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+	</div>
+
+
+  
+  <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">归档</a></p>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">十月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">41</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">9</span></li></ul>
+  </div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle"><a href="/categories">分类</a></p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/Angular源码/" title="Angular源码">Angular源码<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/CSS炒饭/" title="CSS炒饭">CSS炒饭<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/D3小馒头/" title="D3小馒头">D3小馒头<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular2火锅/" title="angular2火锅">angular2火锅<sup>25</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular混搭/" title="angular混搭">angular混搭<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/box2djs方糖/" title="box2djs方糖">box2djs方糖<sup>34</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/cyclejs哈根达斯/" title="cyclejs哈根达斯">cyclejs哈根达斯<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/jQuery杂烩/" title="jQuery杂烩">jQuery杂烩<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/js什锦/" title="js什锦">js什锦<sup>26</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/react沙拉/" title="react沙拉">react沙拉<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/three-js奶茶/" title="three.js奶茶">three.js奶茶<sup>5</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/vue八宝粥/" title="vue八宝粥">vue八宝粥<sup>30</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/webpack宾治/" title="webpack宾治">webpack宾治<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/web乱炖/" title="web乱炖">web乱炖<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端满汉全席/" title="前端满汉全席">前端满汉全席<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端解决方案/" title="前端解决方案">前端解决方案<sup>13</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/喵/" title="喵">喵<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/小程序双皮奶/" title="小程序双皮奶">小程序双皮奶<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/工作这杯茶/" title="工作这杯茶">工作这杯茶<sup>19</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/应用巧克力盒/" title="应用巧克力盒">应用巧克力盒<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/思想棉花糖/" title="思想棉花糖">思想棉花糖<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/柴米油盐工具集/" title="柴米油盐工具集">柴米油盐工具集<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/自动化甜筒/" title="自动化甜筒">自动化甜筒<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/非前端钙片/" title="非前端钙片">非前端钙片<sup>7</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle">标签</p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/分享/" title="分享">分享<sup>44</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/功能设计/" title="功能设计">功能设计<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/原创部件/" title="原创部件">原创部件<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/心态/" title="心态">心态<sup>19</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/教程/" title="教程">教程<sup>80</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/晒猫/" title="晒猫">晒猫<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/笔记/" title="笔记">笔记<sup>121</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/算法/" title="算法">算法<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/自制插件/" title="自制插件">自制插件<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/逻辑实现/" title="逻辑实现">逻辑实现<sup>18</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+    <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">about</a></p>
+      <ul class="archive-list">
+      	<li class="archive-list-item">
+      		<a>wangbeishan@163.com</a>
+      		<a href="https://github.com/godbasin">github.com/godbasin</a>
+      	</li>
+      </ul>
+  </div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<section class="info">
+		<p> 即使梦想再小，却很伟大 ^_^ </p>
+	</section>
+	 
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2021 
+		
+		<a href="https://godbasin.github.io" target="_blank" title="被删">被删</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+
+
+
+
+
+  </body>
+</html>

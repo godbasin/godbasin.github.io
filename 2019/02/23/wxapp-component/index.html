@@ -1,0 +1,1170 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  
+    <title>小程序自定义组件知多少 | Here. There.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="被删">
+    
+    <meta name="description" content="小程序里，自定义组件作为一个贯穿小程序架构核心的组成，你对它又掌握了多少呢？">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Here. There." type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?3d902de4a19cf2bf179534ffd2dd7b7f";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+</html>
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/sun.png" alt="Here. There." title="Here. There."/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Here. There.">Here. There.</a></h1>
+				<h2 class="blog-motto">Love ice cream. Love sunshine. Love life. Love the world. Love myself. Love you.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="https://github.com/godbasin/godbasin.github.io">所有文章</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">分类</a></li>
+					
+						<li><a href="https://godbasin.github.io/front-end-playground">前端游乐场</a></li>
+					
+						<li><a href="/about">关于我</a></li>
+					
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2019/02/23/wxapp-component/" title="小程序自定义组件知多少" itemprop="url">小程序自定义组件知多少</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://godbasin.github.io" title="被删">被删</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2019-02-23T14:38:58.000Z" itemprop="datePublished">2019-02-23</time>
+    更新日期:<time datetime="2019-02-23T14:39:23.332Z" itemprop="dateModified">2019-02-23</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#自定义组件"><span class="toc-number">1.</span> <span class="toc-text">自定义组件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#why"><span class="toc-number">1.1.</span> <span class="toc-text">why</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#代码的复用"><span class="toc-number">1.1.1.</span> <span class="toc-text">代码的复用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#组件化设计"><span class="toc-number">1.1.2.</span> <span class="toc-text">组件化设计</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自定义组件的实现"><span class="toc-number">1.2.</span> <span class="toc-text">自定义组件的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#一切都从-Virtual-DOM-说起"><span class="toc-number">1.2.1.</span> <span class="toc-text">一切都从 Virtual DOM 说起</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Shadow-DOM-模型"><span class="toc-number">1.2.2.</span> <span class="toc-text">Shadow DOM 模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Shadow-Tree-拼接"><span class="toc-number">1.2.3.</span> <span class="toc-text">Shadow Tree 拼接</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#双线程的难题"><span class="toc-number">1.3.</span> <span class="toc-text">双线程的难题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#自定义组件渲染流程"><span class="toc-number">1.3.1.</span> <span class="toc-text">自定义组件渲染流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#让-JS-和-Webview-的组件保持一致"><span class="toc-number">1.3.2.</span> <span class="toc-text">让 JS 和 Webview 的组件保持一致</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Page-和-Component"><span class="toc-number">1.4.</span> <span class="toc-text">Page 和 Component</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Component-是-Page-的超集"><span class="toc-number">1.4.1.</span> <span class="toc-text">Component 是 Page 的超集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#页面渲染"><span class="toc-number">1.4.2.</span> <span class="toc-text">页面渲染</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结束语"><span class="toc-number">1.5.</span> <span class="toc-text">结束语</span></a></li></ol></li></ol>
+		</div>
+		
+		<p>小程序里，自定义组件作为一个贯穿小程序架构核心的组成，你对它又掌握了多少呢？<br><a id="more"></a></p>
+<h1 id="自定义组件"><a href="#自定义组件" class="headerlink" title="自定义组件"></a>自定义组件</h1><h2 id="why"><a href="#why" class="headerlink" title="why"></a>why</h2><h3 id="代码的复用"><a href="#代码的复用" class="headerlink" title="代码的复用"></a>代码的复用</h3><p>在起初小程序只支持 Page 的时候，就会有这样蛋疼的问题：多个页面有相同的组件，每个页面都要复制粘贴一遍，每次改动都要全局搜索一遍，还说不准哪里改漏了就出翔了。</p>
+<h3 id="组件化设计"><a href="#组件化设计" class="headerlink" title="组件化设计"></a>组件化设计</h3><p>在前端项目中，组件化是很常见的方式，某块通用能力的抽象和设计，是一个必备的技能。组件的管理、数据的管理、应用状态的管理，这些在我们设计的过程中都是需要去思考的。当然你也可以说我就堆代码就好了，不过一个真正的码农是不允许自己这么随便的！</p>
+<p>所以，组件化是现代前端必须掌握的生存技能！</p>
+<h2 id="自定义组件的实现"><a href="#自定义组件的实现" class="headerlink" title="自定义组件的实现"></a>自定义组件的实现</h2><h3 id="一切都从-Virtual-DOM-说起"><a href="#一切都从-Virtual-DOM-说起" class="headerlink" title="一切都从 Virtual DOM 说起"></a>一切都从 Virtual DOM 说起</h3><p>前面<a href="https://godbasin.github.io/2018/10/05/wxapp-set-data/">《解剖小程序的 setData》</a>有讲过，基于小程序的双线程设计，视图层（Webview 线程）和逻辑层（JS 线程）之间通信（表现为 setData），是基于虚拟 DOM 来实现数据通信和模版更新的。</p>
+<p>自定义组件一样的双线程，所以一样滴基于 Virtual DOM 来实现通信。那在这里，Virtual DOM 的一些基本知识（包括生成 VD 对象、Diff 更新等），就不过多介绍啦~</p>
+<h3 id="Shadow-DOM-模型"><a href="#Shadow-DOM-模型" class="headerlink" title="Shadow DOM 模型"></a>Shadow DOM 模型</h3><p>基于 Virtual DOM，我们知道在这样的设计里，需要一个框架来支撑维护整个页面的节点树相关信息，包括节点的属性、事件绑定等。在小程序里，Exparser 承担了这个角色。</p>
+<p>前面<a href="https://godbasin.github.io/2018/09/23/wxapp-basic-lib/">《关于小程序的基础库》</a>也讲过，Exparser 的主要特点包括：</p>
+<ul>
+<li>基于 Shadow DOM 模型</li>
+<li>可在纯 JS 环境中运行</li>
+</ul>
+<p>Shadow DOM 是什么呢，它就是我们在写代码时候写的自定义组件、内置组件、原生组件等。Shadow DOM 为 Web 组件中的 DOM 和 CSS 提供了封装。Shadow DOM 使得这些东西与主文档的 DOM 保持分离。</p>
+<p>简而言之，Shadow DOM 是一个 HTML 的新规范，其允许开发者封装 HTML 组件（类似 vue 组件，将 html，css，js 独立部分提取）。</p>
+<p>例如我们定义了一个自定义组件叫<code>&lt;my-component&gt;</code>，你在开发者工具可以见到：<br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/wxapp-component-1.jpg" alt="Shadow DOM"></p>
+<p><code>#shadow-root</code>称为影子根，DOM 子树的根节点，和文档的主要 DOM 树分开渲染。可以看到它在<code>&lt;my-component&gt;</code>里面，换句话说，<code>#shadow-root</code>寄生在<code>&lt;my-component&gt;</code>上。<code>#shadow-root</code>可以嵌套，形成节点树，即称为影子树（Shadow Tree）。</p>
+<p>像这样：<br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/wxapp-component-2.jpg" alt="Shadow Tree"></p>
+<h3 id="Shadow-Tree-拼接"><a href="#Shadow-Tree-拼接" class="headerlink" title="Shadow Tree 拼接"></a>Shadow Tree 拼接</h3><p>既然组件是基于 Shadow DOM，那组件的嵌套关系，其实也就是 Shadow DOM 的嵌套，也可称为 Shadow Tree 的拼接。</p>
+<p>Shadow Tree 拼接是怎么做的呢？一切又得从模版引擎讲起。</p>
+<p>我们知道，Virtual DOM 机制会将节点解析成一个对象，那这个对象要怎么生成真正的 DOM 节点呢？数据变更又是怎么更新到界面的呢？这大概就是模版引擎做的事情了。</p>
+<p><a href="https://godbasin.github.io/2017/10/21/template-engine/">《前端模板引擎》</a>里有详细描述模版引擎的机制，通常来说主要有这些：</p>
+<ul>
+<li>DOM 节点的创建和管理：<code>appendChild</code>/<code>insertBefore</code>/<code>removeChild</code>/<code>replaceChild</code>等</li>
+<li>DOM 节点的关系（嵌套的处理）：<code>parentNode</code>/<code>childNodes</code></li>
+<li>通常创建后的 DOM 节点会保存一个映射，在更新的时候取到映射，然后进行处理（通常包括替换节点、改变内容<code>innerHTML</code>、移动删除新增节点、修改节点属性<code>setAttribute</code>）</li>
+</ul>
+<p>在上面的图我们也可以看到，在 Shadow Tree 拼接的过程中，有些节点并不会最终生成 DOM 节点，例如<code>&lt;slot&gt;</code>这种。</p>
+<p>但是，常用的前端模版引擎，能直接用在小程序里吗？</p>
+<h2 id="双线程的难题"><a href="#双线程的难题" class="headerlink" title="双线程的难题"></a>双线程的难题</h2><h3 id="自定义组件渲染流程"><a href="#自定义组件渲染流程" class="headerlink" title="自定义组件渲染流程"></a>自定义组件渲染流程</h3><p>双线程的设计，给小程序带来了很多便利，安全性管控力都拥有了，当然什么鬼东西都可以比作一把双刃剑，双线程也不例外。</p>
+<p>我们知道，小程序分为 Webview 和 JS 双线程，逻辑层里是没法拿到真正的 DOM 节点，也没法随便动态变更页面的。那在这种情况下，我们要怎么去使用映射来更新模版呢（因为我们压根拿不到 Webview 节点的映射）？</p>
+<p>所以在双线程下，其实两个线程都需要保存一份节点信息。这份节点信息怎么来的呢？其实就是我们需要在创建组件的时候，通过事件通知的方式，分别在逻辑层和视图层创建一份节点信息。</p>
+<p>同时，视图层里的组件是有层级关系的，但是 JS 里没有怎么办？为了维护好父子嵌套等节点关系，所以我们在 逻辑层也需要维护一棵 Shadow Tree。</p>
+<p>那么我们自定义组件的渲染流程大概是：</p>
+<ol>
+<li>组件创建。<ul>
+<li>逻辑层：先是 wxml + js 生成一个 JS 对象（因为需要访问组件实例 this 呀），然后是 JS 其中节点部分生成 Virtual DOM，拼接 Shadow Tree 什么的，最后通过底层通信通知到 视图层</li>
+<li>视图层：拿到节点信息，然后吭哧吭哧开始创建 Shadow DOM，拼接 Shadow Tree 什么的,最后生成真实 DOM，并保留下映射关系</li>
+</ul>
+</li>
+<li>组件更新。</li>
+</ol>
+<p>这时候我们知道，不管是逻辑层，还是视图层，都维护了一份 Shadow Tree，要怎么保证他们之间保持一致呢？</p>
+<h3 id="让-JS-和-Webview-的组件保持一致"><a href="#让-JS-和-Webview-的组件保持一致" class="headerlink" title="让 JS 和 Webview 的组件保持一致"></a>让 JS 和 Webview 的组件保持一致</h3><p>为了让两边的 Shadow Tree 保持一致，可以使用同步队列来传递信息。（这样就不会漏掉啦）</p>
+<p>同步队列可以，每次变动我们就往队列里塞东西就好了。不过这样还会有个问题，我们也知道 setData 其实在实际项目里是使用比较频繁的，要是像 Component 的 observer 里做了 setData 这类型的操作，那不是每次变动会导致一大堆的 setDate？这样通信效率会很低吧？</p>
+<p>所以，其实可以把一次操作里的所有 setData 都整到一次通信里，通过排序保证好顺序就好啦。</p>
+<h2 id="Page-和-Component"><a href="#Page-和-Component" class="headerlink" title="Page 和 Component"></a>Page 和 Component</h2><h3 id="Component-是-Page-的超集"><a href="#Component-是-Page-的超集" class="headerlink" title="Component 是 Page 的超集"></a>Component 是 Page 的超集</h3><p>事实上，小程序的页面也可以视为自定义组件。因而，页面也可以使用<code>Component</code>构造器构造，拥有与普通组件一样的定义段与实例方法。但此时要求对应 json 文件中包含<code>usingComponents</code>定义段。</p>
+<blockquote>
+<p>来自<a href="https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/component.html" target="_blank" rel="noopener">官方文档-Component</a></p>
+</blockquote>
+<p>所以，基于 Component 是 Page 的超集，那么其实组件的渲染流程、方式，其实跟页面没多大区别，应该可以一个方式去理解就差不多啦。</p>
+<h3 id="页面渲染"><a href="#页面渲染" class="headerlink" title="页面渲染"></a>页面渲染</h3><p>既然页面就是组件，那其实页面的渲染流程跟组件的渲染流程基本保持一致。</p>
+<p>视图层渲染，可以参考<a href="https://developers.weixin.qq.com/ebook?action=get_post_info&amp;token=935589521&amp;volumn=1&amp;lang=zh_CN&amp;book=miniprogram&amp;docid=00024a319d00b87b008612f5f5640a" target="_blank" rel="noopener">7.4 视图层渲染</a>说明。</p>
+<h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><hr>
+<p>其实很多新框架新工具出来的时候，经常会让人眼前一亮，觉得哇好厉害，哇好高大上。<br>但其实更多时候，我们需要挖掘新事物的核心，其实大多数都是在原有的事物上增加了个新视角，从不一样的视角看，看到的就不一样了呢。作为一名码农，我们要看到不变的共性，变化的趋势。</p>
+  
+	</div>
+	<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/2code2.jpg" width="200" height="200" style="display:block;margin: 0 auto;" />
+	<p style="text-align: center;margin-top: 10px;margin-bottom: 20px;">码生艰难，写文不易，给我家猪囤点猫粮了喵~</p>
+	<div class="article-content">
+		<p style="margin-top:50px;">
+			查看Github有更多内容噢：<a href="https://github.com/godbasin">https://github.com/godbasin</a>
+			<br>
+			更欢迎来<a href="https://godbasin.github.io/front-end-playground">被删的前端游乐场</a>边撸猫边学前端噢
+			<br>
+			如果你想要关注日常生活中的我，欢迎关注“牧羊的猪”公众号噢
+		</p>
+	</div>
+	<div class="author-right">
+  		<p>作者：被删</p>
+  		<p>出处：<a href="https://godbasin.github.io">https://godbasin.github.io</a></p>
+  		<p>本文版权归作者所有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利。</p>
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/教程/">教程</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/小程序双皮奶/">小程序双皮奶</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  
+<!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a href="http://www.jiathis.com/share?uid=2134021" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config = {data_track_clickback:'true'};
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js?uid=2134021" charset="utf-8"></script>
+<!-- JiaThis Button END -->   
+
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2019/03/10/work-2-article/" title="写文章这件事">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  写文章这件事</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2019/02/15/wxapp-latest-20190215/"  title="小程序开发月刊第二期（20190215）">
+ <strong>NEXT:</strong><br/> 
+ <span>小程序开发月刊第二期（20190215）
+</span>
+</a>
+</div>
+
+</nav>
+
+	<!-- 如果不是首页且没使用 `comments: false` 关闭评论，则尝试加载评论 -->
+
+    <!-- 配置中启用多说时，导入相应代码 -->
+    
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#自定义组件"><span class="toc-number">1.</span> <span class="toc-text">自定义组件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#why"><span class="toc-number">1.1.</span> <span class="toc-text">why</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#代码的复用"><span class="toc-number">1.1.1.</span> <span class="toc-text">代码的复用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#组件化设计"><span class="toc-number">1.1.2.</span> <span class="toc-text">组件化设计</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自定义组件的实现"><span class="toc-number">1.2.</span> <span class="toc-text">自定义组件的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#一切都从-Virtual-DOM-说起"><span class="toc-number">1.2.1.</span> <span class="toc-text">一切都从 Virtual DOM 说起</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Shadow-DOM-模型"><span class="toc-number">1.2.2.</span> <span class="toc-text">Shadow DOM 模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Shadow-Tree-拼接"><span class="toc-number">1.2.3.</span> <span class="toc-text">Shadow Tree 拼接</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#双线程的难题"><span class="toc-number">1.3.</span> <span class="toc-text">双线程的难题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#自定义组件渲染流程"><span class="toc-number">1.3.1.</span> <span class="toc-text">自定义组件渲染流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#让-JS-和-Webview-的组件保持一致"><span class="toc-number">1.3.2.</span> <span class="toc-text">让 JS 和 Webview 的组件保持一致</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Page-和-Component"><span class="toc-number">1.4.</span> <span class="toc-text">Page 和 Component</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Component-是-Page-的超集"><span class="toc-number">1.4.1.</span> <span class="toc-text">Component 是 Page 的超集</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#页面渲染"><span class="toc-number">1.4.2.</span> <span class="toc-text">页面渲染</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结束语"><span class="toc-number">1.5.</span> <span class="toc-text">结束语</span></a></li></ol></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  	
+	<div class="archiveslist">
+		<p class="asidetitle">最近文章</p>
+			<ul class="archive-list">
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/03/13/angular-design-0-prestart/" title="Angular框架解读--预热篇">Angular框架解读--预热篇...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/02/27/network-design-dependency-decoupling/" title="在线文档的网络层开发思考--依赖关系梳理">在线文档的网络层开发思考--依赖关系...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/01/23/network-design-responsibility-driven-design/" title="在线文档的网络层开发思考--职责驱动设计">在线文档的网络层开发思考--职责驱动...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/01/10/about-writing/" title="前端这几年--写文章这件事">前端这几年--写文章这件事...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/11/01/task-runner-design/" title="如何设计一个任务管理器">如何设计一个任务管理器</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/10/10/why-spreadsheet-app-excited/" title="在线Excel项目到底有多刺激">在线Excel项目到底有多刺激...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/10/07/monitor-and-report/" title="前端监控体系搭建">前端监控体系搭建</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/08/30/about-front-end-10/" title="前端这几年--10.我的工作历险记">前端这几年--10.我的工作历险记...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/08/30/about-front-end-9/" title="前端这几年--9.提升工作效率">前端这几年--9.提升工作效率...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/08/29/front-end-performance-analyze/" title="补齐Web前端性能分析的工具盲点">补齐Web前端性能分析的工具盲点...</a>
+				</li>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+	</div>
+
+
+  
+  <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">归档</a></p>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">十月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">41</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">9</span></li></ul>
+  </div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle"><a href="/categories">分类</a></p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/Angular源码/" title="Angular源码">Angular源码<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/CSS炒饭/" title="CSS炒饭">CSS炒饭<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/D3小馒头/" title="D3小馒头">D3小馒头<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular2火锅/" title="angular2火锅">angular2火锅<sup>25</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular混搭/" title="angular混搭">angular混搭<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/box2djs方糖/" title="box2djs方糖">box2djs方糖<sup>34</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/cyclejs哈根达斯/" title="cyclejs哈根达斯">cyclejs哈根达斯<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/jQuery杂烩/" title="jQuery杂烩">jQuery杂烩<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/js什锦/" title="js什锦">js什锦<sup>26</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/react沙拉/" title="react沙拉">react沙拉<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/three-js奶茶/" title="three.js奶茶">three.js奶茶<sup>5</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/vue八宝粥/" title="vue八宝粥">vue八宝粥<sup>30</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/webpack宾治/" title="webpack宾治">webpack宾治<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/web乱炖/" title="web乱炖">web乱炖<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端满汉全席/" title="前端满汉全席">前端满汉全席<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端解决方案/" title="前端解决方案">前端解决方案<sup>13</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/喵/" title="喵">喵<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/小程序双皮奶/" title="小程序双皮奶">小程序双皮奶<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/工作这杯茶/" title="工作这杯茶">工作这杯茶<sup>19</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/应用巧克力盒/" title="应用巧克力盒">应用巧克力盒<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/思想棉花糖/" title="思想棉花糖">思想棉花糖<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/柴米油盐工具集/" title="柴米油盐工具集">柴米油盐工具集<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/自动化甜筒/" title="自动化甜筒">自动化甜筒<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/非前端钙片/" title="非前端钙片">非前端钙片<sup>7</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle">标签</p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/分享/" title="分享">分享<sup>44</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/功能设计/" title="功能设计">功能设计<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/原创部件/" title="原创部件">原创部件<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/心态/" title="心态">心态<sup>19</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/教程/" title="教程">教程<sup>80</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/晒猫/" title="晒猫">晒猫<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/笔记/" title="笔记">笔记<sup>121</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/算法/" title="算法">算法<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/自制插件/" title="自制插件">自制插件<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/逻辑实现/" title="逻辑实现">逻辑实现<sup>18</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+    <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">about</a></p>
+      <ul class="archive-list">
+      	<li class="archive-list-item">
+      		<a>wangbeishan@163.com</a>
+      		<a href="https://github.com/godbasin">github.com/godbasin</a>
+      	</li>
+      </ul>
+  </div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<section class="info">
+		<p> 即使梦想再小，却很伟大 ^_^ </p>
+	</section>
+	 
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2021 
+		
+		<a href="https://godbasin.github.io" target="_blank" title="被删">被删</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+
+
+
+
+
+  </body>
+</html>

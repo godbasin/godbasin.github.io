@@ -1,0 +1,1183 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  
+    <title>玩转Angular2(9)--图片上传控件 | Here. There.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="被删">
+    
+    <meta name="description" content="因为项目原因又玩上了Angular2(v4.0+)，《玩转Angular2》系列用于探索一些灵活或者新的用法。本文紧跟上节radio和checkbox表单控件的创建，讲述图片上传表单控件的创建过程。">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Here. There." type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?3d902de4a19cf2bf179534ffd2dd7b7f";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+</html>
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/sun.png" alt="Here. There." title="Here. There."/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Here. There.">Here. There.</a></h1>
+				<h2 class="blog-motto">Love ice cream. Love sunshine. Love life. Love the world. Love myself. Love you.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="https://github.com/godbasin/godbasin.github.io">所有文章</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">分类</a></li>
+					
+						<li><a href="https://godbasin.github.io/front-end-playground">前端游乐场</a></li>
+					
+						<li><a href="/about">关于我</a></li>
+					
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/06/11/angular2-free-9-upload-iamge/" title="玩转Angular2(9)--图片上传控件" itemprop="url">玩转Angular2(9)--图片上传控件</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://godbasin.github.io" title="被删">被删</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2017-06-11T02:24:19.000Z" itemprop="datePublished">2017-06-11</time>
+    更新日期:<time datetime="2018-12-18T15:31:30.902Z" itemprop="dateModified">2018-12-18</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#图片上传控件的制作"><span class="toc-number">1.</span> <span class="toc-text">图片上传控件的制作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#type-”file”的input"><span class="toc-number">1.1.</span> <span class="toc-text">type=”file”的input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#change事件"><span class="toc-number">1.2.</span> <span class="toc-text">change事件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FileReader"><span class="toc-number">1.3.</span> <span class="toc-text">FileReader</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#添加校验"><span class="toc-number">1.4.</span> <span class="toc-text">添加校验</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#处理错误信息"><span class="toc-number">1.5.</span> <span class="toc-text">处理错误信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#添加设置说明"><span class="toc-number">1.6.</span> <span class="toc-text">添加设置说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用-ngModel-绑定"><span class="toc-number">1.7.</span> <span class="toc-text">使用[(ngModel)]绑定</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结束语"><span class="toc-number">2.</span> <span class="toc-text">结束语</span></a></li></ol>
+		</div>
+		
+		<p>因为项目原因又玩上了Angular2(v4.0+)，《玩转Angular2》系列用于探索一些灵活或者新的用法。<br>本文紧跟上节radio和checkbox表单控件的创建，讲述图片上传表单控件的创建过程。<br><a id="more"></a></p>
+<h2 id="图片上传控件的制作"><a href="#图片上传控件的制作" class="headerlink" title="图片上传控件的制作"></a>图片上传控件的制作</h2><hr>
+<h3 id="type-”file”的input"><a href="#type-”file”的input" class="headerlink" title="type=”file”的input"></a>type=”file”的input</h3><p>要讲图片上传，事情总要从下面的代码开始：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">accept</span>=<span class="string">"image/*"</span> <span class="attr">multiple</span>=<span class="string">"multiple"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这里我们允许上传多张，这样的话我们就需要通过数组的方式双向绑定传值。</p>
+<p>跟之前的<code>checkbox-group</code>一样，我们需要自定义<code>ngModel</code>的绑定过程，这样我们的原型便是：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Component, Input, OnInit, ElementRef&#125; <span class="keyword">from</span> <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;customInputAccessor&#125; <span class="keyword">from</span> <span class="string">'../../class/custom-input.class'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">    selector: <span class="string">'upload-image'</span>,</span><br><span class="line">    templateUrl: <span class="string">'./upload-image.component.html'</span>,</span><br><span class="line">    providers: [customInputAccessor(UploadImageComponent)]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">UploadImageComponent</span> </span>&#123;</span><br><span class="line">    @Input() disabled: boolean = <span class="literal">false</span>;</span><br><span class="line">    @Input() required: boolean = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">    private model: string[] = []; <span class="comment">// 控件的值</span></span><br><span class="line">    private onChange: <span class="function">(<span class="params">_: any</span>) =&gt;</span> <span class="keyword">void</span>;</span><br><span class="line">    private onTouched: <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">void</span>;</span><br><span class="line"></span><br><span class="line">    onBlur() &#123;</span><br><span class="line">        <span class="keyword">this</span>.onTouched();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    writeValue(value: string[]): <span class="keyword">void</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (value &amp;&amp; value.length) &#123;</span><br><span class="line">            <span class="keyword">this</span>.model = value;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    registerOnChange(fn: <span class="function">(<span class="params">_: any</span>) =&gt;</span> &#123;&#125;): <span class="keyword">void</span> &#123;</span><br><span class="line">        <span class="keyword">this</span>.onChange = fn;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    registerOnTouched(fn: <span class="function"><span class="params">()</span> =&gt;</span> &#123;&#125;): <span class="keyword">void</span> &#123;</span><br><span class="line">        <span class="keyword">this</span>.onTouched = fn;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果说这里看不懂，那麻烦大家补一下前两节的内容：<br><a href="https://godbasin.github.io/2017/06/09/angular2-free-7-dynamic-form/">《玩转Angular2(7)–创建动态表单》</a><br><a href="https://godbasin.github.io/2017/06/10/angular2-free-8-radio-and-checkbox/">《玩转Angular2(8)–表单的radio和checkbox》</a> </p>
+<h3 id="change事件"><a href="#change事件" class="headerlink" title="change事件"></a>change事件</h3><p>这里我们首先要把原本丑丑的file input藏起来，这个通过样式调整就可以啦：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.btn-file</span> &#123;</span><br><span class="line">    <span class="attribute">position</span>: relative;</span><br><span class="line">    <span class="attribute">overflow</span>: hidden;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.btn-file</span> <span class="selector-tag">input</span><span class="selector-attr">[type=<span class="string">"file"</span>]</span> &#123;</span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">    <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">right</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">min-width</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">min-height</span>: <span class="number">100%</span>;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">100px</span>;</span><br><span class="line">    <span class="attribute">text-align</span>: right;</span><br><span class="line">    <span class="attribute">filter</span>: <span class="built_in">alpha</span>(opacity=<span class="number">0</span>);</span><br><span class="line">    <span class="attribute">opacity</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">outline</span>: none;</span><br><span class="line">    <span class="attribute">background</span>: <span class="number">#fff</span>;</span><br><span class="line">    <span class="attribute">cursor</span>: inherit;</span><br><span class="line">    <span class="attribute">display</span>: block;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后我们的html调整一下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"btn btn-info btn-file"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-upload fa-fw"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span><br><span class="line">    &#123;&#123;btnName&#125;&#125; </span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">accept</span>=<span class="string">"image/*"</span> <span class="attr">multiple</span>=<span class="string">"multiple"</span> (<span class="attr">change</span>)=<span class="string">"upLoad()"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>是的，我们添加了按钮的名字，这里默认设置为”上传图片就好了”，后面我们再一起看逻辑代码。</p>
+<p>这样我们点击呈现的按钮的同时，也就是点击了<code>&lt;input type=&quot;file&quot; /&gt;</code>，当我们选择了不同的内容之后，<code>change</code>事件便会触发。</p>
+<p>这里我们可以猜想<code>upload()</code>回调会执行些什么：</p>
+<ol>
+<li>多个图片，遍历数组。</li>
+<li>获取每个图片信息，包括预览url、名字、大小等等。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 拿到input，然后获取选中文件</span></span><br><span class="line"><span class="keyword">const</span> input = $(<span class="keyword">this</span>.el.nativeElement).find(<span class="string">'input'</span>)[<span class="number">0</span>];  </span><br><span class="line"><span class="keyword">const</span> files = input.files;</span><br><span class="line"><span class="keyword">if</span> (files) &#123;</span><br><span class="line">    <span class="comment">// 遍历文件</span></span><br><span class="line">    <span class="built_in">Object</span>.keys(files).forEach(<span class="function"><span class="params">index</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> file = files[index];</span><br><span class="line">        <span class="comment">// 获取每个图片信息</span></span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="FileReader"><a href="#FileReader" class="headerlink" title="FileReader"></a>FileReader</h3><p>好久没处理上传事件了，我们先来回顾一下<code>FileReader</code>。</p>
+<p><code>FileReader</code>对象允许Web应用程序异步读取存储在用户计算机上的文件（或原始数据缓冲区）的内容，使用<code>File</code>或<code>Blob</code>对象指定要读取的文件或数据。</p>
+<p>其中<code>File</code>对象可以是来自用户在一个<code>&lt;input&gt;</code>元素上选择文件后返回的<code>FileList</code>对象，也可以来自拖放操作生成的<code>DataTransfer</code>对象，还可以是来自在一个<code>HTMLCanvasElement</code>上执行<code>mozGetAsFile()</code>方法后返回结果。</p>
+<ul>
+<li><p>方法</p>
+<ul>
+<li><code>abort()</code>: 中止该读取操作</li>
+<li><code>readAsArrayBuffer(in Blob blob)</code>/<code>readAsBinaryString(in Blob blob)</code>/<code>readAsDataURL(in Blob blob)</code>/<code>readAsText</code><ul>
+<li>开始读取指定的<code>Blob</code>对象或<code>File</code>对象中的内容。当读取操作完成时，<code>readyState</code>属性的值会成为<code>DONE</code>，如果设置了<code>onloadend</code>事件处理程序，则调用</li>
+<li>四者区别在于返回的<code>result</code></li>
+<li><code>readAsDataURL()</code>的<code>result</code>属性中将包含一个<code>data: URL</code>格式的字符串以表示所读取文件的内容</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>事件处理程序</p>
+<ul>
+<li><code>onabort</code>: 当读取操作被中止时调用</li>
+<li><code>onerror</code>: 当读取操作发生错误时调用</li>
+<li><code>onload</code>: 当读取操作成功完成时调用</li>
+<li><code>onloadend</code>: 当读取操作完成时调用,不管是成功还是失败。在onload或者onerror之后调用</li>
+<li><code>onloadstart</code>: 当读取操作将要开始之前调用</li>
+<li><code>onprogress</code>: 在读取数据过程中周期性调用</li>
+</ul>
+</li>
+</ul>
+<p>说这么多，其实我们只需要它的一个<code>onload</code>事件回调，以及一个<code>readAsDataURL()</code>方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> reader: FileReader = <span class="keyword">new</span> FileReader();</span><br><span class="line"><span class="comment">// 设置文件读取完毕事件</span></span><br><span class="line">reader.onload = <span class="function">(<span class="params">e: ProgressEvent</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> url = reader.result; <span class="comment">// 获取url</span></span><br><span class="line">    <span class="keyword">const</span> name = file.name; <span class="comment">// 获取文件名字</span></span><br><span class="line">&#125;;</span><br><span class="line">reader.readAsDataURL(file); <span class="comment">// 获取图片的data: URL</span></span><br></pre></td></tr></table></figure>
+<h3 id="添加校验"><a href="#添加校验" class="headerlink" title="添加校验"></a>添加校验</h3><p>一般来说，我们常用的校验有：大小、宽高、类型。<br>这里我们使用<code>limit</code>输入：<code>@Input() limit: ILimit = {};</code>。</p>
+<p>而我们的<code>limit</code>输入为以下的样子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">interface ILimit &#123;</span><br><span class="line">    width?: number; <span class="comment">// 宽</span></span><br><span class="line">    height?: number; <span class="comment">// 高</span></span><br><span class="line">    size?: number; <span class="comment">// 大小</span></span><br><span class="line">    type?: string; <span class="comment">// 类型</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中我们的大小和类型都可以通过<code>FileReader</code>获取，那我们的宽高呢？<br>我们将使用<code>new Image()</code>来获取。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> image = <span class="keyword">new</span> Image();</span><br><span class="line"><span class="keyword">const</span> url = reader.result;</span><br><span class="line"><span class="comment">// 添加load事件</span></span><br><span class="line">image.onload = <span class="function"><span class="params">ev</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// image.width</span></span><br><span class="line">    <span class="comment">// image.height</span></span><br><span class="line">&#125;</span><br><span class="line">image.src = url; <span class="comment">// 添加图片地址</span></span><br></pre></td></tr></table></figure>
+<h3 id="处理错误信息"><a href="#处理错误信息" class="headerlink" title="处理错误信息"></a>处理错误信息</h3><p>我们的图片校验成功，则进行预览。而校验不通过的话，好的交互则需要我们返回详细的错误信息。<br>这里我们可以将错误信息收集起来打印：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> *<span class="attr">ngIf</span>=<span class="string">"checkErrArr.length"</span> <span class="attr">style</span>=<span class="string">"color: red;"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> *<span class="attr">ngFor</span>=<span class="string">"let errArr of checkErrArr"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">strong</span>&gt;</span>&#123;&#123;errArr.name&#125;&#125;<span class="tag">&lt;/<span class="name">strong</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span> *<span class="attr">ngFor</span>=<span class="string">"let err of errArr.checkErr"</span>&gt;</span>&#123;&#123;err&#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>大家可以看到<code>checkErrArr</code>将以数组方式存放错误信息。我们添加校验后，<code>FileReader</code>的load事件如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> regMap = &#123; <span class="comment">// 图片类型校验</span></span><br><span class="line">    jpg: <span class="regexp">/\.(jpe?g)$/i</span>,</span><br><span class="line">    jpeg: <span class="regexp">/\.(jpe?g)$/i</span>,</span><br><span class="line">    png: <span class="regexp">/\.(png)$/i</span>,</span><br><span class="line">    gif: <span class="regexp">/\.(gif)$/i</span></span><br><span class="line">&#125;;</span><br><span class="line">reader.onload = <span class="function">(<span class="params">e: ProgressEvent</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> image = <span class="keyword">new</span> Image();</span><br><span class="line">    <span class="keyword">const</span> url = reader.result;</span><br><span class="line">    <span class="keyword">const</span> name = file.name;</span><br><span class="line">    <span class="keyword">const</span> checkErr = [];</span><br><span class="line">    image.onload = <span class="function"><span class="params">ev</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">// 图片大小校验</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.limit.size &amp;&amp; file.size &gt; <span class="keyword">this</span>.limit.size * <span class="number">1024</span>) &#123;</span><br><span class="line">            checkErr.push(<span class="string">'图片大小已超过 '</span> + <span class="keyword">this</span>.limit.size + <span class="string">' K限制'</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 图片尺寸校验</span></span><br><span class="line">        <span class="keyword">if</span> ((<span class="keyword">this</span>.limit.width &amp;&amp; image.width &gt; <span class="keyword">this</span>.limit.width) ||</span><br><span class="line">            (<span class="keyword">this</span>.limit.height &amp;&amp; image.height &gt; <span class="keyword">this</span>.limit.height)) &#123;</span><br><span class="line">            checkErr.push(<span class="string">'图片尺寸不满足 '</span> + (<span class="keyword">this</span>.limit.width ? <span class="string">'w: '</span> + <span class="keyword">this</span>.limit.width + <span class="string">' 以内'</span> : <span class="string">''</span>) +</span><br><span class="line">                (<span class="keyword">this</span>.limit.height ? <span class="string">' h: '</span> + <span class="keyword">this</span>.limit.height + <span class="string">' 以内'</span> : <span class="string">''</span>));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 图片类型校验</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.limit.type &amp;&amp; regMap[<span class="keyword">this</span>.limit.type] &amp;&amp; !regMap[<span class="keyword">this</span>.limit.type].test(file.name)) &#123;</span><br><span class="line">            checkErr.push(<span class="string">'图片类型不符合要求，需要上传'</span> + <span class="keyword">this</span>.limit.type);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!checkErr.length) &#123;</span><br><span class="line">            <span class="comment">// 若校验通过，添加进预览列表</span></span><br><span class="line">            <span class="keyword">this</span>.imagesArr.push(&#123;name, url&#125;);</span><br><span class="line">            <span class="keyword">this</span>.model.push(url);</span><br><span class="line">            <span class="keyword">this</span>.onChange(<span class="keyword">this</span>.model);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 校验不通过，则收入错误信息</span></span><br><span class="line">            <span class="keyword">this</span>.checkErrArr.push(&#123;name, checkErr&#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    image.src = url;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="添加设置说明"><a href="#添加设置说明" class="headerlink" title="添加设置说明"></a>添加设置说明</h3><p>这里我们还需要给我们的设定添加说明，像该处做了哪些限制，需要展示出来给用户。<br>我们通过一个<code>help</code>字段保存这些协助信息：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">help: string = <span class="string">''</span>;</span><br><span class="line"></span><br><span class="line">ngOnInit() &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.required) &#123;</span><br><span class="line">        <span class="keyword">this</span>.help += <span class="string">'必填；'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.limit) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.limit.width &amp;&amp; <span class="keyword">this</span>.limit.height) &#123;</span><br><span class="line">            <span class="keyword">this</span>.help += <span class="string">'图片尺寸：'</span> + <span class="keyword">this</span>.limit.width + <span class="string">'*'</span> + <span class="keyword">this</span>.limit.height + <span class="string">'以内'</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.limit.size) &#123;</span><br><span class="line">            <span class="keyword">this</span>.help = <span class="keyword">this</span>.help ? <span class="keyword">this</span>.help + <span class="string">','</span> + <span class="keyword">this</span>.limit.size + <span class="string">'k以内'</span> : <span class="keyword">this</span>.limit.size + <span class="string">'k以内'</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.limit.type) &#123;</span><br><span class="line">            <span class="keyword">this</span>.help = <span class="keyword">this</span>.help ? <span class="keyword">this</span>.help + <span class="string">',图片类型:'</span> + <span class="keyword">this</span>.limit.type : <span class="string">',图片类型:'</span> + <span class="keyword">this</span>.limit.type;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后我们在按钮下面进行辅助说明：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span> *<span class="attr">ngIf</span>=<span class="string">"help"</span> <span class="attr">class</span>=<span class="string">"help-block"</span>&gt;</span>&#123;&#123;help&#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="使用-ngModel-绑定"><a href="#使用-ngModel-绑定" class="headerlink" title="使用[(ngModel)]绑定"></a>使用[(ngModel)]绑定</h3><p>经过前面的处理，我们的图片上传控件基本完成了。使用方式也很简单，绑定<code>[(ngModel)]</code>就好了：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">upload-image</span> [<span class="attr">limit</span>]=<span class="string">"&#123;width:750,height:422,size:30,type:'jpg'&#125;"</span> [(<span class="attr">ngModel</span>)]=<span class="string">"imageArr"</span> [<span class="attr">required</span>]=<span class="string">"true"</span>&gt;</span><span class="tag">&lt;/<span class="name">upload-image</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这里本骚年还传入了些设定，最终效果图如下：</p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1496243776%281%29.png" alt="image"></p>
+<h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><hr>
+<p>上传图片控件和前面动态表单的结合大家可以自行实践，本骚年也将实现代码放到项目里了。<br>不知道是不是FileReader的原因，上传文件变得好慢，或许是本骚年的使用方式不对。不知道大家有啥建议没呢？<br><a href="https://github.com/godbasin/godbasin.github.io/tree/blog-codes/angular2-free/9-upload-iamge" target="_blank" rel="noopener">此处查看项目代码</a><br><a href="http://angular2-free.godbasin.com/9-upload-iamge/index.html#/home/page-setting" target="_blank" rel="noopener">此处查看页面效果</a></p>
+  
+	</div>
+	<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/2code2.jpg" width="200" height="200" style="display:block;margin: 0 auto;" />
+	<p style="text-align: center;margin-top: 10px;margin-bottom: 20px;">码生艰难，写文不易，给我家猪囤点猫粮了喵~</p>
+	<div class="article-content">
+		<p style="margin-top:50px;">
+			查看Github有更多内容噢：<a href="https://github.com/godbasin">https://github.com/godbasin</a>
+			<br>
+			更欢迎来<a href="https://godbasin.github.io/front-end-playground">被删的前端游乐场</a>边撸猫边学前端噢
+			<br>
+			如果你想要关注日常生活中的我，欢迎关注“牧羊的猪”公众号噢
+		</p>
+	</div>
+	<div class="author-right">
+  		<p>作者：被删</p>
+  		<p>出处：<a href="https://godbasin.github.io">https://godbasin.github.io</a></p>
+  		<p>本文版权归作者所有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利。</p>
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/笔记/">笔记</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/angular2火锅/">angular2火锅</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  
+<!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a href="http://www.jiathis.com/share?uid=2134021" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config = {data_track_clickback:'true'};
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js?uid=2134021" charset="utf-8"></script>
+<!-- JiaThis Button END -->   
+
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2017/06/23/angular2-free-10-add-conditions/" title="玩转Angular2(10)--向表单添加条件控制">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  玩转Angular2(10)--向表单添加条件控制</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2017/06/10/angular2-free-8-radio-and-checkbox/"  title="玩转Angular2(8)--表单的radio和checkbox">
+ <strong>NEXT:</strong><br/> 
+ <span>玩转Angular2(8)--表单的radio和checkbox
+</span>
+</a>
+</div>
+
+</nav>
+
+	<!-- 如果不是首页且没使用 `comments: false` 关闭评论，则尝试加载评论 -->
+
+    <!-- 配置中启用多说时，导入相应代码 -->
+    
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#图片上传控件的制作"><span class="toc-number">1.</span> <span class="toc-text">图片上传控件的制作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#type-”file”的input"><span class="toc-number">1.1.</span> <span class="toc-text">type=”file”的input</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#change事件"><span class="toc-number">1.2.</span> <span class="toc-text">change事件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FileReader"><span class="toc-number">1.3.</span> <span class="toc-text">FileReader</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#添加校验"><span class="toc-number">1.4.</span> <span class="toc-text">添加校验</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#处理错误信息"><span class="toc-number">1.5.</span> <span class="toc-text">处理错误信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#添加设置说明"><span class="toc-number">1.6.</span> <span class="toc-text">添加设置说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用-ngModel-绑定"><span class="toc-number">1.7.</span> <span class="toc-text">使用[(ngModel)]绑定</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结束语"><span class="toc-number">2.</span> <span class="toc-text">结束语</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  	
+	<div class="archiveslist">
+		<p class="asidetitle">最近文章</p>
+			<ul class="archive-list">
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/03/13/angular-design-0-prestart/" title="Angular框架解读--预热篇">Angular框架解读--预热篇...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/02/27/network-design-dependency-decoupling/" title="在线文档的网络层开发思考--依赖关系梳理">在线文档的网络层开发思考--依赖关系...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/01/23/network-design-responsibility-driven-design/" title="在线文档的网络层开发思考--职责驱动设计">在线文档的网络层开发思考--职责驱动...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/01/10/about-writing/" title="前端这几年--写文章这件事">前端这几年--写文章这件事...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/11/01/task-runner-design/" title="如何设计一个任务管理器">如何设计一个任务管理器</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/10/10/why-spreadsheet-app-excited/" title="在线Excel项目到底有多刺激">在线Excel项目到底有多刺激...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/10/07/monitor-and-report/" title="前端监控体系搭建">前端监控体系搭建</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/08/30/about-front-end-10/" title="前端这几年--10.我的工作历险记">前端这几年--10.我的工作历险记...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/08/30/about-front-end-9/" title="前端这几年--9.提升工作效率">前端这几年--9.提升工作效率...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/08/29/front-end-performance-analyze/" title="补齐Web前端性能分析的工具盲点">补齐Web前端性能分析的工具盲点...</a>
+				</li>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+	</div>
+
+
+  
+  <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">归档</a></p>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">十月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">41</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">9</span></li></ul>
+  </div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle"><a href="/categories">分类</a></p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/Angular源码/" title="Angular源码">Angular源码<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/CSS炒饭/" title="CSS炒饭">CSS炒饭<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/D3小馒头/" title="D3小馒头">D3小馒头<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular2火锅/" title="angular2火锅">angular2火锅<sup>25</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular混搭/" title="angular混搭">angular混搭<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/box2djs方糖/" title="box2djs方糖">box2djs方糖<sup>34</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/cyclejs哈根达斯/" title="cyclejs哈根达斯">cyclejs哈根达斯<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/jQuery杂烩/" title="jQuery杂烩">jQuery杂烩<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/js什锦/" title="js什锦">js什锦<sup>26</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/react沙拉/" title="react沙拉">react沙拉<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/three-js奶茶/" title="three.js奶茶">three.js奶茶<sup>5</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/vue八宝粥/" title="vue八宝粥">vue八宝粥<sup>30</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/webpack宾治/" title="webpack宾治">webpack宾治<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/web乱炖/" title="web乱炖">web乱炖<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端满汉全席/" title="前端满汉全席">前端满汉全席<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端解决方案/" title="前端解决方案">前端解决方案<sup>13</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/喵/" title="喵">喵<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/小程序双皮奶/" title="小程序双皮奶">小程序双皮奶<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/工作这杯茶/" title="工作这杯茶">工作这杯茶<sup>19</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/应用巧克力盒/" title="应用巧克力盒">应用巧克力盒<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/思想棉花糖/" title="思想棉花糖">思想棉花糖<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/柴米油盐工具集/" title="柴米油盐工具集">柴米油盐工具集<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/自动化甜筒/" title="自动化甜筒">自动化甜筒<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/非前端钙片/" title="非前端钙片">非前端钙片<sup>7</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle">标签</p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/分享/" title="分享">分享<sup>44</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/功能设计/" title="功能设计">功能设计<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/原创部件/" title="原创部件">原创部件<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/心态/" title="心态">心态<sup>19</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/教程/" title="教程">教程<sup>80</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/晒猫/" title="晒猫">晒猫<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/笔记/" title="笔记">笔记<sup>121</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/算法/" title="算法">算法<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/自制插件/" title="自制插件">自制插件<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/逻辑实现/" title="逻辑实现">逻辑实现<sup>18</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+    <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">about</a></p>
+      <ul class="archive-list">
+      	<li class="archive-list-item">
+      		<a>wangbeishan@163.com</a>
+      		<a href="https://github.com/godbasin">github.com/godbasin</a>
+      	</li>
+      </ul>
+  </div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<section class="info">
+		<p> 即使梦想再小，却很伟大 ^_^ </p>
+	</section>
+	 
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2021 
+		
+		<a href="https://godbasin.github.io" target="_blank" title="被删">被删</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+
+
+
+
+
+  </body>
+</html>

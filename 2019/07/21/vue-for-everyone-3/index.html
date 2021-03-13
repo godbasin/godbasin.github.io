@@ -1,0 +1,1341 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  
+    <title>9102全员学Vue--3.把页面拼成个Web应用 | Here. There.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="被删">
+    
+    <meta name="description" content="本节内容主要介绍使用 vue-router 来管理路由，包括应用和路由的设计和配置、页面间跳转、路由鉴权等。然后将上一节拼出来的页面，再拼出来一个完整的 Web 应用叭。">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Here. There." type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?3d902de4a19cf2bf179534ffd2dd7b7f";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+</html>
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/sun.png" alt="Here. There." title="Here. There."/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Here. There.">Here. There.</a></h1>
+				<h2 class="blog-motto">Love ice cream. Love sunshine. Love life. Love the world. Love myself. Love you.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="https://github.com/godbasin/godbasin.github.io">所有文章</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">分类</a></li>
+					
+						<li><a href="https://godbasin.github.io/front-end-playground">前端游乐场</a></li>
+					
+						<li><a href="/about">关于我</a></li>
+					
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2019/07/21/vue-for-everyone-3/" title="9102全员学Vue--3.把页面拼成个Web应用" itemprop="url">9102全员学Vue--3.把页面拼成个Web应用</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://godbasin.github.io" title="被删">被删</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2019-07-21T06:17:18.000Z" itemprop="datePublished">2019-07-21</time>
+    更新日期:<time datetime="2019-07-21T06:27:56.771Z" itemprop="dateModified">2019-07-21</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Vue-应用概念"><span class="toc-number">1.</span> <span class="toc-text">Vue 应用概念</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#单页应用"><span class="toc-number">1.1.</span> <span class="toc-text">单页应用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SPA-与-MPA"><span class="toc-number">1.1.1.</span> <span class="toc-text">SPA 与 MPA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他应用"><span class="toc-number">1.1.2.</span> <span class="toc-text">其他应用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#页面划分"><span class="toc-number">1.2.</span> <span class="toc-text">页面划分</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#页面结构设计"><span class="toc-number">1.2.1.</span> <span class="toc-text">页面结构设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#页面路由设计"><span class="toc-number">1.2.2.</span> <span class="toc-text">页面路由设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#目录结构划分"><span class="toc-number">1.2.3.</span> <span class="toc-text">目录结构划分</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#路由配置"><span class="toc-number">1.3.</span> <span class="toc-text">路由配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用开源库和工具"><span class="toc-number">1.3.1.</span> <span class="toc-text">使用开源库和工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装和引入-vue-router"><span class="toc-number">1.3.2.</span> <span class="toc-text">安装和引入 vue-router</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-安装依赖"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">1. 安装依赖</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-引入-vue-router"><span class="toc-number">1.3.2.2.</span> <span class="toc-text">2. 引入 vue-router</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用-vue-router-添加路由"><span class="toc-number">1.3.3.</span> <span class="toc-text">使用 vue-router 添加路由</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-配置路由信息"><span class="toc-number">1.3.3.1.</span> <span class="toc-text">1. 配置路由信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Vue-中加载-vue-router-和路由信息"><span class="toc-number">1.3.3.2.</span> <span class="toc-text">2. Vue 中加载 vue-router 和路由信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-lt-router-view-gt-使用"><span class="toc-number">1.3.3.3.</span> <span class="toc-text">3. &lt;router-view&gt;使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-lt-router-link-gt-使用"><span class="toc-number">1.3.3.4.</span> <span class="toc-text">4. &lt;router-link&gt;使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-使用-watch-监控路由变化"><span class="toc-number">1.3.3.5.</span> <span class="toc-text">5. 使用 watch 监控路由变化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-路由跳转"><span class="toc-number">1.3.3.6.</span> <span class="toc-text">6. 路由跳转</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#给路由添加鉴权"><span class="toc-number">1.3.4.</span> <span class="toc-text">给路由添加鉴权</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-设置简单的全局数据"><span class="toc-number">1.3.4.1.</span> <span class="toc-text">1. 设置简单的全局数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-登录页面登录"><span class="toc-number">1.3.4.2.</span> <span class="toc-text">2. 登录页面登录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-鉴权进入内页"><span class="toc-number">1.3.4.3.</span> <span class="toc-text">3. 鉴权进入内页</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结束语"><span class="toc-number">1.4.</span> <span class="toc-text">结束语</span></a></li></ol></li></ol>
+		</div>
+		
+		<p>本节内容主要介绍使用 vue-router 来管理路由，包括应用和路由的设计和配置、页面间跳转、路由鉴权等。然后将上一节拼出来的页面，再拼出来一个完整的 Web 应用叭。<br><a id="more"></a></p>
+<h1 id="Vue-应用概念"><a href="#Vue-应用概念" class="headerlink" title="Vue 应用概念"></a>Vue 应用概念</h1><p>我们<a href="https://godbasin.github.io/2019/06/27/vue-for-everyone-1/">第一节内容</a>里，最后用<a href="https://cli.vuejs.org/zh/" target="_blank" rel="noopener">Vue CLI</a>生成了一个 demo，我们称之为一个 Web 应用。</p>
+<h2 id="单页应用"><a href="#单页应用" class="headerlink" title="单页应用"></a>单页应用</h2><p>单页应用这个概念，是随着前几年 AngularJS、React、Ember 等这些框架的出现而出现的。<a href="https://godbasin.github.io/2019/06/27/vue-for-everyone-1/">第一节内容</a>里，我们在页面渲染中讲了页面的局部刷新，而单页应用则是使用了页面的局部刷新的能力，在切换页面的时候刷新页面内容，从而获取更好的体验。</p>
+<h3 id="SPA-与-MPA"><a href="#SPA-与-MPA" class="headerlink" title="SPA 与 MPA"></a>SPA 与 MPA</h3><p>单页应用（SinglePage Web Application，SPA）和多页应用（MultiPage Application，MPA）的区别可以参考：</p>
+<table>
+<thead>
+<tr>
+<th>-</th>
+<th>单页面应用</th>
+<th>多页面应用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>组成</td>
+<td>一个外壳页面和多个页面片段组成</td>
+<td>多个完整页面构成</td>
+</tr>
+<tr>
+<td>资源共用(css,js)</td>
+<td>共用，只需在外壳部分加载</td>
+<td>不共用，每个页面都需要加载</td>
+</tr>
+<tr>
+<td>刷新方式</td>
+<td>页面局部刷新或更改</td>
+<td>整页刷新</td>
+</tr>
+<tr>
+<td>url 模式</td>
+<td>a.com/#/pageone<br>a.com/#/pagetwo</td>
+<td>a.com/pageone.html<br>a.com/pagetwo.html</td>
+</tr>
+<tr>
+<td>用户体验</td>
+<td>页面片段间的切换快，用户体验良好</td>
+<td>页面切换加载缓慢，流畅度不够，用户体验比较差</td>
+</tr>
+<tr>
+<td>页面跳转动画</td>
+<td>容易实现</td>
+<td>无法实现</td>
+</tr>
+<tr>
+<td>数据传递</td>
+<td>容易</td>
+<td>依赖 url 传参、或者 cookie 、localStorage 等</td>
+</tr>
+<tr>
+<td>搜索引擎优化(SEO)</td>
+<td>需要单独方案、实现较为困难、不利于SEO检索 可利用服务器端渲染(SSR)优化</td>
+<td>实现方法简易</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>以上表格内容来自<a href="https://juejin.im/post/5a0ea4ec6fb9a0450407725c" target="_blank" rel="noopener">《前端：你要懂的单页面应用和多页面应用》</a>，个人认为整理得挺到位的。</p>
+</blockquote>
+<h3 id="其他应用"><a href="#其他应用" class="headerlink" title="其他应用"></a>其他应用</h3><p>所以其实可以看到，应用和页面的关系，可以简单地理解为多个页面拼成一个应用的关系。应用也分很多种噢，前端里最常见的是浏览器中的 Web 应用，除了这个以外，还有<a href="https://developer.mozilla.org/zh-CN/docs/Web/Progressive_web_apps" target="_blank" rel="noopener">渐进式 Web 应用（Progressive Web Apps，PWA）</a>，以及原生应用、移动应用。原生应用这些年也有很火的框架出现，像 React Native，Flutter 和 Xamarin 这样的框架允许使用不同于每种标准本地语言的语言来开发所有平台的本地应用程序。</p>
+<p>从产品的角度来说，一个应用可以理解为给用户提供一套完整的定向服务，会包括用户登录、服务分类（Tab）、交互设计和内容展示等等。从工程项目的角度来看，包括用户身份管理、页面管理、路由管理、应用状态管理等。</p>
+<p>这一节内容，我们主要来讲路由管理，也就是会把<a href="https://godbasin.github.io/2019/07/11/vue-for-everyone-2/">上一节内容</a>中拼好的一个个页面，串成一个完整的应用。</p>
+<blockquote>
+<p>原谅我脑袋里忽然想起了小虎队的“把你的心我的心，串一串，串一株幸运草，串一个同心圆”</p>
+</blockquote>
+<h2 id="页面划分"><a href="#页面划分" class="headerlink" title="页面划分"></a>页面划分</h2><p>在直接讲我们的路由怎么配置前，我们需要先知道我们的应用要怎么划分，路由和页面路径是一一对应的，所以我们需要先设计应用的页面逻辑。我们要知道怎么设计一个应用，或者说根据已有的产品、设计交互，怎么规划我们项目的结构。</p>
+<p>我们看看上一节的<a href="http://vue-for-everyone.godbasin.com/2/index.html" target="_blank" rel="noopener">页面效果</a>：<br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/vue-for-everyone-2-1.jpg" alt></p>
+<h3 id="页面结构设计"><a href="#页面结构设计" class="headerlink" title="页面结构设计"></a>页面结构设计</h3><p>这是常用的一种管理端页面结构，我们可以基于这样的页面设计几种类型的页面拼装：</p>
+<table>
+<thead>
+<tr>
+<th>序号</th>
+<th>页面形式</th>
+<th>页面能力</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>登录页</td>
+<td>只有用户名和密码的输入</td>
+</tr>
+<tr>
+<td>2</td>
+<td>列表 + 表单</td>
+<td>单页可以完成某类服务的增删查改</td>
+</tr>
+<tr>
+<td>3</td>
+<td>列表页</td>
+<td>只有列表展示，提供查和删服务，需要配合 4 的表单页完成增和改</td>
+</tr>
+<tr>
+<td>4</td>
+<td>表单页</td>
+<td>只有表单编辑内容，可提供新增、修改等能力给 3 使用</td>
+</tr>
+</tbody>
+</table>
+<p>上述 2-4 结构的页面，可以配合路由，整理出这样的菜单信息：<br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/vue-for-everyone-3-2.jpg" alt></p>
+<h3 id="页面路由设计"><a href="#页面路由设计" class="headerlink" title="页面路由设计"></a>页面路由设计</h3><p>上述情况下，以<code>/</code>作为根路由（对应的组件为 App.vue），我们设计这么几种路由和页面：</p>
+<table>
+<thead>
+<tr>
+<th>路由</th>
+<th>页面内容</th>
+<th>页面对应的 Component</th>
+<th>页面组成</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/login</code></td>
+<td>登录页</td>
+<td>Login</td>
+<td>表单，包括<code>username</code>和<code>password</code></td>
+</tr>
+<tr>
+<td><code>/home</code></td>
+<td>应用首页</td>
+<td>Home</td>
+<td>左侧菜单<code>&lt;Menu&gt;</code>，右侧路由内容<code>&lt;router-view&gt;</code></td>
+</tr>
+<tr>
+<td><code>/home/service</code></td>
+<td>服务信息页</td>
+<td>Service</td>
+<td>为 Home 的子路由组件，包括列表和表单</td>
+</tr>
+<tr>
+<td><code>/home/product</code></td>
+<td>产品容器页</td>
+<td>Product</td>
+<td>为 Home 的子路由组件，包括<code>&lt;router-view&gt;</code></td>
+</tr>
+<tr>
+<td><code>/home/product/list</code></td>
+<td>产品信息页</td>
+<td>ProductList</td>
+<td>为 Product 的子路由组件，包括列表</td>
+</tr>
+<tr>
+<td><code>/home/product/edit</code></td>
+<td>产品编辑页</td>
+<td>ProductEdit</td>
+<td>为 Product 的子路由组件，包括表单</td>
+</tr>
+</tbody>
+</table>
+<p>页面结构和路由嵌套管理，其实是这样的：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">/login                     /home                     /home/service  </span><br><span class="line">+------------------+       +-----------------+       +-----------------+</span><br><span class="line">| App              |       | App             |       | App             |</span><br><span class="line">| +--------------+ |       | +-------------+ |       | +-------------+ |</span><br><span class="line">| | Login        | |       | | Home        | |       | | Home        | |</span><br><span class="line">| |              | |       | |             | |       | | +---------+ | |</span><br><span class="line">| |              | |  +--) | |&lt;router-view&gt;| |  +--) | | | Service | | |</span><br><span class="line">| |              | |       | |  无对应内容  | |       | | |列表+表单 | | |</span><br><span class="line">| |              | |       | |             | |       | | +---------+ | |</span><br><span class="line">| +--------------+ |       | +-------------+ |       | +-------------+ |</span><br><span class="line">+------------------+       +-----------------+       +-----------------+</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">      /home/product                /home/product/list              /home/product/edit</span><br><span class="line">      +---------------------+      +------------------------+      +------------------------+</span><br><span class="line">      | App                 |      | App                    |      | App                    |</span><br><span class="line">      | +-----------------+ |      | +--------------------+ |      | +--------------------+ |</span><br><span class="line">      | | Home            | |      | | Home               | |      | | Home               | |</span><br><span class="line">      | | +-------------+ | |      | | +----------------+ | |      | | +----------------+ | |</span><br><span class="line"> +--) | | | Product     | | | +--) | | | Product        | | | +--) | | | Product        | | |</span><br><span class="line">      | | |&lt;router-view&gt;| | |      | | | +------------+ | | |      | | | +------------+ | | |</span><br><span class="line">      | | |  无对应内容  | | |      | | | | ProductList| | | |      | | | | ProductEdit| | | |</span><br><span class="line">      | | |             | | |      | | | | 单列表页    | | | |      | | | | 单表单页    | | | |</span><br><span class="line">      | | |             | | |      | | | +------------+ | | |      | | | +------------+ | | |</span><br><span class="line">      | | +-------------+ | |      | | +----------------+ | |      | | +----------------+ | |</span><br><span class="line">      | +-----------------+ |      | +--------------------+ |      | +--------------------+ |</span><br><span class="line">      +---------------------+      +------------------------+      +------------------------+</span><br><span class="line"></span><br><span class="line">      (=′∇`=）画这个图累死俺了</span><br></pre></td></tr></table></figure>
+<p>我们能看到，这里包括了层层的路由嵌套关系，我们后面在配置路由的时候也能看到这样的结构。</p>
+<h3 id="目录结构划分"><a href="#目录结构划分" class="headerlink" title="目录结构划分"></a>目录结构划分</h3><p>我们看到上面的路由划分示意图，使用框框框起来的代表一个 Vue component，而在 Vue 中，其实一切皆组件（页面是特殊的组件），那我们要怎么区分页面和组件呢，一般可以使用项目目录来简单做一些划分：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">├─dist                      // 编译之后的项目文件</span><br><span class="line">├─src                       // 开发目录</span><br><span class="line">│  ├─assets                 // 静态资源</span><br><span class="line">│     ├─less                // 公共less</span><br><span class="line">│     ├─img                 // 图片资源</span><br><span class="line">│  ├─components             // **放这里是组件**</span><br><span class="line">│  ├─pages                  // **放这里是页面** 根据路由结构划分</span><br><span class="line">│  ├─utils                  // 工具库</span><br><span class="line">│  ├─App.vue                // 启动页面，最外层容器组件</span><br><span class="line">│  ├─main.js                // 入口脚本</span><br><span class="line">├─babel.config.js          // babel 配置文件</span><br><span class="line">├─vue.config.js            // vue 自定义配置，与 webpack 配置相关</span><br><span class="line">├─package.json             // 项目配置</span><br><span class="line">├─README.<span class="built_in">md</span>                // 项目说明</span><br></pre></td></tr></table></figure>
+<p>目录结构清晰，其实对一个项目的可维护性非常重要，一眼看去你就知道这个项目大概包括了哪些内容，分别都放在哪里。好看的目录结构和命名，和好看的代码结构和命名一样，已经是天然的说明了，这是很好的编码习惯呢。</p>
+<p>好了，项目目录和路由结构我们划分好了，我们来看看怎么根据上面的设计来配置路由，以及实现相互跳转吧。</p>
+<h2 id="路由配置"><a href="#路由配置" class="headerlink" title="路由配置"></a>路由配置</h2><p>Vue 框架本身的定位是核心关注视图层，所以路由配置、状态管理、其他千奇百怪的测试、mock功能等都不是自带的，我们需要自己找到对应的开源库配合使用（像 angular 这种大而全的框架，则会提供了开箱即用的完整功能，适合大型项目使用）。例如与 Vue 结合的路由管理，一般选择 <a href="https://router.vuejs.org/zh/" target="_blank" rel="noopener">vue-router</a>。</p>
+<h3 id="使用开源库和工具"><a href="#使用开源库和工具" class="headerlink" title="使用开源库和工具"></a>使用开源库和工具</h3><p>这里顺便介绍下前端怎么找开源库和工具，包括几种途径：</p>
+<ol>
+<li>google 搜 <code>vue router</code>。（没有爬墙工具的小伙伴，可以使用 <a href="https://cn.bing.com/" target="_blank" rel="noopener">bing</a> 噢）</li>
+<li>在 <a href="https://github.com/" target="_blank" rel="noopener">github</a> 上搜 <code>vue router</code>。</li>
+<li>去 <a href="https://www.npmjs.com/" target="_blank" rel="noopener">npm</a> 上找 <code>vue router</code> 资源包。（因为前端开源都是基于 npm 包管理，所以基本上都能在 npm 里找到）</li>
+</ol>
+<p>如图：<br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/vue-for-everyone-3-1.jpg" alt="搜索开源库和工具"></p>
+<h3 id="安装和引入-vue-router"><a href="#安装和引入-vue-router" class="headerlink" title="安装和引入 vue-router"></a>安装和引入 vue-router</h3><p>其实官方文档也有介绍怎么安装和使用，这里再简单介绍一下哈：</p>
+<h4 id="1-安装依赖"><a href="#1-安装依赖" class="headerlink" title="1. 安装依赖"></a>1. 安装依赖</h4><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 安装依赖</span><br><span class="line">npm install vue-router</span><br></pre></td></tr></table></figure>
+<h4 id="2-引入-vue-router"><a href="#2-引入-vue-router" class="headerlink" title="2. 引入 vue-router"></a>2. 引入 vue-router</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.js</span></span><br><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span>;</span><br><span class="line"><span class="comment">// 引入 vue-router</span></span><br><span class="line"><span class="keyword">import</span> VueRouter <span class="keyword">from</span> <span class="string">'vue-router'</span>;</span><br><span class="line">Vue.use(VueRouter); <span class="comment">// 使用 vue-router</span></span><br></pre></td></tr></table></figure>
+<h3 id="使用-vue-router-添加路由"><a href="#使用-vue-router-添加路由" class="headerlink" title="使用 vue-router 添加路由"></a>使用 vue-router 添加路由</h3><p>这里我们根据前面的应用设计，讲一下要怎么配置，vue-router 怎么使用。</p>
+<h4 id="1-配置路由信息"><a href="#1-配置路由信息" class="headerlink" title="1. 配置路由信息"></a>1. 配置路由信息</h4><p>根据以上的嵌套关系，我们可以设置最外层的根路由为<code>&quot;/&quot;</code>，加上其他嵌套子路由配置为：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 配置路由信息</span></span><br><span class="line"><span class="comment">// 每个路由应该映射一个组件。 其中"component" 可以是</span></span><br><span class="line"><span class="comment">// 通过 Vue.extend() 创建的组件构造器，</span></span><br><span class="line"><span class="comment">// 或者，只是一个组件配置对象。</span></span><br><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">  &#123;</span><br><span class="line">    path: <span class="string">"/"</span>, <span class="comment">// 父路由路径</span></span><br><span class="line">    component: App, <span class="comment">// 父路由组件，传入 vue component</span></span><br><span class="line">    name: <span class="string">"App"</span>, <span class="comment">// 路由名称</span></span><br><span class="line">    <span class="comment">// 设置子路由</span></span><br><span class="line">    children: [</span><br><span class="line">      &#123; </span><br><span class="line">        path: <span class="string">"login"</span>, <span class="comment">// 子路由路径</span></span><br><span class="line">        component: Login, <span class="comment">// 子路由组件，会替换父组件中&lt;router-view&gt;中的内容</span></span><br><span class="line">        name: <span class="string">"Login"</span> <span class="comment">// 路由名称</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="comment">// 应用首页</span></span><br><span class="line">        path: <span class="string">"home"</span>, <span class="attr">component</span>: Home,  <span class="attr">name</span>: <span class="string">"Home"</span>,</span><br><span class="line">        children: [</span><br><span class="line">          <span class="comment">// 服务列表</span></span><br><span class="line">          &#123; <span class="attr">path</span>: <span class="string">"service"</span>, <span class="attr">component</span>: Service, <span class="attr">name</span>: <span class="string">"Service"</span> &#125;,</span><br><span class="line">          <span class="comment">// 产品容器</span></span><br><span class="line">          &#123; <span class="attr">path</span>: <span class="string">"product"</span>, <span class="attr">component</span>: Product, <span class="attr">name</span>: <span class="string">"Product"</span>,</span><br><span class="line">            children: [ <span class="comment">// 子路由内容</span></span><br><span class="line">              <span class="comment">// 产品列表</span></span><br><span class="line">              &#123; <span class="attr">path</span>: <span class="string">"list"</span>, <span class="attr">component</span>: ProductList, <span class="attr">name</span>: <span class="string">"ProductList"</span> &#125;,</span><br><span class="line">              <span class="comment">// 产品新增</span></span><br><span class="line">              &#123; <span class="attr">path</span>: <span class="string">"add/0"</span>, <span class="attr">component</span>: ProductEdit, <span class="attr">name</span>: <span class="string">"ProductAdd"</span> &#125;,</span><br><span class="line">              <span class="comment">// 产品编辑</span></span><br><span class="line">              <span class="comment">// 我们能看到，新增和编辑其实最终使用的是同一个组件，所以后面会有一些需要兼容处理的地方</span></span><br><span class="line">              <span class="comment">// :id可匹配任意值，且可在组件中通过this.$route.params.id获取该值</span></span><br><span class="line">              &#123; <span class="attr">path</span>: <span class="string">"edit/:id"</span>, <span class="attr">component</span>: ProductEdit, <span class="attr">name</span>: <span class="string">"ProductEdit"</span> &#125;</span><br><span class="line">            ]</span><br><span class="line">          &#125;</span><br><span class="line">        ]</span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+<h4 id="2-Vue-中加载-vue-router-和路由信息"><a href="#2-Vue-中加载-vue-router-和路由信息" class="headerlink" title="2. Vue 中加载 vue-router 和路由信息"></a>2. Vue 中加载 vue-router 和路由信息</h4><p>路由配置设计好之后，我们可以通过将 router 配置参数注入路由，让整个应用都有路由功能：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 加载路由信息</span></span><br><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> VueRouter(&#123;</span><br><span class="line">  <span class="comment">// mode: 路由模式，'hash' | 'history'</span></span><br><span class="line">  <span class="comment">// routes：传入路由配置信息，后面会讲怎么配置</span></span><br><span class="line">  routes <span class="comment">// （缩写）相当于 routes: routes</span></span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 启动一个 Vue 应用</span></span><br><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  el: <span class="string">"#app"</span>,</span><br><span class="line">  router, <span class="comment">// 传入路由能力</span></span><br><span class="line">  render: <span class="function"><span class="params">h</span> =&gt;</span> h(App)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>这里的<a href="https://router.vuejs.org/zh/api/#mode" target="_blank" rel="noopener">路由模式-mode</a>包括两种：</p>
+<ul>
+<li><code>hash</code><ul>
+<li>使用 URL hash 值来作路由。支持所有浏览器，包括不支持 HTML5 History Api 的浏览器</li>
+<li>例如上面说的<code>a.com/#/pageone</code>，便是 hash 模式</li>
+</ul>
+</li>
+<li><code>history</code><ul>
+<li>充分利用 history.pushState API 来完成 URL 跳转而无须重新加载页面</li>
+<li>例如<code>a.com/pageone</code>，如果觉得 hash 模式丑可以使用这种</li>
+<li><strong>注意！！</strong>依赖 <a href="https://router.vuejs.org/zh/guide/essentials/history-mode.html#html5-history-%E6%A8%A1%E5%BC%8F" target="_blank" rel="noopener">HTML5 History API 和服务器配置</a></li>
+</ul>
+</li>
+</ul>
+<p>到这里，我们路由配置和启动的部分已经完成，可以在 <a href="https://github.com/godbasin/vue-element-demo/blob/master/3/src/main.js" target="_blank" rel="noopener">main.js</a> 文件查看完整代码。</p>
+<h4 id="3-lt-router-view-gt-使用"><a href="#3-lt-router-view-gt-使用" class="headerlink" title="3. &lt;router-view&gt;使用"></a>3. <code>&lt;router-view&gt;</code>使用</h4><p><code>&lt;router-view&gt;</code>组件是一个 functional 组件，渲染路径匹配到的视图组件。它渲染的组件还可以内嵌自己的<code>&lt;router-view&gt;</code>，根据嵌套路径，渲染嵌套组件。</p>
+<p>我们来看看<code>&lt;router-view&gt;</code>的使用，这里以<code>App.vue</code>和<code>Home.vue</code>作为例子：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 这里是最外层 /app 路由的组件，App.vue --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 使用 &lt;router-view&gt;&lt;/router-view&gt; 来嵌套路由 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">router-view</span>&gt;</span><span class="tag">&lt;/<span class="name">router-view</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 这里是 /app/home 路由的组件，Home.vue --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 这里采用了简写，省略了一些非关键内容，更多内容可以参考上一节 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">el-container</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 左侧菜单, Menu.vue --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Menu</span>&gt;</span><span class="tag">&lt;/<span class="name">Menu</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 右侧内容 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">el-container</span>&gt;</span></span><br><span class="line">      <span class="comment">&lt;!-- 上边的头部栏 --&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">el-header</span>&gt;</span><span class="tag">&lt;/<span class="name">el-header</span>&gt;</span></span><br><span class="line">      <span class="comment">&lt;!-- 子路由页面的内容 --&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">router-view</span>&gt;</span><span class="tag">&lt;/<span class="name">router-view</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">el-container</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">el-container</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="4-lt-router-link-gt-使用"><a href="#4-lt-router-link-gt-使用" class="headerlink" title="4. &lt;router-link&gt;使用"></a>4. <code>&lt;router-link&gt;</code>使用</h4><p><a href="https://godbasin.github.io/2019/07/11/vue-for-everyone-2/">上一节内容</a>中我们拼了这么一个页面：<br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/vue-for-everyone-2-1.jpg" alt></p>
+<p>大家<a href="http://vue-for-everyone.godbasin.com/2/index.html" target="_blank" rel="noopener">查看页面效果</a>的时候会发现，左侧的菜单点击没有什么反应，因为我们还没有加上路由。那么现在就使用这里的菜单，来展示下<code>&lt;router-link&gt;</code>的使用吧。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 这里是 Menu.vue，即上一节内容种拼的左侧菜单 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 这里主要针对路由相关内容，更多的注释省略了，有需要可查看最终代码 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 此处有个 default-active 属性需要注意，是用来设置菜单的选中样式，我们需要根据当前路由情况来选中 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">el-menu</span> <span class="attr">:collapse</span>=<span class="string">"isMenuCollapse"</span> <span class="attr">:default-openeds</span>=<span class="string">"['0', '1']"</span> <span class="attr">:default-active</span>=<span class="string">"activeIndex"</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 遍历生成父菜单选项 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">template</span> <span class="attr">v-for</span>=<span class="string">"menu in menus"</span>&gt;</span></span><br><span class="line">      <span class="comment">&lt;!-- 有子菜单的时候 --&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">el-submenu</span> <span class="attr">v-if</span>=<span class="string">"menu.subMenus &amp;&amp; menu.subMenus.length"</span> <span class="attr">:index</span>=<span class="string">"menu.index"</span> <span class="attr">:key</span>=<span class="string">"menu.index"</span></span></span><br><span class="line"><span class="tag">      &gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">template</span> <span class="attr">slot</span>=<span class="string">"title"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">i</span> <span class="attr">:class</span>=<span class="string">"menu.icon"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">span</span> <span class="attr">slot</span>=<span class="string">"title"</span>&gt;</span>&#123;&#123;menu.text&#125;&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-menu-item-group</span>&gt;</span></span><br><span class="line">          <span class="comment">&lt;!-- 使用 router-link 组件来导航. --&gt;</span></span><br><span class="line">          <span class="comment">&lt;!-- 通过传入 `to` 属性指定链接. --&gt;</span></span><br><span class="line">          <span class="comment">&lt;!-- &lt;router-link&gt; 默认会被渲染成一个 `&lt;a&gt;` 标签 --&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">router-link</span> <span class="attr">tag</span>=<span class="string">"div"</span> <span class="attr">v-for</span>=<span class="string">"subMenu in menu.subMenus"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">:key</span>=<span class="string">"subMenu.index"</span> <span class="attr">:to</span>=<span class="string">"&#123;name: subMenu.routerName&#125;"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">el-menu-item</span> <span class="attr">:index</span>=<span class="string">"subMenu.index"</span>&gt;</span>&#123;&#123;subMenu.text&#125;&#125;<span class="tag">&lt;/<span class="name">el-menu-item</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">router-link</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">el-menu-item-group</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">el-submenu</span>&gt;</span></span><br><span class="line">      <span class="comment">&lt;!-- 只有单个父菜单的时候，也要给这个父菜单添加路由，同样的 to 指向要去的地方 --&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">router-link</span> <span class="attr">v-else</span> <span class="attr">:index</span>=<span class="string">"menu.index"</span> <span class="attr">:key</span>=<span class="string">"menu.index"</span> <span class="attr">tag</span>=<span class="string">"div"</span> <span class="attr">:to</span>=<span class="string">"&#123;name: menu.routerName&#125;"</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 没子菜单的时候，就用 el-menu-item，也要绑个序号 index --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">el-menu-item</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">i</span> <span class="attr">:class</span>=<span class="string">"menu.icon"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">span</span> <span class="attr">slot</span>=<span class="string">"title"</span>&gt;</span>&#123;&#123;menu.text&#125;&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">el-menu-item</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">router-link</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">el-menu</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>&lt;router-link&gt;</code>的使用，除了通过 name 来跳转之外，还可通过 path 跳转、带上参数、激活样式、tag 设置等：</p>
+<ul>
+<li>to: 一个路径字符串, 或者一个对象 location descriptor</li>
+<li>tag: 渲染成的html元素类型，默认是</li>
+<li>exact: 用于控制当前激活项的行为</li>
+<li>append: 控制相对链接路径的追加方式</li>
+<li>replace: 替代而不是作为历史条目压榨</li>
+<li>active-class: 当链接项激活时增加的 CSS 样式</li>
+</ul>
+<p>更多的大家可以参考<a href="https://router.vuejs.org/zh/api/#router-link" target="_blank" rel="noopener">官网 router-link API</a>。也可以在 <a href="https://github.com/godbasin/vue-element-demo/blob/master/3/src/components/Menu.vue" target="_blank" rel="noopener">Menu.vue</a> 文件查看 Menu 组件的完整代码。</p>
+<h4 id="5-使用-watch-监控路由变化"><a href="#5-使用-watch-监控路由变化" class="headerlink" title="5. 使用 watch 监控路由变化"></a>5. 使用 watch 监控路由变化</h4><p>对应的，我们需要在 menus 里加上 routerName，用来跳转：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// routerName 为对应的路由的路由名称</span></span><br><span class="line"><span class="keyword">const</span> menus = [</span><br><span class="line">  &#123;</span><br><span class="line">    text: <span class="string">"服务管理"</span>, <span class="attr">icon</span>: <span class="string">"el-icon-setting"</span>,</span><br><span class="line">    subMenus: [&#123; <span class="attr">text</span>: <span class="string">"服务信息"</span>, <span class="attr">routerName</span>: <span class="string">'Service'</span> &#125;]  </span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    text: <span class="string">"产品管理"</span>, <span class="attr">icon</span>: <span class="string">"el-icon-menu"</span>,</span><br><span class="line">    subMenus: [</span><br><span class="line">        &#123; <span class="attr">text</span>: <span class="string">"产品信息"</span>, <span class="attr">routerName</span>: <span class="string">'ProductList'</span> &#125;, </span><br><span class="line">        &#123; <span class="attr">text</span>: <span class="string">"新增"</span>, <span class="attr">routerName</span>: <span class="string">'ProductAdd'</span> &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// 日志信息这里为空，则不会进行跳转</span></span><br><span class="line">  &#123; <span class="attr">text</span>: <span class="string">"日志信息"</span>, <span class="attr">icon</span>: <span class="string">"el-icon-message"</span>, <span class="attr">routerName</span>: <span class="string">''</span> &#125;</span><br><span class="line">].map(<span class="function">(<span class="params">x, i</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 添加 index，可用于默认展开 default-openeds 属性，和激活状态 efault-active 属性的设置</span></span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    ...x,</span><br><span class="line">    <span class="comment">// 子菜单就拼接$&#123;父菜单index&#125;-$&#123;子菜单index&#125;</span></span><br><span class="line">    subMenus: <span class="function">(<span class="params">x.subMenus || []</span>).<span class="params">map</span>(<span class="params">(y, j</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> &#123; ...y, <span class="attr">index</span>: <span class="string">`<span class="subst">$&#123;i&#125;</span>-<span class="subst">$&#123;j&#125;</span>`</span> &#125;;</span><br><span class="line">    &#125;),</span><br><span class="line">    <span class="comment">// 父菜单就把 index 加上好了</span></span><br><span class="line">    index: <span class="string">`<span class="subst">$&#123;i&#125;</span>`</span></span><br><span class="line">  &#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>根据<a href="https://element.eleme.io/#/zh-CN/component/menu#menu-attribute" target="_blank" rel="noopener">el-menu的配置</a>我们知道，<code>&lt;el-menu&gt;</code>的<code>default-active</code>属性需要设置当前激活菜单的 index，因此我们需要监控路由的变化，并根据路由情况调整绑定的激活 index。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 下面是 Vue 组件</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  data() &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      menus, <span class="comment">// menus: menus 的简写</span></span><br><span class="line">      activeIndex: <span class="string">''</span></span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;,</span><br><span class="line">  watch: &#123;</span><br><span class="line">    <span class="comment">// 为了设置 el-menu 的 default-active 属性，需要获取到路由状态</span></span><br><span class="line">    <span class="string">'$route'</span> (to) &#123;</span><br><span class="line">      <span class="comment">// 对路由变化作出响应...</span></span><br><span class="line">      <span class="keyword">let</span> activeIndex;</span><br><span class="line">      <span class="comment">// 找到匹配的 routerName</span></span><br><span class="line">      <span class="keyword">this</span>.menus.forEach(<span class="function"><span class="params">x</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span>(x.routerName === to.name)&#123;</span><br><span class="line">          activeIndex = x.index;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">          <span class="keyword">const</span> subMenuItem = x.subMenus.find(<span class="function"><span class="params">y</span> =&gt;</span> y.routerName === to.name);</span><br><span class="line">          <span class="keyword">if</span>(subMenuItem)&#123; activeIndex = subMenuItem.index; &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;);</span><br><span class="line">      <span class="comment">// 并将 activeIndex 设置为对应的 菜单 index</span></span><br><span class="line">      <span class="keyword">if</span>(activeIndex)&#123;</span><br><span class="line">        <span class="keyword">this</span>.activeIndex = activeIndex;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>我们看到，这里使用了一个叫 watch 的属性。Vue 中监听属性 watch 和计算属性 computed 也是很常用的能力（能节省不少的代码），衍生的其他依赖状态就可以使用 computed 来处理，而某种状态的变更可以使用 watch 监听。这里篇幅关系不多说，大家可以去翻阅下<a href="(https://cn.vuejs.org/v2/guide/computed.html">官方文档</a>)。</p>
+<h4 id="6-路由跳转"><a href="#6-路由跳转" class="headerlink" title="6. 路由跳转"></a>6. 路由跳转</h4><p>除了使用<code>&lt;router-link&gt;</code>来定义导航链接，我们还可以借助 router 的实例方法，通过编写代码来实现。在 Vue 实例内部，我们可以通过 $router 访问路由实例，例如我们在 ProductList 页面需要跳转到 ProductEdit 页面来编辑/新增选项内容：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="comment">// ...其他省略</span></span><br><span class="line">  methods: &#123;</span><br><span class="line">    <span class="comment">// 新增/修改一个数据</span></span><br><span class="line">    updateTableItem(id = <span class="number">0</span>)&#123;</span><br><span class="line">      <span class="comment">// 跳转到编辑页面，新增则传id为0，否则为编辑</span></span><br><span class="line">      <span class="comment">// 可以通过 this.$router 访问路由实例</span></span><br><span class="line">      <span class="keyword">if</span>(id !== <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="comment">// 传参 name 为路由名字，params 为我们定义的路由 path 的参数，变成 /edit/xxx</span></span><br><span class="line">        <span class="comment">// 还有另外一种传参方式 query，带查询参数，变成 /edit?id=xxx</span></span><br><span class="line">        <span class="keyword">this</span>.$router.push(&#123;<span class="attr">name</span>: <span class="string">'ProductEdit'</span>, <span class="attr">params</span>: &#123;id&#125;&#125;)</span><br><span class="line">      &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.$router.push(&#123;<span class="attr">name</span>: <span class="string">'ProductAdd'</span>&#125;)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>router 实例的使用和<code>&lt;router-link&gt;</code>其实很相像，也挺简单的，可以参考<a href="https://router.vuejs.org/zh/guide/essentials/navigation.html" target="_blank" rel="noopener">编程式的导航</a>。</p>
+<h3 id="给路由添加鉴权"><a href="#给路由添加鉴权" class="headerlink" title="给路由添加鉴权"></a>给路由添加鉴权</h3><p>既然我们这一次设计了登录页和应用首页（请各位根据<a href="https://godbasin.github.io/2019/07/11/vue-for-everyone-2/">第二节内容</a>分别自行拼出来），一般来说，我们会设计只有当登录完成之后，才可以进入应用里面的其他页面。</p>
+<h4 id="1-设置简单的全局数据"><a href="#1-设置简单的全局数据" class="headerlink" title="1. 设置简单的全局数据"></a>1. 设置简单的全局数据</h4><p>一般来说，在 Vue 中会使用 Vuex 来管理数据状态。基于本节内容主要讲 vue-router，所以我们简单设计一个全局数据的管理库：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// globalData.js</span></span><br><span class="line"><span class="comment">// globalData 用来存全局数据</span></span><br><span class="line"><span class="keyword">let</span> globalData = &#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取全局数据</span></span><br><span class="line"><span class="comment">// 传 key 获取对应的值</span></span><br><span class="line"><span class="comment">// 不传 key 获取全部值</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">getGlobalData</span>(<span class="params">key</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> key ? globalData[key] : globalData;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置全局数据</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">setGlobalData</span>(<span class="params">key, value</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 需要传键值对</span></span><br><span class="line">    <span class="keyword">if</span>(key === <span class="literal">undefined</span> || value === <span class="literal">undefined</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    globalData = &#123;...globalData, [key]: value&#125;</span><br><span class="line">    <span class="keyword">return</span> globalData;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 清除全局数据</span></span><br><span class="line"><span class="comment">// 传 key 清除对应的值</span></span><br><span class="line"><span class="comment">// 不传 key 清除全部值</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">clearGlobalData</span>(<span class="params">key</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 需要传键值对</span></span><br><span class="line">    <span class="keyword">if</span>(key === <span class="literal">undefined</span>)&#123;</span><br><span class="line">        globalData = &#123;&#125;;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">delete</span> globalData[key];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> globalData;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用这种方式的全局数据，是会在页面刷新之后丢失的。而如果用来存用户的登录态信息，为了避免频繁登录，更好的方式是存到 cookie 或者缓存里。</p>
+<h4 id="2-登录页面登录"><a href="#2-登录页面登录" class="headerlink" title="2. 登录页面登录"></a>2. 登录页面登录</h4><p>拼好的页面可以查看 <a href="https://github.com/godbasin/vue-element-demo/blob/master/3/src/pages/Login.vue" target="_blank" rel="noopener">Login.vue</a> 文件，这里由于篇幅关系，我们只看保存数据和跳转的部分：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;setGlobalData&#125; <span class="keyword">from</span> <span class="string">'utils/globalData'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 下面是 Vue 组件</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="comment">// ...其他省略</span></span><br><span class="line">  methods: &#123;</span><br><span class="line">    <span class="comment">// 提交新增/修改表单</span></span><br><span class="line">    onSubmit()&#123;</span><br><span class="line">      <span class="comment">// 校验表单，用户名和密码都必须填入</span></span><br><span class="line">      <span class="comment">// Element 表单校验规则配置，请查看https://element.eleme.cn/#/zh-CN/component/form</span></span><br><span class="line">      <span class="keyword">this</span>.$refs[<span class="string">'form'</span>].validate(<span class="function">(<span class="params">valid</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (valid) &#123;</span><br><span class="line">          <span class="comment">// 校验通过</span></span><br><span class="line">          <span class="comment">// 设置用户名</span></span><br><span class="line">          setGlobalData(<span class="string">'username'</span>, <span class="keyword">this</span>.form.username);</span><br><span class="line">          <span class="comment">// 跳转到里页</span></span><br><span class="line">          <span class="keyword">this</span>.$router.push(&#123;<span class="attr">name</span>: <span class="string">"Home"</span>&#125;);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          <span class="comment">// 校验失败</span></span><br><span class="line">          <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h4 id="3-鉴权进入内页"><a href="#3-鉴权进入内页" class="headerlink" title="3. 鉴权进入内页"></a>3. 鉴权进入内页</h4><p>这里，我们需要使用 vue-router 的<a href="https://router.vuejs.org/zh/guide/advanced/navigation-guards.html#%E5%85%A8%E5%B1%80%E5%89%8D%E7%BD%AE%E5%AE%88%E5%8D%AB" target="_blank" rel="noopener">导航守卫</a>能力，当用户未登录时，则拒绝进入其他路由页面里：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.js</span></span><br><span class="line"><span class="keyword">import</span> &#123; getGlobalData &#125; <span class="keyword">from</span> <span class="string">"utils/globalData"</span>;</span><br><span class="line"></span><br><span class="line">router.beforeEach(<span class="function">(<span class="params">to, <span class="keyword">from</span>, next</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (to.name !== <span class="string">"Login"</span>) &#123;</span><br><span class="line">    <span class="comment">// 非 login 页面，检查是否登录</span></span><br><span class="line">    <span class="comment">// 这里简单前端模拟是否填写了用户名，真实环境需要走后台登录，缓存到本地</span></span><br><span class="line">    <span class="keyword">if</span> (!getGlobalData(<span class="string">"username"</span>)) &#123;</span><br><span class="line">      next(&#123; <span class="attr">name</span>: <span class="string">"Login"</span> &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 其他情况正常执行</span></span><br><span class="line">  next();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>到这里，我们整个应用可以顺利地跑起来了：</p>
+<ul>
+<li><a href="http://vue-for-everyone.godbasin.com/3/index.html" target="_blank" rel="noopener">页面的效果查看</a></li>
+<li><a href="https://github.com/godbasin/vue-element-demo/tree/master/3" target="_blank" rel="noopener">页面代码查看</a></li>
+</ul>
+<h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><hr>
+<p>很多人会谈到程序员的天花板，前端开发也喜欢谈前端开发的天花板。我们总以为自己所经历的是最艰难的，其实每个人都是一样的。工地的建筑工人、快递外卖小哥、各行各业都有各自的难处，人只要想要往上走，总是要爬坡的。<br>自我感动取之便捷，又容易上瘾，我们绝不能走到半山腰上就嚎啕大哭。</p>
+  
+	</div>
+	<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/2code2.jpg" width="200" height="200" style="display:block;margin: 0 auto;" />
+	<p style="text-align: center;margin-top: 10px;margin-bottom: 20px;">码生艰难，写文不易，给我家猪囤点猫粮了喵~</p>
+	<div class="article-content">
+		<p style="margin-top:50px;">
+			查看Github有更多内容噢：<a href="https://github.com/godbasin">https://github.com/godbasin</a>
+			<br>
+			更欢迎来<a href="https://godbasin.github.io/front-end-playground">被删的前端游乐场</a>边撸猫边学前端噢
+			<br>
+			如果你想要关注日常生活中的我，欢迎关注“牧羊的猪”公众号噢
+		</p>
+	</div>
+	<div class="author-right">
+  		<p>作者：被删</p>
+  		<p>出处：<a href="https://godbasin.github.io">https://godbasin.github.io</a></p>
+  		<p>本文版权归作者所有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利。</p>
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/教程/">教程</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/vue八宝粥/">vue八宝粥</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  
+<!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a href="http://www.jiathis.com/share?uid=2134021" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config = {data_track_clickback:'true'};
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js?uid=2134021" charset="utf-8"></script>
+<!-- JiaThis Button END -->   
+
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2019/07/27/front-end-playground/" title="被删的前端游乐场建成！">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  被删的前端游乐场建成！</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2019/07/15/wxapp-latest-20190715/"  title="小程序开发月刊第七期（20190715）">
+ <strong>NEXT:</strong><br/> 
+ <span>小程序开发月刊第七期（20190715）
+</span>
+</a>
+</div>
+
+</nav>
+
+	<!-- 如果不是首页且没使用 `comments: false` 关闭评论，则尝试加载评论 -->
+
+    <!-- 配置中启用多说时，导入相应代码 -->
+    
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Vue-应用概念"><span class="toc-number">1.</span> <span class="toc-text">Vue 应用概念</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#单页应用"><span class="toc-number">1.1.</span> <span class="toc-text">单页应用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SPA-与-MPA"><span class="toc-number">1.1.1.</span> <span class="toc-text">SPA 与 MPA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他应用"><span class="toc-number">1.1.2.</span> <span class="toc-text">其他应用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#页面划分"><span class="toc-number">1.2.</span> <span class="toc-text">页面划分</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#页面结构设计"><span class="toc-number">1.2.1.</span> <span class="toc-text">页面结构设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#页面路由设计"><span class="toc-number">1.2.2.</span> <span class="toc-text">页面路由设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#目录结构划分"><span class="toc-number">1.2.3.</span> <span class="toc-text">目录结构划分</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#路由配置"><span class="toc-number">1.3.</span> <span class="toc-text">路由配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用开源库和工具"><span class="toc-number">1.3.1.</span> <span class="toc-text">使用开源库和工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装和引入-vue-router"><span class="toc-number">1.3.2.</span> <span class="toc-text">安装和引入 vue-router</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-安装依赖"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">1. 安装依赖</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-引入-vue-router"><span class="toc-number">1.3.2.2.</span> <span class="toc-text">2. 引入 vue-router</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用-vue-router-添加路由"><span class="toc-number">1.3.3.</span> <span class="toc-text">使用 vue-router 添加路由</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-配置路由信息"><span class="toc-number">1.3.3.1.</span> <span class="toc-text">1. 配置路由信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Vue-中加载-vue-router-和路由信息"><span class="toc-number">1.3.3.2.</span> <span class="toc-text">2. Vue 中加载 vue-router 和路由信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-lt-router-view-gt-使用"><span class="toc-number">1.3.3.3.</span> <span class="toc-text">3. &lt;router-view&gt;使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-lt-router-link-gt-使用"><span class="toc-number">1.3.3.4.</span> <span class="toc-text">4. &lt;router-link&gt;使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-使用-watch-监控路由变化"><span class="toc-number">1.3.3.5.</span> <span class="toc-text">5. 使用 watch 监控路由变化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-路由跳转"><span class="toc-number">1.3.3.6.</span> <span class="toc-text">6. 路由跳转</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#给路由添加鉴权"><span class="toc-number">1.3.4.</span> <span class="toc-text">给路由添加鉴权</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-设置简单的全局数据"><span class="toc-number">1.3.4.1.</span> <span class="toc-text">1. 设置简单的全局数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-登录页面登录"><span class="toc-number">1.3.4.2.</span> <span class="toc-text">2. 登录页面登录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-鉴权进入内页"><span class="toc-number">1.3.4.3.</span> <span class="toc-text">3. 鉴权进入内页</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结束语"><span class="toc-number">1.4.</span> <span class="toc-text">结束语</span></a></li></ol></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  	
+	<div class="archiveslist">
+		<p class="asidetitle">最近文章</p>
+			<ul class="archive-list">
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/03/13/angular-design-0-prestart/" title="Angular框架解读--预热篇">Angular框架解读--预热篇...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/02/27/network-design-dependency-decoupling/" title="在线文档的网络层开发思考--依赖关系梳理">在线文档的网络层开发思考--依赖关系...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/01/23/network-design-responsibility-driven-design/" title="在线文档的网络层开发思考--职责驱动设计">在线文档的网络层开发思考--职责驱动...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/01/10/about-writing/" title="前端这几年--写文章这件事">前端这几年--写文章这件事...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/11/01/task-runner-design/" title="如何设计一个任务管理器">如何设计一个任务管理器</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/10/10/why-spreadsheet-app-excited/" title="在线Excel项目到底有多刺激">在线Excel项目到底有多刺激...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/10/07/monitor-and-report/" title="前端监控体系搭建">前端监控体系搭建</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/08/30/about-front-end-10/" title="前端这几年--10.我的工作历险记">前端这几年--10.我的工作历险记...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/08/30/about-front-end-9/" title="前端这几年--9.提升工作效率">前端这几年--9.提升工作效率...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/08/29/front-end-performance-analyze/" title="补齐Web前端性能分析的工具盲点">补齐Web前端性能分析的工具盲点...</a>
+				</li>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+	</div>
+
+
+  
+  <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">归档</a></p>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">十月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">41</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">9</span></li></ul>
+  </div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle"><a href="/categories">分类</a></p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/Angular源码/" title="Angular源码">Angular源码<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/CSS炒饭/" title="CSS炒饭">CSS炒饭<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/D3小馒头/" title="D3小馒头">D3小馒头<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular2火锅/" title="angular2火锅">angular2火锅<sup>25</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular混搭/" title="angular混搭">angular混搭<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/box2djs方糖/" title="box2djs方糖">box2djs方糖<sup>34</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/cyclejs哈根达斯/" title="cyclejs哈根达斯">cyclejs哈根达斯<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/jQuery杂烩/" title="jQuery杂烩">jQuery杂烩<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/js什锦/" title="js什锦">js什锦<sup>26</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/react沙拉/" title="react沙拉">react沙拉<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/three-js奶茶/" title="three.js奶茶">three.js奶茶<sup>5</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/vue八宝粥/" title="vue八宝粥">vue八宝粥<sup>30</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/webpack宾治/" title="webpack宾治">webpack宾治<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/web乱炖/" title="web乱炖">web乱炖<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端满汉全席/" title="前端满汉全席">前端满汉全席<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端解决方案/" title="前端解决方案">前端解决方案<sup>13</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/喵/" title="喵">喵<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/小程序双皮奶/" title="小程序双皮奶">小程序双皮奶<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/工作这杯茶/" title="工作这杯茶">工作这杯茶<sup>19</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/应用巧克力盒/" title="应用巧克力盒">应用巧克力盒<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/思想棉花糖/" title="思想棉花糖">思想棉花糖<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/柴米油盐工具集/" title="柴米油盐工具集">柴米油盐工具集<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/自动化甜筒/" title="自动化甜筒">自动化甜筒<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/非前端钙片/" title="非前端钙片">非前端钙片<sup>7</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle">标签</p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/分享/" title="分享">分享<sup>44</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/功能设计/" title="功能设计">功能设计<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/原创部件/" title="原创部件">原创部件<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/心态/" title="心态">心态<sup>19</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/教程/" title="教程">教程<sup>80</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/晒猫/" title="晒猫">晒猫<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/笔记/" title="笔记">笔记<sup>121</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/算法/" title="算法">算法<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/自制插件/" title="自制插件">自制插件<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/逻辑实现/" title="逻辑实现">逻辑实现<sup>18</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+    <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">about</a></p>
+      <ul class="archive-list">
+      	<li class="archive-list-item">
+      		<a>wangbeishan@163.com</a>
+      		<a href="https://github.com/godbasin">github.com/godbasin</a>
+      	</li>
+      </ul>
+  </div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<section class="info">
+		<p> 即使梦想再小，却很伟大 ^_^ </p>
+	</section>
+	 
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2021 
+		
+		<a href="https://godbasin.github.io" target="_blank" title="被删">被删</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+
+
+
+
+
+  </body>
+</html>

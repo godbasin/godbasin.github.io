@@ -1,0 +1,1218 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  
+    <title>VSCode 源码解读：IPC通信机制 | Here. There.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="被删">
+    
+    <meta name="description" content="最近在研究前端大型项目中要怎么管理模块间通信，本文记录研究 VSCode 中通信机制的过程，主要包括 IPC 部分吧。">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Here. There." type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?3d902de4a19cf2bf179534ffd2dd7b7f";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+</html>
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/sun.png" alt="Here. There." title="Here. There."/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Here. There.">Here. There.</a></h1>
+				<h2 class="blog-motto">Love ice cream. Love sunshine. Love life. Love the world. Love myself. Love you.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="https://github.com/godbasin/godbasin.github.io">所有文章</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">分类</a></li>
+					
+						<li><a href="https://godbasin.github.io/front-end-playground">前端游乐场</a></li>
+					
+						<li><a href="/about">关于我</a></li>
+					
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2020/08/15/vscode-ipc/" title="VSCode 源码解读：IPC通信机制" itemprop="url">VSCode 源码解读：IPC通信机制</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://godbasin.github.io" title="被删">被删</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2020-08-15T08:51:30.000Z" itemprop="datePublished">2020-08-15</time>
+    更新日期:<time datetime="2020-08-16T04:18:21.904Z" itemprop="dateModified">2020-08-16</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Electron-的-通信机制"><span class="toc-number">1.</span> <span class="toc-text">Electron 的 通信机制</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Electron-与-NW-js"><span class="toc-number">2.</span> <span class="toc-text">Electron 与 NW.js</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#NW-js-内部架构"><span class="toc-number">2.0.1.</span> <span class="toc-text">NW.js 内部架构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Electron-内部架构"><span class="toc-number">2.0.2.</span> <span class="toc-text">Electron 内部架构</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#VSCode-的通信机制"><span class="toc-number">3.</span> <span class="toc-text">VSCode 的通信机制</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#VSCode-多进程架构"><span class="toc-number">3.1.</span> <span class="toc-text">VSCode 多进程架构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IPC-通信"><span class="toc-number">3.2.</span> <span class="toc-text">IPC 通信</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#协议"><span class="toc-number">3.2.1.</span> <span class="toc-text">协议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#频道"><span class="toc-number">3.2.2.</span> <span class="toc-text">频道</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#客户端与服务端"><span class="toc-number">3.2.3.</span> <span class="toc-text">客户端与服务端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#连接"><span class="toc-number">3.2.4.</span> <span class="toc-text">连接</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考"><span class="toc-number">4.</span> <span class="toc-text">参考</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#结束语"><span class="toc-number">5.</span> <span class="toc-text">结束语</span></a></li></ol>
+		</div>
+		
+		<p>最近在研究前端大型项目中要怎么管理模块间通信，本文记录研究 VSCode 中通信机制的过程，主要包括 IPC 部分吧。</p>
+<a id="more"></a>
+<h1 id="Electron-的-通信机制"><a href="#Electron-的-通信机制" class="headerlink" title="Electron 的 通信机制"></a>Electron 的 通信机制</h1><p>我们知道 Electron 是基于 Chromium + Node.js 的架构。同样基于 Chromium + Node.js 的，还有 NW.js，我们先来看看它们之间有什么不一样吧。</p>
+<h1 id="Electron-与-NW-js"><a href="#Electron-与-NW-js" class="headerlink" title="Electron 与 NW.js"></a>Electron 与 NW.js</h1><p>说到 Node.js 的桌面应用，基本上大家都会知道 Electron 和 NW.js。例如 VsCode 就是基于 Electron 写的，而小程序开发工具则是基于 NW.js 来开发的。</p>
+<p>我们知道，Node.js 和 Chromium 的运行环境不一样，它们的 JavaScript 上下文都有一些特有的全局对象和函数。在 Node.js 中包括 module、process、require等，在 Chromium 中会有 window、 documnet等。</p>
+<p>那么，Electron 和 NW.js 都分别是怎样管理 Node.js 和 Chromium 的呢？</p>
+<h3 id="NW-js-内部架构"><a href="#NW-js-内部架构" class="headerlink" title="NW.js 内部架构"></a>NW.js 内部架构</h3><p>NW.js 是最早的 Node.js 桌面应用框架，架构如图1。</p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/electron_ipc_1.jpg" alt="图1"></p>
+<p>在 NW.js 中，将 Node.js 和 Chromium 整合在一起使用，其中做了几件事情，我们来分别看下。</p>
+<ol>
+<li><p>Node.js 和 Chromium 都使用 V8 来处理执行的 JavaScript，因此在 NW.js 中它们使用相同的 V8 实例。</p>
+</li>
+<li><p>Node.js 和 Chromium 都使用事件循环编程模式，但它们用不同的软件库（Node.js 使用 libuv，Chromium 使用 MessageLoop/Message-Pump）。NW.js 通过使 Chromium 使用构建在 libuv 之上的定制版本的 MessagePump 来集成 Node.js 和 Chromium 的事件循环（如图2）。</p>
+</li>
+</ol>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/electron_ipc_3.jpg" alt="图2"></p>
+<ol start="3">
+<li>整合 Node.js 的上下文到 Chromium 中，使 Node.js 可用（如图3）。</li>
+</ol>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/electron_ipc_2.jpg" alt="图3"></p>
+<p>因此，虽然 NW.js 整合了 Node.js 和 Chromium，但它更接近一个前端的应用开发方式（如图4），它的入口是 index.html。</p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/electron_ipc_0.jpg" alt="图4"></p>
+<h3 id="Electron-内部架构"><a href="#Electron-内部架构" class="headerlink" title="Electron 内部架构"></a>Electron 内部架构</h3><p>Electron 强调 Chromium 源代码和应用程序进行分离，因此并没有将 Node.js 和 Chromium 整合在一起。</p>
+<p>在 Electron 中，分为主进程(main process)和渲染器进程(renderer processes)：</p>
+<ul>
+<li>主进程：一个 Electron 应用中，有且只有一个主进程（package.json 的 main 脚本）</li>
+<li>渲染进程：Electron 里的每个页面都有它自己的进程，叫作渲染进程。由于 Electron 使用了 Chromium 来展示 web 页面，所以 Chromium 的多进程架构也被使用到</li>
+</ul>
+<p>那么，不在一个进程当然涉及跨进程通信。于是，在 Electron 中，可以通过以下方式来进行主进程和渲染器进程的通信：</p>
+<ol>
+<li>利用<code>ipcMain</code>和<code>ipcRenderer</code>模块进行 IPC 方式通信，它们是处理应用程序后端（<code>ipcMain</code>）和前端应用窗口（<code>ipcRenderer</code>）之间的进程间通信的事件触发。</li>
+<li>利用<code>remote</code>模块进行 RPC 方式通信。</li>
+</ol>
+<blockquote>
+<p><code>remote</code>模块返回的每个对象（包括函数），表示主进程中的一个对象（称为远程对象或远程函数）。当调用远程对象的方法时，调用远程函数、或者使用远程构造函数 (函数) 创建新对象时，实际上是在发送同步进程消息。</p>
+</blockquote>
+<p>如图5，Electron 中从应用程序的后端部分到前端部分的任何状态共享（反之亦然），均通过<code>ipcMain</code>和<code>ipcRenderer</code>模块进行。这样，主进程和渲染器进程的 JavaScript 上下文将保持独立，但是可以在进程之间以显式方式传输数据。</p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/electron_ipc_4.jpg" alt="图5"></p>
+<h1 id="VSCode-的通信机制"><a href="#VSCode-的通信机制" class="headerlink" title="VSCode 的通信机制"></a>VSCode 的通信机制</h1><p>VSCode 基于 Electron 进行开发的，那么我们来看看 VSCode 里的相关设计吧。</p>
+<h2 id="VSCode-多进程架构"><a href="#VSCode-多进程架构" class="headerlink" title="VSCode 多进程架构"></a>VSCode 多进程架构</h2><p>VSCode 采用多进程架构，VSCode 启动后主要有下面的几个进程：</p>
+<ul>
+<li>主进程</li>
+<li>渲染进程，多个，包括 Activitybar、Sidebar、Panel、Editor 等等</li>
+<li>插件宿主进程</li>
+<li>Debug 进程</li>
+<li>Search 进程</li>
+</ul>
+<p>这些进程间的关系如图6：</p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/electron_ipc_5.png" alt="图6"></p>
+<p>而在 VSCode 中，这些进程的通信方式同样包括 IPC 和 RPC 两种，如图7：</p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/electron_ipc_6.jpg" alt="图7"></p>
+<h2 id="IPC-通信"><a href="#IPC-通信" class="headerlink" title="IPC 通信"></a>IPC 通信</h2><p>我们能看到，主进程和渲染进程的通信基础还是 Electron 的<code>webContents.send</code>、<code>ipcRender.send</code>、<code>ipcMain.on</code>。</p>
+<p>我们来看看 VSCode 中具体的 IPC 通信机制设计，包括：协议、频道、连接等。</p>
+<h3 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h3><p>IPC 通信中，协议是最基础的。就像我们人和人之间的交流，需要使用约定的方式（语言、手语），在 IPC 中协议可看做是约定。</p>
+<p>作为通信能力，最基本的协议范围包括发送和接受消息：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> interface IMessagePassingProtocol &#123;</span><br><span class="line">  send(buffer: VSBuffer): <span class="keyword">void</span>;</span><br><span class="line">  onMessage: Event&lt;VSBuffer&gt;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>至于具体协议内容，可能包括连接、断开、事件等等：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">Protocol</span> <span class="title">implements</span> <span class="title">IMessagePassingProtocol</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(private sender: Sender, readonly onMessage: Event&lt;VSBuffer&gt;) &#123; &#125;</span><br><span class="line">  <span class="comment">// 发送消息</span></span><br><span class="line">  send(message: VSBuffer): <span class="keyword">void</span> &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">this</span>.sender.send(<span class="string">'vscode:message'</span>, message.buffer);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">      <span class="comment">// systems are going down</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 断开连接</span></span><br><span class="line">  dispose(): <span class="keyword">void</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.sender.send(<span class="string">'vscode:disconnect'</span>, <span class="literal">null</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们能看到，IPC 的通信也使用了 VSCode 中的<code>Event</code>/<code>Emitter</code>事件机制，关于事件的更多可以参考<a href="https://godbasin.github.io/front-end-playground/front-end-basic/deep-learning/vscode-event.html">《VSCode源码解读：事件系统设计》</a>。</p>
+<p>IPC 实际上就是发送和接收信息的能力，而要能准确地进行通信，客户端和服务端需要在同一个频道上。</p>
+<h3 id="频道"><a href="#频道" class="headerlink" title="频道"></a>频道</h3><p>作为一个频道而言，它会有两个功能，一个是点播<code>call</code>，一个是收听，即<code>listen</code>。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * IChannel是对命令集合的抽象</span></span><br><span class="line"><span class="comment"> * call 总是返回一个至多带有单个返回值的 Promise</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">export</span> interface IChannel &#123;</span><br><span class="line">  call&lt;T&gt;(command: string, arg?: any, cancellationToken?: CancellationToken): <span class="built_in">Promise</span>&lt;T&gt;;</span><br><span class="line">  listen&lt;T&gt;(event: string, arg?: any): Event&lt;T&gt;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="客户端与服务端"><a href="#客户端与服务端" class="headerlink" title="客户端与服务端"></a>客户端与服务端</h3><p>一般来说，客户端和服务端的区分主要是：发起连接的一端为客户端，被连接的一端为服务端。在 VSCode 中，主进程是服务端，提供各种频道和服务供订阅；渲染进程是客户端，收听服务端提供的各种频道/服务，也可以给服务端发送一些消息（接入、订阅/收听、离开等）。</p>
+<p>不管是客户端和服务端，它们都会需要发送和接收消息的能力，才能进行正常的通信。</p>
+<p>在 VSCode 中，客户端包括<code>ChannelClient</code>和<code>IPCClient</code>，<code>ChannelClient</code>只处理最基础的频道相关的功能，包括：</p>
+<ol>
+<li>获得频道<code>getChannel</code>。</li>
+<li>发送频道请求<code>sendRequest</code>。</li>
+<li>接收请求结果，并处理<code>onResponse/onBuffer</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 客户端</span></span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">ChannelClient</span> <span class="title">implements</span> <span class="title">IChannelClient</span>, <span class="title">IDisposable</span> </span>&#123;</span><br><span class="line">  getChannel&lt;T extends IChannel&gt;(channelName: string): T &#123;</span><br><span class="line">    <span class="keyword">const</span> that = <span class="keyword">this</span>;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      call(command: string, arg?: any, cancellationToken?: CancellationToken) &#123;</span><br><span class="line">        <span class="keyword">return</span> that.requestPromise(channelName, command, arg, cancellationToken);</span><br><span class="line">      &#125;,</span><br><span class="line">      listen(event: string, <span class="attr">arg</span>: any) &#123;</span><br><span class="line">        <span class="keyword">return</span> that.requestEvent(channelName, event, arg);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">as</span> T;</span><br><span class="line">  &#125;</span><br><span class="line">  private requestPromise(channelName: string, <span class="attr">name</span>: string, arg?: any, cancellationToken = CancellationToken.None): <span class="built_in">Promise</span>&lt;any&gt; &#123;&#125;</span><br><span class="line">  private requestEvent(channelName: string, <span class="attr">name</span>: string, arg?: any): Event&lt;any&gt; &#123;&#125;</span><br><span class="line">  private sendRequest(request: IRawRequest): <span class="keyword">void</span> &#123;&#125;</span><br><span class="line">  private send(header: any, <span class="attr">body</span>: any = <span class="literal">undefined</span>): <span class="keyword">void</span> &#123;&#125;</span><br><span class="line">  private sendBuffer(message: VSBuffer): <span class="keyword">void</span> &#123;&#125;</span><br><span class="line">  private onBuffer(message: VSBuffer): <span class="keyword">void</span> &#123;&#125;</span><br><span class="line">  private onResponse(response: IRawResponse): <span class="keyword">void</span> &#123;&#125;</span><br><span class="line">  private whenInitialized(): <span class="built_in">Promise</span>&lt;<span class="keyword">void</span>&gt; &#123;&#125;</span><br><span class="line">  dispose(): <span class="keyword">void</span> &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>同样的，服务端包括<code>ChannelServer</code>和<code>IPCServer</code>，<code>ChannelServer</code>也只处理与频道直接相关的功能，包括：</p>
+<ol>
+<li>注册频道<code>registerChannel</code>。</li>
+<li>监听客户端消息<code>onRawMessage/onPromise/onEventListen</code>。</li>
+<li>处理客户端消息并返回请求结果<code>sendResponse</code>。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 服务端</span></span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">ChannelServer</span>&lt;<span class="title">TContext</span> </span>= string&gt; implements IChannelServer&lt;TContext&gt;, IDisposable &#123;</span><br><span class="line">  registerChannel(channelName: string, <span class="attr">channel</span>: IServerChannel&lt;TContext&gt;): <span class="keyword">void</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.channels.set(channelName, channel);</span><br><span class="line">  &#125;</span><br><span class="line">  private sendResponse(response: IRawResponse): <span class="keyword">void</span> &#123;&#125;</span><br><span class="line">  private send(header: any, <span class="attr">body</span>: any = <span class="literal">undefined</span>): <span class="keyword">void</span> &#123;&#125;</span><br><span class="line">  private sendBuffer(message: VSBuffer): <span class="keyword">void</span> &#123;&#125;</span><br><span class="line">  private onRawMessage(message: VSBuffer): <span class="keyword">void</span> &#123;&#125;</span><br><span class="line">  private onPromise(request: IRawPromiseRequest): <span class="keyword">void</span> &#123;&#125;</span><br><span class="line">  private onEventListen(request: IRawEventListenRequest): <span class="keyword">void</span> &#123;&#125;</span><br><span class="line">  private disposeActiveRequest(request: IRawRequest): <span class="keyword">void</span> &#123;&#125;</span><br><span class="line">  private collectPendingRequest(request: IRawPromiseRequest | IRawEventListenRequest): <span class="keyword">void</span> &#123;&#125;</span><br><span class="line">  public dispose(): <span class="keyword">void</span> &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们能看到，作为频道的直接连接对象，<code>ChannelClient</code>和<code>ChannelServer</code>的发送和接收基本上是一一对应的，像<code>sendRequest</code>和<code>sendResponse</code>等等。但<code>ChannelClient</code>只能发送请求，而<code>ChannelServer</code>只能响应请求，在阅读完整篇文章后，可以思考一下：如果我们想要实现双向通信的话，可以怎么做呢？</p>
+<p>我们还发现，对消息的发送和接受，<code>ChannelClient</code>和<code>ChannelServer</code>会进行序列化(<code>serialize</code>)和反序列化(<code>deserialize</code>)：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 此处篇幅关系，以 deserialize 举例：</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">deserialize</span>(<span class="params">reader: IReader</span>): <span class="title">any</span> </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> type = reader.read(<span class="number">1</span>).readUInt8(<span class="number">0</span>);</span><br><span class="line">  <span class="keyword">switch</span> (type) &#123;</span><br><span class="line">    <span class="keyword">case</span> DataType.Undefined: <span class="keyword">return</span> <span class="literal">undefined</span>;</span><br><span class="line">    <span class="keyword">case</span> DataType.String: <span class="keyword">return</span> reader.read(readSizeBuffer(reader)).toString();</span><br><span class="line">    <span class="keyword">case</span> DataType.Buffer: <span class="keyword">return</span> reader.read(readSizeBuffer(reader)).buffer;</span><br><span class="line">    <span class="keyword">case</span> DataType.VSBuffer: <span class="keyword">return</span> reader.read(readSizeBuffer(reader));</span><br><span class="line">    <span class="keyword">case</span> DataType.Array: &#123;</span><br><span class="line">      <span class="keyword">const</span> length = readSizeBuffer(reader);</span><br><span class="line">      <span class="keyword">const</span> result: any[] = [];</span><br><span class="line"></span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; length; i++) &#123;</span><br><span class="line">        result.push(deserialize(reader));</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">case</span> DataType.Object: <span class="keyword">return</span> <span class="built_in">JSON</span>.parse(reader.read(readSizeBuffer(reader)).toString());</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>那么，<code>IPCClient</code>和<code>IPCServer</code>又起到什么作用呢？</p>
+<h3 id="连接"><a href="#连接" class="headerlink" title="连接"></a>连接</h3><p>现在有了频道直接相关的客户端部分<code>ChannelClient</code>和服务端部分<code>ChannelServer</code>，但是它们之间需要连接起来才能进行通信。一个连接(<code>Connection</code>)由<code>ChannelClient</code>和<code>ChannelServer</code>组成。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">interface Connection&lt;TContext&gt; extends Client&lt;TContext&gt; &#123;</span><br><span class="line">  readonly channelServer: ChannelServer&lt;TContext&gt;; <span class="comment">// 服务端</span></span><br><span class="line">  readonly channelClient: ChannelClient; <span class="comment">// 客户端</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>而连接的建立，则由<code>IPCServer</code>和<code>IPCClient</code>负责。其中：</p>
+<ul>
+<li><code>IPCClient</code>基于<code>ChannelClient</code>，负责简单的客户端到服务端一对一连接</li>
+<li><code>IPCServer</code>基于<code>channelServer</code>，负责服务端到客户端的连接，由于一个服务端可提供多个服务，因此会有多个连接</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 客户端</span></span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">IPCClient</span>&lt;<span class="title">TContext</span> </span>= string&gt; implements IChannelClient, IChannelServer&lt;TContext&gt;, IDisposable &#123;</span><br><span class="line">  private channelClient: ChannelClient;</span><br><span class="line">  private channelServer: ChannelServer&lt;TContext&gt;;</span><br><span class="line">  getChannel&lt;T extends IChannel&gt;(channelName: string): T &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.channelClient.getChannel(channelName) <span class="keyword">as</span> T;</span><br><span class="line">  &#125;</span><br><span class="line">  registerChannel(channelName: string, <span class="attr">channel</span>: IServerChannel&lt;TContext&gt;): <span class="keyword">void</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.channelServer.registerChannel(channelName, channel);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 由于服务端有多个服务，因此可能存在多个连接</span></span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">IPCServer</span>&lt;<span class="title">TContext</span> </span>= string&gt; implements IChannelServer&lt;TContext&gt;, IRoutingChannelClient&lt;TContext&gt;, IConnectionHub&lt;TContext&gt;, IDisposable &#123;</span><br><span class="line">  private channels = <span class="keyword">new</span> <span class="built_in">Map</span>&lt;string, IServerChannel&lt;TContext&gt;&gt;();</span><br><span class="line">  private _connections = <span class="keyword">new</span> <span class="built_in">Set</span>&lt;Connection&lt;TContext&gt;&gt;();</span><br><span class="line">  <span class="comment">// 获取连接信息</span></span><br><span class="line">  <span class="keyword">get</span> connections(): Connection&lt;TContext&gt;[] &#123;&#125;</span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 从远程客户端获取频道。</span></span><br><span class="line"><span class="comment">	 * 通过路由器后，可以指定它要呼叫和监听/从哪个客户端。</span></span><br><span class="line"><span class="comment">	 * 否则，当在没有路由器的情况下进行呼叫时，将选择一个随机客户端，而在没有路由器的情况下进行侦听时，将监听每个客户端。</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">  getChannel&lt;T extends IChannel&gt;(channelName: string, <span class="attr">router</span>: IClientRouter&lt;TContext&gt;): T;</span><br><span class="line">  getChannel&lt;T extends IChannel&gt;<span class="function">(<span class="params">channelName: string, clientFilter: (client: Client&lt;TContext&gt;</span>) =&gt;</span> boolean): T;</span><br><span class="line">  getChannel&lt;T extends IChannel&gt;<span class="function">(<span class="params">channelName: string, routerOrClientFilter: IClientRouter&lt;TContext&gt; | ((client: Client&lt;TContext&gt;</span>) =&gt;</span> boolean)): T &#123;&#125;</span><br><span class="line">  <span class="comment">// 注册频道</span></span><br><span class="line">  registerChannel(channelName: string, <span class="attr">channel</span>: IServerChannel&lt;TContext&gt;): <span class="keyword">void</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.channels.set(channelName, channel);</span><br><span class="line">    <span class="comment">// 添加到连接中</span></span><br><span class="line">    <span class="keyword">this</span>._connections.forEach(<span class="function"><span class="params">connection</span> =&gt;</span> &#123;</span><br><span class="line">      connection.channelServer.registerChannel(channelName, channel);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>前面也说过，客户端可理解为渲染进程，服务端可理解为主进程。</p>
+<p>而连接的详细建立过程，可以参考<a href="https://juejin.im/post/6844904050052300814" target="_blank" rel="noopener">《vscode-通信机制设计解读(Electron)》</a>一文。这里借用里面的一张图：</p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/electron_ipc_7.jpg" alt="图8"></p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a href="https://zhaomenghuan.js.org/blog/vscode-workbench-source-code-interpretation.html" target="_blank" rel="noopener">vscode 定制开发 —— Workbench 源码解读及实战前言</a></li>
+<li><a href="https://zhaomenghuan.js.org/blog/vscode-custom-development-basic-preparation.html" target="_blank" rel="noopener">vscode 定制开发 —— 基础准备</a></li>
+<li><a href="https://livebook.manning.com/book/cross-platform-desktop-applications/chapter-6/59" target="_blank" rel="noopener">【译】探索NW.js和Electron的内部</a></li>
+<li><a href="https://juejin.im/post/6844904050052300814" target="_blank" rel="noopener">vscode-通信机制设计解读(Electron)</a></li>
+<li><a href="https://imweb.io/topic/5b3b72ab4d378e703a4f4435" target="_blank" rel="noopener">你不知道的 Electron (一)：神奇的 remote 模块</a></li>
+</ul>
+<h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p>IPC 和 RPC 通信是由于 Electron 的跨进程通信出现的。那么，我们还可以思考下，在一般的前端开发场景下，除了跨进程以外是否还有其他场景可以参考呢？</p>
+<p>至于 RPC 的部分，由于目前也没有强业务相关，有空我们下次再约。</p>
+  
+	</div>
+	<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/2code2.jpg" width="200" height="200" style="display:block;margin: 0 auto;" />
+	<p style="text-align: center;margin-top: 10px;margin-bottom: 20px;">码生艰难，写文不易，给我家猪囤点猫粮了喵~</p>
+	<div class="article-content">
+		<p style="margin-top:50px;">
+			查看Github有更多内容噢：<a href="https://github.com/godbasin">https://github.com/godbasin</a>
+			<br>
+			更欢迎来<a href="https://godbasin.github.io/front-end-playground">被删的前端游乐场</a>边撸猫边学前端噢
+			<br>
+			如果你想要关注日常生活中的我，欢迎关注“牧羊的猪”公众号噢
+		</p>
+	</div>
+	<div class="author-right">
+  		<p>作者：被删</p>
+  		<p>出处：<a href="https://godbasin.github.io">https://godbasin.github.io</a></p>
+  		<p>本文版权归作者所有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利。</p>
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/逻辑实现/">逻辑实现</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/前端解决方案/">前端解决方案</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  
+<!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a href="http://www.jiathis.com/share?uid=2134021" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config = {data_track_clickback:'true'};
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js?uid=2134021" charset="utf-8"></script>
+<!-- JiaThis Button END -->   
+
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2020/08/23/online-doc-network/" title="在线文档的网络层设计思考">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  在线文档的网络层设计思考</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2020/07/26/interview-6-javascript/"  title="前端面试这件事--6.Javascript相关">
+ <strong>NEXT:</strong><br/> 
+ <span>前端面试这件事--6.Javascript相关
+</span>
+</a>
+</div>
+
+</nav>
+
+	<!-- 如果不是首页且没使用 `comments: false` 关闭评论，则尝试加载评论 -->
+
+    <!-- 配置中启用多说时，导入相应代码 -->
+    
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Electron-的-通信机制"><span class="toc-number">1.</span> <span class="toc-text">Electron 的 通信机制</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Electron-与-NW-js"><span class="toc-number">2.</span> <span class="toc-text">Electron 与 NW.js</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#NW-js-内部架构"><span class="toc-number">2.0.1.</span> <span class="toc-text">NW.js 内部架构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Electron-内部架构"><span class="toc-number">2.0.2.</span> <span class="toc-text">Electron 内部架构</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#VSCode-的通信机制"><span class="toc-number">3.</span> <span class="toc-text">VSCode 的通信机制</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#VSCode-多进程架构"><span class="toc-number">3.1.</span> <span class="toc-text">VSCode 多进程架构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IPC-通信"><span class="toc-number">3.2.</span> <span class="toc-text">IPC 通信</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#协议"><span class="toc-number">3.2.1.</span> <span class="toc-text">协议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#频道"><span class="toc-number">3.2.2.</span> <span class="toc-text">频道</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#客户端与服务端"><span class="toc-number">3.2.3.</span> <span class="toc-text">客户端与服务端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#连接"><span class="toc-number">3.2.4.</span> <span class="toc-text">连接</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考"><span class="toc-number">4.</span> <span class="toc-text">参考</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#结束语"><span class="toc-number">5.</span> <span class="toc-text">结束语</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  	
+	<div class="archiveslist">
+		<p class="asidetitle">最近文章</p>
+			<ul class="archive-list">
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/03/13/angular-design-0-prestart/" title="Angular框架解读--预热篇">Angular框架解读--预热篇...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/02/27/network-design-dependency-decoupling/" title="在线文档的网络层开发思考--依赖关系梳理">在线文档的网络层开发思考--依赖关系...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/01/23/network-design-responsibility-driven-design/" title="在线文档的网络层开发思考--职责驱动设计">在线文档的网络层开发思考--职责驱动...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/01/10/about-writing/" title="前端这几年--写文章这件事">前端这几年--写文章这件事...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/11/01/task-runner-design/" title="如何设计一个任务管理器">如何设计一个任务管理器</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/10/10/why-spreadsheet-app-excited/" title="在线Excel项目到底有多刺激">在线Excel项目到底有多刺激...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/10/07/monitor-and-report/" title="前端监控体系搭建">前端监控体系搭建</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/08/30/about-front-end-10/" title="前端这几年--10.我的工作历险记">前端这几年--10.我的工作历险记...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/08/30/about-front-end-9/" title="前端这几年--9.提升工作效率">前端这几年--9.提升工作效率...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/08/29/front-end-performance-analyze/" title="补齐Web前端性能分析的工具盲点">补齐Web前端性能分析的工具盲点...</a>
+				</li>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+	</div>
+
+
+  
+  <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">归档</a></p>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">十月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">41</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">9</span></li></ul>
+  </div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle"><a href="/categories">分类</a></p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/Angular源码/" title="Angular源码">Angular源码<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/CSS炒饭/" title="CSS炒饭">CSS炒饭<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/D3小馒头/" title="D3小馒头">D3小馒头<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular2火锅/" title="angular2火锅">angular2火锅<sup>25</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular混搭/" title="angular混搭">angular混搭<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/box2djs方糖/" title="box2djs方糖">box2djs方糖<sup>34</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/cyclejs哈根达斯/" title="cyclejs哈根达斯">cyclejs哈根达斯<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/jQuery杂烩/" title="jQuery杂烩">jQuery杂烩<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/js什锦/" title="js什锦">js什锦<sup>26</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/react沙拉/" title="react沙拉">react沙拉<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/three-js奶茶/" title="three.js奶茶">three.js奶茶<sup>5</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/vue八宝粥/" title="vue八宝粥">vue八宝粥<sup>30</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/webpack宾治/" title="webpack宾治">webpack宾治<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/web乱炖/" title="web乱炖">web乱炖<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端满汉全席/" title="前端满汉全席">前端满汉全席<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端解决方案/" title="前端解决方案">前端解决方案<sup>13</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/喵/" title="喵">喵<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/小程序双皮奶/" title="小程序双皮奶">小程序双皮奶<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/工作这杯茶/" title="工作这杯茶">工作这杯茶<sup>19</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/应用巧克力盒/" title="应用巧克力盒">应用巧克力盒<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/思想棉花糖/" title="思想棉花糖">思想棉花糖<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/柴米油盐工具集/" title="柴米油盐工具集">柴米油盐工具集<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/自动化甜筒/" title="自动化甜筒">自动化甜筒<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/非前端钙片/" title="非前端钙片">非前端钙片<sup>7</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle">标签</p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/分享/" title="分享">分享<sup>44</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/功能设计/" title="功能设计">功能设计<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/原创部件/" title="原创部件">原创部件<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/心态/" title="心态">心态<sup>19</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/教程/" title="教程">教程<sup>80</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/晒猫/" title="晒猫">晒猫<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/笔记/" title="笔记">笔记<sup>121</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/算法/" title="算法">算法<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/自制插件/" title="自制插件">自制插件<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/逻辑实现/" title="逻辑实现">逻辑实现<sup>18</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+    <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">about</a></p>
+      <ul class="archive-list">
+      	<li class="archive-list-item">
+      		<a>wangbeishan@163.com</a>
+      		<a href="https://github.com/godbasin">github.com/godbasin</a>
+      	</li>
+      </ul>
+  </div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<section class="info">
+		<p> 即使梦想再小，却很伟大 ^_^ </p>
+	</section>
+	 
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2021 
+		
+		<a href="https://godbasin.github.io" target="_blank" title="被删">被删</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,1203 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  
+    <title>做一个拖放功能的自定义页面 | Here. There.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="被删">
+    
+    <meta name="description" content="以前写过一个拖放功能的页面，用来搭建自定义移动端页面。本文介绍实现方法。">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Here. There." type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?3d902de4a19cf2bf179534ffd2dd7b7f";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+</html>
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/sun.png" alt="Here. There." title="Here. There."/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Here. There.">Here. There.</a></h1>
+				<h2 class="blog-motto">Love ice cream. Love sunshine. Love life. Love the world. Love myself. Love you.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="https://github.com/godbasin/godbasin.github.io">所有文章</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">分类</a></li>
+					
+						<li><a href="https://godbasin.github.io/front-end-playground">前端游乐场</a></li>
+					
+						<li><a href="/about">关于我</a></li>
+					
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/06/19/drag-and-drop/" title="做一个拖放功能的自定义页面" itemprop="url">做一个拖放功能的自定义页面</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://godbasin.github.io" title="被删">被删</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2016-06-19T07:42:49.000Z" itemprop="datePublished">2016-06-19</time>
+    更新日期:<time datetime="2018-08-18T12:58:12.284Z" itemprop="dateModified">2018-08-18</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本页面搭建"><span class="toc-number">1.</span> <span class="toc-text">基本页面搭建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#绑定鼠标左键按下事件"><span class="toc-number">2.</span> <span class="toc-text">绑定鼠标左键按下事件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#需要进行绑定的对象"><span class="toc-number">2.1.</span> <span class="toc-text">需要进行绑定的对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#点击对象后进行处理"><span class="toc-number">2.2.</span> <span class="toc-text">点击对象后进行处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#若对象位于页面效果内，进行相关处理"><span class="toc-number">2.3.</span> <span class="toc-text">若对象位于页面效果内，进行相关处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#定位当前位置是否有特定元素"><span class="toc-number">3.</span> <span class="toc-text">定位当前位置是否有特定元素</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#绑定鼠标移动事件"><span class="toc-number">4.</span> <span class="toc-text">绑定鼠标移动事件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#需要进行的判断"><span class="toc-number">4.1.</span> <span class="toc-text">需要进行的判断</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#绑定鼠标左键松开事件"><span class="toc-number">5.</span> <span class="toc-text">绑定鼠标左键松开事件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#效果事件"><span class="toc-number">5.1.</span> <span class="toc-text">效果事件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#需要进行的判断-1"><span class="toc-number">5.2.</span> <span class="toc-text">需要进行的判断</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#完善后续处理"><span class="toc-number">6.</span> <span class="toc-text">完善后续处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结束语"><span class="toc-number">7.</span> <span class="toc-text">结束语</span></a></li></ol>
+		</div>
+		
+		<p>以前写过一个拖放功能的页面，用来搭建自定义移动端页面。本文介绍实现方法。<br><a id="more"></a></p>
+<p>项目放在github上，有兴趣的小伙伴可以下载玩玩看<br><a href="https://github.com/godbasin/godbasin.github.io/tree/blog-codes/DD-custom-pages" target="_blank" rel="noopener">DD-custom-pages</a><br>已经没有在维护了，也基本没优化，但还是挺有意思的一个项目</p>
+<p>最终效果图如下<a href="http://o907xb1mi.bkt.clouddn.com/index.html" target="_blank" rel="noopener">点击查看页面</a><br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/dd_custom_pages.png" alt="image"></p>
+<h2 id="基本页面搭建"><a href="#基本页面搭建" class="headerlink" title="基本页面搭建"></a>基本页面搭建</h2><hr>
+<p>首先是最基本的页面搭建</p>
+<ul>
+<li>三个基本布局对象<ul>
+<li>1.左侧布局列表</li>
+<li>2.中间页面效果</li>
+<li>3.右侧控件列表</li>
+</ul>
+</li>
+<li>对象的事件处理<br>对象基本事件的编写<ul>
+<li>1.布局切换，以及自定义布局事件</li>
+<li>2.控件切换，选择等</li>
+</ul>
+</li>
+</ul>
+<p>样式布局什么的，这里就略过啦，具体可参考<a href="https://github.com/godbasin/DD-custom-pages" target="_blank" rel="noopener">项目</a></p>
+<h2 id="绑定鼠标左键按下事件"><a href="#绑定鼠标左键按下事件" class="headerlink" title="绑定鼠标左键按下事件"></a>绑定鼠标左键按下事件</h2><hr>
+<h3 id="需要进行绑定的对象"><a href="#需要进行绑定的对象" class="headerlink" title="需要进行绑定的对象"></a>需要进行绑定的对象</h3><ul>
+<li>需要进行鼠标左键按下绑定的对象有两种：布局和控件</li>
+<li>布局分为两种：左侧布局列表获取、中间页面效果获取的布局，class为fix-layout和float-layout区分</li>
+<li><p>控件同理: 右侧控件列表获取、中间页面效果获取的控件，class为fix-target和float-target区分</p>
+</li>
+<li><p>全局绑定鼠标鼠标左键按下事件<br>由于该项目中鼠标事件几乎是最主要事件，因此采用全局绑定</p>
+</li>
+</ul>
+<h3 id="点击对象后进行处理"><a href="#点击对象后进行处理" class="headerlink" title="点击对象后进行处理"></a>点击对象后进行处理</h3><ul>
+<li>设置拖动标志true，此时可进行鼠标移动事件的处理，后面会提及</li>
+<li>这里采用复制元素的方式，jQuery实现，$().clone()复制元素对象</li>
+<li>复制对象后，设置对象位置、大小等，这里设置拖动时将元素宽度减小为一般</li>
+</ul>
+<h3 id="若对象位于页面效果内，进行相关处理"><a href="#若对象位于页面效果内，进行相关处理" class="headerlink" title="若对象位于页面效果内，进行相关处理"></a>若对象位于页面效果内，进行相关处理</h3><ul>
+<li>若是对象为布局，则插入布局位置效果</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//绑定事件，这里使用了jQuery</span></span><br><span class="line">$(<span class="built_in">document</span>).on(<span class="string">'mousedown'</span>, mouseDown);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mouseDown</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">  <span class="comment">//获取左键点击事件</span></span><br><span class="line">  <span class="keyword">if</span> (e.which == <span class="number">1</span>) &#123;</span><br><span class="line">    <span class="comment">//定位当前事件位置，并取出相关元素</span></span><br><span class="line">    position_target(e);</span><br><span class="line">    <span class="comment">//处理左侧布局列表获取的布局元素事件</span></span><br><span class="line">    <span class="keyword">if</span> ($(target).attr(<span class="string">'class'</span>) == <span class="string">"fix-layout"</span>) &#123;</span><br><span class="line">      dragging = <span class="literal">true</span>; <span class="comment">//设置拖动标志</span></span><br><span class="line">      target = $(target).clone(); <span class="comment">//复制元素</span></span><br><span class="line">      $(target).removeClass(<span class="string">"fix-layout"</span>).addClass(<span class="string">"move-layout"</span>); <span class="comment">//拖动时元素样式</span></span><br><span class="line">      $(<span class="string">".container"</span>).append(target); <span class="comment">//将复制的元素添加到页面</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//处理中间布局列表获取的布局元素事件</span></span><br><span class="line">    <span class="keyword">if</span> ($(target).attr(<span class="string">'class'</span>) == <span class="string">"float-layout"</span>) &#123;</span><br><span class="line">      dragging = <span class="literal">true</span>; <span class="comment">//设置拖动标志</span></span><br><span class="line">      $(target).removeClass(<span class="string">"float-layout"</span>).addClass(<span class="string">"move-layout"</span>); <span class="comment">//拖动时元素样式</span></span><br><span class="line">      $(<span class="string">".container"</span>).append(target); <span class="comment">//将元素移动到页面</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//处理右侧控件列表获取的控件元素事件</span></span><br><span class="line">    <span class="keyword">if</span> ($(target).attr(<span class="string">'class'</span>) == <span class="string">"fix-target"</span>) &#123;</span><br><span class="line">      dragging = <span class="literal">true</span>; <span class="comment">//设置拖动标志</span></span><br><span class="line">      target = $(target).clone(); <span class="comment">//复制元素</span></span><br><span class="line">      $(target).removeClass(<span class="string">"fix-target"</span>).addClass(<span class="string">"move-target"</span>); <span class="comment">//拖动时元素样式</span></span><br><span class="line">      $(<span class="string">".container"</span>).append(target); <span class="comment">//将复制的元素添加到页面</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//处理中间布局列表获取的控件元素事件</span></span><br><span class="line">    <span class="keyword">if</span> ($(target).attr(<span class="string">'class'</span>) == <span class="string">"float-target"</span>) &#123;</span><br><span class="line">      dragging = <span class="literal">true</span>; <span class="comment">//设置拖动标志</span></span><br><span class="line">      $(target).removeClass(<span class="string">"float-target"</span>).addClass(<span class="string">"move-target"</span>); <span class="comment">//拖动时元素样式</span></span><br><span class="line">      $(<span class="string">".container"</span>).append(target); <span class="comment">//将元素移动到页面</span></span><br><span class="line">      $(target).children(<span class="string">".header, .footer, .nav, .content, .slider-7, .slider-8, .slider-9"</span>).css(<span class="string">"height"</span>, <span class="string">"auto"</span>); <span class="comment">//拖动时元素内层控件样式</span></span><br><span class="line">      $(target).children(<span class="string">".listview-l"</span>).css(<span class="string">"height"</span>, <span class="string">"100px"</span>); <span class="comment">//拖动时元素内层控件样式</span></span><br><span class="line">      $(target).children(<span class="string">".listview-s"</span>).css(<span class="string">"height"</span>, <span class="string">"50px"</span>); <span class="comment">//拖动时元素内层控件样式</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//判断是否有元素在拖动，将元素位置设置在当前鼠标位置</span></span><br><span class="line">    <span class="keyword">if</span> (dragging) &#123;</span><br><span class="line">      <span class="keyword">var</span> oX = getMousePos(e).x - $(target).width() / <span class="number">2</span>;</span><br><span class="line">      <span class="keyword">var</span> oY = getMousePos(e).y - $(target).height() / <span class="number">2</span>;</span><br><span class="line">      $(target).css(&#123;</span><br><span class="line">        <span class="string">"left"</span>: oX + <span class="string">"px"</span>,</span><br><span class="line">        <span class="string">"top"</span>: oY + <span class="string">"px"</span></span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//定位当前事件位置，判断是否在合适的位置</span></span><br><span class="line">    <span class="comment">//若当前元素为布局，且位置为页面效果内，则添加提示，元素放置的位置</span></span><br><span class="line">    position_box(e);</span><br><span class="line">    <span class="keyword">if</span> ($(box).attr(<span class="string">'id'</span>) == <span class="string">"box"</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> ($(target).attr(<span class="string">'class'</span>) == <span class="string">"move-layout"</span> || $(target).attr(<span class="string">'class'</span>) == <span class="string">"move-layout-over"</span>) &#123;</span><br><span class="line">        $(target).removeClass(<span class="string">"move-layout"</span>).addClass(<span class="string">"move-layout-over"</span>);</span><br><span class="line">        <span class="keyword">if</span> (dropping == <span class="literal">false</span>) &#123;</span><br><span class="line">          drop = $(<span class="string">"&lt;div class='drop-layout'&gt;&lt;/div&gt;"</span>);</span><br><span class="line">          moveDrop();</span><br><span class="line">          $(<span class="string">"#box-content"</span>).append(drop);</span><br><span class="line">          dropping = <span class="literal">true</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          $(drop).remove();</span><br><span class="line">          moveDrop();</span><br><span class="line">          $(<span class="string">"#box-content"</span>).append(drop);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="定位当前位置是否有特定元素"><a href="#定位当前位置是否有特定元素" class="headerlink" title="定位当前位置是否有特定元素"></a>定位当前位置是否有特定元素</h2><hr>
+<ul>
+<li><p>使用鼠标定位获取相关布局或者控件对象<br>这里可参考上一篇文章：<a href="/2016/06/19/position-object/">《js判断某个位置是否特定元素》</a></p>
+</li>
+<li><p>获取当前鼠标位置</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getMousePos</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> e = event || <span class="built_in">window</span>.event;</span><br><span class="line">  <span class="keyword">var</span> scrollX = <span class="built_in">document</span>.documentElement.scrollLeft || <span class="built_in">document</span>.body.scrollLeft;</span><br><span class="line">  <span class="keyword">var</span> scrollY = <span class="built_in">document</span>.documentElement.scrollTop || <span class="built_in">document</span>.body.scrollTop;</span><br><span class="line">  <span class="keyword">var</span> x = e.pageX || e.clientX + scrollX;</span><br><span class="line">  <span class="keyword">var</span> y = e.pageY || e.clientY + scrollY;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="string">'x'</span>: x,</span><br><span class="line">    <span class="string">'y'</span>: y</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>定位当前位置是否有布局或者控件对象position_target</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">position_target</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> e = e || <span class="built_in">window</span>.event;</span><br><span class="line">  <span class="keyword">var</span> scrollX = <span class="built_in">document</span>.documentElement.scrollLeft || <span class="built_in">document</span>.body.scrollLeft;</span><br><span class="line">  <span class="keyword">var</span> scrollY = <span class="built_in">document</span>.documentElement.scrollTop || <span class="built_in">document</span>.body.scrollTop;</span><br><span class="line">  <span class="keyword">var</span> eventX = e.pageX - scrollX || e.clientX;</span><br><span class="line">  <span class="keyword">var</span> eventY = e.pageY - scrollY || e.clientY;</span><br><span class="line">  target = <span class="built_in">document</span>.elementFromPoint(eventX, eventY);</span><br><span class="line">  target = fnGetTable(target);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fnGetTable</span>(<span class="params">oEl</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">while</span> (<span class="literal">null</span> != oEl &amp;&amp; $(oEl).attr(<span class="string">'class'</span>) != <span class="string">"fix-target"</span> &amp;&amp; $(oEl).attr(<span class="string">'id'</span>) != <span class="string">"set-layout"</span> &amp;&amp; $(oEl).attr(<span class="string">'id'</span>) != <span class="string">"save-page"</span> &amp;&amp; $(oEl).attr(<span class="string">'class'</span>) != <span class="string">"box-footer"</span> &amp;&amp; $(oEl).attr(<span class="string">'class'</span>) != <span class="string">"to-edit"</span> &amp;&amp; $(oEl).attr(<span class="string">'class'</span>) != <span class="string">"edit"</span> &amp;&amp; $(oEl).attr(<span class="string">'class'</span>) != <span class="string">"container"</span> &amp;&amp; $(oEl).attr(<span class="string">'class'</span>) != <span class="string">"float-target"</span> &amp;&amp; $(oEl).attr(<span class="string">'class'</span>) != <span class="string">"fix-layout"</span> &amp;&amp; $(oEl).attr(<span class="string">'class'</span>) != <span class="string">"float-layout"</span>) &#123;</span><br><span class="line">    oEl = oEl.parentElement;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> oEl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>定位当前位置是否有在页面效果的布局里position_target</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">position_box</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> e = e || <span class="built_in">window</span>.event;</span><br><span class="line">  <span class="keyword">var</span> scrollX = <span class="built_in">document</span>.documentElement.scrollLeft || <span class="built_in">document</span>.body.scrollLeft;</span><br><span class="line">  <span class="keyword">var</span> scrollY = <span class="built_in">document</span>.documentElement.scrollTop || <span class="built_in">document</span>.body.scrollTop;</span><br><span class="line">  <span class="keyword">var</span> eventX = e.pageX - scrollX || e.clientX;</span><br><span class="line">  <span class="keyword">var</span> eventY = $(target).offset().top - <span class="number">1</span> - scrollY;</span><br><span class="line">  box = <span class="built_in">document</span>.elementFromPoint(eventX, eventY);</span><br><span class="line">  box = fnGetTable2(box);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fnGetTable2</span>(<span class="params">oEl</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">while</span> (<span class="literal">null</span> != oEl &amp;&amp; $(oEl).attr(<span class="string">'id'</span>) != <span class="string">"box"</span> &amp;&amp; $(oEl).attr(<span class="string">'class'</span>) != <span class="string">"container"</span> &amp;&amp; $(oEl).attr(<span class="string">'data-type'</span>) != <span class="string">"layout"</span>) &#123;</span><br><span class="line">    oEl = oEl.parentElement;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> oEl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="绑定鼠标移动事件"><a href="#绑定鼠标移动事件" class="headerlink" title="绑定鼠标移动事件"></a>绑定鼠标移动事件</h2><hr>
+<h3 id="需要进行的判断"><a href="#需要进行的判断" class="headerlink" title="需要进行的判断"></a>需要进行的判断</h3><ul>
+<li>是否有正在拖动的布局或者控件</li>
+<li>当前鼠标位置是否在页面效果内，添加布局示意（蓝色框框表示即将添加布局的位置）</li>
+<li>当前鼠标位置是否在页面效果内的某个布局上方，在相应位置添加布局示意</li>
+<li>全局绑定鼠标移动事件</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="built_in">document</span>).mousemove(<span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">  <span class="comment">//判断是否有正在拖动的布局或者控件</span></span><br><span class="line">  <span class="keyword">if</span> (dragging) &#123;</span><br><span class="line">    <span class="comment">//正在拖动的对象位置跟随鼠标移动</span></span><br><span class="line">    <span class="keyword">var</span> oX = getMousePos(e).x - $(target).width() / <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">var</span> oY = getMousePos(e).y - $(target).height() / <span class="number">2</span>;</span><br><span class="line">    $(target).css(&#123;</span><br><span class="line">      <span class="string">"left"</span>: oX + <span class="string">"px"</span>,</span><br><span class="line">      <span class="string">"top"</span>: oY + <span class="string">"px"</span></span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="comment">//定位当前事件位置</span></span><br><span class="line">    position_box(e);</span><br><span class="line">    <span class="comment">//判断当前位置在页面效果内，且在某个布局上方，布局示意添加在当前布局前方</span></span><br><span class="line">    <span class="keyword">if</span> ($(box).attr(<span class="string">'data-type'</span>) == <span class="string">"layout"</span> &amp;&amp; $(box).parent().attr(<span class="string">'class'</span>) == <span class="string">"float-layout"</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> ($(target).attr(<span class="string">'class'</span>) == <span class="string">"move-layout"</span> || $(target).attr(<span class="string">'class'</span>) == <span class="string">"move-layout-over"</span>) &#123;</span><br><span class="line">        $(target).removeClass(<span class="string">"move-layout"</span>).addClass(<span class="string">"move-layout-over"</span>);</span><br><span class="line">        <span class="keyword">if</span> (dropping == <span class="literal">false</span>) &#123;</span><br><span class="line">          drop = $(<span class="string">"&lt;div class='drop-layout'&gt;&lt;/div&gt;"</span>);</span><br><span class="line">          moveDrop();</span><br><span class="line">          $($(box).parent()).before(drop);</span><br><span class="line">          dropping = <span class="literal">true</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          $(drop).remove();</span><br><span class="line">          moveDrop();</span><br><span class="line">          $($(box).parent()).before(drop);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    <span class="comment">//判断当前位置在页面效果内，且不在某个布局上方，布局示意添加在页面效果最后</span></span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> ($(box).attr(<span class="string">'id'</span>) == <span class="string">"box"</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> ($(target).attr(<span class="string">'class'</span>) == <span class="string">"move-layout"</span> || $(target).attr(<span class="string">'class'</span>) == <span class="string">"move-layout-over"</span>) &#123;</span><br><span class="line">        $(target).removeClass(<span class="string">"move-layout"</span>).addClass(<span class="string">"move-layout-over"</span>);</span><br><span class="line">        <span class="keyword">if</span> (dropping == <span class="literal">false</span>) &#123;</span><br><span class="line">          drop = $(<span class="string">"&lt;div class='drop-layout'&gt;&lt;/div&gt;"</span>);</span><br><span class="line">          moveDrop();</span><br><span class="line">          $(<span class="string">"#box-content"</span>).append(drop);</span><br><span class="line">          dropping = <span class="literal">true</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          $(drop).remove();</span><br><span class="line">          moveDrop();</span><br><span class="line">          $(<span class="string">"#box-content"</span>).append(drop);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    <span class="comment">//判断当前位置不在页面效果内，移除布局示意</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> ($(target).attr(<span class="string">'class'</span>) == <span class="string">"move-layout-over"</span>) &#123;</span><br><span class="line">        $(target).removeClass(<span class="string">"move-layout-over"</span>).addClass(<span class="string">"move-layout"</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (dropping == <span class="literal">true</span>) &#123;</span><br><span class="line">        $(drop).remove();</span><br><span class="line">        dropping = <span class="literal">false</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="绑定鼠标左键松开事件"><a href="#绑定鼠标左键松开事件" class="headerlink" title="绑定鼠标左键松开事件"></a>绑定鼠标左键松开事件</h2><hr>
+<h3 id="效果事件"><a href="#效果事件" class="headerlink" title="效果事件"></a>效果事件</h3><ul>
+<li>当前拖动的对象为布局，且当前鼠标位置是否在页面效果内，添加布局</li>
+<li>当前拖动的对象为控件，且当前鼠标位置是否在页面效果内某个布局上方，且该布局内无其他控件，添加控件至布局</li>
+<li>当前鼠标位置不在页面效果内，移除拖动的对象</li>
+</ul>
+<h3 id="需要进行的判断-1"><a href="#需要进行的判断-1" class="headerlink" title="需要进行的判断"></a>需要进行的判断</h3><ul>
+<li>是否有正在拖动的布局或者控件</li>
+<li>当前鼠标位置是否在页面效果内</li>
+<li>当前拖动的对象是否为布局，且当前鼠标位置是否在页面效果内</li>
+<li>当前拖动的对象是否为控件，且当前鼠标位置是否在页面效果内某个布局上方，该布局是否为空</li>
+<li>全局绑定鼠标左键松开事件</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="built_in">document</span>).mouseup(<span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">  <span class="comment">//定位当前事件位置</span></span><br><span class="line">  position_box(e);</span><br><span class="line">  e.cancelBubble = <span class="literal">true</span>;</span><br><span class="line">  <span class="comment">//判断是否有正在拖动的布局或者控件</span></span><br><span class="line">  <span class="keyword">if</span> (dragging == <span class="literal">true</span>) &#123;</span><br><span class="line">    <span class="comment">//当前位置为页面效果内的某个布局上方，添加布局或者添加控件</span></span><br><span class="line">    <span class="keyword">if</span> (($(box).attr(<span class="string">'data-type'</span>) == <span class="string">"layout"</span> &amp;&amp; $(box).parent().attr(<span class="string">'class'</span>) == <span class="string">"float-layout"</span>) || ($(box).attr(<span class="string">'data-type'</span>) == <span class="string">"layout"</span> &amp;&amp; $(box).parent().attr(<span class="string">'data-type'</span>) == <span class="string">"layout"</span>)) &#123;</span><br><span class="line">      <span class="keyword">if</span> ($(target).attr(<span class="string">'class'</span>) == <span class="string">"move-target"</span> &amp;&amp; $(box).children().length == <span class="number">0</span>) &#123;</span><br><span class="line">        $(target).removeClass(<span class="string">"move-target"</span>).addClass(<span class="string">"float-target"</span>);</span><br><span class="line">        $(target).children(<span class="string">".header, .footer, .nav, .listview-l, .listview-s, .content, .slider-7, .slider-8, .slider-9"</span>).css(<span class="string">"height"</span>, <span class="string">"100%"</span>);</span><br><span class="line">        $(box).append(target);</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> ($(target).attr(<span class="string">'class'</span>) == <span class="string">"move-layout-over"</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (dropping) &#123;</span><br><span class="line">          $(target).removeClass(<span class="string">"move-layout-over"</span>).addClass(<span class="string">"float-layout"</span>);</span><br><span class="line">          $(drop).before($(target));</span><br><span class="line">        &#125;</span><br><span class="line">      &#125; <span class="keyword">else</span> $(target).remove();</span><br><span class="line">    <span class="comment">//当前位置为页面效果内，添加布局</span></span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> ($(box).attr(<span class="string">'id'</span>) == <span class="string">"box"</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> ($(target).attr(<span class="string">'class'</span>) == <span class="string">"move-layout-over"</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (dropping) &#123;</span><br><span class="line">          $(target).removeClass(<span class="string">"move-layout-over"</span>).addClass(<span class="string">"float-layout"</span>);</span><br><span class="line">          $(drop).before($(target));</span><br><span class="line">        &#125;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        $(target).remove();</span><br><span class="line">      &#125;</span><br><span class="line">    <span class="comment">//当前鼠标位置不在页面效果内，移除拖动的对象</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      $(target).remove();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  $(drop).remove();</span><br><span class="line">  dropping = <span class="literal">false</span>;</span><br><span class="line">  dragging = <span class="literal">false</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="完善后续处理"><a href="#完善后续处理" class="headerlink" title="完善后续处理"></a>完善后续处理</h2><hr>
+<ul>
+<li>编辑控件样式<ul>
+<li>在页面效果内的控件可进行编辑（改变颜色、内容等）</li>
+</ul>
+</li>
+<li>保存页面效果<ul>
+<li>这里为了偷懒直接把整个html导出，将它导出保存到html页面内，并加载相应的样式</li>
+<li>当然为了数据处理的方便，你也可以将这一切都转成数据保存到数据库，提取的时候进行相关处理就好了</li>
+</ul>
+</li>
+</ul>
+<h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><hr>
+<p>有时候写些有意思的项目也是很不错的，脑洞要大大的，当然事后别忘了优化哦。</p>
+  
+	</div>
+	<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/2code2.jpg" width="200" height="200" style="display:block;margin: 0 auto;" />
+	<p style="text-align: center;margin-top: 10px;margin-bottom: 20px;">码生艰难，写文不易，给我家猪囤点猫粮了喵~</p>
+	<div class="article-content">
+		<p style="margin-top:50px;">
+			查看Github有更多内容噢：<a href="https://github.com/godbasin">https://github.com/godbasin</a>
+			<br>
+			更欢迎来<a href="https://godbasin.github.io/front-end-playground">被删的前端游乐场</a>边撸猫边学前端噢
+			<br>
+			如果你想要关注日常生活中的我，欢迎关注“牧羊的猪”公众号噢
+		</p>
+	</div>
+	<div class="author-right">
+  		<p>作者：被删</p>
+  		<p>出处：<a href="https://godbasin.github.io">https://godbasin.github.io</a></p>
+  		<p>本文版权归作者所有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利。</p>
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/原创部件/">原创部件</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/js什锦/">js什锦</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  
+<!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a href="http://www.jiathis.com/share?uid=2134021" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config = {data_track_clickback:'true'};
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js?uid=2134021" charset="utf-8"></script>
+<!-- JiaThis Button END -->   
+
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2016/06/20/responsive-waterfall/" title="jQuery响应式瀑布流">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  jQuery响应式瀑布流</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2016/06/19/position-object/"  title="js判断某个位置是否特定元素">
+ <strong>NEXT:</strong><br/> 
+ <span>js判断某个位置是否特定元素
+</span>
+</a>
+</div>
+
+</nav>
+
+	<!-- 如果不是首页且没使用 `comments: false` 关闭评论，则尝试加载评论 -->
+
+    <!-- 配置中启用多说时，导入相应代码 -->
+    
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本页面搭建"><span class="toc-number">1.</span> <span class="toc-text">基本页面搭建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#绑定鼠标左键按下事件"><span class="toc-number">2.</span> <span class="toc-text">绑定鼠标左键按下事件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#需要进行绑定的对象"><span class="toc-number">2.1.</span> <span class="toc-text">需要进行绑定的对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#点击对象后进行处理"><span class="toc-number">2.2.</span> <span class="toc-text">点击对象后进行处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#若对象位于页面效果内，进行相关处理"><span class="toc-number">2.3.</span> <span class="toc-text">若对象位于页面效果内，进行相关处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#定位当前位置是否有特定元素"><span class="toc-number">3.</span> <span class="toc-text">定位当前位置是否有特定元素</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#绑定鼠标移动事件"><span class="toc-number">4.</span> <span class="toc-text">绑定鼠标移动事件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#需要进行的判断"><span class="toc-number">4.1.</span> <span class="toc-text">需要进行的判断</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#绑定鼠标左键松开事件"><span class="toc-number">5.</span> <span class="toc-text">绑定鼠标左键松开事件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#效果事件"><span class="toc-number">5.1.</span> <span class="toc-text">效果事件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#需要进行的判断-1"><span class="toc-number">5.2.</span> <span class="toc-text">需要进行的判断</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#完善后续处理"><span class="toc-number">6.</span> <span class="toc-text">完善后续处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结束语"><span class="toc-number">7.</span> <span class="toc-text">结束语</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  	
+	<div class="archiveslist">
+		<p class="asidetitle">最近文章</p>
+			<ul class="archive-list">
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/03/13/angular-design-0-prestart/" title="Angular框架解读--预热篇">Angular框架解读--预热篇...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/02/27/network-design-dependency-decoupling/" title="在线文档的网络层开发思考--依赖关系梳理">在线文档的网络层开发思考--依赖关系...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/01/23/network-design-responsibility-driven-design/" title="在线文档的网络层开发思考--职责驱动设计">在线文档的网络层开发思考--职责驱动...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/01/10/about-writing/" title="前端这几年--写文章这件事">前端这几年--写文章这件事...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/11/01/task-runner-design/" title="如何设计一个任务管理器">如何设计一个任务管理器</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/10/10/why-spreadsheet-app-excited/" title="在线Excel项目到底有多刺激">在线Excel项目到底有多刺激...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/10/07/monitor-and-report/" title="前端监控体系搭建">前端监控体系搭建</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/08/30/about-front-end-10/" title="前端这几年--10.我的工作历险记">前端这几年--10.我的工作历险记...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/08/30/about-front-end-9/" title="前端这几年--9.提升工作效率">前端这几年--9.提升工作效率...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/08/29/front-end-performance-analyze/" title="补齐Web前端性能分析的工具盲点">补齐Web前端性能分析的工具盲点...</a>
+				</li>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+	</div>
+
+
+  
+  <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">归档</a></p>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">十月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">41</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">9</span></li></ul>
+  </div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle"><a href="/categories">分类</a></p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/Angular源码/" title="Angular源码">Angular源码<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/CSS炒饭/" title="CSS炒饭">CSS炒饭<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/D3小馒头/" title="D3小馒头">D3小馒头<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular2火锅/" title="angular2火锅">angular2火锅<sup>25</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular混搭/" title="angular混搭">angular混搭<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/box2djs方糖/" title="box2djs方糖">box2djs方糖<sup>34</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/cyclejs哈根达斯/" title="cyclejs哈根达斯">cyclejs哈根达斯<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/jQuery杂烩/" title="jQuery杂烩">jQuery杂烩<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/js什锦/" title="js什锦">js什锦<sup>26</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/react沙拉/" title="react沙拉">react沙拉<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/three-js奶茶/" title="three.js奶茶">three.js奶茶<sup>5</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/vue八宝粥/" title="vue八宝粥">vue八宝粥<sup>30</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/webpack宾治/" title="webpack宾治">webpack宾治<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/web乱炖/" title="web乱炖">web乱炖<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端满汉全席/" title="前端满汉全席">前端满汉全席<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端解决方案/" title="前端解决方案">前端解决方案<sup>13</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/喵/" title="喵">喵<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/小程序双皮奶/" title="小程序双皮奶">小程序双皮奶<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/工作这杯茶/" title="工作这杯茶">工作这杯茶<sup>19</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/应用巧克力盒/" title="应用巧克力盒">应用巧克力盒<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/思想棉花糖/" title="思想棉花糖">思想棉花糖<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/柴米油盐工具集/" title="柴米油盐工具集">柴米油盐工具集<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/自动化甜筒/" title="自动化甜筒">自动化甜筒<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/非前端钙片/" title="非前端钙片">非前端钙片<sup>7</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle">标签</p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/分享/" title="分享">分享<sup>44</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/功能设计/" title="功能设计">功能设计<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/原创部件/" title="原创部件">原创部件<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/心态/" title="心态">心态<sup>19</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/教程/" title="教程">教程<sup>80</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/晒猫/" title="晒猫">晒猫<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/笔记/" title="笔记">笔记<sup>121</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/算法/" title="算法">算法<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/自制插件/" title="自制插件">自制插件<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/逻辑实现/" title="逻辑实现">逻辑实现<sup>18</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+    <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">about</a></p>
+      <ul class="archive-list">
+      	<li class="archive-list-item">
+      		<a>wangbeishan@163.com</a>
+      		<a href="https://github.com/godbasin">github.com/godbasin</a>
+      	</li>
+      </ul>
+  </div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<section class="info">
+		<p> 即使梦想再小，却很伟大 ^_^ </p>
+	</section>
+	 
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2021 
+		
+		<a href="https://godbasin.github.io" target="_blank" title="被删">被删</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+
+
+
+
+
+  </body>
+</html>

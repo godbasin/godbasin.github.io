@@ -1,0 +1,1232 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  
+    <title>前端入门8--Ajax和http | Here. There.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="被删">
+    
+    <meta name="description" content="《前端入门》系列主要为个人对前端一些经验和认识总结。本节主要涉及 HTTP 协议和 Ajax 请求，日常开发的联调等内容。">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Here. There." type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?3d902de4a19cf2bf179534ffd2dd7b7f";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+</html>
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/sun.png" alt="Here. There." title="Here. There."/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Here. There.">Here. There.</a></h1>
+				<h2 class="blog-motto">Love ice cream. Love sunshine. Love life. Love the world. Love myself. Love you.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="https://github.com/godbasin/godbasin.github.io">所有文章</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">分类</a></li>
+					
+						<li><a href="https://godbasin.github.io/front-end-playground">前端游乐场</a></li>
+					
+						<li><a href="/about">关于我</a></li>
+					
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/05/19/front-end-8-http-and-ajax/" title="前端入门8--Ajax和http" itemprop="url">前端入门8--Ajax和http</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://godbasin.github.io" title="被删">被删</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2018-05-19T03:41:23.000Z" itemprop="datePublished">2018-05-19</time>
+    更新日期:<time datetime="2018-08-18T12:58:12.409Z" itemprop="dateModified">2018-08-18</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Ajax-请求"><span class="toc-number">1.</span> <span class="toc-text">Ajax 请求</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#网络请求的发展"><span class="toc-number">1.1.</span> <span class="toc-text">网络请求的发展</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XMLHttpRequest"><span class="toc-number">1.2.</span> <span class="toc-text">XMLHttpRequest</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HTTP协议"><span class="toc-number">2.</span> <span class="toc-text">HTTP协议</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#理解HTTP协议"><span class="toc-number">2.1.</span> <span class="toc-text">理解HTTP协议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP结构"><span class="toc-number">2.1.1.</span> <span class="toc-text">HTTP结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#无连接的HTTP"><span class="toc-number">2.1.2.</span> <span class="toc-text">无连接的HTTP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#无状态的HTTP"><span class="toc-number">2.1.3.</span> <span class="toc-text">无状态的HTTP</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP与浏览器缓存"><span class="toc-number">2.2.</span> <span class="toc-text">HTTP与浏览器缓存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP与跨域"><span class="toc-number">2.3.</span> <span class="toc-text">HTTP与跨域</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#浏览器同源政策"><span class="toc-number">2.3.1.</span> <span class="toc-text">浏览器同源政策</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#前端解决跨域"><span class="toc-number">2.3.2.</span> <span class="toc-text">前端解决跨域</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#请求联调"><span class="toc-number">3.</span> <span class="toc-text">请求联调</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#浏览器查看请求"><span class="toc-number">3.1.</span> <span class="toc-text">浏览器查看请求</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Network面板"><span class="toc-number">3.1.1.</span> <span class="toc-text">Network面板</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查看具体资源的详情"><span class="toc-number">3.1.2.</span> <span class="toc-text">查看具体资源的详情</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Fiddler"><span class="toc-number">3.2.</span> <span class="toc-text">Fiddler</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#其他深入学习"><span class="toc-number">4.</span> <span class="toc-text">其他深入学习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#前端阶段性总结"><span class="toc-number">4.1.</span> <span class="toc-text">前端阶段性总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#前端杂谈"><span class="toc-number">4.2.</span> <span class="toc-text">前端杂谈</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#结束语"><span class="toc-number">5.</span> <span class="toc-text">结束语</span></a></li></ol>
+		</div>
+		
+		<p>《前端入门》系列主要为个人对前端一些经验和认识总结。本节主要涉及 HTTP 协议和 Ajax 请求，日常开发的联调等内容。</p>
+<a id="more"></a>
+<h1 id="Ajax-请求"><a href="#Ajax-请求" class="headerlink" title="Ajax 请求"></a>Ajax 请求</h1><p>Ajax 不是 JavaScript 的规范，它只是 Jesse James Garrett 提出的新术语：<code>Asynchronous JavaScript and XML</code>，意思是用 JavaScript 执行异步网络请求。</p>
+<h2 id="网络请求的发展"><a href="#网络请求的发展" class="headerlink" title="网络请求的发展"></a>网络请求的发展</h2><p>网络请求，是用来从服务端获取需要的信息，然后解析协议和内容，来进行页面渲染或者是信息获取的过程。前面<a href>《前端入门 6– 认识浏览器》</a>一节已经大致说过关于浏览器渲染，以及完整的 HTTP 请求流程。</p>
+<p>在很久以前，我们的网络请求除了静态资源（<code>html/css/js</code>等）文件的获取，主要用于表单的提交。我们在完成表单内容的填写之后，点击<code>Submit</code>按钮，表单开始提交，浏览器就会刷新页面，然后在新页面里告诉你操作是成功了还是失败了。</p>
+<p>然后随着时间发展，大家觉得这样每次都刷新页面的体验太糟了，然后开始使用<code>XMLHttpRequest</code>来获取请求内容，再更新到页面中。页面开始支持局部更新、动态加载，后面还有懒加载、首屏加载等等，其实都可以算是基于这个基础吧。</p>
+<p>同步请求会阻塞进程，页面呈现假死状态，导致体验效果也较差。接下来，Ajax 的应用越来越广，慢慢大家都开始使用异步请求 + 回调的方式，来进行请求处理。那是一个浏览器兼容困难时期，jQuery 封装的<code>$.ajax()</code>，由于兼容性处理较好，也开始被大家广泛使用<br>。</p>
+<p>现在，我们用上了路由管理，编写单页应用，Ajax 已经是一个不可或缺的功能了。</p>
+<p>我们先来认识下 Ajax 的核心：<code>XMLHttpRequest</code> API 。</p>
+<h2 id="XMLHttpRequest"><a href="#XMLHttpRequest" class="headerlink" title="XMLHttpRequest"></a>XMLHttpRequest</h2><p><code>XMLHttpRequest</code>让发送一个 HTTP 请求变得非常容易。你只需要简单的创建一个请求对象实例，打开一个 URL，然后发送这个请求。当传输完毕后，结果的 HTTP 状态以及返回的响应内容也可以从请求对象中获取。</p>
+<p>来看个简单的例子（我们常用的 Ajax 处理）：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> request = <span class="keyword">new</span> XMLHttpRequest(); <span class="comment">// 新建XMLHttpRequest对象</span></span><br><span class="line"></span><br><span class="line">request.onreadystatechange = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 状态发生变化时，函数被回调</span></span><br><span class="line">  <span class="keyword">if</span> (request.readyState == <span class="number">4</span>) &#123;</span><br><span class="line">    <span class="comment">// 成功完成</span></span><br><span class="line">    <span class="comment">// 判断响应结果:</span></span><br><span class="line">    <span class="keyword">if</span> (request.status == <span class="number">200</span>) &#123;</span><br><span class="line">      <span class="comment">// 成功，通过responseText拿到响应的文本</span></span><br><span class="line">      <span class="built_in">console</span>.log(request.responseText);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// 失败，根据响应码判断失败原因:</span></span><br><span class="line">      <span class="built_in">console</span>.log(request.status);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 发送请求</span></span><br><span class="line"><span class="comment">// open的参数：</span></span><br><span class="line"><span class="comment">// 一：请求方法，包括get/post等</span></span><br><span class="line"><span class="comment">// 二：请求地址</span></span><br><span class="line"><span class="comment">// 三：表示是否异步请求，若为false则是同步请求，会阻塞进程</span></span><br><span class="line">request.open(<span class="string">"GET"</span>, <span class="string">"/api/categories"</span>, <span class="literal">true</span>);</span><br><span class="line">request.send();</span><br></pre></td></tr></table></figure>
+<p>大概就是上面这样，来处理一个 HTTP 请求。我们通常会将它封装成一个通用的方法，方便调用。上面例子中使用<code>200</code>来判断是否成功，但有些时候<code>200-400</code>（不包括<code>400</code>）的范围，都可以算是成功的。</p>
+<p>如果说我们将其封装起来，同时使用 ES6 的 Promise 的方式来操作的话，大概会是这样：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ajax</span>(<span class="params">&#123; method, url, params, contentType &#125;</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">  <span class="keyword">const</span> formData = <span class="keyword">new</span> FormData();</span><br><span class="line">  <span class="built_in">Object</span>.keys(params).forEach(<span class="function"><span class="params">key</span> =&gt;</span> &#123;</span><br><span class="line">    formData.append(key, params[key]);</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      xhr.open(method, url, <span class="literal">false</span>);</span><br><span class="line">      xhr.setRequestHeader(<span class="string">"Content-Type"</span>, contentType);</span><br><span class="line">      xhr.onreadystatechange = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (xhr.readyState === <span class="number">4</span>) &#123;</span><br><span class="line">          <span class="keyword">if</span> (xhr.status &gt;= <span class="number">200</span> &amp;&amp; xhr.status &lt; <span class="number">400</span>) &#123;</span><br><span class="line">            <span class="comment">// 这里我们使用200-400来判断</span></span><br><span class="line">            resolve(xhr.responseText);</span><br><span class="line">          &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 返回请求信息</span></span><br><span class="line">            reject(xhr);</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;;</span><br><span class="line">      xhr.send(formData);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">      reject(err);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里使用了<code>FormData</code>来处理。通过<code>FormData</code>对象可以组装一组用<code>XMLHttpRequest</code>发送请求的键/值对。<br>它可以更灵活方便的发送表单数据，因为可以独立于表单使用。如果你把表单的编码类型设置为<code>multipart/form-data</code>，则通过<code>FormData</code>传输的数据格式和表单通过<code>submit()</code>方法传输的数据格式相同。也支持文件的上传和添加。</p>
+<p>上面的代码也只是一个简单的例子，如果要封装成完善的库，我们通常还需要处理一些问题：</p>
+<ul>
+<li>浏览器兼容性</li>
+<li>babel polyfill处理ES6</li>
+<li>get方法通过将params转换拼接URL处理</li>
+</ul>
+<p>如果想知道不使用<code>FormData</code>对象的情况下，通过AJAX序列化和提交表单，以及更多的<code>XMLHttpRequest</code>内容，可以参考<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest" target="_blank" rel="noopener">Using XMLHttpRequest | MDN</a>。</p>
+<h1 id="HTTP协议"><a href="#HTTP协议" class="headerlink" title="HTTP协议"></a>HTTP协议</h1><p>关于HTTP协议的内容，实在是太多太多，这里只大致讲一下接触比较多的。</p>
+<p>更多与HTTP协议相关的详细说明，可参考<a href="https://godbasin.github.io/2017/05/20/front-end-notes-7-init-http/">《前端阶段性总结之「理解HTTP协议」》</a>。</p>
+<p>还有TCP/IP协议的就直接略过，可参考下<a href="https://godbasin.github.io/2017/05/19/front-end-notes-6-network-protocol/">《前端阶段性总结之「网络协议基础」》</a></p>
+<h2 id="理解HTTP协议"><a href="#理解HTTP协议" class="headerlink" title="理解HTTP协议"></a>理解HTTP协议</h2><h3 id="HTTP结构"><a href="#HTTP结构" class="headerlink" title="HTTP结构"></a>HTTP结构</h3><p><strong>HTTP消息的结构</strong></p>
+<ol>
+<li>Request</li>
+</ol>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">------------------</span><br><span class="line">Request line</span><br><span class="line">（包括：请求方法、请求的资源、HTTP协议的版本号）</span><br><span class="line">------------------</span><br><span class="line">Request header</span><br><span class="line">（包括：Cache头域、Client头域、Cookie/Login头域、Entity头域、Miscellaneous头域、Transport头域等）</span><br><span class="line">------------------</span><br><span class="line">空行</span><br><span class="line">------------------</span><br><span class="line">Request body</span><br><span class="line">------------------</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>Response</li>
+</ol>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">------------------</span><br><span class="line">Response line</span><br><span class="line">（包括：HTTP协议的版本号、状态码、消息）</span><br><span class="line">------------------</span><br><span class="line">Response header</span><br><span class="line">（包括：Cache头域、Cookie/Login头域、Entity头域、Miscellaneous头域、Transport头域、Location头域等）</span><br><span class="line">------------------</span><br><span class="line">空行</span><br><span class="line">------------------</span><br><span class="line">Response body</span><br><span class="line">------------------</span><br></pre></td></tr></table></figure>
+<p><strong>状态码</strong><br>状态码由三位数字组成，第一个数字定义了响应的类别（括号中为常见的状态码）：</p>
+<ul>
+<li>1XX–提示信息：表示请求已被成功接收，继续处理</li>
+<li>2XX–成功：表示请求已被成功接收，理解，接受（200 OK）</li>
+<li>3XX–重定向：要完成请求必须进行更进一步的处理（302 Found重定向/304 Not Modified缓存）</li>
+<li>4XX–客户端错误：请求有语法错误或请求无法实现（400 Bad Request客户端请求与语法错误/403 Forbidden服务器拒绝提供服务/404 Not Found请求资源不存在）</li>
+<li>5XX–服务器端错误：服务器未能实现合法的请求（500 Internal Server Error服务器发生了不可预期的错误）</li>
+</ul>
+<h3 id="无连接的HTTP"><a href="#无连接的HTTP" class="headerlink" title="无连接的HTTP"></a>无连接的HTTP</h3><p><strong>无连接</strong><br>无连接的含义是限制每次连接只处理一个请求。服务器处理完客户的请求，并收到客户的应答后，即断开连接。</p>
+<p><strong>Keep-Alive</strong><br>Keep-Alive功能使客户端到服务器端的连接持续有效，当出现对服务器的后继请求时，Keep-Alive功能避免了建立或者重新建立连接。</p>
+<h3 id="无状态的HTTP"><a href="#无状态的HTTP" class="headerlink" title="无状态的HTTP"></a>无状态的HTTP</h3><p>无状态是指协议对于事务处理没有记忆能力，服务器不知道客户端是什么状态。</p>
+<p>通常我们会根据场景，使用<code>Cookie</code>、<code>Token</code>、<code>Session</code>等方法来记录用户状态，完善上下请求的承接性。</p>
+<h2 id="HTTP与浏览器缓存"><a href="#HTTP与浏览器缓存" class="headerlink" title="HTTP与浏览器缓存"></a>HTTP与浏览器缓存</h2><p>浏览器会在第一次请求完服务器后得到响应，我们可以在服务器中设置这些响应，从而达到在以后的请求中尽量减少甚至不从服务器获取资源的目的。</p>
+<p>静态资源的缓存能减轻很多流量，如今我们的文件很多都加上了md5，则缓存的使用越来越广泛。</p>
+<p>浏览器是依靠请求和响应中的的头信息来控制缓存的，主要涉及<code>Expires</code>与<code>Cache-Control</code>、<code>Last-Modified/If-Modified-Since</code>、<code>ETag/If-None-Match</code>这几个。</p>
+<p>第一次请求：<br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/015343_psx2_568818.png" alt="image"></p>
+<p>再次请求：<br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/015353_P04w_568818.png" alt="image"></p>
+<h2 id="HTTP与跨域"><a href="#HTTP与跨域" class="headerlink" title="HTTP与跨域"></a>HTTP与跨域</h2><h3 id="浏览器同源政策"><a href="#浏览器同源政策" class="headerlink" title="浏览器同源政策"></a>浏览器同源政策</h3><p>同源政策的目的，是为了保证用户信息的安全，防止恶意的网站窃取数据。所谓”同源”指的是”三个相同”: 协议相同、域名相同、端口相同。</p>
+<p>随着互联网的发展，”同源政策”越来越严格。目前，如果非同源，共有三种行为受到限制。</p>
+<ol>
+<li><code>Cookie</code>、<code>LocalStorage</code>和<code>IndexDB</code>无法读取。</li>
+<li><code>DOM</code>无法获得。</li>
+<li><code>AJAX</code>请求不能发送。</li>
+</ol>
+<h3 id="前端解决跨域"><a href="#前端解决跨域" class="headerlink" title="前端解决跨域"></a>前端解决跨域</h3><p>跨域方法大概以下几种：</p>
+<ul>
+<li><code>document.domain + iframe</code>(只有在主域相同的时候才能使用该方法)</li>
+<li>动态创建<code>script</code>(JSONP)</li>
+<li><code>location.hash + iframe</code></li>
+<li><code>window.name + iframe</code></li>
+<li><code>postMessage</code></li>
+<li>CORS</li>
+<li><code>websockets</code></li>
+</ul>
+<p>现在的话，应该是CORS的使用会更广泛吧。实现CORS通信的关键是服务器。只要服务器实现了CORS接口，就可以跨源通信。</p>
+<h1 id="请求联调"><a href="#请求联调" class="headerlink" title="请求联调"></a>请求联调</h1><p>一般来说，我们的日常联调通常有两种：浏览器查看请求，或是工具抓包查看（Fiddler）。</p>
+<h2 id="浏览器查看请求"><a href="#浏览器查看请求" class="headerlink" title="浏览器查看请求"></a>浏览器查看请求</h2><p>我们又来看浏览器的控制台了：<br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1513065617%281%29.png" alt="image"></p>
+<h3 id="Network面板"><a href="#Network面板" class="headerlink" title="Network面板"></a>Network面板</h3><p>Network面板可以记录页面上的网络请求的详情信息，从发起网页页面请求Request后分析HTTP请求后得到的各个请求资源信息（包括状态、资源类型、大小、所用时间、Request和Response等），可以根据这个进行网络性能优化。</p>
+<p>该面板主要包括5大块窗格，如图：<br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/7f5c083982ec4c8378100687072118b9.png" alt="image"></p>
+<ul>
+<li><strong>Controls</strong>：控制Network的外观和功能。</li>
+<li><strong>Filters</strong>：控制Requests Table具体显示哪些内容。</li>
+<li><strong>Overview</strong>：显示获取到资源的时间轴信息。</li>
+<li><strong>Requests Table</strong>：按资源获取的前后顺序显示所有获取到的资源信息，点击资源名可以查看该资源的详细信息。</li>
+<li><strong>Summary</strong>：显示总的请求数、数据传输量、加载时间信息。</li>
+</ul>
+<h3 id="查看具体资源的详情"><a href="#查看具体资源的详情" class="headerlink" title="查看具体资源的详情"></a>查看具体资源的详情</h3><p>通过点击某个资源的Name可以查看该资源的详细信息，根据选择的资源类型显示的信息也不太一样，可能包括如下Tab信息：</p>
+<ul>
+<li><strong>Headers</strong>：该资源的HTTP头信息。</li>
+<li><strong>Preview</strong>：根据你所选择的资源类型（JSON、图片、文本）显示相应的预览。</li>
+<li><strong>Response</strong>：显示HTTP的Response信息。</li>
+<li><strong>Cookies</strong>：显示资源HTTP的Request和Response过程中的Cookies信息。</li>
+<li><strong>Timing</strong>：显示资源在整个请求生命周期过程中各部分花费的时间。</li>
+</ul>
+<p>一般来说，联调主要关注请求是否正确发送、回包是否是约定的格式，所以我们更多使用资源详情的查看，包括：</p>
+<ul>
+<li>查看HTTP头信息是否正确</li>
+<li>查看请求数据是否带上</li>
+<li>查看请求是否成功，分析HTTP状态码</li>
+<li>查看回包格式和内容是否正确</li>
+</ul>
+<p>而其他功能，或许对于性能优化的时候会使用更多，先不多介绍。<br>这里面有一篇文章写得挺详细的，可以参考<a href="http://web.jobbole.com/89106/" target="_blank" rel="noopener">《Chrome开发者工具详解(2)：Network面板》</a></p>
+<h2 id="Fiddler"><a href="#Fiddler" class="headerlink" title="Fiddler"></a>Fiddler</h2><p>Fiddler是一个HTTP的调试代理，以代理服务器的方式，监听系统的Http网络数据流动。Fiddler可以也可以让你检查所有的HTTP通讯，设置断点，以及Fiddle所有的“进出”的数据（可用于抓包、修改请求等）。</p>
+<p>通常来说，我们会使用它来解决一些问题：</p>
+<ol>
+<li>查看请求详情（类似上方的浏览器Network面板）。</li>
+<li>请求失败时，抓包给后台查看问题。</li>
+<li>模拟请求。</li>
+<li>拦截请求，并更改请求内容。</li>
+<li>移动端的请求查看和抓包。</li>
+</ol>
+<p>具体的使用方式，可以参考<a href="http://www.cnblogs.com/FounderBox/p/4653588.html?utm_source=tuicool" target="_blank" rel="noopener">Fiddler教程</a>。</p>
+<h1 id="其他深入学习"><a href="#其他深入学习" class="headerlink" title="其他深入学习"></a>其他深入学习</h1><p>就目前来说，大致的入门内容大概到这，还有很多内容或许分散在本骚年的各个系列博客中。这里放一些总结和整理相关的吧。</p>
+<h2 id="前端阶段性总结"><a href="#前端阶段性总结" class="headerlink" title="前端阶段性总结"></a>前端阶段性总结</h2><blockquote>
+<p><a href="https://godbasin.github.io/2017/05/20/front-end-notes-7-init-http/">《前端阶段性总结之「理解HTTP协议」》</a><br><a href="https://godbasin.github.io/2017/05/19/front-end-notes-6-network-protocol/">《前端阶段性总结之「网络协议基础」》</a><br><a href="https://godbasin.github.io/2017/05/14/front-end-notes-5-build-tool/">《前端阶段性总结之「自动化和构建工具」》</a><br><a href="https://godbasin.github.io/2017/05/12/front-end-notes-4-frame/">《前端阶段性总结之「框架相关」》</a><br><a href="https://godbasin.github.io/2017/05/07/front-end-notes-3-javascript-keep-moving/">《前端阶段性总结之「javascript新特性」》</a><br><a href="https://godbasin.github.io/2017/05/06/front-end-notes-2-deep-into-javascript/">《前端阶段性总结之「深入javascript」》</a><br><a href="https://godbasin.github.io/2017/05/01/front-end-notes-1-init-javascript/">《前端阶段性总结之「掌握javascript」》</a><br><a href="https://godbasin.github.io/2017/04/30/front-end-notes-0-about/">《前端阶段性总结之「总览整理」》</a>      </p>
+</blockquote>
+<h2 id="前端杂谈"><a href="#前端杂谈" class="headerlink" title="前端杂谈"></a>前端杂谈</h2><blockquote>
+<p><a href="https://godbasin.github.io/2017/10/21/template-engine/">《前端模板引擎》</a><br><a href="https://godbasin.github.io/2017/10/14/dialogue-abstraction/">《对话抽象》</a><br><a href="https://godbasin.github.io/2017/09/29/data-driven-or-event-driven/">《前端思维转变–从事件驱动到数据驱动》</a><br>还有《纯前端的进军》系列，更多可以查看github上博客：<a href="https://github.com/godbasin/godbasin.github.io" target="_blank" rel="noopener">godbasin/godbasin.github.io</a>。</p>
+</blockquote>
+<h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><hr>
+<p>这一节主要讲了 HTTP 请求相关，包括 Ajax（XMLHttpRequest）、HTTP 协议/跨域/缓存等，以及常用的前后台交互（联调）方式的介绍。这里面都是书面的介绍，我们需要更多的其实是实践，动手去写吧。</p>
+  
+	</div>
+	<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/2code2.jpg" width="200" height="200" style="display:block;margin: 0 auto;" />
+	<p style="text-align: center;margin-top: 10px;margin-bottom: 20px;">码生艰难，写文不易，给我家猪囤点猫粮了喵~</p>
+	<div class="article-content">
+		<p style="margin-top:50px;">
+			查看Github有更多内容噢：<a href="https://github.com/godbasin">https://github.com/godbasin</a>
+			<br>
+			更欢迎来<a href="https://godbasin.github.io/front-end-playground">被删的前端游乐场</a>边撸猫边学前端噢
+			<br>
+			如果你想要关注日常生活中的我，欢迎关注“牧羊的猪”公众号噢
+		</p>
+	</div>
+	<div class="author-right">
+  		<p>作者：被删</p>
+  		<p>出处：<a href="https://godbasin.github.io">https://godbasin.github.io</a></p>
+  		<p>本文版权归作者所有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利。</p>
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/分享/">分享</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/js什锦/">js什锦</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  
+<!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a href="http://www.jiathis.com/share?uid=2134021" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config = {data_track_clickback:'true'};
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js?uid=2134021" charset="utf-8"></script>
+<!-- JiaThis Button END -->   
+
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2018/05/26/app-component-isolation/" title="页面区块化与应用组件化">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  页面区块化与应用组件化</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2018/05/13/front-end-7-debug/"  title="前端入门7--代码调试">
+ <strong>NEXT:</strong><br/> 
+ <span>前端入门7--代码调试
+</span>
+</a>
+</div>
+
+</nav>
+
+	<!-- 如果不是首页且没使用 `comments: false` 关闭评论，则尝试加载评论 -->
+
+    <!-- 配置中启用多说时，导入相应代码 -->
+    
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Ajax-请求"><span class="toc-number">1.</span> <span class="toc-text">Ajax 请求</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#网络请求的发展"><span class="toc-number">1.1.</span> <span class="toc-text">网络请求的发展</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XMLHttpRequest"><span class="toc-number">1.2.</span> <span class="toc-text">XMLHttpRequest</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HTTP协议"><span class="toc-number">2.</span> <span class="toc-text">HTTP协议</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#理解HTTP协议"><span class="toc-number">2.1.</span> <span class="toc-text">理解HTTP协议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP结构"><span class="toc-number">2.1.1.</span> <span class="toc-text">HTTP结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#无连接的HTTP"><span class="toc-number">2.1.2.</span> <span class="toc-text">无连接的HTTP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#无状态的HTTP"><span class="toc-number">2.1.3.</span> <span class="toc-text">无状态的HTTP</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP与浏览器缓存"><span class="toc-number">2.2.</span> <span class="toc-text">HTTP与浏览器缓存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP与跨域"><span class="toc-number">2.3.</span> <span class="toc-text">HTTP与跨域</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#浏览器同源政策"><span class="toc-number">2.3.1.</span> <span class="toc-text">浏览器同源政策</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#前端解决跨域"><span class="toc-number">2.3.2.</span> <span class="toc-text">前端解决跨域</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#请求联调"><span class="toc-number">3.</span> <span class="toc-text">请求联调</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#浏览器查看请求"><span class="toc-number">3.1.</span> <span class="toc-text">浏览器查看请求</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Network面板"><span class="toc-number">3.1.1.</span> <span class="toc-text">Network面板</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查看具体资源的详情"><span class="toc-number">3.1.2.</span> <span class="toc-text">查看具体资源的详情</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Fiddler"><span class="toc-number">3.2.</span> <span class="toc-text">Fiddler</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#其他深入学习"><span class="toc-number">4.</span> <span class="toc-text">其他深入学习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#前端阶段性总结"><span class="toc-number">4.1.</span> <span class="toc-text">前端阶段性总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#前端杂谈"><span class="toc-number">4.2.</span> <span class="toc-text">前端杂谈</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#结束语"><span class="toc-number">5.</span> <span class="toc-text">结束语</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  	
+	<div class="archiveslist">
+		<p class="asidetitle">最近文章</p>
+			<ul class="archive-list">
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/03/13/angular-design-0-prestart/" title="Angular框架解读--预热篇">Angular框架解读--预热篇...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/02/27/network-design-dependency-decoupling/" title="在线文档的网络层开发思考--依赖关系梳理">在线文档的网络层开发思考--依赖关系...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/01/23/network-design-responsibility-driven-design/" title="在线文档的网络层开发思考--职责驱动设计">在线文档的网络层开发思考--职责驱动...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/01/10/about-writing/" title="前端这几年--写文章这件事">前端这几年--写文章这件事...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/11/01/task-runner-design/" title="如何设计一个任务管理器">如何设计一个任务管理器</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/10/10/why-spreadsheet-app-excited/" title="在线Excel项目到底有多刺激">在线Excel项目到底有多刺激...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/10/07/monitor-and-report/" title="前端监控体系搭建">前端监控体系搭建</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/08/30/about-front-end-10/" title="前端这几年--10.我的工作历险记">前端这几年--10.我的工作历险记...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/08/30/about-front-end-9/" title="前端这几年--9.提升工作效率">前端这几年--9.提升工作效率...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/08/29/front-end-performance-analyze/" title="补齐Web前端性能分析的工具盲点">补齐Web前端性能分析的工具盲点...</a>
+				</li>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+	</div>
+
+
+  
+  <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">归档</a></p>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">十月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">41</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">9</span></li></ul>
+  </div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle"><a href="/categories">分类</a></p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/Angular源码/" title="Angular源码">Angular源码<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/CSS炒饭/" title="CSS炒饭">CSS炒饭<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/D3小馒头/" title="D3小馒头">D3小馒头<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular2火锅/" title="angular2火锅">angular2火锅<sup>25</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular混搭/" title="angular混搭">angular混搭<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/box2djs方糖/" title="box2djs方糖">box2djs方糖<sup>34</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/cyclejs哈根达斯/" title="cyclejs哈根达斯">cyclejs哈根达斯<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/jQuery杂烩/" title="jQuery杂烩">jQuery杂烩<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/js什锦/" title="js什锦">js什锦<sup>26</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/react沙拉/" title="react沙拉">react沙拉<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/three-js奶茶/" title="three.js奶茶">three.js奶茶<sup>5</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/vue八宝粥/" title="vue八宝粥">vue八宝粥<sup>30</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/webpack宾治/" title="webpack宾治">webpack宾治<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/web乱炖/" title="web乱炖">web乱炖<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端满汉全席/" title="前端满汉全席">前端满汉全席<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端解决方案/" title="前端解决方案">前端解决方案<sup>13</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/喵/" title="喵">喵<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/小程序双皮奶/" title="小程序双皮奶">小程序双皮奶<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/工作这杯茶/" title="工作这杯茶">工作这杯茶<sup>19</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/应用巧克力盒/" title="应用巧克力盒">应用巧克力盒<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/思想棉花糖/" title="思想棉花糖">思想棉花糖<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/柴米油盐工具集/" title="柴米油盐工具集">柴米油盐工具集<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/自动化甜筒/" title="自动化甜筒">自动化甜筒<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/非前端钙片/" title="非前端钙片">非前端钙片<sup>7</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle">标签</p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/分享/" title="分享">分享<sup>44</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/功能设计/" title="功能设计">功能设计<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/原创部件/" title="原创部件">原创部件<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/心态/" title="心态">心态<sup>19</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/教程/" title="教程">教程<sup>80</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/晒猫/" title="晒猫">晒猫<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/笔记/" title="笔记">笔记<sup>121</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/算法/" title="算法">算法<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/自制插件/" title="自制插件">自制插件<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/逻辑实现/" title="逻辑实现">逻辑实现<sup>18</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+    <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">about</a></p>
+      <ul class="archive-list">
+      	<li class="archive-list-item">
+      		<a>wangbeishan@163.com</a>
+      		<a href="https://github.com/godbasin">github.com/godbasin</a>
+      	</li>
+      </ul>
+  </div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<section class="info">
+		<p> 即使梦想再小，却很伟大 ^_^ </p>
+	</section>
+	 
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2021 
+		
+		<a href="https://godbasin.github.io" target="_blank" title="被删">被删</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+
+
+
+
+
+  </body>
+</html>

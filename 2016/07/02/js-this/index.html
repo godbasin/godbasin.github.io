@@ -1,0 +1,1258 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  
+    <title>谈谈js的this | Here. There.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="被删">
+    
+    <meta name="description" content="有个同事一直问我代码里面为啥要return this。今天就简单聊聊关于javascript中的this吧。">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Here. There." type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?3d902de4a19cf2bf179534ffd2dd7b7f";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+</html>
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/sun.png" alt="Here. There." title="Here. There."/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Here. There.">Here. There.</a></h1>
+				<h2 class="blog-motto">Love ice cream. Love sunshine. Love life. Love the world. Love myself. Love you.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="https://github.com/godbasin/godbasin.github.io">所有文章</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">分类</a></li>
+					
+						<li><a href="https://godbasin.github.io/front-end-playground">前端游乐场</a></li>
+					
+						<li><a href="/about">关于我</a></li>
+					
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/07/02/js-this/" title="谈谈js的this" itemprop="url">谈谈js的this</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://godbasin.github.io" title="被删">被删</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2016-07-02T07:32:32.000Z" itemprop="datePublished">2016-07-02</time>
+    更新日期:<time datetime="2016-08-20T10:54:21.087Z" itemprop="dateModified">2016-08-20</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#js对象"><span class="toc-number">1.</span> <span class="toc-text">js对象</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#一切皆对象"><span class="toc-number">1.1.</span> <span class="toc-text">一切皆对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#javascript对象"><span class="toc-number">1.2.</span> <span class="toc-text">javascript对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#判断对象类型"><span class="toc-number">1.3.</span> <span class="toc-text">判断对象类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建对象的方法"><span class="toc-number">1.4.</span> <span class="toc-text">创建对象的方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考"><span class="toc-number">1.5.</span> <span class="toc-text">参考</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#js执行环境"><span class="toc-number">2.</span> <span class="toc-text">js执行环境</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#全局执行环境"><span class="toc-number">2.1.</span> <span class="toc-text">全局执行环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#函数执行环境"><span class="toc-number">2.2.</span> <span class="toc-text">函数执行环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#作用域"><span class="toc-number">2.3.</span> <span class="toc-text">作用域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考-1"><span class="toc-number">2.4.</span> <span class="toc-text">参考</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#js的this"><span class="toc-number">3.</span> <span class="toc-text">js的this</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#this指向什么"><span class="toc-number">3.1.</span> <span class="toc-text">this指向什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#this与全局变量"><span class="toc-number">3.2.</span> <span class="toc-text">this与全局变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#this与某个对象"><span class="toc-number">3.3.</span> <span class="toc-text">this与某个对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JavaScript中函数的调用方式"><span class="toc-number">3.4.</span> <span class="toc-text">JavaScript中函数的调用方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#return-this链式调用"><span class="toc-number">3.5.</span> <span class="toc-text">return this链式调用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考-2"><span class="toc-number">3.6.</span> <span class="toc-text">参考</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结束语"><span class="toc-number">4.</span> <span class="toc-text">结束语</span></a></li></ol>
+		</div>
+		
+		<p>有个同事一直问我代码里面为啥要return this。今天就简单聊聊关于javascript中的this吧。<br><a id="more"></a></p>
+<p>首先，在js里面，this指针代表的是执行当前代码的对象的所有者。</p>
+<h2 id="js对象"><a href="#js对象" class="headerlink" title="js对象"></a>js对象</h2><hr>
+<h3 id="一切皆对象"><a href="#一切皆对象" class="headerlink" title="一切皆对象"></a>一切皆对象</h3><p>一切皆对象相信大家都很熟悉了吧。与其他面向对象语言不同的是，JS并没有Class的概念，在其他语言中，我们基本都需要实例化某个具体类的实例，但JS里却不同，它的做法是：任何函数都可以被实例化为一个对象。<br>JavaScript中的所有事物都是对象：字符串、数值、数组、函数…此外，JavaScript允许自定义对象。</p>
+<h3 id="javascript对象"><a href="#javascript对象" class="headerlink" title="javascript对象"></a>javascript对象</h3><p>JavaScript提供多个内建对象，比如 String、Date、Array等等。<br>对象只是带有属性和方法的特殊数据类型。</p>
+<ul>
+<li><p>访问对象的属性<br>属性是与对象相关的值。访问对象属性的语法是：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">objectName.propertyName</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>访问对象的方法<br>方法是能够在对象上执行的动作。可以通过以下语法来调用方法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">objectName.methodName()</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="判断对象类型"><a href="#判断对象类型" class="headerlink" title="判断对象类型"></a>判断对象类型</h3><ul>
+<li>typeof运算符<ul>
+<li>typeof的返回值，主要有五种： undefined, boolean, number, string, object。</li>
+<li>对于typeof的返回值，容易混淆object和null，因为null在js中指的是一个空对象。</li>
+<li>使用typeof的一个不好的地方就是它会把Array还有用户自定义函数都返回为object。</li>
+</ul>
+</li>
+<li>instanceof运算符<ul>
+<li>instanceof也是一个运算符，运算过程中也需要一个参数(Object, Boolean, Number, String, Function)，判断某一个对象是否是所给的构造函数的一个实例，返回值是true或者false。</li>
+</ul>
+</li>
+<li>object.constructor<ul>
+<li>constructor属性返回对创建此对象的数组函数的引用。</li>
+</ul>
+</li>
+</ul>
+<h3 id="创建对象的方法"><a href="#创建对象的方法" class="headerlink" title="创建对象的方法"></a>创建对象的方法</h3><ul>
+<li>使用内置对象<ul>
+<li>JavaScript语言原生对象（语言级对象），如String、Object、Function等； </li>
+<li>JavaScript运行期的宿主对象（环境宿主级对象），如window、document、body等。 </li>
+</ul>
+</li>
+<li><p>使用JSON符号 </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="attr">name</span>:<span class="string">"name"</span>, <span class="attr">key</span>:<span class="string">"value"</span>&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>自定义对象构造<br>方法很多，工厂方法、构造函数方法、原型方法、混合的构造函数/原型方法等。《javascript高级程序设计》里面讲得很详细，又或者大家可以上网自行谷哥。</p>
+<ul>
+<li>使用this关键字构造</li>
+<li>使用原型prototype构造</li>
+</ul>
+</li>
+</ul>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="http://www.w3school.com.cn/js/js_objects.asp" target="_blank" rel="noopener">《JavaScript 对象》</a></p>
+<h2 id="js执行环境"><a href="#js执行环境" class="headerlink" title="js执行环境"></a>js执行环境</h2><hr>
+<p>执行环境定义了变量和函数有权访问的其他数据，决定了他们各自的行为。</p>
+<h3 id="全局执行环境"><a href="#全局执行环境" class="headerlink" title="全局执行环境"></a>全局执行环境</h3><ul>
+<li>在一个页面中，第一次载入JS代码时创建一个全局执行环境，全局执行环境是最外围的执行环境</li>
+<li>在Web浏览器中，全局执行环境被认为是window对象<ul>
+<li>因此，所有的全局变量和函数都是作为window对象的属性和方法创建的。</li>
+<li>全局执行环境直到应用程序退出后—例如关闭浏览器和网页—时才被销毁。</li>
+</ul>
+</li>
+</ul>
+<h3 id="函数执行环境"><a href="#函数执行环境" class="headerlink" title="函数执行环境"></a>函数执行环境</h3><ul>
+<li>ECMAScript程序中的执行流<ul>
+<li>每个函数都有自己的执行环境，当执行进入一个函数时，函数的执行环境就会被推入一个执行环境栈的顶部并获取执行权。</li>
+<li>当这个函数执行完毕，它的执行环境又从这个栈的顶部被删除，并把执行权并还给之前执行环境。</li>
+<li>该执行环境中的所有代码执行完毕后，该环境被销毁，保存在其中的所有变量和函数定义也随之销毁。</li>
+</ul>
+</li>
+<li>定义期<ul>
+<li>全局函数A创建了一个A的[[scope]]属性，包含全局[[scope]]</li>
+<li>函数A里定义函数B，则B的[[scope]]包含全局[[scope]]和A的[[scope]]</li>
+</ul>
+</li>
+<li>执行期<br>当函数被执行的时候，就是进入这个函数的执行环境，首先会创一个它自己的活动对象，包含<ul>
+<li>this</li>
+<li>参数(arguments，全局对象没有arguments)</li>
+<li>局部变量(包括命名的参数)</li>
+<li>一个变量对象的作用域链[[scope chain]]</li>
+</ul>
+</li>
+</ul>
+<h3 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h3><ul>
+<li>没有块级作用域</li>
+<li>延长作用域链<ul>
+<li>try-catch语句的catch块</li>
+<li>with语句</li>
+</ul>
+</li>
+</ul>
+<h3 id="参考-1"><a href="#参考-1" class="headerlink" title="参考"></a>参考</h3><p><a href="http://www.cnblogs.com/pigtail/archive/2012/07/19/2570988.html" target="_blank" rel="noopener">《javascript高级程序第三版学习笔记【执行环境、作用域】》</a></p>
+<h2 id="js的this"><a href="#js的this" class="headerlink" title="js的this"></a>js的this</h2><hr>
+<p>讲了那么多，终于来到本节的重点了。不过前面讲的也跟接下来的有关系的哦。</p>
+<h3 id="this指向什么"><a href="#this指向什么" class="headerlink" title="this指向什么"></a>this指向什么</h3><p>this指针代表的是执行当前代码的对象的所有者。即有以下两种：</p>
+<ul>
+<li>this指向全局变量</li>
+<li>this指向某个对象</li>
+</ul>
+<h3 id="this与全局变量"><a href="#this与全局变量" class="headerlink" title="this与全局变量"></a>this与全局变量</h3><p>我们来看以下代码（例1）：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> x;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">example</span>(<span class="params">x</span>) </span>&#123; </span><br><span class="line"> <span class="keyword">this</span>.x = x; </span><br><span class="line">&#125; </span><br><span class="line">example(<span class="number">5</span>); </span><br><span class="line">alert(x); <span class="comment">//5</span></span><br></pre></td></tr></table></figure></p>
+<p>在这里，x和函数example均是全局变量，因此它们的全局执行环境是window对象。所以在example中的this也是指向全局的window对象。</p>
+<h3 id="this与某个对象"><a href="#this与某个对象" class="headerlink" title="this与某个对象"></a>this与某个对象</h3><p>来看下面的代码（例2）<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> x;</span><br><span class="line"><span class="keyword">var</span> example = &#123;</span><br><span class="line">  fun: <span class="function"><span class="keyword">function</span>(<span class="params">x</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.x = x;</span><br><span class="line">    alert(<span class="keyword">this</span>.x); <span class="comment">//5</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line">example.fun(<span class="number">5</span>); </span><br><span class="line">alert(x); <span class="comment">//undefined</span></span><br><span class="line">alert(<span class="keyword">this</span>.x); <span class="comment">//undefined</span></span><br></pre></td></tr></table></figure></p>
+<p>在这里，我们定义了一个example对象，同时给该对象添加了x属性和fun方法，因此在调用fun方法时其执行环境为example的fun函数，而this指向该函数的所有者为example对象。<br>故最后全局变量x并没有改变，仍然是undefined。</p>
+<p>当然上面我们也提到过，js对象的创建办法有几种，刚才的是通过json创建，我们还可以使用其它自定义对象构造方法。<br>（例3）：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//构造函数，就是通过这个函数生成一个新对象（object），this就指这个新对象</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">obj</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.x = <span class="number">5</span>;</span><br><span class="line">  alert(<span class="keyword">this</span>.x); <span class="comment">//5</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> example = <span class="keyword">new</span> obj();</span><br><span class="line">alert(example.x); <span class="comment">//5</span></span><br><span class="line">alert(<span class="keyword">this</span>.x); <span class="comment">//undefined</span></span><br></pre></td></tr></table></figure></p>
+<p>现在我们再看看下面的代码（例4）：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> x;</span><br><span class="line"><span class="keyword">var</span> example = &#123;</span><br><span class="line">  fun: <span class="function"><span class="keyword">function</span>(<span class="params">x</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> fun2 = <span class="function"><span class="keyword">function</span>(<span class="params">x</span>)</span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.x = x;</span><br><span class="line">      alert(<span class="keyword">this</span>.x); <span class="comment">//5</span></span><br><span class="line">    &#125;;</span><br><span class="line">    fun2(x);</span><br><span class="line">    alert(<span class="keyword">this</span>.x); <span class="comment">//undefined</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line">example.fun(<span class="number">5</span>); </span><br><span class="line">alert(example.x); <span class="comment">//undefined</span></span><br><span class="line">alert(<span class="keyword">this</span>.x); <span class="comment">//5</span></span><br></pre></td></tr></table></figure></p>
+<p>当我们在对象的方法内定义新的函数，这时候该函数内的this绑定到全局window对象。是不是有点不可思议？<br>这也是我们在写代码过程中容易遇到的一些问题，这里补充一下函数的调用方法一起说明吧。</p>
+<h3 id="JavaScript中函数的调用方式"><a href="#JavaScript中函数的调用方式" class="headerlink" title="JavaScript中函数的调用方式"></a>JavaScript中函数的调用方式</h3><ul>
+<li>作为对象方法调用<ul>
+<li>在JavaScript中，函数也是对象，因此函数可以作为一个对象的属性。</li>
+<li>此时该函数被称为该对象的方法，在使用这种调用方式时，this被自然绑定到该对象。</li>
+</ul>
+</li>
+<li>作为函数调用<br>这是我们刚才遇到的现象（例4），也即函数作为函数调用。<ul>
+<li>函数也可以直接被调用，此时this绑定到全局对象。</li>
+<li>在浏览器中，window就是该全局对象。<br>我们可以使用下面变量替代的方法规避这一缺陷：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> x;</span><br><span class="line"><span class="keyword">var</span> example = &#123;</span><br><span class="line">  fun: <span class="function"><span class="keyword">function</span>(<span class="params">x</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> that = <span class="keyword">this</span>;</span><br><span class="line">    <span class="keyword">var</span> fun2 = <span class="function"><span class="keyword">function</span>(<span class="params">x</span>)</span>&#123;</span><br><span class="line">      that.x = x;</span><br><span class="line">      alert(<span class="keyword">this</span>.x); <span class="comment">//undefined</span></span><br><span class="line">      alert(that.x); <span class="comment">//5</span></span><br><span class="line">    &#125;;</span><br><span class="line">    fun2(x);</span><br><span class="line">    alert(<span class="keyword">this</span>.x); <span class="comment">//5</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line">example.fun(<span class="number">5</span>); </span><br><span class="line">alert(example.x); <span class="comment">//5</span></span><br><span class="line">alert(<span class="keyword">this</span>.x); <span class="comment">//undefined</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<p>同时，像setTimeout和setInterval这样的异步回调函数，经常也会遇到执行环境变更的问题，此时我们也可以使用该方法进行规避。</p>
+<ul>
+<li>作为构造函数调用（例3）<ul>
+<li>JavaScript并没有类（class）的概念，而是使用基于原型（prototype）的继承方式。</li>
+<li>JavaScript中的构造函数也很特殊，如果不使用new调用，则和普通函数一样。（例1）</li>
+</ul>
+</li>
+<li>使用apply或call调用<ul>
+<li>在JavaScript中函数也是对象，对象则有方法，apply和call就是函数对象的方法。</li>
+<li>这两个方法异常强大，他们允许切换函数执行的上下文环境（context），即this绑定的对象。<br>现在我们定义一个obj对象，并使它的一个方法等于全局函数：<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">example</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.x = <span class="number">5</span>;</span><br><span class="line">  alert(<span class="keyword">this</span>.x); <span class="comment">//5</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> obj = &#123;&#125;;</span><br><span class="line">obj.x = <span class="number">1</span>;</span><br><span class="line">obj.fun = example;</span><br><span class="line">alert(obj.x); <span class="comment">//1</span></span><br><span class="line">alert(<span class="keyword">this</span>.x); <span class="comment">//undefined</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<p>1.此时我们直接调用该方法，会修改该对象的属性值。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">obj.fun();</span><br><span class="line">alert(obj.x); <span class="comment">//5</span></span><br><span class="line">alert(<span class="keyword">this</span>.x); <span class="comment">//undefined</span></span><br></pre></td></tr></table></figure></p>
+<p>2.如果我们在该方法上进行apply，则会出现以下结果。说明apply()的参数为空时，默认调用全局对象。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">obj.fun.apply();</span><br><span class="line">alert(obj.x); <span class="comment">//1</span></span><br><span class="line">alert(<span class="keyword">this</span>.x); <span class="comment">//5</span></span><br></pre></td></tr></table></figure></p>
+<p>3.我们给apply添加该对象作为参数。apply()的作用是改变函数的调用对象，它的第一个参数就表示改变后的调用这个函数的对象。。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">obj.fun.apply(obj);</span><br><span class="line">alert(obj.x); <span class="comment">//5</span></span><br><span class="line">alert(<span class="keyword">this</span>.x); <span class="comment">//undefined</span></span><br></pre></td></tr></table></figure></p>
+<p>另外，call方法可以用来代替另一个对象调用一个方法。call方法可将一个函数的对象上下文从初始的上下文改变为由thisObj指定的新对象。</p>
+<ul>
+<li>apply和call两者在作用上是相同的，但两者在参数上有区别的：<ul>
+<li>对于第一个参数意义都一样</li>
+<li>对第二个参数：apply传入的是一个参数数组，也就是将多个参数组合成为一个数组传入，而call则作为call的参数传入（从第二个参数开始</li>
+</ul>
+</li>
+</ul>
+<h3 id="return-this链式调用"><a href="#return-this链式调用" class="headerlink" title="return this链式调用"></a>return this链式调用</h3><p>最后我们回到最开始的问题，为什么要在代码中使用return this呢？<br>其实这是个链式调用的小技巧，我们只需要在对象的方法最后return this，就可以返回该对象，继续调用该对象的其它方法。看以下代码：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> x;</span><br><span class="line"><span class="keyword">var</span> example = &#123;</span><br><span class="line">  fun1: <span class="function"><span class="keyword">function</span>(<span class="params">x</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.x = x;</span><br><span class="line">    alert(<span class="string">"fun1: "</span> + <span class="keyword">this</span>.x);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">  &#125;,</span><br><span class="line">  fun2: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.x += <span class="number">1</span>;</span><br><span class="line">    alert(<span class="string">"fun2: "</span> + <span class="keyword">this</span>.x);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line">example.fun1(<span class="number">5</span>).fun2().fun1(<span class="number">2</span>).fun2(); <span class="comment">//链式调用对象的方法</span></span><br><span class="line"><span class="comment">//fun1: 5</span></span><br><span class="line"><span class="comment">//fun2: 6</span></span><br><span class="line"><span class="comment">//fun1: 2</span></span><br><span class="line"><span class="comment">//fun2: 3</span></span><br><span class="line">alert(example.x); <span class="comment">//3</span></span><br><span class="line">alert(<span class="keyword">this</span>.x); <span class="comment">//undefined</span></span><br></pre></td></tr></table></figure></p>
+<p>链式调用是个挺有趣的东西，本骚年当初也是在研究jQuery的源码的时候看到的呢。</p>
+<h3 id="参考-2"><a href="#参考-2" class="headerlink" title="参考"></a>参考</h3><p><a href="http://www.ibm.com/developerworks/cn/web/1207_wangqf_jsthis/" target="_blank" rel="noopener">《深入浅出JavaScript中的this》</a><br><a href="http://www.ruanyifeng.com/blog/2010/04/using_this_keyword_in_javascript.html" target="_blank" rel="noopener">《Javascript的this用法》</a></p>
+<h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><hr>
+<p>有些人觉得jQuery已经过时了，现在都流行像AngularJS/ReactJS/Backbone.js这些框架。<br>其实jQuery只是个库，它帮我们解决了很多兼容问题，也简化了js代码，跟框架不一样。而且本骚年认为jQuery库还是有很多精华的逻辑和思维呢，这些是永远都不会过时的呀。</p>
+  
+	</div>
+	<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/2code2.jpg" width="200" height="200" style="display:block;margin: 0 auto;" />
+	<p style="text-align: center;margin-top: 10px;margin-bottom: 20px;">码生艰难，写文不易，给我家猪囤点猫粮了喵~</p>
+	<div class="article-content">
+		<p style="margin-top:50px;">
+			查看Github有更多内容噢：<a href="https://github.com/godbasin">https://github.com/godbasin</a>
+			<br>
+			更欢迎来<a href="https://godbasin.github.io/front-end-playground">被删的前端游乐场</a>边撸猫边学前端噢
+			<br>
+			如果你想要关注日常生活中的我，欢迎关注“牧羊的猪”公众号噢
+		</p>
+	</div>
+	<div class="author-right">
+  		<p>作者：被删</p>
+  		<p>出处：<a href="https://godbasin.github.io">https://godbasin.github.io</a></p>
+  		<p>本文版权归作者所有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利。</p>
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/笔记/">笔记</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/js什锦/">js什锦</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  
+<!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a href="http://www.jiathis.com/share?uid=2134021" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config = {data_track_clickback:'true'};
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js?uid=2134021" charset="utf-8"></script>
+<!-- JiaThis Button END -->   
+
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2016/07/03/js-closure/" title="谈谈js的闭包">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  谈谈js的闭包</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2016/07/01/angular-note-1-create-angular-project/"  title="Angular使用笔记1--搭建Angular项目">
+ <strong>NEXT:</strong><br/> 
+ <span>Angular使用笔记1--搭建Angular项目
+</span>
+</a>
+</div>
+
+</nav>
+
+	<!-- 如果不是首页且没使用 `comments: false` 关闭评论，则尝试加载评论 -->
+
+    <!-- 配置中启用多说时，导入相应代码 -->
+    
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#js对象"><span class="toc-number">1.</span> <span class="toc-text">js对象</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#一切皆对象"><span class="toc-number">1.1.</span> <span class="toc-text">一切皆对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#javascript对象"><span class="toc-number">1.2.</span> <span class="toc-text">javascript对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#判断对象类型"><span class="toc-number">1.3.</span> <span class="toc-text">判断对象类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建对象的方法"><span class="toc-number">1.4.</span> <span class="toc-text">创建对象的方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考"><span class="toc-number">1.5.</span> <span class="toc-text">参考</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#js执行环境"><span class="toc-number">2.</span> <span class="toc-text">js执行环境</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#全局执行环境"><span class="toc-number">2.1.</span> <span class="toc-text">全局执行环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#函数执行环境"><span class="toc-number">2.2.</span> <span class="toc-text">函数执行环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#作用域"><span class="toc-number">2.3.</span> <span class="toc-text">作用域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考-1"><span class="toc-number">2.4.</span> <span class="toc-text">参考</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#js的this"><span class="toc-number">3.</span> <span class="toc-text">js的this</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#this指向什么"><span class="toc-number">3.1.</span> <span class="toc-text">this指向什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#this与全局变量"><span class="toc-number">3.2.</span> <span class="toc-text">this与全局变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#this与某个对象"><span class="toc-number">3.3.</span> <span class="toc-text">this与某个对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JavaScript中函数的调用方式"><span class="toc-number">3.4.</span> <span class="toc-text">JavaScript中函数的调用方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#return-this链式调用"><span class="toc-number">3.5.</span> <span class="toc-text">return this链式调用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考-2"><span class="toc-number">3.6.</span> <span class="toc-text">参考</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结束语"><span class="toc-number">4.</span> <span class="toc-text">结束语</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  	
+	<div class="archiveslist">
+		<p class="asidetitle">最近文章</p>
+			<ul class="archive-list">
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/03/13/angular-design-0-prestart/" title="Angular框架解读--预热篇">Angular框架解读--预热篇...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/02/27/network-design-dependency-decoupling/" title="在线文档的网络层开发思考--依赖关系梳理">在线文档的网络层开发思考--依赖关系...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/01/23/network-design-responsibility-driven-design/" title="在线文档的网络层开发思考--职责驱动设计">在线文档的网络层开发思考--职责驱动...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/01/10/about-writing/" title="前端这几年--写文章这件事">前端这几年--写文章这件事...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/11/01/task-runner-design/" title="如何设计一个任务管理器">如何设计一个任务管理器</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/10/10/why-spreadsheet-app-excited/" title="在线Excel项目到底有多刺激">在线Excel项目到底有多刺激...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/10/07/monitor-and-report/" title="前端监控体系搭建">前端监控体系搭建</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/08/30/about-front-end-10/" title="前端这几年--10.我的工作历险记">前端这几年--10.我的工作历险记...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/08/30/about-front-end-9/" title="前端这几年--9.提升工作效率">前端这几年--9.提升工作效率...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/08/29/front-end-performance-analyze/" title="补齐Web前端性能分析的工具盲点">补齐Web前端性能分析的工具盲点...</a>
+				</li>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+	</div>
+
+
+  
+  <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">归档</a></p>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">十月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">41</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">9</span></li></ul>
+  </div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle"><a href="/categories">分类</a></p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/Angular源码/" title="Angular源码">Angular源码<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/CSS炒饭/" title="CSS炒饭">CSS炒饭<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/D3小馒头/" title="D3小馒头">D3小馒头<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular2火锅/" title="angular2火锅">angular2火锅<sup>25</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular混搭/" title="angular混搭">angular混搭<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/box2djs方糖/" title="box2djs方糖">box2djs方糖<sup>34</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/cyclejs哈根达斯/" title="cyclejs哈根达斯">cyclejs哈根达斯<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/jQuery杂烩/" title="jQuery杂烩">jQuery杂烩<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/js什锦/" title="js什锦">js什锦<sup>26</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/react沙拉/" title="react沙拉">react沙拉<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/three-js奶茶/" title="three.js奶茶">three.js奶茶<sup>5</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/vue八宝粥/" title="vue八宝粥">vue八宝粥<sup>30</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/webpack宾治/" title="webpack宾治">webpack宾治<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/web乱炖/" title="web乱炖">web乱炖<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端满汉全席/" title="前端满汉全席">前端满汉全席<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端解决方案/" title="前端解决方案">前端解决方案<sup>13</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/喵/" title="喵">喵<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/小程序双皮奶/" title="小程序双皮奶">小程序双皮奶<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/工作这杯茶/" title="工作这杯茶">工作这杯茶<sup>19</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/应用巧克力盒/" title="应用巧克力盒">应用巧克力盒<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/思想棉花糖/" title="思想棉花糖">思想棉花糖<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/柴米油盐工具集/" title="柴米油盐工具集">柴米油盐工具集<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/自动化甜筒/" title="自动化甜筒">自动化甜筒<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/非前端钙片/" title="非前端钙片">非前端钙片<sup>7</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle">标签</p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/分享/" title="分享">分享<sup>44</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/功能设计/" title="功能设计">功能设计<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/原创部件/" title="原创部件">原创部件<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/心态/" title="心态">心态<sup>19</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/教程/" title="教程">教程<sup>80</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/晒猫/" title="晒猫">晒猫<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/笔记/" title="笔记">笔记<sup>121</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/算法/" title="算法">算法<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/自制插件/" title="自制插件">自制插件<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/逻辑实现/" title="逻辑实现">逻辑实现<sup>18</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+    <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">about</a></p>
+      <ul class="archive-list">
+      	<li class="archive-list-item">
+      		<a>wangbeishan@163.com</a>
+      		<a href="https://github.com/godbasin">github.com/godbasin</a>
+      	</li>
+      </ul>
+  </div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<section class="info">
+		<p> 即使梦想再小，却很伟大 ^_^ </p>
+	</section>
+	 
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2021 
+		
+		<a href="https://godbasin.github.io" target="_blank" title="被删">被删</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+
+
+
+
+
+  </body>
+</html>

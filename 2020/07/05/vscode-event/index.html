@@ -1,0 +1,1184 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  
+    <title>VSCode 源码解读：事件系统设计 | Here. There.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="被删">
+    
+    <meta name="description" content="最近在研究前端大型项目中要怎么管理满天飞的事件、模块间各种显示和隐式调用的问题，本文结合相应的源码分析，记录 VS Code 中的事件管理系统设计。">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Here. There." type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?3d902de4a19cf2bf179534ffd2dd7b7f";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+</html>
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/sun.png" alt="Here. There." title="Here. There."/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Here. There.">Here. There.</a></h1>
+				<h2 class="blog-motto">Love ice cream. Love sunshine. Love life. Love the world. Love myself. Love you.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="https://github.com/godbasin/godbasin.github.io">所有文章</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">分类</a></li>
+					
+						<li><a href="https://godbasin.github.io/front-end-playground">前端游乐场</a></li>
+					
+						<li><a href="/about">关于我</a></li>
+					
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2020/07/05/vscode-event/" title="VSCode 源码解读：事件系统设计" itemprop="url">VSCode 源码解读：事件系统设计</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://godbasin.github.io" title="被删">被删</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2020-07-05T01:55:29.000Z" itemprop="datePublished">2020-07-05</time>
+    更新日期:<time datetime="2020-07-05T03:13:05.687Z" itemprop="dateModified">2020-07-05</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#VS-Code-事件"><span class="toc-number">1.</span> <span class="toc-text">VS Code 事件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Q1-VS-Code-中的事件管理代码在哪？"><span class="toc-number">1.1.</span> <span class="toc-text">Q1: VS Code 中的事件管理代码在哪？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Q2-VS-Code-中的事件都包括了哪些能力？"><span class="toc-number">1.2.</span> <span class="toc-text">Q2: VS Code 中的事件都包括了哪些能力？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Q3-VS-Code-中的事件的触发和监听是怎么实现的？"><span class="toc-number">1.3.</span> <span class="toc-text">Q3: VS Code 中的事件的触发和监听是怎么实现的？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Q4-项目中的事件是怎么管理的？"><span class="toc-number">1.4.</span> <span class="toc-text">Q4: 项目中的事件是怎么管理的？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Q5-事件满天飞，不会导致性能问题吗？"><span class="toc-number">1.5.</span> <span class="toc-text">Q5: 事件满天飞，不会导致性能问题吗？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Q6-上面只销毁了事件触发器本身的资源，那对于订阅者来说，要怎么销毁订阅的-Listener-呢？"><span class="toc-number">1.6.</span> <span class="toc-text">Q6: 上面只销毁了事件触发器本身的资源，那对于订阅者来说，要怎么销毁订阅的 Listener 呢？</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#结束语"><span class="toc-number">2.</span> <span class="toc-text">结束语</span></a></li></ol>
+		</div>
+		
+		<p>最近在研究前端大型项目中要怎么管理满天飞的事件、模块间各种显示和隐式调用的问题，本文结合相应的源码分析，记录 VS Code 中的事件管理系统设计。</p>
+<a id="more"></a>
+<h1 id="VS-Code-事件"><a href="#VS-Code-事件" class="headerlink" title="VS Code 事件"></a>VS Code 事件</h1><p>看源码的方式有很多种，带着疑问有目的性地看，会简单很多。</p>
+<h2 id="Q1-VS-Code-中的事件管理代码在哪？"><a href="#Q1-VS-Code-中的事件管理代码在哪？" class="headerlink" title="Q1: VS Code 中的事件管理代码在哪？"></a>Q1: VS Code 中的事件管理代码在哪？</h2><p>一般来说，说到事件，肯定是跟<code>event</code>关键字相关，因此我们直接全局搜一下文件名（VS Code 下快捷键<code>ctrl+p</code>）:<br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/vscode-event-file-name.png" alt></p>
+<p>一下子就出来了，这个路径是<code>base\common\event.ts</code>的肯定是比较关键的。打开一看，里面比较关键的有两个：<strong>Event</strong>和<strong>Emitter</strong>。</p>
+<h2 id="Q2-VS-Code-中的事件都包括了哪些能力？"><a href="#Q2-VS-Code-中的事件都包括了哪些能力？" class="headerlink" title="Q2: VS Code 中的事件都包括了哪些能力？"></a>Q2: VS Code 中的事件都包括了哪些能力？</h2><p>先来看看<code>Event</code>:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 主要定义了一些接口协议，以及相关方法</span></span><br><span class="line"><span class="comment">// 使用 namespace 的方式将相关内容包裹起来</span></span><br><span class="line"><span class="keyword">export</span> namespace Event &#123;</span><br><span class="line">  <span class="comment">// 来看看里面比较关键的一些方法</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 给定一个事件，返回另一个仅触发一次的事件</span></span><br><span class="line">  <span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">once</span>&lt;<span class="title">T</span>&gt;(<span class="params">event: Event&lt;T&gt;</span>): <span class="title">Event</span>&lt;<span class="title">T</span>&gt; </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 给定一连串的事件处理功能（过滤器，映射等），每个事件和每个侦听器都将调用每个函数</span></span><br><span class="line">  <span class="comment">// 对事件链进行快照可以使每个事件每个事件仅被调用一次</span></span><br><span class="line">  <span class="comment">// 以此衍生了 map、forEach、filter、any 等方法此处省略</span></span><br><span class="line">  <span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">snapshot</span>&lt;<span class="title">T</span>&gt;(<span class="params">event: Event&lt;T&gt;</span>): <span class="title">Event</span>&lt;<span class="title">T</span>&gt; </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 给事件增加防抖</span></span><br><span class="line">  <span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">debounce</span>&lt;<span class="title">T</span>&gt;(<span class="params">event: Event&lt;T&gt;, merge: (last: T | undefined, event: T</span>) =&gt; <span class="title">T</span>, <span class="title">delay</span>?: <span class="title">number</span>, <span class="title">leading</span>?: <span class="title">boolean</span>, <span class="title">leakWarningThreshold</span>?: <span class="title">number</span>): <span class="title">Event</span>&lt;<span class="title">T</span>&gt;;</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">	// 触发一次的事件，同时包括触发时间</span></span><br><span class="line"><span class="function">	<span class="title">export</span> <span class="title">function</span> <span class="title">stopwatch</span>&lt;<span class="title">T</span>&gt;(<span class="params">event: Event&lt;T&gt;</span>): <span class="title">Event</span>&lt;<span class="title">number</span>&gt; </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 仅在 event 元素更改时才触发的事件</span></span><br><span class="line">  <span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">latch</span>&lt;<span class="title">T</span>&gt;(<span class="params">event: Event&lt;T&gt;</span>): <span class="title">Event</span>&lt;<span class="title">T</span>&gt; </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 缓冲提供的事件，直到出现第一个 listener，这时立即触发所有事件，然后从头开始传输事件</span></span><br><span class="line">  <span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">buffer</span>&lt;<span class="title">T</span>&gt;(<span class="params">event: Event&lt;T&gt;, nextTick = false, _buffer: T[] = []</span>): <span class="title">Event</span>&lt;<span class="title">T</span>&gt; </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 可链式处理的事件，支持以下方法</span></span><br><span class="line">  <span class="keyword">export</span> interface IChainableEvent&lt;T&gt; &#123;</span><br><span class="line">    event: Event&lt;T&gt;;</span><br><span class="line">    map&lt;O&gt;<span class="function">(<span class="params">fn: (i: T</span>) =&gt;</span> O): IChainableEvent&lt;O&gt;;</span><br><span class="line">    forEach(fn: <span class="function">(<span class="params">i: T</span>) =&gt;</span> <span class="keyword">void</span>): IChainableEvent&lt;T&gt;;</span><br><span class="line">    filter(fn: <span class="function">(<span class="params">e: T</span>) =&gt;</span> boolean): IChainableEvent&lt;T&gt;;</span><br><span class="line">    filter&lt;R&gt;<span class="function">(<span class="params">fn: (e: T | R</span>) =&gt;</span> e is R): IChainableEvent&lt;R&gt;;</span><br><span class="line">    reduce&lt;R&gt;<span class="function">(<span class="params">merge: (last: R | <span class="literal">undefined</span>, event: T</span>) =&gt;</span> R, initial?: R): IChainableEvent&lt;R&gt;;</span><br><span class="line">    latch(): IChainableEvent&lt;T&gt;;</span><br><span class="line">    debounce(merge: <span class="function">(<span class="params">last: T | <span class="literal">undefined</span>, event: T</span>) =&gt;</span> T, delay?: number, leading?: boolean, leakWarningThreshold?: number): IChainableEvent&lt;T&gt;;</span><br><span class="line">    debounce&lt;R&gt;<span class="function">(<span class="params">merge: (last: R | <span class="literal">undefined</span>, event: T</span>) =&gt;</span> R, delay?: number, leading?: boolean, leakWarningThreshold?: number): IChainableEvent&lt;R&gt;;</span><br><span class="line">    on(listener: <span class="function">(<span class="params">e: T</span>) =&gt;</span> any, thisArgs?: any, disposables?: IDisposable[] | DisposableStore): IDisposable;</span><br><span class="line">    once(listener: <span class="function">(<span class="params">e: T</span>) =&gt;</span> any, thisArgs?: any, disposables?: IDisposable[]): IDisposable;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">ChainableEvent</span>&lt;<span class="title">T</span>&gt; <span class="title">implements</span> <span class="title">IChainableEvent</span>&lt;<span class="title">T</span>&gt; </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 将事件转为可链式处理的事件</span></span><br><span class="line">  <span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">chain</span>&lt;<span class="title">T</span>&gt;(<span class="params">event: Event&lt;T&gt;</span>): <span class="title">IChainableEvent</span>&lt;<span class="title">T</span>&gt; </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 来自 DOM 事件的事件</span></span><br><span class="line">  <span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">fromDOMEventEmitter</span>&lt;<span class="title">T</span>&gt;(<span class="params">emitter: DOMEventEmitter, eventName: string, map: (...args: any[]</span>) =&gt; <span class="title">T</span> = <span class="title">id</span> =&gt; <span class="title">id</span>): <span class="title">Event</span>&lt;<span class="title">T</span>&gt; </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 来自 Promise 的事件</span></span><br><span class="line">  <span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">fromPromise</span>&lt;<span class="title">T</span> = <span class="title">any</span>&gt;(<span class="params">promise: Promise&lt;T&gt;</span>): <span class="title">Event</span>&lt;<span class="title">undefined</span>&gt; </span>&#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们能看到，<code>Event</code>中主要是一些对事件的处理和某种类型事件的生成。其中，除了常见的<code>once</code>和 DOM 事件等兼容，还提供了比较丰富的事件能力：</p>
+<ul>
+<li>防抖动</li>
+<li>可链式调用</li>
+<li>缓存</li>
+<li>Promise 转事件</li>
+</ul>
+<h2 id="Q3-VS-Code-中的事件的触发和监听是怎么实现的？"><a href="#Q3-VS-Code-中的事件的触发和监听是怎么实现的？" class="headerlink" title="Q3: VS Code 中的事件的触发和监听是怎么实现的？"></a>Q3: VS Code 中的事件的触发和监听是怎么实现的？</h2><p>到这里，我们只看到了关于事件的一些功能（参考<code>Event</code>），而事件的触发和监听又是怎么进行的呢？</p>
+<p>我们可以继续来看<code>Emitter</code>:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这是事件发射器的一些生命周期和设置</span></span><br><span class="line"><span class="keyword">export</span> interface EmitterOptions &#123;</span><br><span class="line">  onFirstListenerAdd?: <span class="built_in">Function</span>;</span><br><span class="line">  onFirstListenerDidAdd?: <span class="built_in">Function</span>;</span><br><span class="line">  onListenerDidAdd?: <span class="built_in">Function</span>;</span><br><span class="line">  onLastListenerRemove?: <span class="built_in">Function</span>;</span><br><span class="line">  leakWarningThreshold?: number;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">Emitter</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">  <span class="comment">// 可传入生命周期方法和设置</span></span><br><span class="line">  <span class="keyword">constructor</span>(options?: EmitterOptions) &#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 允许大家订阅此发射器的事件</span></span><br><span class="line">  <span class="keyword">get</span> event(): Event&lt;T&gt; &#123;</span><br><span class="line">    <span class="comment">// 此处会根据传入的生命周期相关设置，在对应的场景下调用相关的生命周期方法</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 向订阅者触发事件</span></span><br><span class="line">  fire(event: T): <span class="keyword">void</span> &#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 清理相关的 listener 和队列等</span></span><br><span class="line">  dispose() &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到，<code>Emitter</code>以<code>Event</code>为对象，以简洁的方式提供了事件的订阅、触发、清理等能力。</p>
+<h2 id="Q4-项目中的事件是怎么管理的？"><a href="#Q4-项目中的事件是怎么管理的？" class="headerlink" title="Q4: 项目中的事件是怎么管理的？"></a>Q4: 项目中的事件是怎么管理的？</h2><p><code>Emitter</code>似乎有些简单了，我们只能看到单个事件发射器的使用。那各个模块之间的事件订阅和触发又是怎么实现的呢？</p>
+<p>我们来全局搜一下关键字<code>Emitter</code>:<br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/vscode-event-global-emitter.jpg" alt></p>
+<p>搜出来很多地方都有使用，我们来看一下第一个：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这里我们只摘录相关的代码</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WindowManager</span> </span>&#123;</span><br><span class="line">  public <span class="keyword">static</span> readonly INSTANCE = <span class="keyword">new</span> WindowManager();</span><br><span class="line">  <span class="comment">// 注册一个事件发射器</span></span><br><span class="line">  private readonly _onDidChangeZoomLevel = <span class="keyword">new</span> Emitter&lt;number&gt;();</span><br><span class="line">  <span class="comment">// 将该发射器允许大家订阅的事件取出来</span></span><br><span class="line">  public readonly onDidChangeZoomLevel: Event&lt;number&gt; = <span class="keyword">this</span>._onDidChangeZoomLevel.event;</span><br><span class="line"></span><br><span class="line">  public setZoomLevel(zoomLevel: number, <span class="attr">isTrusted</span>: boolean): <span class="keyword">void</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>._zoomLevel === zoomLevel) &#123;</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">this</span>._zoomLevel = zoomLevel;</span><br><span class="line">    <span class="comment">// 当 zoomLevel 有变更时，触发该事件</span></span><br><span class="line">    <span class="keyword">this</span>._onDidChangeZoomLevel.fire(<span class="keyword">this</span>._zoomLevel);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>显然，在 VS Code 里，事件的使用方式主要包括：</p>
+<ul>
+<li>注册事件发射器</li>
+<li>对外提供定义的事件</li>
+<li>在特定时机向订阅者触发事件</li>
+</ul>
+<p>那么，其他地方又是怎样订阅这么一个事件呢？在这个例子中，由于浏览器实例唯一，可以通过挂载全局对象的方式来提供使用：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 对外提供一个调用全局实例的方法</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">onDidChangeZoomLevel</span>(<span class="params">callback: (zoomLevel: number</span>) =&gt; <span class="title">void</span>): <span class="title">IDisposable</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> WindowManager.INSTANCE.onDidChangeZoomLevel(callback);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 其他地方的调用方式</span></span><br><span class="line"><span class="keyword">import</span> &#123; onDidChangeZoomLevel &#125; <span class="keyword">from</span> <span class="string">'vs/base/browser/browser'</span>;</span><br><span class="line"><span class="keyword">let</span> zoomListener = onDidChangeZoomLevel(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 该干啥干啥</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>除此之外，我们也可以通过创建实例调用来直接监听相关事件:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> instance = <span class="keyword">new</span> WindowManager(opts);</span><br><span class="line">instance.onDidChangeZoomLevel(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 该干啥干啥</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="Q5-事件满天飞，不会导致性能问题吗？"><a href="#Q5-事件满天飞，不会导致性能问题吗？" class="headerlink" title="Q5: 事件满天飞，不会导致性能问题吗？"></a>Q5: 事件满天飞，不会导致性能问题吗？</h2><p>习惯使用一些前端框架的小伙伴们肯定比较有经验，我们如果在某个组件里做了事件订阅这样的操作，当组件销毁的时候是需要取消事件订阅的。否则该订阅内容会在内存中一直存在，除了一些异常问题，还可能引起内存泄露。</p>
+<p>那么，VS Code 里又是怎么处理这样的问题呢？</p>
+<p>其实我们在全局搜<code>Emitter</code>的时候，也能看到一些地方的使用方式是：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 只选取局部关键代码摘要</span></span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">Scrollable</span> <span class="keyword">extends</span> <span class="title">Disposable</span> </span>&#123;</span><br><span class="line">  private _onScroll = <span class="keyword">this</span>._register(<span class="keyword">new</span> Emitter&lt;ScrollEvent&gt;());</span><br><span class="line">  public readonly onScroll: Event&lt;ScrollEvent&gt; = <span class="keyword">this</span>._onScroll.event;</span><br><span class="line"></span><br><span class="line">  private _setState(newState: ScrollState): <span class="keyword">void</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> oldState = <span class="keyword">this</span>._state;</span><br><span class="line">    <span class="keyword">if</span> (oldState.equals(newState)) &#123;</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">this</span>._state = newState;</span><br><span class="line">    <span class="comment">// 状态变更的时候，触发事件</span></span><br><span class="line">    <span class="keyword">this</span>._onScroll.fire(<span class="keyword">this</span>._state.createScrollEvent(oldState));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里使用了<code>this._register(new Emitter&lt;T&gt;())</code>这样的方式注册事件发射器，我们能看到该方法继承自<code>Disposable</code>。而<code>Disposable</code>的实现也很简洁:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> abstract <span class="class"><span class="keyword">class</span> <span class="title">Disposable</span> <span class="title">implements</span> <span class="title">IDisposable</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 用一个 Set 来存储注册的事件发射器</span></span><br><span class="line">  private readonly _store = <span class="keyword">new</span> DisposableStore();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">constructor</span>() &#123;</span><br><span class="line">    trackDisposable(<span class="keyword">this</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 处理事件发射器</span></span><br><span class="line">  public dispose(): <span class="keyword">void</span> &#123;</span><br><span class="line">    markTracked(<span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">this</span>._store.dispose();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 注册一个事件发射器</span></span><br><span class="line">  protected _register&lt;T extends IDisposable&gt;(t: T): T &#123;</span><br><span class="line">    <span class="keyword">if</span> ((t <span class="keyword">as</span> unknown <span class="keyword">as</span> Disposable) === <span class="keyword">this</span>) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Cannot register a disposable on itself!'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>._store.add(t);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>也就是说，每个继承<code>Disposable</code>类都会有管理事件发射器的相关方法，包括添加、销毁处理等。其实我们仔细看看，这个<code>Disposable</code>并不只是服务于事件发射器，它适用于所有支持<code>dispose()</code>方法的对象：</p>
+<blockquote>
+<p>Dispose 模式主要用来资源管理，资源比如内存被对象占用，则会通过调用方法来释放。</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> interface IDisposable &#123;</span><br><span class="line">  dispose(): <span class="keyword">void</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">DisposableStore</span> <span class="title">implements</span> <span class="title">IDisposable</span> </span>&#123;</span><br><span class="line">  private _toDispose = <span class="keyword">new</span> <span class="built_in">Set</span>&lt;IDisposable&gt;();</span><br><span class="line">  private _isDisposed = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 处置所有注册的 Disposable，并将其标记为已处置</span></span><br><span class="line">  <span class="comment">// 将来添加到此对象的所有 Disposable 都将在 add 中处置。</span></span><br><span class="line">  public dispose(): <span class="keyword">void</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>._isDisposed) &#123;</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    markTracked(<span class="keyword">this</span>);</span><br><span class="line">    <span class="keyword">this</span>._isDisposed = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">this</span>.clear();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 丢弃所有已登记的 Disposable，但不要将其标记为已处置</span></span><br><span class="line">  public clear(): <span class="keyword">void</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>._toDispose.forEach(<span class="function"><span class="params">item</span> =&gt;</span> item.dispose());</span><br><span class="line">    <span class="keyword">this</span>._toDispose.clear();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 添加一个 Disposable</span></span><br><span class="line">  public add&lt;T extends IDisposable&gt;(t: T): T &#123;</span><br><span class="line">    markTracked(t);</span><br><span class="line">    <span class="comment">// 如果已处置，则不添加</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>._isDisposed) &#123;</span><br><span class="line">      <span class="comment">// 报错提示之类的</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// 未处置，则可添加</span></span><br><span class="line">      <span class="keyword">this</span>._toDispose.add(t);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> t;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因此，我们可以看到，在 VS Code 中是这样管理事件的：</p>
+<ol>
+<li>抹平 DOM 事件等差异，提供标准化的<code>Event</code>和<code>Emitter</code>能力。</li>
+<li>通过注册<code>Emitter</code>，并对外提供类似生命周期的方法<code>onXxxxx</code>的方式，来进行事件的订阅和监听。</li>
+<li>通过提供通用类<code>Disposable</code>，统一管理多个事件发射器（或其他资源）的注册、销毁。</li>
+</ol>
+<h2 id="Q6-上面只销毁了事件触发器本身的资源，那对于订阅者来说，要怎么销毁订阅的-Listener-呢？"><a href="#Q6-上面只销毁了事件触发器本身的资源，那对于订阅者来说，要怎么销毁订阅的-Listener-呢？" class="headerlink" title="Q6: 上面只销毁了事件触发器本身的资源，那对于订阅者来说，要怎么销毁订阅的 Listener 呢？"></a>Q6: 上面只销毁了事件触发器本身的资源，那对于订阅者来说，要怎么销毁订阅的 Listener 呢？</h2><p>或许读到这里的时候，你依然有点懵。看上去 VS Code 的<code>Emitter</code>和<code>Event</code>似乎跟常见的实现方式很相似，只是使用的方式有点不一样而已，到底有什么特别的呢？</p>
+<p>不知道大家注意到了没，在 VS Code 中，注册一个事件发射器、订阅某个事件，都是通过<code>this._register()</code>这样的方式来实现:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 注册事件发射器</span></span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">Button</span> <span class="keyword">extends</span> <span class="title">Disposable</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 注册一个事件发射器，可使用 this._onDidClick.fire(xxx) 来触发事件</span></span><br><span class="line">  private _onDidClick = <span class="keyword">this</span>._register(<span class="keyword">new</span> Emitter&lt;Event&gt;());</span><br><span class="line">  <span class="keyword">get</span> onDidClick(): BaseEvent&lt;Event&gt; &#123; <span class="keyword">return</span> <span class="keyword">this</span>._onDidClick.event; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 订阅某个事件</span></span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">QuickInputController</span> <span class="keyword">extends</span> <span class="title">Disposable</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 省略很多其他非关键代码</span></span><br><span class="line">  private getUI() &#123;</span><br><span class="line">    <span class="keyword">const</span> ok = <span class="keyword">new</span> Button(okContainer);</span><br><span class="line">    ok.label = localize(<span class="string">'ok'</span>, <span class="string">"OK"</span>);</span><br><span class="line">    <span class="comment">// 注册一个 Disposable，用来订阅某个事件</span></span><br><span class="line">    <span class="keyword">this</span>._register(ok.onDidClick(<span class="function"><span class="params">e</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">this</span>.onDidAcceptEmitter.fire();</span><br><span class="line">    &#125;));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>也就是说当某个类被销毁时，会发生以下事情：</p>
+<ol>
+<li>它所注册的事件发射器会被销毁，而事件发射器中的 Listener、队列等都会被清空。</li>
+<li>它所订阅的一些事件会被销毁，订阅中的 Listener 同样会被移除。</li>
+</ol>
+<p>至于订阅事件的 Listener 是如何被移除的，可参考以下代码:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">Emitter</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">  <span class="keyword">get</span> event(): Event&lt;T&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="keyword">this</span>._event) &#123;</span><br><span class="line">      <span class="keyword">this</span>._event = <span class="function">(<span class="params">listener: (e: T</span>) =&gt;</span> any, thisArgs?: any, disposables?: IDisposable[] | DisposableStore) =&gt; &#123;</span><br><span class="line">        <span class="comment">// 若无队列，则新建一个</span></span><br><span class="line">        <span class="keyword">if</span> (!<span class="keyword">this</span>._listeners) &#123;</span><br><span class="line">          <span class="keyword">this</span>._listeners = <span class="keyword">new</span> LinkedList();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 往队列中添加该 Listener，同时返回一个移除该 Listener 的方法</span></span><br><span class="line">        <span class="keyword">const</span> remove = <span class="keyword">this</span>._listeners.push(!thisArgs ? listener : [listener, thisArgs]);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">let</span> result: IDisposable;</span><br><span class="line">        <span class="comment">// 返回一个带 dispose 方法的结果，dispose 执行时会移除该 Listener</span></span><br><span class="line">        result = &#123;</span><br><span class="line">          dispose: <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">            result.dispose = Emitter._noop;</span><br><span class="line">            <span class="keyword">if</span> (!<span class="keyword">this</span>._disposed) &#123;</span><br><span class="line">              remove();</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">if</span> (disposables <span class="keyword">instanceof</span> DisposableStore) &#123;</span><br><span class="line">          disposables.add(result);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">Array</span>.isArray(disposables)) &#123;</span><br><span class="line">          disposables.push(result);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">      &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>._event;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>到这里，VS Code 中事件相关的管理的设计也都呈现出来了，包括：</p>
+<ul>
+<li>提供标准化的<code>Event</code>和<code>Emitter</code>能力</li>
+<li>通过注册<code>Emitter</code>，并对外提供类似生命周期的方法<code>onXxxxx</code>的方式，来进行事件的订阅和监听</li>
+<li>通过提供通用类<code>Disposable</code>，统一管理相关资源的注册和销毁</li>
+<li>通过使用同样的方式<code>this._register()</code>注册事件和订阅事件，将事件相关资源的处理统一挂载到<code>dispose()</code>方法中</li>
+</ul>
+<h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p>VS Code 中除了事件的管理，Dispose 模式还体现在各种其他资源的管理，包括插件等。</p>
+<p>当我们遇到一些问题不知道该怎么解决的时候，可以试着站到巨人的肩膀上，说不定可以看到更多。</p>
+  
+	</div>
+	<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/2code2.jpg" width="200" height="200" style="display:block;margin: 0 auto;" />
+	<p style="text-align: center;margin-top: 10px;margin-bottom: 20px;">码生艰难，写文不易，给我家猪囤点猫粮了喵~</p>
+	<div class="article-content">
+		<p style="margin-top:50px;">
+			查看Github有更多内容噢：<a href="https://github.com/godbasin">https://github.com/godbasin</a>
+			<br>
+			更欢迎来<a href="https://godbasin.github.io/front-end-playground">被删的前端游乐场</a>边撸猫边学前端噢
+			<br>
+			如果你想要关注日常生活中的我，欢迎关注“牧羊的猪”公众号噢
+		</p>
+	</div>
+	<div class="author-right">
+  		<p>作者：被删</p>
+  		<p>出处：<a href="https://godbasin.github.io">https://godbasin.github.io</a></p>
+  		<p>本文版权归作者所有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利。</p>
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/逻辑实现/">逻辑实现</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/前端解决方案/">前端解决方案</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  
+<!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a href="http://www.jiathis.com/share?uid=2134021" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config = {data_track_clickback:'true'};
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js?uid=2134021" charset="utf-8"></script>
+<!-- JiaThis Button END -->   
+
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2020/07/26/interview-6-javascript/" title="前端面试这件事--6.Javascript相关">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  前端面试这件事--6.Javascript相关</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2020/07/04/reactive-programing/"  title="响应式编程在前端领域的应用">
+ <strong>NEXT:</strong><br/> 
+ <span>响应式编程在前端领域的应用
+</span>
+</a>
+</div>
+
+</nav>
+
+	<!-- 如果不是首页且没使用 `comments: false` 关闭评论，则尝试加载评论 -->
+
+    <!-- 配置中启用多说时，导入相应代码 -->
+    
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#VS-Code-事件"><span class="toc-number">1.</span> <span class="toc-text">VS Code 事件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Q1-VS-Code-中的事件管理代码在哪？"><span class="toc-number">1.1.</span> <span class="toc-text">Q1: VS Code 中的事件管理代码在哪？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Q2-VS-Code-中的事件都包括了哪些能力？"><span class="toc-number">1.2.</span> <span class="toc-text">Q2: VS Code 中的事件都包括了哪些能力？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Q3-VS-Code-中的事件的触发和监听是怎么实现的？"><span class="toc-number">1.3.</span> <span class="toc-text">Q3: VS Code 中的事件的触发和监听是怎么实现的？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Q4-项目中的事件是怎么管理的？"><span class="toc-number">1.4.</span> <span class="toc-text">Q4: 项目中的事件是怎么管理的？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Q5-事件满天飞，不会导致性能问题吗？"><span class="toc-number">1.5.</span> <span class="toc-text">Q5: 事件满天飞，不会导致性能问题吗？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Q6-上面只销毁了事件触发器本身的资源，那对于订阅者来说，要怎么销毁订阅的-Listener-呢？"><span class="toc-number">1.6.</span> <span class="toc-text">Q6: 上面只销毁了事件触发器本身的资源，那对于订阅者来说，要怎么销毁订阅的 Listener 呢？</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#结束语"><span class="toc-number">2.</span> <span class="toc-text">结束语</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  	
+	<div class="archiveslist">
+		<p class="asidetitle">最近文章</p>
+			<ul class="archive-list">
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/03/13/angular-design-0-prestart/" title="Angular框架解读--预热篇">Angular框架解读--预热篇...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/02/27/network-design-dependency-decoupling/" title="在线文档的网络层开发思考--依赖关系梳理">在线文档的网络层开发思考--依赖关系...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/01/23/network-design-responsibility-driven-design/" title="在线文档的网络层开发思考--职责驱动设计">在线文档的网络层开发思考--职责驱动...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/01/10/about-writing/" title="前端这几年--写文章这件事">前端这几年--写文章这件事...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/11/01/task-runner-design/" title="如何设计一个任务管理器">如何设计一个任务管理器</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/10/10/why-spreadsheet-app-excited/" title="在线Excel项目到底有多刺激">在线Excel项目到底有多刺激...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/10/07/monitor-and-report/" title="前端监控体系搭建">前端监控体系搭建</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/08/30/about-front-end-10/" title="前端这几年--10.我的工作历险记">前端这几年--10.我的工作历险记...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/08/30/about-front-end-9/" title="前端这几年--9.提升工作效率">前端这几年--9.提升工作效率...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/08/29/front-end-performance-analyze/" title="补齐Web前端性能分析的工具盲点">补齐Web前端性能分析的工具盲点...</a>
+				</li>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+	</div>
+
+
+  
+  <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">归档</a></p>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">十月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">41</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">9</span></li></ul>
+  </div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle"><a href="/categories">分类</a></p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/Angular源码/" title="Angular源码">Angular源码<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/CSS炒饭/" title="CSS炒饭">CSS炒饭<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/D3小馒头/" title="D3小馒头">D3小馒头<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular2火锅/" title="angular2火锅">angular2火锅<sup>25</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular混搭/" title="angular混搭">angular混搭<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/box2djs方糖/" title="box2djs方糖">box2djs方糖<sup>34</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/cyclejs哈根达斯/" title="cyclejs哈根达斯">cyclejs哈根达斯<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/jQuery杂烩/" title="jQuery杂烩">jQuery杂烩<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/js什锦/" title="js什锦">js什锦<sup>26</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/react沙拉/" title="react沙拉">react沙拉<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/three-js奶茶/" title="three.js奶茶">three.js奶茶<sup>5</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/vue八宝粥/" title="vue八宝粥">vue八宝粥<sup>30</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/webpack宾治/" title="webpack宾治">webpack宾治<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/web乱炖/" title="web乱炖">web乱炖<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端满汉全席/" title="前端满汉全席">前端满汉全席<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端解决方案/" title="前端解决方案">前端解决方案<sup>13</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/喵/" title="喵">喵<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/小程序双皮奶/" title="小程序双皮奶">小程序双皮奶<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/工作这杯茶/" title="工作这杯茶">工作这杯茶<sup>19</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/应用巧克力盒/" title="应用巧克力盒">应用巧克力盒<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/思想棉花糖/" title="思想棉花糖">思想棉花糖<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/柴米油盐工具集/" title="柴米油盐工具集">柴米油盐工具集<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/自动化甜筒/" title="自动化甜筒">自动化甜筒<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/非前端钙片/" title="非前端钙片">非前端钙片<sup>7</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle">标签</p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/分享/" title="分享">分享<sup>44</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/功能设计/" title="功能设计">功能设计<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/原创部件/" title="原创部件">原创部件<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/心态/" title="心态">心态<sup>19</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/教程/" title="教程">教程<sup>80</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/晒猫/" title="晒猫">晒猫<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/笔记/" title="笔记">笔记<sup>121</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/算法/" title="算法">算法<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/自制插件/" title="自制插件">自制插件<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/逻辑实现/" title="逻辑实现">逻辑实现<sup>18</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+    <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">about</a></p>
+      <ul class="archive-list">
+      	<li class="archive-list-item">
+      		<a>wangbeishan@163.com</a>
+      		<a href="https://github.com/godbasin">github.com/godbasin</a>
+      	</li>
+      </ul>
+  </div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<section class="info">
+		<p> 即使梦想再小，却很伟大 ^_^ </p>
+	</section>
+	 
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2021 
+		
+		<a href="https://godbasin.github.io" target="_blank" title="被删">被删</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+
+
+
+
+
+  </body>
+</html>

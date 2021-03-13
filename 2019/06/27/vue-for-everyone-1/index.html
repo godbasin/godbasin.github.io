@@ -1,0 +1,1296 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  
+    <title>9102全员学Vue--1.如何理解前端和Vue | Here. There.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="被删">
+    
+    <meta name="description" content="最近身边学习 Vue 的人也越来越多了，大家都有很多的疑问，为什么前端要用框架、Vue 做了些什么、要怎么上手，等等。距离上一次写 Vue 也过去三年了，是时候再把这三年自己的理解再整理进去了。由于这个系列主要是希望写给可能前端掌握也不深的人，所以会铺垫一些自己认为需要的内容，本节先来讲讲入门前端，作为铺垫，来理解 Vue 这个框架吧。">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Here. There." type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?3d902de4a19cf2bf179534ffd2dd7b7f";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+</html>
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/sun.png" alt="Here. There." title="Here. There."/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Here. There.">Here. There.</a></h1>
+				<h2 class="blog-motto">Love ice cream. Love sunshine. Love life. Love the world. Love myself. Love you.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="https://github.com/godbasin/godbasin.github.io">所有文章</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">分类</a></li>
+					
+						<li><a href="https://godbasin.github.io/front-end-playground">前端游乐场</a></li>
+					
+						<li><a href="/about">关于我</a></li>
+					
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2019/06/27/vue-for-everyone-1/" title="9102全员学Vue--1.如何理解前端和Vue" itemprop="url">9102全员学Vue--1.如何理解前端和Vue</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://godbasin.github.io" title="被删">被删</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2019-06-27T15:09:59.000Z" itemprop="datePublished">2019-06-27</time>
+    更新日期:<time datetime="2019-07-06T07:07:04.680Z" itemprop="dateModified">2019-07-06</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前端页面解析"><span class="toc-number">1.</span> <span class="toc-text">前端页面解析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#页面组成"><span class="toc-number">1.1.</span> <span class="toc-text">页面组成</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HTML"><span class="toc-number">1.1.1.</span> <span class="toc-text">HTML</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CSS"><span class="toc-number">1.1.2.</span> <span class="toc-text">CSS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Javascript"><span class="toc-number">1.1.3.</span> <span class="toc-text">Javascript</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#页面渲染"><span class="toc-number">1.2.</span> <span class="toc-text">页面渲染</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#浏览器的渲染机制"><span class="toc-number">1.2.1.</span> <span class="toc-text">浏览器的渲染机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#页面的局部刷新"><span class="toc-number">1.2.2.</span> <span class="toc-text">页面的局部刷新</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-绑定映射表方式"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">1. 绑定映射表方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-直接替换内容方式"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">2. 直接替换内容方式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#页面回流、重绘"><span class="toc-number">1.2.3.</span> <span class="toc-text">页面回流、重绘</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事件驱动"><span class="toc-number">1.3.</span> <span class="toc-text">事件驱动</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#前端思维转变"><span class="toc-number">2.</span> <span class="toc-text">前端思维转变</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#前端框架的出现"><span class="toc-number">2.1.</span> <span class="toc-text">前端框架的出现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#数据绑定"><span class="toc-number">2.1.1.</span> <span class="toc-text">数据绑定</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Vue-文本插值"><span class="toc-number">2.1.1.1.</span> <span class="toc-text">Vue 文本插值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数据绑定的实现"><span class="toc-number">2.1.1.2.</span> <span class="toc-text">数据绑定的实现</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#虚拟-DOM"><span class="toc-number">2.1.2.</span> <span class="toc-text">虚拟 DOM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#XSS-漏洞"><span class="toc-number">2.1.3.</span> <span class="toc-text">XSS 漏洞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vue简介"><span class="toc-number">2.1.4.</span> <span class="toc-text">Vue简介</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据驱动"><span class="toc-number">2.2.</span> <span class="toc-text">数据驱动</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#页面编写"><span class="toc-number">2.2.1.</span> <span class="toc-text">页面编写</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#页面抽象"><span class="toc-number">2.2.2.</span> <span class="toc-text">页面抽象</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#前端工程化"><span class="toc-number">2.3.</span> <span class="toc-text">前端工程化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#npm-依赖包"><span class="toc-number">2.3.1.</span> <span class="toc-text">npm 依赖包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#vue-cli"><span class="toc-number">2.3.2.</span> <span class="toc-text">vue cli</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#启动项目"><span class="toc-number">2.3.3.</span> <span class="toc-text">启动项目</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结束语"><span class="toc-number">2.4.</span> <span class="toc-text">结束语</span></a></li></ol></li></ol>
+		</div>
+		
+		<p>最近身边学习 Vue 的人也越来越多了，大家都有很多的疑问，为什么前端要用框架、Vue 做了些什么、要怎么上手，等等。距离上一次写 Vue 也过去三年了，是时候再把这三年自己的理解再整理进去了。由于这个系列主要是希望写给可能前端掌握也不深的人，所以会铺垫一些自己认为需要的内容，本节先来讲讲入门前端，作为铺垫，来理解 Vue 这个框架吧。<br><a id="more"></a></p>
+<h1 id="前端页面解析"><a href="#前端页面解析" class="headerlink" title="前端页面解析"></a>前端页面解析</h1><h2 id="页面组成"><a href="#页面组成" class="headerlink" title="页面组成"></a>页面组成</h2><p>我们打开一个前端项目，经常会看到很多不同后缀的文件，例如一个页面可能包括<code>a.html</code>、<code>a.css</code>、<code>a.js</code>，用了 Vue 还有<code>a.vue</code>，再加上 Typescript 可能还有<code>a.ts</code>。</p>
+<p>相信有些没写过前端的开发们是有点崩溃的，我们先来分别看看一个前端页面都是由什么组成的。其实<strong>最终跑在浏览器中的代码，主要包括三种：HTML、CSS、Javascript。</strong></p>
+<h3 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h3><p>直接从代码说起，最简单的莫过于：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h1</span>&gt;</span>我的第一个标题<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>我的第一个段落。<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>这里面包括两个子模快：</p>
+<ul>
+<li><code>&lt;head&gt;</code>：常包括控制样式的<code>&lt;link&gt;</code>标签、控制浏览器特殊逻辑的<code>&lt;meta&gt;</code>标签、控制代码执行逻辑的<code>&lt;script&gt;</code>，不展示到页面。</li>
+<li><code>&lt;body&gt;</code>：包括展示在页面的内容。</li>
+</ul>
+<p>通常来说，一段 HTML 代码，最终在浏览器中会生成一堆 DOM 节点树，例如：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span>&gt;</span>123<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>456<span class="tag">&lt;<span class="name">span</span>&gt;</span>789<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>这段代码在浏览器中渲染时，其实是长这个样子的：<br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/wxapp-3.png" alt></p>
+<p>这不一定是最终的结果，因为我们还可以这样操作：  </p>
+<ol>
+<li>通过 CSS 样式，例如<code>display: none</code>来让其中某个节点消失。  </li>
+<li>通过 JS 代码操作 DOM，例如使用<code>document.getElementById</code>获取到某个节点元素，然后再通过设置<code>.innerHTML</code>来改变元素的内容。  </li>
+</ol>
+<h3 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h3><p>CSS 主要是给我们的 HTML 元素添加样式，可以通过几个方式匹配:  </p>
+<ul>
+<li>DOM 元素匹配：例如<code>p{color: red}</code>会让所有<code>&lt;p&gt;</code>元素的文字都变成红色   </li>
+<li>class 匹配：类的匹配，例如<code>.color-red{color: red}</code>会让所有<code>&lt;xxx class=&quot;color-red&quot;&gt;</code>元素的文字都变成红色   </li>
+<li>id 匹配：id标识符的匹配，例如<code>#color-red{color: red}</code>会让<code>&lt;xxx id=&quot;color-red&quot;&gt;</code>元素的文字都变成红色（若页面内有多个相同的 id，则只有第一个生效）  </li>
+</ul>
+<p>CSS 的调试和编写上手不简单，会需要很多的踩坑和练习，它也不像 JS 那样可以完全根据语法或是逻辑理解，总有兼容性会颠覆你之前的认知。不过 CSS 写好了，对写页面的效率会有很大的提升。</p>
+<h3 id="Javascript"><a href="#Javascript" class="headerlink" title="Javascript"></a>Javascript</h3><p>HTML 是简单的网页静态信息，而 JavaScript 可以在网页上实现复杂的功能。</p>
+<p>我们常常使用 Javascript 来做以下事情：  </p>
+<ul>
+<li>处理事件（点击、输入等）  </li>
+<li>改变 HTML 内容、位置和样式  </li>
+<li>处理 Http 请求、各种业务逻辑的执行  </li>
+<li>很多其他的事情也可以做</li>
+</ul>
+<p>Javascript 是单线程的，更多是因为对页面交互的同步处理。作为浏览器脚本语言，JavaScript的主要用途是与用户互动，以及操作 DOM，若是多线程会导致严重的同步问题。</p>
+<p>关于更多的 Javascript，可以阅读<a href="https://godbasin.github.io/2018/05/05/front-end-5-javascript/">《前端入门5–Javascript》</a>。</p>
+<h2 id="页面渲染"><a href="#页面渲染" class="headerlink" title="页面渲染"></a>页面渲染</h2><h3 id="浏览器的渲染机制"><a href="#浏览器的渲染机制" class="headerlink" title="浏览器的渲染机制"></a>浏览器的渲染机制</h3><p>我们现在知道一个页面的代码里，主要包括了 HTML、CSS、Javascript 三大块内容，那么浏览器是怎么解析和加载这些内容的呢？</p>
+<p>一次浏览器的页面渲染过程中，浏览器会解析三种文件：  </p>
+<ul>
+<li><strong>解析 HTML/SVG/XHTML，会生成一个 DOM 结构树</strong></li>
+<li><strong>解析 CSS，会生成一个 CSS 规则树</strong></li>
+<li><strong>解析 JS，可通过 DOM API 和 CSS API 来操作 DOM 结构树和 CSS 规则树</strong></li>
+</ul>
+<p>CSS 规则树与 DOM 结构树结合，最终生成一个 Render 树（即最终呈现的页面，例如其中会移除 DOM 结构树中匹配到 CSS 里面<code>display:none</code>的 DOM 节点）。一般来说浏览器绘制页面的过程是：  </p>
+<ol>
+<li><strong>计算 CSS 规则树。</strong>  </li>
+<li><strong>生成 Render 树。</strong>  </li>
+<li><strong>计算各个节点的大小/position/z-index。</strong>  </li>
+<li><strong>绘制。</strong>  </li>
+</ol>
+<p>更多的资料，大家可以参考<a href="https://coolshell.cn/articles/9666.html" target="_blank" rel="noopener">《浏览器的渲染原理简介》</a>，或者英文很棒的你也可以阅读原文<a href="http://taligarsiel.com/Projects/howbrowserswork1.htm" target="_blank" rel="noopener">《How browsers work》</a></p>
+<h3 id="页面的局部刷新"><a href="#页面的局部刷新" class="headerlink" title="页面的局部刷新"></a>页面的局部刷新</h3><p>一般看来，浏览器生成了最终的 Render 树，页面也已经渲染完毕，似乎浏览器已经完成了它的工作了。但现实中我们的页面更多的不只是静态的页面，还会包括点击、拖拽等事件操作，以及接口请求、数据渲染到页面等动态的交互逻辑，这时候我们会需要更新页面的信息。</p>
+<p>我们的业务代码中情况会复杂得多，除了插入内容，还包括内容更新、删除元素节点等。不管是那种情况，目前来说前端一般分为两种方式：  </p>
+<ol>
+<li>绑定映射表方式。</li>
+<li>直接替换内容方式。</li>
+</ol>
+<h4 id="1-绑定映射表方式"><a href="#1-绑定映射表方式" class="headerlink" title="1. 绑定映射表方式"></a>1. 绑定映射表方式</h4><p>这其实是挺经常使用的一种方式，例如下面这段代码：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="built_in">document</span>.getElementById(<span class="string">'a'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>这里拿到了<code>&lt;xxx id=&quot;a&quot;&gt;</code>的这样一个元素映射，我们在更新内容、处理节点的时候就可以用这个映射来直接操作，如：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 更改元素里面内容</span></span><br><span class="line">a.innerHTML = <span class="string">'&lt;p&gt;测试&lt;/p&gt;'</span></span><br><span class="line"><span class="comment">// 2. 插入一个&lt;a&gt;元素</span></span><br><span class="line">a.appendChild(<span class="built_in">document</span>.createElement(<span class="string">`a`</span>))</span><br><span class="line"><span class="comment">// 3. 删除第一个元素，在这里是前面的&lt;p&gt;测试&lt;/p&gt;</span></span><br><span class="line">a.removeChild(a.firstChild)</span><br></pre></td></tr></table></figure></p>
+<p>如果我们一个页面里需要绑定变量的元素很多，那每次要更新某块的页面数据，可能会需要保存很多的元素映射，同时需要调用很多很多的<code>createElement()/appendChild()/removeChild()</code>这类方法，也是个不小的开销。这种情况下，我们可以使用直接替换内容的方式。</p>
+<h4 id="2-直接替换内容方式"><a href="#2-直接替换内容方式" class="headerlink" title="2. 直接替换内容方式"></a>2. 直接替换内容方式</h4><p>我们每次更新页面数据和状态，还可以通过<code>innerHTML</code>方法来用新的<code>HTML String</code>替换旧的，这种方法写起来很简单，无非是将各种节点使用字符串的方式拼接起来而已。</p>
+<p>例如，上面的几次更新 a 元素节点，可以调整成这样实现：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 更改元素里面内容</span></span><br><span class="line">a.innerHTML = <span class="string">'&lt;p&gt;测试&lt;/p&gt;'</span></span><br><span class="line"><span class="comment">// 2. 插入一个&lt;a&gt;元素</span></span><br><span class="line">a.innerHTML = <span class="string">'&lt;p&gt;测试&lt;/p&gt;&lt;a&gt;&lt;/a&gt;'</span></span><br><span class="line"><span class="comment">// 3. 删除第一个元素，在这里是前面的&lt;p&gt;测试&lt;/p&gt;</span></span><br><span class="line">a.innerHTML = <span class="string">'&lt;a&gt;&lt;/a&gt;'</span></span><br></pre></td></tr></table></figure></p>
+<p>这种方式来更新页面简单粗暴，但是如果我们更新的节点范围比较大，这时候我们需要替换掉很大一片的<code>HTML String</code>。这种情况下，会面临着可能导致更多的浏览器计算。</p>
+<h3 id="页面回流、重绘"><a href="#页面回流、重绘" class="headerlink" title="页面回流、重绘"></a>页面回流、重绘</h3><p>前面也介绍了，浏览器绘制页面的过程是：1.计算<code>CSS规则树</code> =&gt; 2.生成<code>Render树</code> =&gt; 3.计算各个节点的<code>大小</code>/<code>position</code>/<code>z-index</code> =&gt; 4.绘制。其中计算的环节也是消耗较大的地方。</p>
+<p>我们使用 DOM API 和 CSS API 的时候，通常会触发浏览器的两种操作：Repaint（重绘） 和 Reflow（回流）：  </p>
+<ul>
+<li><strong>Repaint：页面部分重画，通常不涉及尺寸的改变，常见于颜色的变化。</strong>这时候一般只触发绘制过程的第4个步骤。  </li>
+<li><strong>Reflow：意味着节点需要重新计算和绘制，常见于尺寸的改变。</strong>这时候会触发3和4两个步骤。<br>在 Reflow 的时候，浏览器会使渲染树中受到影响的部分失效，并重新构造这部分渲染树，完成 Reflow 后，浏览器会重新绘制受影响的部分到屏幕中，该过程成为 Repaint。</li>
+</ul>
+<p>回流的花销跟render tree有多少节点需要重新构建有关系，这也是为什么前面说使用<code>innerHTML</code>会导致更多的开销。所以到底是使用绑定映射表方式，还是使用直接替换内容方式，都是需要具体问题具体分析的。</p>
+<h2 id="事件驱动"><a href="#事件驱动" class="headerlink" title="事件驱动"></a>事件驱动</h2><p>事件驱动其实是前端开发中最容易理解的编码方式，例如我们写一个提交表单的页面，用事件驱动的方式来写的话，会是这样一个流程：  </p>
+<ol>
+<li>编写静态页面。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span>&gt;</span></span><br><span class="line">    Name: <span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">"name-value"</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"name"</span> <span class="attr">id</span>=<span class="string">"name-input"</span> /&gt;</span></span><br><span class="line">    Email: <span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">"email-value"</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"email"</span> <span class="attr">name</span>=<span class="string">"email"</span> <span class="attr">id</span>=<span class="string">"email-input"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>给对应的元素绑定对应的事件。例如给 input 输入框绑定输入事件：</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> nameInputEl = <span class="built_in">document</span>.getElementById(<span class="string">'name-input'</span>);</span><br><span class="line"><span class="keyword">var</span> emailInputEl = <span class="built_in">document</span>.getElementById(<span class="string">'email-input'</span>);</span><br><span class="line"><span class="comment">// 监听输入事件，此时 updateValue 函数未定义</span></span><br><span class="line">nameInputEl.addEventListener(<span class="string">'input'</span>, updateNameValue);</span><br><span class="line">emailInputEl.addEventListener(<span class="string">'input'</span>, updateEmailValue);</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>事件触发时，更新页面内容：</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> nameValueEl = <span class="built_in">document</span>.getElementById(<span class="string">'name-value'</span>);</span><br><span class="line"><span class="keyword">var</span> emailValueEl = <span class="built_in">document</span>.getElementById(<span class="string">'email-value'</span>);</span><br><span class="line"><span class="comment">// 定义 updateValue 函数，用来更新页面内容</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">updateNameValue</span>(<span class="params">e</span>)</span>&#123;</span><br><span class="line">    nameValueEl.innerText = e.srcElement.value;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">updateEmailValue</span>(<span class="params">e</span>)</span>&#123;</span><br><span class="line">    emailValueEl.innerText = e.srcElement.value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以上这个流程，是很常见的前端编码思维，我们称之为<strong>事件驱动</strong>模式。</p>
+<h1 id="前端思维转变"><a href="#前端思维转变" class="headerlink" title="前端思维转变"></a>前端思维转变</h1><p>很多人不理解这几年来前端的变化，为什么不能再用 jQuery 统一天下呢？为什么要搞那么多的库，还要按照环境呢？不是用个 txt 编辑器就能写完一个页面吗，前端弄那么复杂是为了什么呢？</p>
+<p>既然称之为思维转变，那么可以将事件驱动的思维模式作为过去常见的一种方式，而如今的前端开发过程中，多了很多的新框架、新工具，还有了工程化，这些带来了怎样的思维模式的转变呢？</p>
+<h2 id="前端框架的出现"><a href="#前端框架的出现" class="headerlink" title="前端框架的出现"></a>前端框架的出现</h2><p>其实最初是 AngularJS 开始占领了比较多的地位，后面 React 迎面赶上，在 Angular 断崖升级的帮助下，Vue 结合了各种框架的优势，以及非常容易入门的文档，成功成为了那一匹黑马。既然这一系列写的是 Vue 的入门和使用，那这里当然是基于 Vue 来介绍了。</p>
+<h3 id="数据绑定"><a href="#数据绑定" class="headerlink" title="数据绑定"></a>数据绑定</h3><h4 id="Vue-文本插值"><a href="#Vue-文本插值" class="headerlink" title="Vue 文本插值"></a>Vue 文本插值</h4><p>在 Vue 中，最基础的模板语法是数据绑定，例如：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;&#123; data &#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>这里绑定了一个 msg 的变量，开发者在 Vue 实例 data 中绑定该变量：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  data: &#123;</span><br><span class="line">    data: <span class="string">'测试文本'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>最终页面展示内容为<code>&lt;div&gt;测试文本&lt;/div&gt;</code>。</p>
+<h4 id="数据绑定的实现"><a href="#数据绑定的实现" class="headerlink" title="数据绑定的实现"></a>数据绑定的实现</h4><p>这种使用双大括号来绑定变量的方式，我们称之为数据绑定。它是怎么实现的呢，数据绑定的过程其实不复杂：</p>
+<ol>
+<li>解析语法生成 AST。</li>
+<li>根据 AST 结果生成 DOM。</li>
+<li>将数据绑定更新至模板。</li>
+</ol>
+<p>上述这个过程，是模板引擎在做的事情。我们来看看上面在 Vue 里的代码片段<code>&lt;div&gt;&lt;/div&gt;</code>，我们可以解析后获得这样一个 AST 对象：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">thisDiv = &#123;</span><br><span class="line">    dom: &#123;</span><br><span class="line">        type: <span class="string">'dom'</span>, <span class="attr">ele</span>: <span class="string">'div'</span>, <span class="attr">nodeIndex</span>: <span class="number">0</span>, <span class="attr">children</span>: [</span><br><span class="line">            &#123;<span class="attr">type</span>: <span class="string">'text'</span>, <span class="attr">value</span>: <span class="string">''</span>&#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">    binding: [</span><br><span class="line">        &#123;<span class="attr">type</span>: <span class="string">'dom'</span>, <span class="attr">nodeIndex</span>: <span class="number">0</span>, <span class="attr">valueName</span>: <span class="string">'data'</span>&#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样，我们在生成一个 DOM 的时候，同时添加对<code>data</code>的监听，数据更新时我们会找到对应的<code>nodeIndex</code>，更新值：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 假设这是一个生成 DOM 的过程，包括 innerHTML 和事件监听</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">generateDOM</span>(<span class="params">astObject</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> &#123;dom, binding = []&#125; = astObject;</span><br><span class="line">    <span class="comment">// 生成DOM，这里假装当前节点是baseDom</span></span><br><span class="line">    baseDom.innerHTML = getDOMString(dom);</span><br><span class="line">    <span class="comment">// 对于数据绑定的，来进行监听更新吧</span></span><br><span class="line">    baseDom.addEventListener(<span class="string">'data:change'</span>, (name, value) =&gt; &#123;</span><br><span class="line">        <span class="comment">// 寻找匹配的数据绑定</span></span><br><span class="line">        <span class="keyword">const</span> obj = binding.find(<span class="function"><span class="params">x</span> =&gt;</span> x.valueName == name);</span><br><span class="line">        <span class="comment">// 若找到值绑定的对应节点，则更新其值。</span></span><br><span class="line">        <span class="keyword">if</span>(obj)&#123;</span><br><span class="line">            baseDom.find(<span class="string">`[data-node-index="<span class="subst">$&#123;obj.nodeIndex&#125;</span>"]`</span>).innerHTML = value;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取DOM字符串，这里简单拼成字符串</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getDOMString</span>(<span class="params">domObj</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 无效对象返回''</span></span><br><span class="line">    <span class="keyword">if</span>(!domObj) <span class="keyword">return</span> <span class="string">''</span>;</span><br><span class="line">    <span class="keyword">const</span> &#123;type, children = [], nodeIndex, ele, value&#125; = domObj;</span><br><span class="line">    <span class="keyword">if</span>(type == <span class="string">'dom'</span>)&#123;</span><br><span class="line">        <span class="comment">// 若有子对象，递归返回生成的字符串拼接</span></span><br><span class="line">        <span class="keyword">const</span> childString = <span class="string">''</span>;</span><br><span class="line">        children.forEach(<span class="function"><span class="params">x</span> =&gt;</span> &#123;</span><br><span class="line">            childString += getDOMString(x);</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="comment">// dom对象，拼接生成对象字符串</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">`&lt;<span class="subst">$&#123;ele&#125;</span> data-node-index="<span class="subst">$&#123;nodeIndex&#125;</span>"&gt;<span class="subst">$&#123;childString&#125;</span>&lt;/<span class="subst">$&#123;ele&#125;</span>&gt;`</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(type == <span class="string">'text'</span>)&#123;</span><br><span class="line">        <span class="comment">// 若为textNode，返回text的值</span></span><br><span class="line">        <span class="keyword">return</span> value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>关于模板引擎更多的情况，可以查看<a href="https://godbasin.github.io/2017/10/21/template-engine/">《前端模板引擎》</a>。</p>
+<h3 id="虚拟-DOM"><a href="#虚拟-DOM" class="headerlink" title="虚拟 DOM"></a>虚拟 DOM</h3><p>虚拟 DOM 如今已经被作为前端面试基础题了，多多少少面试者都要去了解下，当初 React 就是因为虚拟 DOM 的提出，暂时赢下了浏览器性能之争。当然，这都是几年前的事情了，如今几大框架的性能问题，早也不是什么大问题了。</p>
+<p>虚拟 DOM 大概是这么个过程：<br>(1) 用 JS 对象模拟 DOM 树，得到一棵虚拟 DOM 树。<br>(2) 当页面数据变更时，生成新的虚拟 DOM 树，比较新旧两棵虚拟 DOM 树的差异。<br>(3) 把差异应用到真正的 DOM 树上。  </p>
+<p>为什么要用到虚拟 DOM 呢？这是因为一个 DOM 节点它包括了太多太多的属性、元素和事件对象，感觉有上百个。但是我们并不是全部都会用到，通常包括节点内容、元素位置、样式、节点的添加删除等方法，而我们通过用 JS 对象表示 DOM 元素的方式，大大降低了比较差异的计算量。</p>
+<p>虚拟 DOM 中，差异对比也是很关键的一步，这里简单说一下。当状态变更的时候，重新构造一棵新的对象树。然后用新的树和旧的树进行比较，记录两棵树差异。通常来说这样的差异需要记录：需要替换掉原来的节点、移动、删除、新增子节点、修改了节点的属性、 对于文本节点的文本内容改变。经过差异对比之后，我们能获得一组差异记录，接下里我们需要使用它。</p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/wxapp-4.png" alt="DOM 树对比"></p>
+<p>如图，这里我们对比两棵 DOM 树，得到的差异有：p 元素插入了一个 span 元素子节点，然后原先的文本节点挪到了span 元素子节点下面，最后通过 JS 操作就可以实现完。</p>
+<h3 id="XSS-漏洞"><a href="#XSS-漏洞" class="headerlink" title="XSS 漏洞"></a>XSS 漏洞</h3><p>模板引擎还可以协助预防下 XSS 相关漏洞。我们知道，XSS 的整个攻击过程大概为：</p>
+<ol>
+<li>通常页面中包含的用户输入内容都在固定的容器或者属性内，以文本的形式展示。  </li>
+<li>攻击者利用这些页面的用户输入片段，拼接特殊格式的字符串，突破原有位置的限制，形成了代码片段。  </li>
+<li>攻击者通过在目标网站上注入脚本，使之在用户的浏览器上运行，从而引发潜在风险。  </li>
+</ol>
+<p>避免 XSS 的方法之一主要是将用户所提供的内容进行过滤，而大多数模板引擎会自带 HTML 转义功能。在 Vue 中，默认的数据绑定方式（双大括号、<code>v-bind</code>等）会进行 HTML 转义，将数据解释为普通文本，而非 HTML 代码。</p>
+<p>当然，如果你一定要输出 HTML 代码，也可以使用<code>v-html</code>指令输出。<a href="https://cn.vuejs.org/v2/guide/syntax.html#%E5%8E%9F%E5%A7%8B-HTML" target="_blank" rel="noopener">官方文档</a>也有特殊说明：</p>
+<blockquote>
+<p>你的站点上动态渲染的任意 HTML 可能会非常危险，因为它很容易导致 XSS 攻击。请只对可信内容使用 HTML 插值，绝不要对用户提供的内容使用插值。</p>
+</blockquote>
+<p>关于 XSS 漏洞，更多的可以查看<a href="https://tech.meituan.com/2018/09/27/fe-security.html" target="_blank" rel="noopener">《前端安全系列（一）：如何防止XSS攻击？》</a>一文。</p>
+<h3 id="Vue简介"><a href="#Vue简介" class="headerlink" title="Vue简介"></a>Vue简介</h3><p>看看这些模板引擎都做了啥事，原本就是一个<code>&lt;div&gt;</code>，经过 AST 生成一个对象，最终还是生成一个<code>&lt;div&gt;</code>，这是多余的步骤吗？不是的，在这个过程中我们可以实现一些功能：</p>
+<ul>
+<li>排除无效 DOM 元素，并在构建过程可进行报错  </li>
+<li>使用自定义组件的时候，可匹配出来  </li>
+<li>可方便地实现数据绑定、事件绑定等，具备自动更新页面的功能  </li>
+<li>为虚拟 DOM Diff 过程打下铺垫  </li>
+<li>HTML 转义（预防 XSS 漏洞）  </li>
+</ul>
+<p>所以 Vue 它只是一个模板引擎吗？怎么说呢，模板引擎可能是我们选择框架的原因里最重要的一个，毕竟如果没有框架的话，所有上述这些很好用的能力都需要自己搭建，不然开发效率会很受影响。</p>
+<p>我们看看 Vue 官方的介绍：</p>
+<blockquote>
+<p>Vue 是一套用于构建用户界面的渐进式框架。与其它大型框架不同的是，Vue 被设计为可以自底向上逐层应用。Vue 的核心库只关注视图层，不仅易于上手，还便于与第三方库或既有项目整合。</p>
+</blockquote>
+<p>关于 Vue 和其他框架的对比，可以看看官方文档-<a href="https://cn.vuejs.org/v2/guide/comparison.html" target="_blank" rel="noopener">对比其他框架</a>。易于上手这块，是大多数人都比较认可的，框架的性能也不错，这也是技术选型中比较重要的一些考虑。</p>
+<h2 id="数据驱动"><a href="#数据驱动" class="headerlink" title="数据驱动"></a>数据驱动</h2><p>前面也介绍了，在 jQuery 年代，我们通常是使用事件驱动的模式去进行开发了。那么使用了 Vue 之后，写代码的方式会有哪些不一样吗？</p>
+<p>既然前面介绍了事件模型一般的编码流程，我们再来看看，同样的们写一个提交表单的页面，用数据驱动的方式来写的话，会变成这么一个流程：</p>
+<ol>
+<li>设计数据结构。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 包括一个 name 和 一个 email 的值</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  data() &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      name: <span class="string">''</span>,</span><br><span class="line">      email: <span class="string">''</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>把数据绑定到页面中需要使用/展示的地方。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span>&gt;</span></span><br><span class="line">    Name: <span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; name &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"name"</span> <span class="attr">v-bind:value</span>=<span class="string">"name"</span> <span class="attr">v-on:input</span>=<span class="string">"updateNameValue"</span> /&gt;</span></span><br><span class="line">    Email: <span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; email &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"email"</span> <span class="attr">name</span>=<span class="string">"email"</span> <span class="attr">v-bind:value</span>=<span class="string">"email"</span> <span class="attr">v-on:input</span>=<span class="string">"updateEmailValue"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>事件触发时，更新数据。</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  data() &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      name: <span class="string">''</span>,</span><br><span class="line">      email: <span class="string">''</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  methods: &#123;</span><br><span class="line">    <span class="comment">// 绑定 input 事件，获取到输入值，设置到对应的数据中</span></span><br><span class="line">    updateNameValue(event)&#123;</span><br><span class="line">      <span class="keyword">this</span>.name = event.target.value;</span><br><span class="line">    &#125;,</span><br><span class="line">    updateEmailValue(event)&#123;</span><br><span class="line">      <span class="keyword">this</span>.email = event.target.value;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们在设置数据（<code>this.name = event.target.value</code>）的时候，Vue 已经替我们把将数据更新到页面的逻辑处理了。大家也可以去 <a href="https://codepen.io/anon/pen/qzPbWQ" target="_blank" rel="noopener">codepen</a> 或者 jsfiddle、<a href="https://stackblitz.com/" target="_blank" rel="noopener">stackblitz</a> 这些在线编码网站上尝试下。</p>
+<p>所以事件驱动和数据驱动一个很重要的区别在于，我们是从每个事件的触发开始设计我们的代码，还是以数据为中心，接收事件触发和更新数据状态的方式来写代码。</p>
+<h3 id="页面编写"><a href="#页面编写" class="headerlink" title="页面编写"></a>页面编写</h3><p>如果要问，vue 和 jQuery 有什么不一样？其实它们从定位到设计到实现上都完全不一样，但是对开发者来说，我们可以做个简单直观的区别：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--1. jQuery + 事件驱动--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"input"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">"p"</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">$(<span class="string">'#input'</span>).on(<span class="string">'click'</span>, e =&gt; &#123;</span></span><br><span class="line"><span class="actionscript">    <span class="keyword">const</span> val = e.target.value;</span></span><br><span class="line"><span class="javascript">    $(<span class="string">'#p'</span>).text(val);</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--2. vue + 数据驱动--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">v-model</span>=<span class="string">"inputValue"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; inputValue &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>当我们在 Vue 中，模板引擎帮我们处理了模板渲染、数据绑定的过程，我们只需要知道这里面只有一个有效数据，即输入框的值。</p>
+<h3 id="页面抽象"><a href="#页面抽象" class="headerlink" title="页面抽象"></a>页面抽象</h3><p>既然使用了数据驱动，那么对页面的一个抽象能力也是很重要的。例如我们现在要写一个列表，数据从后台获取到之后，展示到页面中。</p>
+<ol>
+<li><p>当我们需要渲染成列表时：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--1). jQuery + 事件驱动--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">ul</span> <span class="attr">id</span>=<span class="string">"ul"</span>&gt;</span><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">const</span> dom = $(<span class="string">'#ul'</span>);</span></span><br><span class="line"><span class="javascript">list.forEach(<span class="function"><span class="params">item</span> =&gt;</span> &#123;</span></span><br><span class="line"><span class="handlebars"><span class="xml">    dom.append(`<span class="tag">&lt;<span class="name">li</span> <span class="attr">data-id</span>=<span class="string">"$&#123;item.id&#125;"</span>&gt;</span><span class="tag">&lt;<span class="name">span</span>&gt;</span>$&#123;item.name&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span>: <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"$&#123;item.href&#125;"</span>&gt;</span>$&#123;item.href&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span>`)</span></span></span><br><span class="line">&#125;);</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--2). vue + 数据驱动--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span> <span class="attr">v-for</span>=<span class="string">"item in list"</span> <span class="attr">:key</span>=<span class="string">"item.id"</span>&gt;</span><span class="tag">&lt;<span class="name">span</span>&gt;</span>&#123;&#123;item.name&#125;&#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">:href</span>=<span class="string">"item.href"</span>&gt;</span>&#123;&#123;item.href&#125;&#125;<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>当我们需要更新一个列表中某个 id 的其中一个数据时（这里需要更改 id 为 3 的 name 值）：</p>
+</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1). jQuery + 事件驱动</span></span><br><span class="line"><span class="keyword">const</span> dom = $(<span class="string">'#ul'</span>);</span><br><span class="line"><span class="keyword">const</span> id = <span class="number">3</span>;</span><br><span class="line">dom.find(<span class="string">`li[data-id="<span class="subst">$&#123;id&#125;</span>"] span`</span>).text(<span class="string">'newName3'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2). vue + 数据驱动</span></span><br><span class="line"><span class="keyword">const</span> id = <span class="number">3</span>;</span><br><span class="line">list.find(<span class="function"><span class="params">item</span> =&gt;</span> item.id == <span class="number">3</span>).name == <span class="string">'newName3'</span>;</span><br></pre></td></tr></table></figure>
+<p>在使用数据驱动的时候，模板渲染的事情会交给框架去完成，我们需要做的就是数据处理而已。那么转换了数据驱动之后，有什么好处呢？</p>
+<p>当我们把一个页面抽象成数据来表示之后，可以做的事情就多了。如果我们把所有的页面、组件、展示内容和接口配置等都变成了配置数据，那么我们就可以把所有的东西都进行配置化。以前也写过一篇<a href="https://godbasin.github.io/2018/06/09/component-with-configuration/">《组件配置化》</a>，另外在玩 Angular 的时候也做过类似的设计，包括<a href="http://angular2-form-schame.godbasin.com/index.html" target="_blank" rel="noopener">组件的配置–通过配置生成表单</a>和<a href="http://angular-custom-app.godbasin.com/#/home/custom-app" target="_blank" rel="noopener">页面应用的配置–通过配置生成管理端</a>。当然，Vue 也完全可以做这种事情的，配置化的难度常常不在于技术有多难，而在于怎么把业务进行适当的抽象。</p>
+<h2 id="前端工程化"><a href="#前端工程化" class="headerlink" title="前端工程化"></a>前端工程化</h2><p>其实前端工程化这块，我并不是能理解得很深刻，能讲给大家的，应该只是自己的一种理解了。一般来说，现在的主流构建工具应该是 Webpack，包括我们使用 Vue 官方脚手架生成的代码，构建工具也是 Webpack。</p>
+<p>我们在代码中会使用到很多的资源，图片、样式、代码，还有各式各样的依赖包，而打包的时候怎么实现按需分块、处理依赖关系、不包含多余的文件或内容，同时提供开发和生产环境，包括本地调试自动更新到浏览器这些能力，都是由 Webpack 整合起来的。</p>
+<h3 id="npm-依赖包"><a href="#npm-依赖包" class="headerlink" title="npm 依赖包"></a>npm 依赖包</h3><p>要实现工程化，前端开发几乎都离不开 nodejs 的包管理器 npm，比如前端在搭建本地开发服务以及打包编译前端代码等都会用到。在前端开发过程中，经常用到<code>npm install</code>来安装所需的依赖。</p>
+<p>为什么会有 npm 包的出现呢？因为一个人的力量是有限的，我们在写代码的时候，为了可以将注意力集中到业务开发中，会需要使用别人开源的很多工具、框架和代码包。在很早以前，我们是一个个地下载，或是通过<code>&lt;script src=&quot;https://cdn.jsdelivr.net/npm/vue/dist/vue.js&quot;&gt;&lt;/script&gt;</code>的方式去引用。</p>
+<p>当一个网站依赖的代码越来越多，其实管理依赖和版本是一件很麻烦的事情。然后 npm 就出现了，作为一个把这些代码集中到一起来管理的工具。</p>
+<p>同时，我们可以结合一些 tree shaking 的能力，在本地构建的时候，把使用的别人的依赖包里没用用到的部分去掉，减小代码包的大小等。</p>
+<p>在安装 Node.js 的时候，npm 的能力也会一块提供到，按照完之后就能直接在机器终端使用<code>npm install xxx</code>这种能力啦，需要安装什么依赖包呢，你可以去<a href="https://www.npmjs.com/" target="_blank" rel="noopener">npmjs官网</a>搜一下，也可以自己发布一些包供别人使用，例如之前我也写过一个<a href="https://www.npmjs.com/package/v-select2-component" target="_blank" rel="noopener">v-select2-component</a>组件。</p>
+<h3 id="vue-cli"><a href="#vue-cli" class="headerlink" title="vue cli"></a>vue cli</h3><p>通常来说，脚手架可以让你快速地生成示例代码、搭建本地环境，也可以更新依赖的版本等，避免了每个开发者自行调整开发环境、打包逻辑等配置。</p>
+<p>Vue cli 也提供了这样的能力，更多的可以参考<a href="https://cli.vuejs.org/zh/" target="_blank" rel="noopener">官方文档</a>。</p>
+<blockquote>
+<p>Vue CLI 致力于将 Vue 生态中的工具基础标准化。它确保了各种构建工具能够基于智能的默认配置即可平稳衔接，这样你可以专注在撰写应用上，而不必花好几天去纠结配置的问题。</p>
+</blockquote>
+<p>使用方式很简单：<br><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 安装脚手架</span><br><span class="line">npm install -g @vue/cli</span><br><span class="line">// 脚手架生成 vue 项目，同时会自动安装依赖</span><br><span class="line">vue create vue-cli-demo</span><br></pre></td></tr></table></figure></p>
+<p>生成之后的代码目录是这样的：<br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/vue-cli-demo-files.jpg" alt></p>
+<h3 id="启动项目"><a href="#启动项目" class="headerlink" title="启动项目"></a>启动项目</h3><p>一般来说，项目会有个 README.md 文件，你能看到一些简单的说明，例如这里生成的：<br><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># Project setup</span><br><span class="line">yarn install</span><br><span class="line"></span><br><span class="line"># Compiles and hot-reloads <span class="keyword">for</span> development</span><br><span class="line">yarn run serve</span><br><span class="line"></span><br><span class="line"># Compiles and minifies <span class="keyword">for</span> production</span><br><span class="line">yarn run build</span><br><span class="line"></span><br><span class="line"># Run your tests</span><br><span class="line">yarn run test</span><br><span class="line"></span><br><span class="line"># Lints and fixes files</span><br><span class="line">yarn run lint</span><br></pre></td></tr></table></figure></p>
+<p>yarn 跟 npm 都是差不多的包管理器，区别在于 yarn 在安装时会速度更快（并行、离线等），以及版本统一管理的比较好。但如果你不是有特殊的喜好或者习惯，其实两个都可以用，例如这里的<code>yarn run serve</code>也可以用<code>npm run serve</code>来运行。</p>
+<p>如果有些习惯不好的项目缺了 README，这种时候要怎么去启动一个项目呢？可以查看<code>package.json</code>文件：<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"scripts"</span>: &#123;</span><br><span class="line">    <span class="attr">"serve"</span>: <span class="string">"vue-cli-service serve"</span>,</span><br><span class="line">    <span class="attr">"build"</span>: <span class="string">"vue-cli-service build"</span>,</span><br><span class="line">    <span class="attr">"lint"</span>: <span class="string">"vue-cli-service lint"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>一般来说，开发环境是<code>dev</code>、<code>serve</code>等，生产环境是<code>build</code>，<code>scripts</code>里是一些任务，运行命令<code>npm run taskName</code>就可以启动了。<br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/vue-cli-demo-serve.jpg" alt></p>
+<p>上图中，我们可以看到任务已经启动了，访问输出的地址（这里是<code>http://localhost:8080/</code>或者<code>http://10.40.120.53:8080/</code>）就能看到我们的项目跑起来了。<br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/vue-cli-demo-page.jpg" alt></p>
+<h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><hr>
+<p>第一 part 结束了，更多的内容还是前端相关。这些主要是这几年对页面渲染的一些新的理解，然后简单用脚手架启动了个 demo 项目。内容是按照自己觉得较清晰的逻辑展开来讲的，如果说你有更好的想法，或是发现我的描述中有哪些不到位的地方，也十分欢迎来交流。<br>工具始终是工具没错，但一个工具为什么受这么多人追捧，它到底解决了什么，你可以从中学习到什么，这些才是个人认为的在使用工具时候收获的很重要的东西。在 Vue 官方文档很完善的情况下，我来给你们补上文档以外的一些技巧和内容吧。</p>
+  
+	</div>
+	<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/2code2.jpg" width="200" height="200" style="display:block;margin: 0 auto;" />
+	<p style="text-align: center;margin-top: 10px;margin-bottom: 20px;">码生艰难，写文不易，给我家猪囤点猫粮了喵~</p>
+	<div class="article-content">
+		<p style="margin-top:50px;">
+			查看Github有更多内容噢：<a href="https://github.com/godbasin">https://github.com/godbasin</a>
+			<br>
+			更欢迎来<a href="https://godbasin.github.io/front-end-playground">被删的前端游乐场</a>边撸猫边学前端噢
+			<br>
+			如果你想要关注日常生活中的我，欢迎关注“牧羊的猪”公众号噢
+		</p>
+	</div>
+	<div class="author-right">
+  		<p>作者：被删</p>
+  		<p>出处：<a href="https://godbasin.github.io">https://godbasin.github.io</a></p>
+  		<p>本文版权归作者所有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利。</p>
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/教程/">教程</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/vue八宝粥/">vue八宝粥</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  
+<!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a href="http://www.jiathis.com/share?uid=2134021" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config = {data_track_clickback:'true'};
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js?uid=2134021" charset="utf-8"></script>
+<!-- JiaThis Button END -->   
+
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2019/06/30/about-front-end-2-principle/" title="前端这几年--2.工作原则和选择">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  前端这几年--2.工作原则和选择</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2019/06/17/wxapp-latest-20190617/"  title="小程序开发月刊第六期（20190617）">
+ <strong>NEXT:</strong><br/> 
+ <span>小程序开发月刊第六期（20190617）
+</span>
+</a>
+</div>
+
+</nav>
+
+	<!-- 如果不是首页且没使用 `comments: false` 关闭评论，则尝试加载评论 -->
+
+    <!-- 配置中启用多说时，导入相应代码 -->
+    
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前端页面解析"><span class="toc-number">1.</span> <span class="toc-text">前端页面解析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#页面组成"><span class="toc-number">1.1.</span> <span class="toc-text">页面组成</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HTML"><span class="toc-number">1.1.1.</span> <span class="toc-text">HTML</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CSS"><span class="toc-number">1.1.2.</span> <span class="toc-text">CSS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Javascript"><span class="toc-number">1.1.3.</span> <span class="toc-text">Javascript</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#页面渲染"><span class="toc-number">1.2.</span> <span class="toc-text">页面渲染</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#浏览器的渲染机制"><span class="toc-number">1.2.1.</span> <span class="toc-text">浏览器的渲染机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#页面的局部刷新"><span class="toc-number">1.2.2.</span> <span class="toc-text">页面的局部刷新</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-绑定映射表方式"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">1. 绑定映射表方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-直接替换内容方式"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">2. 直接替换内容方式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#页面回流、重绘"><span class="toc-number">1.2.3.</span> <span class="toc-text">页面回流、重绘</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事件驱动"><span class="toc-number">1.3.</span> <span class="toc-text">事件驱动</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#前端思维转变"><span class="toc-number">2.</span> <span class="toc-text">前端思维转变</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#前端框架的出现"><span class="toc-number">2.1.</span> <span class="toc-text">前端框架的出现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#数据绑定"><span class="toc-number">2.1.1.</span> <span class="toc-text">数据绑定</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Vue-文本插值"><span class="toc-number">2.1.1.1.</span> <span class="toc-text">Vue 文本插值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数据绑定的实现"><span class="toc-number">2.1.1.2.</span> <span class="toc-text">数据绑定的实现</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#虚拟-DOM"><span class="toc-number">2.1.2.</span> <span class="toc-text">虚拟 DOM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#XSS-漏洞"><span class="toc-number">2.1.3.</span> <span class="toc-text">XSS 漏洞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vue简介"><span class="toc-number">2.1.4.</span> <span class="toc-text">Vue简介</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据驱动"><span class="toc-number">2.2.</span> <span class="toc-text">数据驱动</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#页面编写"><span class="toc-number">2.2.1.</span> <span class="toc-text">页面编写</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#页面抽象"><span class="toc-number">2.2.2.</span> <span class="toc-text">页面抽象</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#前端工程化"><span class="toc-number">2.3.</span> <span class="toc-text">前端工程化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#npm-依赖包"><span class="toc-number">2.3.1.</span> <span class="toc-text">npm 依赖包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#vue-cli"><span class="toc-number">2.3.2.</span> <span class="toc-text">vue cli</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#启动项目"><span class="toc-number">2.3.3.</span> <span class="toc-text">启动项目</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结束语"><span class="toc-number">2.4.</span> <span class="toc-text">结束语</span></a></li></ol></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  	
+	<div class="archiveslist">
+		<p class="asidetitle">最近文章</p>
+			<ul class="archive-list">
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/03/13/angular-design-0-prestart/" title="Angular框架解读--预热篇">Angular框架解读--预热篇...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/02/27/network-design-dependency-decoupling/" title="在线文档的网络层开发思考--依赖关系梳理">在线文档的网络层开发思考--依赖关系...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/01/23/network-design-responsibility-driven-design/" title="在线文档的网络层开发思考--职责驱动设计">在线文档的网络层开发思考--职责驱动...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/01/10/about-writing/" title="前端这几年--写文章这件事">前端这几年--写文章这件事...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/11/01/task-runner-design/" title="如何设计一个任务管理器">如何设计一个任务管理器</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/10/10/why-spreadsheet-app-excited/" title="在线Excel项目到底有多刺激">在线Excel项目到底有多刺激...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/10/07/monitor-and-report/" title="前端监控体系搭建">前端监控体系搭建</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/08/30/about-front-end-10/" title="前端这几年--10.我的工作历险记">前端这几年--10.我的工作历险记...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/08/30/about-front-end-9/" title="前端这几年--9.提升工作效率">前端这几年--9.提升工作效率...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/08/29/front-end-performance-analyze/" title="补齐Web前端性能分析的工具盲点">补齐Web前端性能分析的工具盲点...</a>
+				</li>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+	</div>
+
+
+  
+  <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">归档</a></p>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">十月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">41</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">9</span></li></ul>
+  </div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle"><a href="/categories">分类</a></p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/Angular源码/" title="Angular源码">Angular源码<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/CSS炒饭/" title="CSS炒饭">CSS炒饭<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/D3小馒头/" title="D3小馒头">D3小馒头<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular2火锅/" title="angular2火锅">angular2火锅<sup>25</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular混搭/" title="angular混搭">angular混搭<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/box2djs方糖/" title="box2djs方糖">box2djs方糖<sup>34</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/cyclejs哈根达斯/" title="cyclejs哈根达斯">cyclejs哈根达斯<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/jQuery杂烩/" title="jQuery杂烩">jQuery杂烩<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/js什锦/" title="js什锦">js什锦<sup>26</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/react沙拉/" title="react沙拉">react沙拉<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/three-js奶茶/" title="three.js奶茶">three.js奶茶<sup>5</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/vue八宝粥/" title="vue八宝粥">vue八宝粥<sup>30</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/webpack宾治/" title="webpack宾治">webpack宾治<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/web乱炖/" title="web乱炖">web乱炖<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端满汉全席/" title="前端满汉全席">前端满汉全席<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端解决方案/" title="前端解决方案">前端解决方案<sup>13</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/喵/" title="喵">喵<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/小程序双皮奶/" title="小程序双皮奶">小程序双皮奶<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/工作这杯茶/" title="工作这杯茶">工作这杯茶<sup>19</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/应用巧克力盒/" title="应用巧克力盒">应用巧克力盒<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/思想棉花糖/" title="思想棉花糖">思想棉花糖<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/柴米油盐工具集/" title="柴米油盐工具集">柴米油盐工具集<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/自动化甜筒/" title="自动化甜筒">自动化甜筒<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/非前端钙片/" title="非前端钙片">非前端钙片<sup>7</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle">标签</p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/分享/" title="分享">分享<sup>44</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/功能设计/" title="功能设计">功能设计<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/原创部件/" title="原创部件">原创部件<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/心态/" title="心态">心态<sup>19</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/教程/" title="教程">教程<sup>80</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/晒猫/" title="晒猫">晒猫<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/笔记/" title="笔记">笔记<sup>121</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/算法/" title="算法">算法<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/自制插件/" title="自制插件">自制插件<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/逻辑实现/" title="逻辑实现">逻辑实现<sup>18</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+    <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">about</a></p>
+      <ul class="archive-list">
+      	<li class="archive-list-item">
+      		<a>wangbeishan@163.com</a>
+      		<a href="https://github.com/godbasin">github.com/godbasin</a>
+      	</li>
+      </ul>
+  </div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<section class="info">
+		<p> 即使梦想再小，却很伟大 ^_^ </p>
+	</section>
+	 
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2021 
+		
+		<a href="https://godbasin.github.io" target="_blank" title="被删">被删</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,1205 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  
+    <title>小程序开发月刊第五期（20190515） | Here. There.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="被删">
+    
+    <meta name="description" content="听说小程序开发月刊还是挺实用的~~">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Here. There." type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?3d902de4a19cf2bf179534ffd2dd7b7f";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+</html>
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/sun.png" alt="Here. There." title="Here. There."/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Here. There.">Here. There.</a></h1>
+				<h2 class="blog-motto">Love ice cream. Love sunshine. Love life. Love the world. Love myself. Love you.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="https://github.com/godbasin/godbasin.github.io">所有文章</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">分类</a></li>
+					
+						<li><a href="https://godbasin.github.io/front-end-playground">前端游乐场</a></li>
+					
+						<li><a href="/about">关于我</a></li>
+					
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2019/05/15/wxapp-latest-20190515/" title="小程序开发月刊第五期（20190515）" itemprop="url">小程序开发月刊第五期（20190515）</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://godbasin.github.io" title="被删">被删</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2019-05-15T15:52:31.000Z" itemprop="datePublished">2019-05-15</time>
+    更新日期:<time datetime="2019-05-19T04:15:07.150Z" itemprop="dateModified">2019-05-19</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#小程序-latest"><span class="toc-number">1.</span> <span class="toc-text">小程序 latest</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#小程序能力"><span class="toc-number">1.1.</span> <span class="toc-text">小程序能力</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#「2-7-0版本基础库」新增功能"><span class="toc-number">1.1.1.</span> <span class="toc-text">「2.7.0版本基础库」新增功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#「微信开放社区」新增关注功能"><span class="toc-number">1.1.2.</span> <span class="toc-text">「微信开放社区」新增关注功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#wx-getWifiList接口需获取用户位置信息授权"><span class="toc-number">1.1.3.</span> <span class="toc-text">wx.getWifiList接口需获取用户位置信息授权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#「小程序管理后台」新增-Source-Map-文件下载功能"><span class="toc-number">1.1.4.</span> <span class="toc-text">「小程序管理后台」新增 Source Map 文件下载功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#更新日志"><span class="toc-number">1.1.5.</span> <span class="toc-text">更新日志</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开发者工具"><span class="toc-number">1.2.</span> <span class="toc-text">开发者工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#微信开发者工具支持ES6-转ES5"><span class="toc-number">1.2.1.</span> <span class="toc-text">微信开发者工具支持ES6+转ES5</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#「小程序·云开发」新增了HTTP-API支持"><span class="toc-number">1.2.2.</span> <span class="toc-text">「小程序·云开发」新增了HTTP API支持</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#「小程序·云开发」新增-消息推送-支持"><span class="toc-number">1.2.3.</span> <span class="toc-text">「小程序·云开发」新增 消息推送 支持</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#「小程序·云开发」新增免-SessionKey-获取开放数据"><span class="toc-number">1.2.4.</span> <span class="toc-text">「小程序·云开发」新增免 SessionKey 获取开放数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他"><span class="toc-number">1.2.5.</span> <span class="toc-text">其他</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#小程序教程"><span class="toc-number">2.</span> <span class="toc-text">小程序教程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#社区精选文章"><span class="toc-number">2.1.</span> <span class="toc-text">社区精选文章</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#最新踩坑-amp-amp-Tips"><span class="toc-number">2.2.</span> <span class="toc-text">最新踩坑 &amp;&amp; Tips</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结束语"><span class="toc-number">2.3.</span> <span class="toc-text">结束语</span></a></li></ol></li></ol>
+		</div>
+		
+		<p>听说小程序开发月刊还是挺实用的~~<br><a id="more"></a></p>
+<h1 id="小程序-latest"><a href="#小程序-latest" class="headerlink" title="小程序 latest"></a>小程序 latest</h1><h2 id="小程序能力"><a href="#小程序能力" class="headerlink" title="小程序能力"></a>小程序能力</h2><h3 id="「2-7-0版本基础库」新增功能"><a href="#「2-7-0版本基础库」新增功能" class="headerlink" title="「2.7.0版本基础库」新增功能"></a>「2.7.0版本基础库」新增功能</h3><ol>
+<li>相机组件新增逐帧数据接口，该接口可让开发者对相机摄像头捕捉到的图像进行实时地识别和处理，实现如实时美妆、文字识别等功能，详见<a href="https://developers.weixin.qq.com/miniprogram/dev/component/camera.html" target="_blank" rel="noopener">《camera组件》</a>。  </li>
+<li>新增富文本编辑器组件，用户可以方便地对图文进行编辑，实现更丰富的图文展示效果，可扫描以下小程序码体验，接入指引详见<a href="https://developers.weixin.qq.com/miniprogram/dev/component/editor.html" target="_blank" rel="noopener">《富文本编辑器组件》</a>。  </li>
+<li>TabBar新增支持配置网络图片，方便开发者在不同节日、活动等场景下，更灵活地配置底部导航栏内的相应图标，详见<a href="https://developers.weixin.qq.com/miniprogram/dev/api/wx.setTabBarItem.html" target="_blank" rel="noopener">《TabBar》</a>。</li>
+<li>为了帮助开发者解决“刘海屏”的适配问题，新增查询手机安全区域功能，在安全区域中的内容可保证不被遮挡，详见<a href="https://developers.weixin.qq.com/miniprogram/dev/api/wx.getSystemInfo.html" target="_blank" rel="noopener">《getSystemInfo》</a>。  </li>
+<li>为了提升用户对图片的操作效率以及快速“识别图中的小程序码”，在用户未进入图片预览模式时，也可以通过长按图片唤起图片的操作菜单，详见<a href="https://developers.weixin.qq.com/miniprogram/dev/component/image.html" target="_blank" rel="noopener">《image组件》</a>。</li>
+<li>canvas画布组件支持WebGL，提升了图形渲染效率，可更流畅地展示3D场景和模型。</li>
+</ol>
+<p>更多2.7.0版本基础库的新能力及详情，可查看<a href="https://developers.weixin.qq.com/miniprogram/dev/framework/release.html" target="_blank" rel="noopener">《更新日志》</a>。</p>
+<h3 id="「微信开放社区」新增关注功能"><a href="#「微信开放社区」新增关注功能" class="headerlink" title="「微信开放社区」新增关注功能"></a>「微信开放社区」新增关注功能</h3><p>微信开放社区新增「关注用户」功能，社区用户可以对自己关心的用户进行关注，成为这个用户的关注者，更方便看到该用户的动态。</p>
+<blockquote>
+<p>例如关注下被删什么的</p>
+</blockquote>
+<h3 id="wx-getWifiList接口需获取用户位置信息授权"><a href="#wx-getWifiList接口需获取用户位置信息授权" class="headerlink" title="wx.getWifiList接口需获取用户位置信息授权"></a>wx.getWifiList接口需获取用户位置信息授权</h3><p>2019年5月17日起新提交发布的版本若未获取用户位置权限，则在android平台上将无法正常调用wx.getWifiList接口。该调整策略在微信android客户端 7.0.4 版本生效。<br>更多详情请查看<a href="https://developers.weixin.qq.com/community/develop/doc/0002ec7dc6cd5894957808bd854c01" target="_blank" rel="noopener">wx.getWifiList接口需获取用户位置信息授权后使用</a>。</p>
+<h3 id="「小程序管理后台」新增-Source-Map-文件下载功能"><a href="#「小程序管理后台」新增-Source-Map-文件下载功能" class="headerlink" title="「小程序管理后台」新增 Source Map 文件下载功能"></a>「小程序管理后台」新增 Source Map 文件下载功能</h3><p>小程序管理后台-【运维中心】-【错误查询】新增线上版本 Source Map 文件下载功能，开发者可通过 Source Map 文件定位错误信息对应的源代码位置。</p>
+<h3 id="更新日志"><a href="#更新日志" class="headerlink" title="更新日志"></a>更新日志</h3><ul>
+<li><a href="https://developers.weixin.qq.com/community/develop/doc/0002c407d0c0d023d8889391651001" target="_blank" rel="noopener">社区问题反馈以及功能优化更新（05.06-05.10）</a></li>
+<li><a href="https://developers.weixin.qq.com/community/develop/doc/00000a9a2040505a5b887ef7156c01" target="_blank" rel="noopener">社区问题反馈以及功能优化更新（04.22-04.26）</a></li>
+<li><a href="https://developers.weixin.qq.com/community/develop/doc/00008813390720866b784e0fd5ac01" target="_blank" rel="noopener">社区问题反馈以及功能优化更新（04.15-04.19）</a></li>
+</ul>
+<h2 id="开发者工具"><a href="#开发者工具" class="headerlink" title="开发者工具"></a>开发者工具</h2><h3 id="微信开发者工具支持ES6-转ES5"><a href="#微信开发者工具支持ES6-转ES5" class="headerlink" title="微信开发者工具支持ES6+转ES5"></a>微信开发者工具支持ES6+转ES5</h3><p>新版工具增加了增强编译的选项来增强ES6转ES5的能力，启用后会使用新的编译逻辑以及提供额外的选项供开发者使用。</p>
+<ul>
+<li>使用preset-env,支持最新的ECMAScript语法</li>
+<li>共享helpers函数，默认放在项目@babel/runtime目录，可通过项目配置文件配置</li>
+<li>支持<code>async/await</code>语法，按需注入regeneratorRuntime，目录位置与helpers函数一致</li>
+<li>关于polyfill，基础库中已经引入了大量的es6相关的polyfill可参考文档，增强编译下，新增：<code>Array.prototype.includes</code>(es7)、<code>Object.entries</code>(es8)、<code>Object.values</code>(es8)</li>
+</ul>
+<p>更多详细能力请参考<a href="https://developers.weixin.qq.com/community/develop/doc/00066877c54eb0ff5488b54885b801" target="_blank" rel="noopener">微信开发者工具 1.02.1905081 更新说明</a>。</p>
+<p>这里补充两个容易踩的坑：</p>
+<ol>
+<li>旧版开发者工具只支持ES6转ES5，这里的ES6并不包括ES7/ES8，所以<code>Object.entries</code>(es8)、<code>Object.values</code>(es8)、<code>async/await</code>这些不支持，需要自己编译。</li>
+<li>微信开发者工具 1.02.1905081 已知bug:<ul>
+<li>体验评分会卡死</li>
+<li>带分包功能的小程序，预览后分包页面出现白屏</li>
+</ul>
+</li>
+<li>项目使用babel编译，在编译async/await时会生成Promise，同时Promise里捕捉到的异常都没有处理。会导致js语法错误不能被MP平台监控，从而没法正常告警（也无法在App.onError里捕捉到）。使用开发者工具编译可能也会存在同样的问题，建议自行hack Promise，加上catch把异常抛出或添加到App.onError里。</li>
+</ol>
+<h3 id="「小程序·云开发」新增了HTTP-API支持"><a href="#「小程序·云开发」新增了HTTP-API支持" class="headerlink" title="「小程序·云开发」新增了HTTP API支持"></a>「小程序·云开发」新增了HTTP API支持</h3><p>云调用新增了HTTP API支持，目前提供了云函数触发、数据库导入导出、文件下载上传删除、获取腾讯云API调用凭证等能力。欢迎大家体验及反馈。</p>
+<ul>
+<li><a href="https://developers.weixin.qq.com/miniprogram/dev/wxcloud/reference-http-api/index.html" target="_blank" rel="noopener">文档</a></li>
+<li><a href="https://cloud.tencent.com/document/api/876/34809" target="_blank" rel="noopener">腾讯云可用API</a></li>
+</ul>
+<h3 id="「小程序·云开发」新增-消息推送-支持"><a href="#「小程序·云开发」新增-消息推送-支持" class="headerlink" title="「小程序·云开发」新增 消息推送 支持"></a>「小程序·云开发」新增 消息推送 支持</h3><p>云调用近期将新增 消息推送 支持，现已支持客服消息推送，物流等功能的消息推送后续将陆续推出，现在已经可以在内测版开发者工具中体验客服消息推送了（在云函数中接收客服消息和回复），可新建云开发快速启动模板然后查看里面的云调用客服消息示例，欢迎大家来体验~<br>文档：</p>
+<ul>
+<li><a href="https://developers.weixin.qq.com/miniprogram/dev/framework/server-ability/message-push.html" target="_blank" rel="noopener">消息推送文档</a></li>
+<li><a href="https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/customer-message/receive.html" target="_blank" rel="noopener">客服消息事件</a></li>
+<li><a href="https://developers.weixin.qq.com/miniprogram/dev/api-backend/customerServiceMessage.send.html?t=19051721#method-cloud" target="_blank" rel="noopener">云调用</a></li>
+</ul>
+<h3 id="「小程序·云开发」新增免-SessionKey-获取开放数据"><a href="#「小程序·云开发」新增免-SessionKey-获取开放数据" class="headerlink" title="「小程序·云开发」新增免 SessionKey 获取开放数据"></a>「小程序·云开发」新增免 SessionKey 获取开放数据</h3><p>云调用近期将新增支持免 SessionKey 获取开放数据，现已经可以在内测版开发者工具上体验了（开放数据包括用户信息，分享信息，微信运动等），待基础库 2.7.0 发布完成即可在手机上使用，在内测版工具上可以选择 9.9.9 版本基础库使用，欢迎大家来体验和吐槽~</p>
+<ul>
+<li><a href="https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/signature.html" target="_blank" rel="noopener">开放数据获取方式文档</a></li>
+<li><a href="https://developers.weixin.qq.com/miniprogram/dev/api/wx.getUserInfo.html" target="_blank" rel="noopener">示例 getUserInfo 文档</a></li>
+<li>支持的 API 和组件有：wx.getUserInfo，wx.getShareInfo, wx.getWeRunData 以及 button 组件的 getUserInfo</li>
+</ul>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p><strong>Typescript能力：</strong><br>最新的小程序官方Typing库更新了！新增Component/云函数等支持！</p>
+<ul>
+<li>Git地址: <a href="https://github.com/wechat-miniprogram/api-typings" target="_blank" rel="noopener">https://github.com/wechat-miniprogram/api-typings</a></li>
+</ul>
+<h1 id="小程序教程"><a href="#小程序教程" class="headerlink" title="小程序教程"></a>小程序教程</h1><h2 id="社区精选文章"><a href="#社区精选文章" class="headerlink" title="社区精选文章"></a>社区精选文章</h2><ul>
+<li><a href="https://developers.weixin.qq.com/community/develop/article/doc/00022e1ce2cd38f14e88cdee15bc13" target="_blank" rel="noopener">永远对微信小程序保持尊重——小程序心得体会和开发经验</a></li>
+<li><a href="https://developers.weixin.qq.com/community/develop/article/doc/00080a33d6c4284bb57886c8e56c13" target="_blank" rel="noopener">腾讯课堂小程序详情页开发总结</a></li>
+<li><a href="https://developers.weixin.qq.com/community/develop/article/doc/000e462d9f0348423778380095b413" target="_blank" rel="noopener">有赞前端质量保障体系</a></li>
+<li><a href="https://developers.weixin.qq.com/community/develop/article/doc/000aa441bdc990492478911e85c013" target="_blank" rel="noopener">小打卡|如何组件化拆分一个200+页面的小程序</a></li>
+</ul>
+<p>更多可以查看<a href="https://developers.weixin.qq.com/community/develop/article" target="_blank" rel="noopener">文章分享</a>。</p>
+<h2 id="最新踩坑-amp-amp-Tips"><a href="#最新踩坑-amp-amp-Tips" class="headerlink" title="最新踩坑 &amp;&amp; Tips"></a>最新踩坑 &amp;&amp; Tips</h2><ol>
+<li><p>wx.getLocation无响应（既不会success，也不会fail，可能导致小程序不可用），在安卓上会偶现，和机型无关。<br>目前建议的解决方法是手动加个超时。</p>
+</li>
+<li><p>小程序授权获取实名信息文档:<a href="https://developers.weixin.qq.com/community/business/doc/000804439ac77080c8672c77451c0d。" target="_blank" rel="noopener">https://developers.weixin.qq.com/community/business/doc/000804439ac77080c8672c77451c0d。</a><br>同时文中 设置-接口能力 路径改为 开发-接口能力。</p>
+</li>
+<li><p><code>&lt;picker&gt;</code>组件，IOS不支持YYYY-MM-DD的日期格式，而picker默认返回的格式是YYYY-MM-DD，有日期转时间戳的场景的话，需要正则替换一下。<br>PS: H5里也存在同样的问题。</p>
+</li>
+<li><p>小程序做自适应客户端字体大小，目前需要通过<a href="https://developers.weixin.qq.com/miniprogram/dev/api/wx.getSystemInfo.html" target="_blank" rel="noopener">wx.getSystemInfo</a>接口获取fontSizeSetting字段，来调整样式。</p>
+<ul>
+<li>fontSizeSetting: 用户字体大小（单位px）。以微信客户端「我-设置-通用-字体大小」中的设置为准 </li>
+</ul>
+</li>
+<li><p>发布新的小程序后，终端用户手机里面还有老的小程序的缓存，可使用<a href="https://developers.weixin.qq.com/miniprogram/dev/api/UpdateManager.html" target="_blank" rel="noopener">UpdateManager</a>强制用户升级到最新版本。</p>
+</li>
+<li><p>小程序基础库版本兼容问题，可设置最低基础库版本：登录小程序管理后台，进入“设置-&gt;基本设置-&gt;基础库最低版本设置”进行配置。</p>
+<ul>
+<li>在配置前，开发者可查看近30天内访问小程序的用户的基础库版本占比，以帮助开发者了解当前用户使用的情况。</li>
+<li>上述设置需要在iOS 6.5.8或安卓 6.5.7及以上微信客户端版本生效。太低版本不支持最低基础库版本设置。</li>
+</ul>
+</li>
+</ol>
+<h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><p>在这个世界上，没有人能在所有事情上都与你看法一致，所以既然有人在与你在最重要的方面价值观相同，也与你有实践价值观的相同做法，那就要确保与这些人为伍。 –《原则》</p>
+  
+	</div>
+	<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/2code2.jpg" width="200" height="200" style="display:block;margin: 0 auto;" />
+	<p style="text-align: center;margin-top: 10px;margin-bottom: 20px;">码生艰难，写文不易，给我家猪囤点猫粮了喵~</p>
+	<div class="article-content">
+		<p style="margin-top:50px;">
+			查看Github有更多内容噢：<a href="https://github.com/godbasin">https://github.com/godbasin</a>
+			<br>
+			更欢迎来<a href="https://godbasin.github.io/front-end-playground">被删的前端游乐场</a>边撸猫边学前端噢
+			<br>
+			如果你想要关注日常生活中的我，欢迎关注“牧羊的猪”公众号噢
+		</p>
+	</div>
+	<div class="author-right">
+  		<p>作者：被删</p>
+  		<p>出处：<a href="https://godbasin.github.io">https://godbasin.github.io</a></p>
+  		<p>本文版权归作者所有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利。</p>
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/教程/">教程</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/小程序双皮奶/">小程序双皮奶</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  
+<!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a href="http://www.jiathis.com/share?uid=2134021" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config = {data_track_clickback:'true'};
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js?uid=2134021" charset="utf-8"></script>
+<!-- JiaThis Button END -->   
+
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2019/06/17/wxapp-latest-20190617/" title="小程序开发月刊第六期（20190617）">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  小程序开发月刊第六期（20190617）</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2019/04/15/wxapp-latest-20190415/"  title="小程序开发月刊第四期（20190415）">
+ <strong>NEXT:</strong><br/> 
+ <span>小程序开发月刊第四期（20190415）
+</span>
+</a>
+</div>
+
+</nav>
+
+	<!-- 如果不是首页且没使用 `comments: false` 关闭评论，则尝试加载评论 -->
+
+    <!-- 配置中启用多说时，导入相应代码 -->
+    
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#小程序-latest"><span class="toc-number">1.</span> <span class="toc-text">小程序 latest</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#小程序能力"><span class="toc-number">1.1.</span> <span class="toc-text">小程序能力</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#「2-7-0版本基础库」新增功能"><span class="toc-number">1.1.1.</span> <span class="toc-text">「2.7.0版本基础库」新增功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#「微信开放社区」新增关注功能"><span class="toc-number">1.1.2.</span> <span class="toc-text">「微信开放社区」新增关注功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#wx-getWifiList接口需获取用户位置信息授权"><span class="toc-number">1.1.3.</span> <span class="toc-text">wx.getWifiList接口需获取用户位置信息授权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#「小程序管理后台」新增-Source-Map-文件下载功能"><span class="toc-number">1.1.4.</span> <span class="toc-text">「小程序管理后台」新增 Source Map 文件下载功能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#更新日志"><span class="toc-number">1.1.5.</span> <span class="toc-text">更新日志</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开发者工具"><span class="toc-number">1.2.</span> <span class="toc-text">开发者工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#微信开发者工具支持ES6-转ES5"><span class="toc-number">1.2.1.</span> <span class="toc-text">微信开发者工具支持ES6+转ES5</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#「小程序·云开发」新增了HTTP-API支持"><span class="toc-number">1.2.2.</span> <span class="toc-text">「小程序·云开发」新增了HTTP API支持</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#「小程序·云开发」新增-消息推送-支持"><span class="toc-number">1.2.3.</span> <span class="toc-text">「小程序·云开发」新增 消息推送 支持</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#「小程序·云开发」新增免-SessionKey-获取开放数据"><span class="toc-number">1.2.4.</span> <span class="toc-text">「小程序·云开发」新增免 SessionKey 获取开放数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他"><span class="toc-number">1.2.5.</span> <span class="toc-text">其他</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#小程序教程"><span class="toc-number">2.</span> <span class="toc-text">小程序教程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#社区精选文章"><span class="toc-number">2.1.</span> <span class="toc-text">社区精选文章</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#最新踩坑-amp-amp-Tips"><span class="toc-number">2.2.</span> <span class="toc-text">最新踩坑 &amp;&amp; Tips</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结束语"><span class="toc-number">2.3.</span> <span class="toc-text">结束语</span></a></li></ol></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  	
+	<div class="archiveslist">
+		<p class="asidetitle">最近文章</p>
+			<ul class="archive-list">
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/03/13/angular-design-0-prestart/" title="Angular框架解读--预热篇">Angular框架解读--预热篇...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/02/27/network-design-dependency-decoupling/" title="在线文档的网络层开发思考--依赖关系梳理">在线文档的网络层开发思考--依赖关系...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/01/23/network-design-responsibility-driven-design/" title="在线文档的网络层开发思考--职责驱动设计">在线文档的网络层开发思考--职责驱动...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/01/10/about-writing/" title="前端这几年--写文章这件事">前端这几年--写文章这件事...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/11/01/task-runner-design/" title="如何设计一个任务管理器">如何设计一个任务管理器</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/10/10/why-spreadsheet-app-excited/" title="在线Excel项目到底有多刺激">在线Excel项目到底有多刺激...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/10/07/monitor-and-report/" title="前端监控体系搭建">前端监控体系搭建</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/08/30/about-front-end-10/" title="前端这几年--10.我的工作历险记">前端这几年--10.我的工作历险记...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/08/30/about-front-end-9/" title="前端这几年--9.提升工作效率">前端这几年--9.提升工作效率...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/08/29/front-end-performance-analyze/" title="补齐Web前端性能分析的工具盲点">补齐Web前端性能分析的工具盲点...</a>
+				</li>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+	</div>
+
+
+  
+  <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">归档</a></p>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">十月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">41</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">9</span></li></ul>
+  </div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle"><a href="/categories">分类</a></p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/Angular源码/" title="Angular源码">Angular源码<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/CSS炒饭/" title="CSS炒饭">CSS炒饭<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/D3小馒头/" title="D3小馒头">D3小馒头<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular2火锅/" title="angular2火锅">angular2火锅<sup>25</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular混搭/" title="angular混搭">angular混搭<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/box2djs方糖/" title="box2djs方糖">box2djs方糖<sup>34</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/cyclejs哈根达斯/" title="cyclejs哈根达斯">cyclejs哈根达斯<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/jQuery杂烩/" title="jQuery杂烩">jQuery杂烩<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/js什锦/" title="js什锦">js什锦<sup>26</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/react沙拉/" title="react沙拉">react沙拉<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/three-js奶茶/" title="three.js奶茶">three.js奶茶<sup>5</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/vue八宝粥/" title="vue八宝粥">vue八宝粥<sup>30</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/webpack宾治/" title="webpack宾治">webpack宾治<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/web乱炖/" title="web乱炖">web乱炖<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端满汉全席/" title="前端满汉全席">前端满汉全席<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端解决方案/" title="前端解决方案">前端解决方案<sup>13</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/喵/" title="喵">喵<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/小程序双皮奶/" title="小程序双皮奶">小程序双皮奶<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/工作这杯茶/" title="工作这杯茶">工作这杯茶<sup>19</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/应用巧克力盒/" title="应用巧克力盒">应用巧克力盒<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/思想棉花糖/" title="思想棉花糖">思想棉花糖<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/柴米油盐工具集/" title="柴米油盐工具集">柴米油盐工具集<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/自动化甜筒/" title="自动化甜筒">自动化甜筒<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/非前端钙片/" title="非前端钙片">非前端钙片<sup>7</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle">标签</p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/分享/" title="分享">分享<sup>44</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/功能设计/" title="功能设计">功能设计<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/原创部件/" title="原创部件">原创部件<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/心态/" title="心态">心态<sup>19</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/教程/" title="教程">教程<sup>80</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/晒猫/" title="晒猫">晒猫<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/笔记/" title="笔记">笔记<sup>121</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/算法/" title="算法">算法<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/自制插件/" title="自制插件">自制插件<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/逻辑实现/" title="逻辑实现">逻辑实现<sup>18</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+    <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">about</a></p>
+      <ul class="archive-list">
+      	<li class="archive-list-item">
+      		<a>wangbeishan@163.com</a>
+      		<a href="https://github.com/godbasin">github.com/godbasin</a>
+      	</li>
+      </ul>
+  </div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<section class="info">
+		<p> 即使梦想再小，却很伟大 ^_^ </p>
+	</section>
+	 
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2021 
+		
+		<a href="https://godbasin.github.io" target="_blank" title="被删">被删</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+
+
+
+
+
+  </body>
+</html>

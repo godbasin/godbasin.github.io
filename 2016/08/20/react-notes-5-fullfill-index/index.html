@@ -1,0 +1,1197 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  
+    <title>React使用笔记5--理解jsx以及制作index页面 | Here. There.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="被删">
+    
+    <meta name="description" content="最近在学习使用React作为前端的框架，《React使用笔记》系列用于记录过程中的一些使用和解决方法。本文简单介绍jsx，以及记录制作首页的过程。">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Here. There." type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?3d902de4a19cf2bf179534ffd2dd7b7f";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+</html>
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/sun.png" alt="Here. There." title="Here. There."/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Here. There.">Here. There.</a></h1>
+				<h2 class="blog-motto">Love ice cream. Love sunshine. Love life. Love the world. Love myself. Love you.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="https://github.com/godbasin/godbasin.github.io">所有文章</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">分类</a></li>
+					
+						<li><a href="https://godbasin.github.io/front-end-playground">前端游乐场</a></li>
+					
+						<li><a href="/about">关于我</a></li>
+					
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/08/20/react-notes-5-fullfill-index/" title="React使用笔记5--理解jsx以及制作index页面" itemprop="url">React使用笔记5--理解jsx以及制作index页面</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://godbasin.github.io" title="被删">被删</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2016-08-20T10:49:32.000Z" itemprop="datePublished">2016-08-20</time>
+    更新日期:<time datetime="2018-12-18T15:37:47.627Z" itemprop="dateModified">2018-12-18</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#理解jsx"><span class="toc-number">1.</span> <span class="toc-text">理解jsx</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是JSX"><span class="toc-number">1.1.</span> <span class="toc-text">什么是JSX</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用JSX"><span class="toc-number">1.2.</span> <span class="toc-text">使用JSX</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JSX与HTML区别"><span class="toc-number">1.3.</span> <span class="toc-text">JSX与HTML区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考"><span class="toc-number">1.4.</span> <span class="toc-text">参考</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JSX的if…else…"><span class="toc-number">2.</span> <span class="toc-text">JSX的if…else…</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用三元表达式"><span class="toc-number">2.1.</span> <span class="toc-text">使用三元表达式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JS代码中使用if表达式"><span class="toc-number">2.2.</span> <span class="toc-text">JS代码中使用if表达式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#制作index页面"><span class="toc-number">3.</span> <span class="toc-text">制作index页面</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#添加props属性值"><span class="toc-number">3.1.</span> <span class="toc-text">添加props属性值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#添加state值"><span class="toc-number">3.2.</span> <span class="toc-text">添加state值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#添加改变状态事件"><span class="toc-number">3.3.</span> <span class="toc-text">添加改变状态事件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#map遍历数据"><span class="toc-number">3.4.</span> <span class="toc-text">map遍历数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#添加点击事件onClick"><span class="toc-number">3.5.</span> <span class="toc-text">添加点击事件onClick</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#组件代码"><span class="toc-number">3.6.</span> <span class="toc-text">组件代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结束语"><span class="toc-number">4.</span> <span class="toc-text">结束语</span></a></li></ol>
+		</div>
+		
+		<p>最近在学习使用React作为前端的框架，《React使用笔记》系列用于记录过程中的一些使用和解决方法。<br>本文简单介绍jsx，以及记录制作首页的过程。<br><a id="more"></a></p>
+<h2 id="理解jsx"><a href="#理解jsx" class="headerlink" title="理解jsx"></a>理解jsx</h2><hr>
+<h3 id="什么是JSX"><a href="#什么是JSX" class="headerlink" title="什么是JSX"></a>什么是JSX</h3><p>JSX即JavaScript XML，是一个看起来很像XML的JavaScript语法扩展。<br>JSX能定义简洁且我们熟知的包含属性的树状结构语法。</p>
+<h3 id="使用JSX"><a href="#使用JSX" class="headerlink" title="使用JSX"></a>使用JSX</h3><p>JSX把类XML的语法转成纯粹JavaScript，XML元素、属性和子节点被转换成React.createElement的参数。</p>
+<ul>
+<li>JSX标签<br>React的JSX里约定分别使用首字母大、小写来区分本地组件的类和HTML标签。</li>
+<li>JavaScript表达式<ul>
+<li>表达式用{}包起来，不要加引号，加引号就会被当成字符串。</li>
+<li>JSX是HTML和JavaScript混写的语法，当遇到&lt;，JSX就当HTML解析，遇到{就当JavaScript解析。</li>
+<li>同样地，JavaScript表达式可用于描述子结点。</li>
+</ul>
+</li>
+</ul>
+<h3 id="JSX与HTML区别"><a href="#JSX与HTML区别" class="headerlink" title="JSX与HTML区别"></a>JSX与HTML区别</h3><ul>
+<li>HTML实体<br>如果想在JSX表达式中显示HTML实体，可以会遇到二次转义的问题，因为React默认会转义所有字符串，为了防止各种XSS攻击。<ul>
+<li>1.安全的做法是先找到实体的Unicode编号 ，然后在JavaScript字符串里使用。</li>
+<li>2.可以在数组里混合使用字符串和JSX元素。</li>
+<li>3.万不得已，可以直接使用原始HTML。</li>
+</ul>
+</li>
+<li>HTML属性<br>一些标识符像class和for不建议作为XML属性名。作为替代，React DOM使用className和htmlFor来做对应的属性。</li>
+<li>内联样式<br>在React中写行内样式时，要使用双大括号，不能采用引号的书写方式</li>
+<li>自定义HTML属性<br>如果往原生HTML元素里传入HTML规范里不存在的属性，React不会显示它们。如果需要使用自定义属性，要加data-前缀。</li>
+<li>注释<br>JSX里添加注释很容易，它们只是JS表达式而已。你只需要在一个标签的子节点内(非最外层)小心地用单大括号包围要注释的部分。</li>
+<li>事件绑定<br>在JSX中事件属性都是以驼峰命名的方式，HTML中的内嵌事件的编写方式在JSX语法中是无效的。</li>
+</ul>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="http://reactjs.cn/react/docs/jsx-in-depth.html" target="_blank" rel="noopener">《深入理解JSX》</a></p>
+<h2 id="JSX的if…else…"><a href="#JSX的if…else…" class="headerlink" title="JSX的if…else…"></a>JSX的if…else…</h2><hr>
+<p>你没法在JSX中使用if-else语句，因为JSX只是函数调用和对象创建的语法糖。<br>这里我们结合首页来说明一些使用方法吧。</p>
+<h3 id="使用三元表达式"><a href="#使用三元表达式" class="headerlink" title="使用三元表达式"></a>使用三元表达式</h3><p>页面中我们使用一个loading的state(状态来表示当前查看的模块)。现在我们结合hidden样式来进行界面的显示控制吧。</p>
+<ul>
+<li>hidden样式</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.hidden</span> &#123; <span class="attribute">display</span>:none; &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>显示控制</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div className=&#123;loading == <span class="string">'sethead'</span> ? <span class="string">''</span> : <span class="string">'hidden'</span>&#125;&gt;这里是设置头像页面&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">&lt;div className=&#123;loading == 'setinfo' ? '' : 'hidden'&#125;&gt;这里是修改资料页面&lt;/</span>div&gt;</span><br><span class="line">&lt;div className=&#123;loading == <span class="string">'other'</span> ? <span class="string">''</span> : <span class="string">'hidden'</span>&#125;&gt;这里是其他页面&lt;<span class="regexp">/div&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="JS代码中使用if表达式"><a href="#JS代码中使用if表达式" class="headerlink" title="JS代码中使用if表达式"></a>JS代码中使用if表达式</h3><p>当三元操作表达式不够健壮，你也可以使用if语句来决定应该渲染那个组件。<br>这里我们使用两层的map遍历菜单，需要判断是否有子菜单，然后加载。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(menu.menus)&#123; <span class="comment">//判断是否有子菜单</span></span><br><span class="line">  menus = menu.menus.map(<span class="function"><span class="keyword">function</span>(<span class="params">item, j</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (<span class="xml"><span class="tag">&lt;<span class="name">ListGroupItem&#125;</span> <span class="attr">key</span>=<span class="string">&#123;j&#125;</span>&gt;</span>&#123; item.text &#125;<span class="tag">&lt;/<span class="name">ListGroupItem</span>&gt;</span></span>);</span><br><span class="line">  &#125;);</span><br><span class="line">  menusgroup = (</span><br><span class="line">    &lt;ListGroup&gt;</span><br><span class="line">    &#123; menus &#125;</span><br><span class="line">    &lt;<span class="regexp">/ListGroup&gt;</span></span><br><span class="line"><span class="regexp">	);  			</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="制作index页面"><a href="#制作index页面" class="headerlink" title="制作index页面"></a>制作index页面</h2><hr>
+<p>页面结构如下：<br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/F3A2.tmp.png" alt="image"></p>
+<h3 id="添加props属性值"><a href="#添加props属性值" class="headerlink" title="添加props属性值"></a>添加props属性值</h3><p>菜单内容等使用pros属性保存（不会发生改变）。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">getDefaultProps : <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> that = <span class="keyword">this</span>;</span><br><span class="line">  <span class="keyword">return</span> &#123;<span class="comment">//设置默认属性</span></span><br><span class="line">    asidemenus: [&#123;</span><br><span class="line">      title: <span class="string">'基本资料'</span>, <span class="comment">//title用于储存该菜单显示名称</span></span><br><span class="line">      click: <span class="string">'init'</span>, <span class="comment">//click用于储存该菜单对应点击时loading的状态值</span></span><br><span class="line">      menus: [&#123;</span><br><span class="line">        text: <span class="string">'名字'</span>,</span><br><span class="line">        click: <span class="string">'name'</span>,</span><br><span class="line">      &#125;, &#123;</span><br><span class="line">        text: <span class="string">'邮箱'</span>,</span><br><span class="line">        click: <span class="string">'email'</span>,</span><br><span class="line">      &#125;, &#123;</span><br><span class="line">        text: <span class="string">'github'</span>,</span><br><span class="line">        click: <span class="string">'github'</span>,</span><br><span class="line">      &#125;, ]</span><br><span class="line">    &#125;, &#123;</span><br><span class="line">      title: <span class="string">'设置头像'</span>,</span><br><span class="line">      click: <span class="string">'sethead'</span>,</span><br><span class="line">    &#125;, &#123;</span><br><span class="line">      title: <span class="string">'修改资料'</span>,</span><br><span class="line">      click: <span class="string">'setinfo'</span>,</span><br><span class="line">    &#125;, &#123;</span><br><span class="line">      title: <span class="string">'其他'</span>,</span><br><span class="line">      click: <span class="string">'other'</span>,</span><br><span class="line">    &#125;],</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure></p>
+<h3 id="添加state值"><a href="#添加state值" class="headerlink" title="添加state值"></a>添加state值</h3><p>loading状态使用state状态保存（会发生改变）。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">getInitialState: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;<span class="attr">loading</span>: <span class="string">'init'</span>&#125;;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure></p>
+<h3 id="添加改变状态事件"><a href="#添加改变状态事件" class="headerlink" title="添加改变状态事件"></a>添加改变状态事件</h3><p>创建事件用来改变loading状态。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">changeState: <span class="function"><span class="keyword">function</span>(<span class="params">state</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.setState(&#123;<span class="attr">loading</span>: state&#125;);</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure></p>
+<h3 id="map遍历数据"><a href="#map遍历数据" class="headerlink" title="map遍历数据"></a>map遍历数据</h3><p>上面也有提到map的使用。<br>在这里有个需要注意的地方就是，遍历的时候需要给元素设置key，下面介绍一下key。</p>
+<ul>
+<li>key<br>给组件设置独一无二的键，并确保它在一个渲染周期中保持一致，是的React能够更智能地决定应该重用一个组件，还是销毁并重新创建一个组件，进而提升渲染性能。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">menus = menu.menus.map(<span class="function"><span class="keyword">function</span>(<span class="params">item, j</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> (<span class="xml"><span class="tag">&lt;<span class="name">ListGroupItem&#125;</span> <span class="attr">key</span>=<span class="string">&#123;j&#125;</span>&gt;</span>&#123; item.text &#125;<span class="tag">&lt;/<span class="name">ListGroupItem</span>&gt;</span></span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="添加点击事件onClick"><a href="#添加点击事件onClick" class="headerlink" title="添加点击事件onClick"></a>添加点击事件onClick</h3><ul>
+<li>事件处理<br>React里只需把事件处理器（event handler）以骆峰命名（camelCased）形式当作组件的props传入即可，就像使用普通HTML那样。</li>
+<li>自动绑定<br>React中，所有方法被自动绑定到了它的组件实例上。React还缓存这些绑定方法，所以CPU和内存都是非常高效。</li>
+<li>事件代理<ul>
+<li>React实际并没有把事件处理器绑定到节点本身。</li>
+<li>当React启动的时候，它在最外层使用唯一一个事件监听器处理所有事件。</li>
+<li>当组件被加载和卸载时，只是在内部映射里添加或删除事件处理器。</li>
+<li>当事件触发，React根据映射来决定如何分发。当映射里处理器时，会当作空操作处理。</li>
+</ul>
+</li>
+<li>虚拟事件对象<ul>
+<li>事件处理器将会传入虚拟事件对象的实例，一个对浏览器本地事件的跨浏览器封装。</li>
+<li>它有和浏览器本地事件相同的属性和方法，包括 stopPropagation()和preventDefault()，但是没有浏览器兼容问题。</li>
+<li>要在捕获阶段触发某个事件处理器，在事件名字后面追加Capture字符串</li>
+</ul>
+</li>
+</ul>
+<p>介绍完了React的事件处理相关，我们这里提一个在map里面使用事件绑定需要注意的地方。<br>当使用map遍历时，map函数里面的this对象不再指向该组件，此时我们只需要在函数后面添加.bind(this)就好。</p>
+<p>需要传递参数时，可以在事件的后面使用bind进行传参，然后直接在事件函数中获取就好啦。</p>
+<ul>
+<li>bind<ul>
+<li>bind与call很相似，例如，可接受的参数都分为两部分，且第一个参数都是作为执行时函数上下文中的this的对象。</li>
+<li>不同点有两个：</li>
+<li>1.bind的返回值是函数。</li>
+<li>2.call是把第二个及以后的参数作为函数方法的实参传进去，而bind虽说也是获取第二个及以后的参数用于之后方法的执行，但是返回的函数中传入的实参则是在bind中传入参数的基础上往后排的。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">menus = menu.menus.map(<span class="function"><span class="keyword">function</span>(<span class="params">item, j</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> (<span class="xml"><span class="tag">&lt;<span class="name">ListGroupItem&#125;</span> <span class="attr">key</span>=<span class="string">&#123;j&#125;</span> <span class="attr">onClick</span>=<span class="string">&#123;this.changeState.bind(null,item.click)</span>&gt;</span>&#123; item.text &#125;<span class="tag">&lt;/<span class="name">ListGroupItem</span>&gt;</span></span>);</span><br><span class="line">&#125;.bind(<span class="keyword">this</span>));</span><br></pre></td></tr></table></figure>
+<h3 id="组件代码"><a href="#组件代码" class="headerlink" title="组件代码"></a>组件代码</h3><p>这里贴一下我们组件的代码，有点长哦。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Panel, PanelGroup, ListGroup, ListGroupItem &#125; <span class="keyword">from</span> <span class="string">'react-bootstrap'</span>;</span><br><span class="line"><span class="keyword">import</span> Header <span class="keyword">from</span>  <span class="string">'./header.jsx'</span>; <span class="comment">//login自定义组件</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Index = React.createClass(&#123;</span><br><span class="line">  getDefaultProps : <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">     <span class="keyword">return</span> &#123;<span class="comment">//设置默认属性</span></span><br><span class="line">      asidemenus: <span class="string">''</span>, <span class="comment">//这里就省略啦，大家可以看前面的菜单数据</span></span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;,</span><br><span class="line">  changeState: <span class="function"><span class="keyword">function</span>(<span class="params">state</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123;<span class="attr">loading</span>: state&#125;);</span><br><span class="line">  &#125;,</span><br><span class="line">  getInitialState: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="attr">loading</span>: <span class="string">'init'</span>&#125;;</span><br><span class="line">  &#125;,</span><br><span class="line">  render() &#123;</span><br><span class="line">  	<span class="keyword">var</span> loading = <span class="keyword">this</span>.state.loading;</span><br><span class="line">  	<span class="keyword">var</span> that = <span class="keyword">this</span>;</span><br><span class="line">  	<span class="keyword">var</span> changeState = <span class="keyword">this</span>.changeState;</span><br><span class="line">  	<span class="keyword">var</span> asidemenus = <span class="keyword">this</span>.props.asidemenus.map(<span class="function"><span class="keyword">function</span>(<span class="params">menu, i</span>)</span>&#123;</span><br><span class="line">  		<span class="keyword">var</span> menus, menusgroup; 		</span><br><span class="line">  		<span class="keyword">if</span>(menu.menus)&#123;</span><br><span class="line">  			menus = menu.menus.map(<span class="function"><span class="keyword">function</span>(<span class="params">item, j</span>)</span>&#123;</span><br><span class="line">  				<span class="keyword">return</span> (<span class="xml"><span class="tag">&lt;<span class="name">ListGroupItem</span> <span class="attr">onClick</span>=<span class="string">&#123;this.changeState.bind(null,item.click)&#125;</span> <span class="attr">key</span>=<span class="string">&#123;j&#125;</span>&gt;</span>&#123; item.text &#125;<span class="tag">&lt;/<span class="name">ListGroupItem</span>&gt;</span></span>);</span><br><span class="line">  			&#125;.bind(<span class="keyword">this</span>));</span><br><span class="line">  			menusgroup = (</span><br><span class="line">  				&lt;ListGroup&gt;</span><br><span class="line">  					&#123; menus &#125;</span><br><span class="line">  				&lt;<span class="regexp">/ListGroup&gt;</span></span><br><span class="line"><span class="regexp">  			);  			</span></span><br><span class="line"><span class="regexp">  		&#125;</span></span><br><span class="line"><span class="regexp">  		var menuheader = (</span></span><br><span class="line"><span class="regexp">  			&lt;ul class="panel-title "&gt;</span></span><br><span class="line"><span class="regexp">				&lt;li onClick=&#123;this.changeState.bind(null,menu.click)&#125;&gt;</span></span><br><span class="line"><span class="regexp">						&#123; menu.title &#125;</span></span><br><span class="line"><span class="regexp">				&lt;/</span>li&gt;</span><br><span class="line">      &lt;<span class="regexp">/ul&gt;</span></span><br><span class="line"><span class="regexp">  		);</span></span><br><span class="line"><span class="regexp">  		return (</span></span><br><span class="line"><span class="regexp">  			&lt;Panel collapsible defaultExpanded className="list-group" key=&#123;i&#125; header=&#123;menuheader&#125;&gt;</span></span><br><span class="line"><span class="regexp">				&lt;div id="collapse&#123;i&#125;" className="panel-collapse collapse in"&gt;</span></span><br><span class="line"><span class="regexp">					&#123; menusgroup &#125;										</span></span><br><span class="line"><span class="regexp">				&lt;/</span>div&gt;</span><br><span class="line">      &lt;<span class="regexp">/Panel&gt;</span></span><br><span class="line"><span class="regexp">  		);</span></span><br><span class="line"><span class="regexp">  	&#125;.bind(this));</span></span><br><span class="line"><span class="regexp">    return (</span></span><br><span class="line"><span class="regexp">    	&lt;div className="container-fluid row"&gt;</span></span><br><span class="line"><span class="regexp">    		&lt;Header active="index"&gt;&lt;/</span>Header&gt;</span><br><span class="line">        &lt;aside className=<span class="string">"col-md-2 col-md-offset-1"</span>&gt;</span><br><span class="line">          &lt;PanelGroup id=<span class="string">"accordion"</span>&gt;</span><br><span class="line">            &#123;	asidemenus &#125;						</span><br><span class="line">          &lt;<span class="regexp">/PanelGroup&gt;</span></span><br><span class="line"><span class="regexp">				&lt;/</span>aside&gt;</span><br><span class="line">        &lt;article className=<span class="string">"col-md-7"</span>&gt;</span><br><span class="line">          &lt;section className=<span class="string">"index-content"</span>&gt;</span><br><span class="line">            &lt;p className=&#123;loading == <span class="string">'init'</span> || loading == <span class="string">'name'</span> ? <span class="string">''</span> : <span class="string">'hidden'</span>&#125;&gt;昵称：被删&lt;<span class="regexp">/p&gt;</span></span><br><span class="line"><span class="regexp">						&lt;p className=&#123;loading == 'init' || loading == 'email' ? '' : 'hidden'&#125;&gt;邮箱：wangbeishan@163.com&lt;/</span>p&gt;</span><br><span class="line">            &lt;p className=&#123;loading == <span class="string">'init'</span> || loading == <span class="string">'github'</span> ? <span class="string">''</span> : <span class="string">'hidden'</span>&#125;&gt;github: <span class="xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"https://github.com/godbasin"</span>&gt;</span>github.com/godbasin<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span>&lt;<span class="regexp">/p&gt;</span></span><br><span class="line"><span class="regexp">						&lt;div className=&#123;loading == 'sethead' ? '' : 'hidden'&#125;&gt;这里是设置头像页面&lt;/</span>div&gt;</span><br><span class="line">            &lt;div className=&#123;loading == <span class="string">'setinfo'</span> ? <span class="string">''</span> : <span class="string">'hidden'</span>&#125;&gt;这里是修改资料页面&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">						&lt;div className=&#123;loading == 'other' ? '' : 'hidden'&#125;&gt;这里是其他页面&lt;/</span>div&gt;</span><br><span class="line">          &lt;<span class="regexp">/section&gt;</span></span><br><span class="line"><span class="regexp">				&lt;/</span>article&gt;</span><br><span class="line">      &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">		);</span></span><br><span class="line"><span class="regexp">	&#125;</span></span><br><span class="line"><span class="regexp">&#125;);</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">module.exports = Index;</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><hr>
+<p>其实从AngularJS转React的时候，有很多模板引擎的使用方式不一致了，还是很不习惯的呢。相对Angular来说，React似乎教程更少呢，所以本骚年有些时候遇到bug也不是很懂，大家一起来探寻吧。<br><a href="https://github.com/godbasin/godbasin.github.io/tree/blog-codes/react-notes/5-fullfill-index" target="_blank" rel="noopener">此处查看项目代码（仅包含app部分）</a><br><a href="http://react-notes.godbasin.com/5-fullfill-index/index.html?#/index" target="_blank" rel="noopener">此处查看页面效果</a></p>
+  
+	</div>
+	<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/2code2.jpg" width="200" height="200" style="display:block;margin: 0 auto;" />
+	<p style="text-align: center;margin-top: 10px;margin-bottom: 20px;">码生艰难，写文不易，给我家猪囤点猫粮了喵~</p>
+	<div class="article-content">
+		<p style="margin-top:50px;">
+			查看Github有更多内容噢：<a href="https://github.com/godbasin">https://github.com/godbasin</a>
+			<br>
+			更欢迎来<a href="https://godbasin.github.io/front-end-playground">被删的前端游乐场</a>边撸猫边学前端噢
+			<br>
+			如果你想要关注日常生活中的我，欢迎关注“牧羊的猪”公众号噢
+		</p>
+	</div>
+	<div class="author-right">
+  		<p>作者：被删</p>
+  		<p>出处：<a href="https://godbasin.github.io">https://godbasin.github.io</a></p>
+  		<p>本文版权归作者所有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利。</p>
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/笔记/">笔记</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/react沙拉/">react沙拉</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  
+<!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a href="http://www.jiathis.com/share?uid=2134021" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config = {data_track_clickback:'true'};
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js?uid=2134021" charset="utf-8"></script>
+<!-- JiaThis Button END -->   
+
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2016/08/21/react-notes-6-use-flux/" title="React使用笔记6--使用flux&quot;单向流动&quot;你的应用">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  React使用笔记6--使用flux&quot;单向流动&quot;你的应用</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2016/08/14/react-notes-4-create-header/"  title="React使用笔记4--创建头部组件">
+ <strong>NEXT:</strong><br/> 
+ <span>React使用笔记4--创建头部组件
+</span>
+</a>
+</div>
+
+</nav>
+
+	<!-- 如果不是首页且没使用 `comments: false` 关闭评论，则尝试加载评论 -->
+
+    <!-- 配置中启用多说时，导入相应代码 -->
+    
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#理解jsx"><span class="toc-number">1.</span> <span class="toc-text">理解jsx</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是JSX"><span class="toc-number">1.1.</span> <span class="toc-text">什么是JSX</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用JSX"><span class="toc-number">1.2.</span> <span class="toc-text">使用JSX</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JSX与HTML区别"><span class="toc-number">1.3.</span> <span class="toc-text">JSX与HTML区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考"><span class="toc-number">1.4.</span> <span class="toc-text">参考</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JSX的if…else…"><span class="toc-number">2.</span> <span class="toc-text">JSX的if…else…</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用三元表达式"><span class="toc-number">2.1.</span> <span class="toc-text">使用三元表达式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JS代码中使用if表达式"><span class="toc-number">2.2.</span> <span class="toc-text">JS代码中使用if表达式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#制作index页面"><span class="toc-number">3.</span> <span class="toc-text">制作index页面</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#添加props属性值"><span class="toc-number">3.1.</span> <span class="toc-text">添加props属性值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#添加state值"><span class="toc-number">3.2.</span> <span class="toc-text">添加state值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#添加改变状态事件"><span class="toc-number">3.3.</span> <span class="toc-text">添加改变状态事件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#map遍历数据"><span class="toc-number">3.4.</span> <span class="toc-text">map遍历数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#添加点击事件onClick"><span class="toc-number">3.5.</span> <span class="toc-text">添加点击事件onClick</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#组件代码"><span class="toc-number">3.6.</span> <span class="toc-text">组件代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结束语"><span class="toc-number">4.</span> <span class="toc-text">结束语</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  	
+	<div class="archiveslist">
+		<p class="asidetitle">最近文章</p>
+			<ul class="archive-list">
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/03/13/angular-design-0-prestart/" title="Angular框架解读--预热篇">Angular框架解读--预热篇...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/02/27/network-design-dependency-decoupling/" title="在线文档的网络层开发思考--依赖关系梳理">在线文档的网络层开发思考--依赖关系...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/01/23/network-design-responsibility-driven-design/" title="在线文档的网络层开发思考--职责驱动设计">在线文档的网络层开发思考--职责驱动...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/01/10/about-writing/" title="前端这几年--写文章这件事">前端这几年--写文章这件事...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/11/01/task-runner-design/" title="如何设计一个任务管理器">如何设计一个任务管理器</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/10/10/why-spreadsheet-app-excited/" title="在线Excel项目到底有多刺激">在线Excel项目到底有多刺激...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/10/07/monitor-and-report/" title="前端监控体系搭建">前端监控体系搭建</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/08/30/about-front-end-10/" title="前端这几年--10.我的工作历险记">前端这几年--10.我的工作历险记...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/08/30/about-front-end-9/" title="前端这几年--9.提升工作效率">前端这几年--9.提升工作效率...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/08/29/front-end-performance-analyze/" title="补齐Web前端性能分析的工具盲点">补齐Web前端性能分析的工具盲点...</a>
+				</li>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+	</div>
+
+
+  
+  <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">归档</a></p>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">十月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">41</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">9</span></li></ul>
+  </div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle"><a href="/categories">分类</a></p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/Angular源码/" title="Angular源码">Angular源码<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/CSS炒饭/" title="CSS炒饭">CSS炒饭<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/D3小馒头/" title="D3小馒头">D3小馒头<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular2火锅/" title="angular2火锅">angular2火锅<sup>25</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular混搭/" title="angular混搭">angular混搭<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/box2djs方糖/" title="box2djs方糖">box2djs方糖<sup>34</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/cyclejs哈根达斯/" title="cyclejs哈根达斯">cyclejs哈根达斯<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/jQuery杂烩/" title="jQuery杂烩">jQuery杂烩<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/js什锦/" title="js什锦">js什锦<sup>26</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/react沙拉/" title="react沙拉">react沙拉<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/three-js奶茶/" title="three.js奶茶">three.js奶茶<sup>5</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/vue八宝粥/" title="vue八宝粥">vue八宝粥<sup>30</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/webpack宾治/" title="webpack宾治">webpack宾治<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/web乱炖/" title="web乱炖">web乱炖<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端满汉全席/" title="前端满汉全席">前端满汉全席<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端解决方案/" title="前端解决方案">前端解决方案<sup>13</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/喵/" title="喵">喵<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/小程序双皮奶/" title="小程序双皮奶">小程序双皮奶<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/工作这杯茶/" title="工作这杯茶">工作这杯茶<sup>19</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/应用巧克力盒/" title="应用巧克力盒">应用巧克力盒<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/思想棉花糖/" title="思想棉花糖">思想棉花糖<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/柴米油盐工具集/" title="柴米油盐工具集">柴米油盐工具集<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/自动化甜筒/" title="自动化甜筒">自动化甜筒<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/非前端钙片/" title="非前端钙片">非前端钙片<sup>7</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle">标签</p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/分享/" title="分享">分享<sup>44</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/功能设计/" title="功能设计">功能设计<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/原创部件/" title="原创部件">原创部件<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/心态/" title="心态">心态<sup>19</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/教程/" title="教程">教程<sup>80</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/晒猫/" title="晒猫">晒猫<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/笔记/" title="笔记">笔记<sup>121</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/算法/" title="算法">算法<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/自制插件/" title="自制插件">自制插件<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/逻辑实现/" title="逻辑实现">逻辑实现<sup>18</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+    <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">about</a></p>
+      <ul class="archive-list">
+      	<li class="archive-list-item">
+      		<a>wangbeishan@163.com</a>
+      		<a href="https://github.com/godbasin">github.com/godbasin</a>
+      	</li>
+      </ul>
+  </div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<section class="info">
+		<p> 即使梦想再小，却很伟大 ^_^ </p>
+	</section>
+	 
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2021 
+		
+		<a href="https://godbasin.github.io" target="_blank" title="被删">被删</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+
+
+
+
+
+  </body>
+</html>

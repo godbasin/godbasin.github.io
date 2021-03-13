@@ -1,0 +1,1220 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  
+    <title>大型前端项目要怎么跟踪和分析函数调用链 | Here. There.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="被删">
+    
+    <meta name="description" content="相信不少有大型项目维护经验的小伙伴，都曾经遇到代码量太多、函数调用链路太长、断点断到头都要断等等问题。最近也在研究解决这个问题，本文分享下整体的思路和解决方案。">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Here. There." type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?3d902de4a19cf2bf179534ffd2dd7b7f";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+</html>
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/sun.png" alt="Here. There." title="Here. There."/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Here. There.">Here. There.</a></h1>
+				<h2 class="blog-motto">Love ice cream. Love sunshine. Love life. Love the world. Love myself. Love you.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="https://github.com/godbasin/godbasin.github.io">所有文章</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">分类</a></li>
+					
+						<li><a href="https://godbasin.github.io/front-end-playground">前端游乐场</a></li>
+					
+						<li><a href="/about">关于我</a></li>
+					
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2020/06/21/trace-stash/" title="大型前端项目要怎么跟踪和分析函数调用链" itemprop="url">大型前端项目要怎么跟踪和分析函数调用链</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://godbasin.github.io" title="被删">被删</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2020-06-21T06:41:31.000Z" itemprop="datePublished">2020-06-21</time>
+    更新日期:<time datetime="2020-06-21T06:42:54.833Z" itemprop="dateModified">2020-06-21</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#方案设计"><span class="toc-number">1.</span> <span class="toc-text">方案设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#现状"><span class="toc-number">1.1.</span> <span class="toc-text">现状</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#目标"><span class="toc-number">1.2.</span> <span class="toc-text">目标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#整体方案设计"><span class="toc-number">1.3.</span> <span class="toc-text">整体方案设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方案细节设计"><span class="toc-number">1.4.</span> <span class="toc-text">方案细节设计</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#函数调用链的设计和实现"><span class="toc-number">2.</span> <span class="toc-text">函数调用链的设计和实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#单次追踪对象"><span class="toc-number">2.1.</span> <span class="toc-text">单次追踪对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#追踪堆栈"><span class="toc-number">2.2.</span> <span class="toc-text">追踪堆栈</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#装饰器逻辑"><span class="toc-number">2.3.</span> <span class="toc-text">装饰器逻辑</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结束语"><span class="toc-number">3.</span> <span class="toc-text">结束语</span></a></li></ol>
+		</div>
+		
+		<p>相信不少有大型项目维护经验的小伙伴，都曾经遇到代码量太多、函数调用链路太长、断点断到头都要断等等问题。最近也在研究解决这个问题，本文分享下整体的思路和解决方案。<br><a id="more"></a></p>
+<h2 id="方案设计"><a href="#方案设计" class="headerlink" title="方案设计"></a>方案设计</h2><p>简单做一个函数耗时分析的功能还是比较简单的，写代码也是比较容易的一部分。但如果让一个功能真正发挥它的价值，前期方案的设计和分析也是很重要的。</p>
+<h3 id="现状"><a href="#现状" class="headerlink" title="现状"></a>现状</h3><p>一般来说，对于大型项目或是新人加入，维护过程（熟悉代码、定位问题、性能优化等）比较痛的有以下问题：</p>
+<ul>
+<li><strong>函数执行情况黑盒</strong><ul>
+<li>函数调用链不清晰</li>
+<li>函数耗时不清楚</li>
+<li>代码异常定位困难</li>
+</ul>
+</li>
+<li><strong>用户行为难以复现</strong></li>
+</ul>
+<p>要是遇到代码稍微复杂点，事件比较多、函数调用也特别多的，即使使用断点也能看到眼花，蒸汽眼罩都得多买一些（真的贵啊）。生活本来就比较难了，身为技术人的我们得用技术去提升下自身的生活和工作体验呀。</p>
+<p>回到上面说到的现状，函数执行黑盒这块相信大家都比较容易考虑到，而在日常的问题定位中，很多情况下我们需要查用户的问题，但是用户的反馈常常表达上会和我们理解的不一致。那如果能直接还原用户的操作，那岂不是棒棒哒？</p>
+<h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><p>那既然现状有了，我们可以根据自己的需要，把目标确定下来。</p>
+<blockquote>
+<p>个人觉得，即使是技术人员，前期的目标和现状分析也是很重要的。我们常常会遇到很多项目进行到一半发现和预期不一致、需要重新返工甚至只能放弃，往往是因为前期做的调研不充分，考虑到的情况还不够多。综上，设计的部分也需要好好去做，至于具体的方式，是手稿、文字、流程图、还是 PPT，可以根据个人喜好去选择。</p>
+</blockquote>
+<p>那么，我先来拆分下自己想要的功能是什么样子的：</p>
+<ul>
+<li>基础能力<ul>
+<li>单个函数执行情况：函数名、入参、出参、耗时</li>
+<li>全局辅助信息：函数调用链、调用次数统计</li>
+</ul>
+</li>
+<li>便捷接入<ul>
+<li>不改动源码</li>
+</ul>
+</li>
+<li>易拓展<ul>
+<li>可重放功能</li>
+<li>可保存到服务器</li>
+</ul>
+</li>
+</ul>
+<p>首先，基本功能必不可少，主要包括函数的一些执行情况，例如调用链、函数名、类名、入参出参，还有性能分析相关的，包括耗时、函数调用次数的统计等。这些在我们分析和定位问题的时候，能派上不少的用场。</p>
+<p>其次，对于这部分功能代码，需要满足易用性，包括易接入、易拓展等。易接入主要考虑不需要改动源代码，这也是代码设计中比较基础的要求了。易拓展则预留给后续想要在现有功能基础上添加新功能的时候，会相对简便。</p>
+<h3 id="整体方案设计"><a href="#整体方案设计" class="headerlink" title="整体方案设计"></a>整体方案设计</h3><p>方案设计也不算复杂，基本上就是结合目标，然后以自己最熟练的方向作为起点，一点点把完整的功能视图补全。最后，再回顾下前面的现状和目标，分析设计出来的方案是否有脱离实际需要（有时候我们的脑补能力很强大，容易飘离本意）。</p>
+<p>说起函数，最简单的就是给每个想要检测的函数包裹一层，除了调用原有的功能以外，新增对函数的一些数据采集，包括上面说到的单个函数执行信息和全局的辅助信息等。</p>
+<p>要怎么方便地使用这些信息呢？我们可以通过堆栈的方式存下来，然后对这些信息进行处理来获取调用链、耗时等。通常来说，可以暴露全局变量的接口，来快速打印输出这些信息。</p>
+<p>我们来看看设计方案：</p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/function-trace-global.png" alt></p>
+<p>这里，将函数重放和上传服务器的优先级降低，先实现核心功能。工作内容的拆分、工作量的预估这些也都是方案设计中比较重要的部分，将大目标拆分成一个个小目标，这样对整体节奏、实现过程的把控会更有力。</p>
+<h3 id="方案细节设计"><a href="#方案细节设计" class="headerlink" title="方案细节设计"></a>方案细节设计</h3><p>整体方案初步定了，我们需要考虑每个环节的细节方案。以一期的功能为主，流程包括以下：<br><strong>1. 监听函数执行</strong>。<br><strong>2. 采集函数执行情况</strong>：（调用链路、入参出参、耗时）。<br><strong>3. 暴露全局变量或 API</strong>。<br><strong>4. 使用全局变量或 API 打印调用链等</strong>。</p>
+<p>由于这是一个非关键链路的功能，除了怎样的功能更方便使用以外，主要考虑这样的旁路功能不能影响主要功能的性能、不能因为一些异常导致正常功能无法使用。因此我们需要对每个流程进行一些分析和考虑：</p>
+<ul>
+<li>监听函数执行<ul>
+<li>可通过依赖注入的方式，减少对源代码的入侵</li>
+<li>代码实现多基于 Class，可考虑装饰器 Decorator 的方式</li>
+</ul>
+</li>
+<li>采集函数执行情况<ul>
+<li>需要注意性能和存储消耗，保证原有功能健壮性</li>
+<li>考虑使用栈来存储<ul>
+<li>存储考虑链路长度限制、参数长度限制、链路数量上限</li>
+</ul>
+</li>
+<li>设置优先级，根据优先级选择性采集</li>
+<li>旁路功能可考虑丢Worker执行<ul>
+<li>考虑通信对性能的消耗</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>我们能看到方案的一些细节如图：<br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/function-trace-p0.png" alt></p>
+<p>至此，大致的方案设计已经完成。</p>
+<h2 id="函数调用链的设计和实现"><a href="#函数调用链的设计和实现" class="headerlink" title="函数调用链的设计和实现"></a>函数调用链的设计和实现</h2><p>其实对于函数耗时统计的，网上也有一大堆的代码可以搜到，其中基于装饰器实现的也很多。由于我们项目中代码大多数都是基于 Class 设计的，因此装饰器这种不影响源代码的方式更加适合。</p>
+<h3 id="单次追踪对象"><a href="#单次追踪对象" class="headerlink" title="单次追踪对象"></a>单次追踪对象</h3><p>装饰器的实现其实不难，网上也有很多可以参考的。而我们装饰器里的具体逻辑是怎样的，依赖我们设计的单次追踪对象和调用栈是怎样的。因此，我们可以先设计一下单次追踪对象。</p>
+<p>该对象要实现的功能包括：</p>
+<ol>
+<li><strong>特殊 ID 标记本追踪对象（<code>traceId</code>）</strong>。创建该次对象的时候，自动生成该 ID。</li>
+<li><strong>可更新追踪对象的信息（<code>update</code>方法）</strong>。</li>
+<li><strong>执行该追踪对象（<code>exec</code>方法）</strong>。为重放功能做铺垫，如果我们存储了该函数以及函数入参，理想情况下可认为该函数可重放</li>
+<li><strong>打印该追踪对象相关信息（<code>print</code>方法）</strong>。</li>
+</ol>
+<p>来，直接看大致的代码设计：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">interface IFunctionTraceInfo &#123;</span><br><span class="line">    className?: string; <span class="comment">// 类名</span></span><br><span class="line">    functionName?: string; <span class="comment">// 函数名</span></span><br><span class="line">    inParams?: any[] | <span class="literal">null</span>; <span class="comment">// 入参</span></span><br><span class="line">    outParams?: any[] | <span class="literal">null</span>; <span class="comment">// 出参</span></span><br><span class="line">    timeConsuming?: number; <span class="comment">// 耗时</span></span><br><span class="line">    originFunction?: <span class="built_in">Function</span>; <span class="comment">// 原函数</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FunctionTrace</span> </span>&#123;</span><br><span class="line">    traceId: string; <span class="comment">// 标记本次Trace</span></span><br><span class="line">    traceInfo: IFunctionTraceInfo;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">constructor</span>(traceInfo: IFunctionTraceInfo) &#123;</span><br><span class="line">        <span class="keyword">this</span>.traceId = <span class="keyword">this</span>.getRandomId();</span><br><span class="line">        <span class="keyword">this</span>.traceInfo = traceInfo;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 随机生成一个 ID 来标记</span></span><br><span class="line">    getRandomId() &#123;</span><br><span class="line">        <span class="comment">// 时间戳（9位） + 随机串（10位）</span></span><br><span class="line">        <span class="keyword">return</span> (<span class="built_in">Date</span>.now()).toString(<span class="number">32</span>) + <span class="built_in">Math</span>.random().toString(<span class="number">32</span>).substring(<span class="number">2</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 更新该函数的一些信息</span></span><br><span class="line">    update(traceInfo: IFunctionTraceInfo) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 执行该函数</span></span><br><span class="line">    exec() &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 打印该函数的一些信息</span></span><br><span class="line">    print() &#123;</span><br><span class="line">        <span class="keyword">const</span> &#123; className, functionName, timeConsuming &#125; = <span class="keyword">this</span>.traceInfo;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">`<span class="subst">$&#123;className&#125;</span> -&gt; <span class="subst">$&#123;functionName&#125;</span>(<span class="subst">$&#123;<span class="keyword">this</span>.traceId&#125;</span>): <span class="subst">$&#123;timeConsuming&#125;</span>`</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="追踪堆栈"><a href="#追踪堆栈" class="headerlink" title="追踪堆栈"></a>追踪堆栈</h3><p>除了单次的追踪堆栈，我们还需要根据函数执行的顺序等维护完整的调用链信息，因此我们需要一个堆栈来维护完整的调用链。</p>
+<p>那么，这个堆栈的功能也应该包括：</p>
+<ol>
+<li><strong>当前的层次（<code>level</code>）</strong>。为调用链做铺垫，可认为函数开始执行的时候<code>level++</code>，函数结束的时候<code>level--</code>。<ul>
+<li>当多个函数交错执行的时候（例如事件触发），该方式可能不准确</li>
+</ul>
+</li>
+<li><strong>堆栈信息（<code>traceList</code>）</strong>。</li>
+<li><strong>开始记录某次追踪（<code>start</code>方法）</strong>。添加该次追踪之后将<code>level++</code>，便于记录当前追踪的层次。</li>
+<li><strong>结束记录某次追踪（<code>end</code>方法）</strong>。<code>level--</code>。</li>
+<li><strong>获取某次追踪对象（<code>getTrace</code>方法）</strong>。可用于单次追踪对象的信息获取和操作。</li>
+<li><strong>打印堆栈信息</strong>。结合当前层次，通过缩放打印对应的调用信息，可包括耗时等。</li>
+<li><strong>打印堆栈中函数的调用次数</strong>。以调用次数该维度打印堆栈中的追踪信息，可用于分析函数调用次数是否符合预期。</li>
+</ol>
+<p>同样的，我们来看看代码：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">interface StashFunctionTrace &#123;</span><br><span class="line">    traceLevel?: number;</span><br><span class="line">    trace: FunctionTrace;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FunctionTraceStash</span> </span>&#123;</span><br><span class="line">    level: number; <span class="comment">// 当前层级，默认为0</span></span><br><span class="line">    traceList: StashFunctionTrace[]; <span class="comment">// Trace数组</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">constructor</span>() &#123;</span><br><span class="line">        <span class="keyword">this</span>.level = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">this</span>.traceList = [];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 开始本次 Trace</span></span><br><span class="line">    <span class="comment">// 添加该 Trace 之后将 level + 1，便于记录当前 Trace 的层次</span></span><br><span class="line">    start(trace: FunctionTrace) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 结束本次 Trace</span></span><br><span class="line">    end() &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 根据 traceId 获取某个 Trace 对象</span></span><br><span class="line">    getTrace(traceId: string): StashFunctionTrace | <span class="literal">null</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.traceList.find(<span class="function">(<span class="params">stashTrace</span>) =&gt;</span> stashTrace.trace.traceId === traceId) || <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 打印 Trace 堆栈信息</span></span><br><span class="line">    printTraceList(): string &#123;</span><br><span class="line">        <span class="keyword">const</span> traceStringList: string[] = [];</span><br><span class="line">        <span class="keyword">this</span>.traceList.forEach(<span class="function">(<span class="params">stashTrace</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">let</span> prefix = <span class="string">''</span>;</span><br><span class="line">            <span class="keyword">if</span> (stashTrace.traceLevel &amp;&amp; stashTrace.traceLevel &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="comment">// 根据层次，前置 tab</span></span><br><span class="line">                prefix = <span class="keyword">new</span> <span class="built_in">Array</span>(stashTrace.traceLevel).join(<span class="string">'\t'</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            traceStringList.push(prefix + stashTrace.trace.print());</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="keyword">return</span> traceStringList.join(<span class="string">'\n'</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 打印函数调用次数统计</span></span><br><span class="line">    printTraceCount(className?: string, functionName?: string) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 重放该堆栈</span></span><br><span class="line">    replay() &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 清空该堆栈信息</span></span><br><span class="line">    clear() &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="装饰器逻辑"><a href="#装饰器逻辑" class="headerlink" title="装饰器逻辑"></a>装饰器逻辑</h3><p>到这里，我们可以确定装饰器需要进行哪些操作：</p>
+<ol>
+<li>生成追踪记录<code>new Trace(执行信息)</code>，包括入参、类名、方法名等。</li>
+<li><code>TraceStash.add(Trace)</code>添加层次。</li>
+<li><code>originFun()</code>包裹原有函数、执行。</li>
+<li><code>Trace.update()</code>更新一些信息，包括函数耗时、出参等。</li>
+<li><code>TraceStash.end()</code>结束本次调用。</li>
+</ol>
+<p>为了方便使用，我们可以设计基于<code>Class</code>的装饰器，以及基于<code>Class.methods</code>方法的装饰器，还可以基于单函数的装饰器。</p>
+<p>我们还可以通过AST分析自动给代码中需要的部分添加上装饰器。至于装饰器具体实现，大家下来可以自己想一下。</p>
+<h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><p>很多人喜欢拿了任务就直接开撸，然后就会在写代码的过程中发现一个又一个问题。幸运的话，最终能做出想要的效果。而运气不好的话，可能得推倒重来了。<br>而在开始写代码之前，稍微进行一些分析、思考和调研，可以得到事半功倍的效果。</p>
+  
+	</div>
+	<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/2code2.jpg" width="200" height="200" style="display:block;margin: 0 auto;" />
+	<p style="text-align: center;margin-top: 10px;margin-bottom: 20px;">码生艰难，写文不易，给我家猪囤点猫粮了喵~</p>
+	<div class="article-content">
+		<p style="margin-top:50px;">
+			查看Github有更多内容噢：<a href="https://github.com/godbasin">https://github.com/godbasin</a>
+			<br>
+			更欢迎来<a href="https://godbasin.github.io/front-end-playground">被删的前端游乐场</a>边撸猫边学前端噢
+			<br>
+			如果你想要关注日常生活中的我，欢迎关注“牧羊的猪”公众号噢
+		</p>
+	</div>
+	<div class="author-right">
+  		<p>作者：被删</p>
+  		<p>出处：<a href="https://godbasin.github.io">https://godbasin.github.io</a></p>
+  		<p>本文版权归作者所有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利。</p>
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/逻辑实现/">逻辑实现</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/前端解决方案/">前端解决方案</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  
+<!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a href="http://www.jiathis.com/share?uid=2134021" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config = {data_track_clickback:'true'};
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js?uid=2134021" charset="utf-8"></script>
+<!-- JiaThis Button END -->   
+
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2020/06/26/module-seperate/" title="谈谈依赖和解耦">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  谈谈依赖和解耦</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2020/06/14/operation-transform/"  title="多人协作如何进行冲突处理">
+ <strong>NEXT:</strong><br/> 
+ <span>多人协作如何进行冲突处理
+</span>
+</a>
+</div>
+
+</nav>
+
+	<!-- 如果不是首页且没使用 `comments: false` 关闭评论，则尝试加载评论 -->
+
+    <!-- 配置中启用多说时，导入相应代码 -->
+    
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#方案设计"><span class="toc-number">1.</span> <span class="toc-text">方案设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#现状"><span class="toc-number">1.1.</span> <span class="toc-text">现状</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#目标"><span class="toc-number">1.2.</span> <span class="toc-text">目标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#整体方案设计"><span class="toc-number">1.3.</span> <span class="toc-text">整体方案设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方案细节设计"><span class="toc-number">1.4.</span> <span class="toc-text">方案细节设计</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#函数调用链的设计和实现"><span class="toc-number">2.</span> <span class="toc-text">函数调用链的设计和实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#单次追踪对象"><span class="toc-number">2.1.</span> <span class="toc-text">单次追踪对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#追踪堆栈"><span class="toc-number">2.2.</span> <span class="toc-text">追踪堆栈</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#装饰器逻辑"><span class="toc-number">2.3.</span> <span class="toc-text">装饰器逻辑</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结束语"><span class="toc-number">3.</span> <span class="toc-text">结束语</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  	
+	<div class="archiveslist">
+		<p class="asidetitle">最近文章</p>
+			<ul class="archive-list">
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/03/13/angular-design-0-prestart/" title="Angular框架解读--预热篇">Angular框架解读--预热篇...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/02/27/network-design-dependency-decoupling/" title="在线文档的网络层开发思考--依赖关系梳理">在线文档的网络层开发思考--依赖关系...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/01/23/network-design-responsibility-driven-design/" title="在线文档的网络层开发思考--职责驱动设计">在线文档的网络层开发思考--职责驱动...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/01/10/about-writing/" title="前端这几年--写文章这件事">前端这几年--写文章这件事...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/11/01/task-runner-design/" title="如何设计一个任务管理器">如何设计一个任务管理器</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/10/10/why-spreadsheet-app-excited/" title="在线Excel项目到底有多刺激">在线Excel项目到底有多刺激...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/10/07/monitor-and-report/" title="前端监控体系搭建">前端监控体系搭建</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/08/30/about-front-end-10/" title="前端这几年--10.我的工作历险记">前端这几年--10.我的工作历险记...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/08/30/about-front-end-9/" title="前端这几年--9.提升工作效率">前端这几年--9.提升工作效率...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/08/29/front-end-performance-analyze/" title="补齐Web前端性能分析的工具盲点">补齐Web前端性能分析的工具盲点...</a>
+				</li>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+	</div>
+
+
+  
+  <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">归档</a></p>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">十月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">41</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">9</span></li></ul>
+  </div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle"><a href="/categories">分类</a></p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/Angular源码/" title="Angular源码">Angular源码<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/CSS炒饭/" title="CSS炒饭">CSS炒饭<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/D3小馒头/" title="D3小馒头">D3小馒头<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular2火锅/" title="angular2火锅">angular2火锅<sup>25</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular混搭/" title="angular混搭">angular混搭<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/box2djs方糖/" title="box2djs方糖">box2djs方糖<sup>34</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/cyclejs哈根达斯/" title="cyclejs哈根达斯">cyclejs哈根达斯<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/jQuery杂烩/" title="jQuery杂烩">jQuery杂烩<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/js什锦/" title="js什锦">js什锦<sup>26</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/react沙拉/" title="react沙拉">react沙拉<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/three-js奶茶/" title="three.js奶茶">three.js奶茶<sup>5</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/vue八宝粥/" title="vue八宝粥">vue八宝粥<sup>30</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/webpack宾治/" title="webpack宾治">webpack宾治<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/web乱炖/" title="web乱炖">web乱炖<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端满汉全席/" title="前端满汉全席">前端满汉全席<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端解决方案/" title="前端解决方案">前端解决方案<sup>13</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/喵/" title="喵">喵<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/小程序双皮奶/" title="小程序双皮奶">小程序双皮奶<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/工作这杯茶/" title="工作这杯茶">工作这杯茶<sup>19</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/应用巧克力盒/" title="应用巧克力盒">应用巧克力盒<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/思想棉花糖/" title="思想棉花糖">思想棉花糖<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/柴米油盐工具集/" title="柴米油盐工具集">柴米油盐工具集<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/自动化甜筒/" title="自动化甜筒">自动化甜筒<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/非前端钙片/" title="非前端钙片">非前端钙片<sup>7</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle">标签</p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/分享/" title="分享">分享<sup>44</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/功能设计/" title="功能设计">功能设计<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/原创部件/" title="原创部件">原创部件<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/心态/" title="心态">心态<sup>19</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/教程/" title="教程">教程<sup>80</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/晒猫/" title="晒猫">晒猫<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/笔记/" title="笔记">笔记<sup>121</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/算法/" title="算法">算法<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/自制插件/" title="自制插件">自制插件<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/逻辑实现/" title="逻辑实现">逻辑实现<sup>18</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+    <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">about</a></p>
+      <ul class="archive-list">
+      	<li class="archive-list-item">
+      		<a>wangbeishan@163.com</a>
+      		<a href="https://github.com/godbasin">github.com/godbasin</a>
+      	</li>
+      </ul>
+  </div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<section class="info">
+		<p> 即使梦想再小，却很伟大 ^_^ </p>
+	</section>
+	 
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2021 
+		
+		<a href="https://godbasin.github.io" target="_blank" title="被删">被删</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,1218 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  
+    <title>玩转Angular2(3)--启用路由和添加静态资源 | Here. There.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="被删">
+    
+    <meta name="description" content="因为项目原因又玩上了Angular2(v4.0+)，《玩转Angular2》系列用于探索一些灵活或者新的用法。本文记录启用路由Router，以及添加静态资源的过程。">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Here. There." type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?3d902de4a19cf2bf179534ffd2dd7b7f";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+</html>
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/sun.png" alt="Here. There." title="Here. There."/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Here. There.">Here. There.</a></h1>
+				<h2 class="blog-motto">Love ice cream. Love sunshine. Love life. Love the world. Love myself. Love you.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="https://github.com/godbasin/godbasin.github.io">所有文章</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">分类</a></li>
+					
+						<li><a href="https://godbasin.github.io/front-end-playground">前端游乐场</a></li>
+					
+						<li><a href="/about">关于我</a></li>
+					
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/05/30/angular2-free-3-init-routes-and-assets/" title="玩转Angular2(3)--启用路由和添加静态资源" itemprop="url">玩转Angular2(3)--启用路由和添加静态资源</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://godbasin.github.io" title="被删">被删</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2017-05-30T03:41:33.000Z" itemprop="datePublished">2017-05-30</time>
+    更新日期:<time datetime="2018-12-18T15:31:30.819Z" itemprop="dateModified">2018-12-18</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#使用路由"><span class="toc-number">1.</span> <span class="toc-text">使用路由</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#有关路由"><span class="toc-number">1.1.</span> <span class="toc-text">有关路由</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在视图中跳转"><span class="toc-number">1.2.</span> <span class="toc-text">在视图中跳转</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#注册路由模块"><span class="toc-number">1.3.</span> <span class="toc-text">注册路由模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用Router"><span class="toc-number">1.4.</span> <span class="toc-text">使用Router</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取路由信息"><span class="toc-number">1.5.</span> <span class="toc-text">获取路由信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lazyload"><span class="toc-number">1.6.</span> <span class="toc-text">lazyload</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加资源加载"><span class="toc-number">2.</span> <span class="toc-text">添加资源加载</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#全局注入js"><span class="toc-number">2.1.</span> <span class="toc-text">全局注入js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#全局注入css"><span class="toc-number">2.2.</span> <span class="toc-text">全局注入css</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#项目结构"><span class="toc-number">3.</span> <span class="toc-text">项目结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#目录"><span class="toc-number">3.1.</span> <span class="toc-text">目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他配置文件调整"><span class="toc-number">3.2.</span> <span class="toc-text">其他配置文件调整</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结束语"><span class="toc-number">4.</span> <span class="toc-text">结束语</span></a></li></ol>
+		</div>
+		
+		<p>因为项目原因又玩上了Angular2(v4.0+)，《玩转Angular2》系列用于探索一些灵活或者新的用法。<br>本文记录启用路由Router，以及添加静态资源的过程。<br><a id="more"></a></p>
+<h2 id="使用路由"><a href="#使用路由" class="headerlink" title="使用路由"></a>使用路由</h2><hr>
+<h3 id="有关路由"><a href="#有关路由" class="headerlink" title="有关路由"></a>有关路由</h3><p>现在流行的前端框架，像React/Vue/Angular等，都不可避免地自带路由模块。</p>
+<p>要说为什么呢，本骚年是这么认为的（个人意见仅供参考）：</p>
+<ol>
+<li>单页应用已经十分流行了，尤其在PC端，而使用前端路由，配合模块化，便使得开发单页应用得心应手。</li>
+<li>路由的设计很简单，事件的监听配合框架自行封装的一些<code>[router-link]</code>等组件，便在开发效率锦上添花。</li>
+</ol>
+<p>(本骚年也不知道为啥突然懂得这么多的成语，开心逃</p>
+<ul>
+<li>Angular的Router</li>
+</ul>
+<p>Angular的Router借鉴了浏览器的导航模型。它把浏览器中的URL看做一个操作指南， 据此导航到一个由客户端生成的视图，并可以把参数传给支撑视图的相应组件，帮它决定具体该展现哪些内容。 </p>
+<p>路由器还在浏览器的历史日志中记录下这些活动，这样浏览器的前进和后退按钮也能照常工作。</p>
+<h3 id="在视图中跳转"><a href="#在视图中跳转" class="headerlink" title="在视图中跳转"></a>在视图中跳转</h3><p>这里只介绍常用的两种，它们都需要在A标签上使用：</p>
+<ul>
+<li>[routerLink]属性</li>
+</ul>
+<p>不用说，一看就知道<code>[routerLink]</code>属性是用来定位到具体的路由的，当然我们同样可以使用angular中常用的绑定来传入需要的变量。</p>
+<ul>
+<li>[routerLinkActive]属性</li>
+</ul>
+<p>该属性可配置在带<code>[routerLink]</code>属性的A标签上，则当<code>[routerLink]</code>对应的路由被触发了，则<code>[routerLinkActive]</code>绑定的Class样式将被激活。</p>
+<h3 id="注册路由模块"><a href="#注册路由模块" class="headerlink" title="注册路由模块"></a>注册路由模块</h3><p>在Angular的release版本开始，加入了NgModule这样一个模块设计，首先我们需注册这样一个路由模块：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; NgModule &#125; <span class="keyword">from</span> <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; RouterModule, Routes &#125; <span class="keyword">from</span> <span class="string">'@angular/router'</span>;</span><br><span class="line">... <span class="comment">// 引入其他Component</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> appRoutes: Routes = [</span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">'one-path'</span>, <span class="attr">component</span>: OneComponent &#125;,</span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">'other-path'</span>, <span class="attr">component</span>: OtherComponent &#125;,</span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">'**'</span>, <span class="attr">redirectTo</span>: <span class="string">'one-path'</span> &#125;</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line">@NgModule(&#123;</span><br><span class="line">  imports: [</span><br><span class="line">    RouterModule.forRoot(appRoutes)</span><br><span class="line">  ],</span><br><span class="line">  exports: [</span><br><span class="line">    RouterModule</span><br><span class="line">  ]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">AppRoutingModule</span> </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>根路由注册使用<code>RouterModule.forRoot()</code></li>
+<li>子路由注册使用<code>RouterModule.forChild()</code></li>
+</ul>
+<p>对于根路由和子路由，一个应用有一个根路由，但可以有多个子路由，像我们的DOM树结构一样，层层向下伸展。</p>
+<p>这样的设计思想现在也很流行了，像还有Angular中的依赖注入DI，或者是React的虚拟DOM设计等。</p>
+<h3 id="使用Router"><a href="#使用Router" class="headerlink" title="使用Router"></a>使用Router</h3><ul>
+<li>在js中跳转</li>
+</ul>
+<p>一般来说，我们使用<code>router.navigate()</code>来进行跳转，像我们的登陆页面：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component &#125; <span class="keyword">from</span> <span class="string">'@angular/core'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Router &#125; <span class="keyword">from</span> <span class="string">'@angular/router'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-login'</span>,</span><br><span class="line">  templateUrl: <span class="string">'./login.component.html'</span>,</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">LoginComponent</span> <span class="title">implements</span> <span class="title">OnInit</span>, <span class="title">OnDestroy</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 注入router</span></span><br><span class="line">  <span class="keyword">constructor</span>(private router: Router) &#123;&#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 登录事件</span></span><br><span class="line">  onSubmit() &#123;</span><br><span class="line">    <span class="keyword">this</span>.router.navigate([<span class="string">'/home'</span>]);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当然，<code>router.navigate()</code>还可以传入其他的params，使用方法大家可以查阅文档。</p>
+<ul>
+<li>监听路由</li>
+</ul>
+<p>在Angular2的release版本之后，路由进行了调整，我们需要通过<code>subscribe()</code>这样的方式对事件进行订阅：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 监听导航事件变更</span></span><br><span class="line"><span class="comment">// NavigationEnd表示导航事件变更完毕</span></span><br><span class="line"><span class="comment">// 通过对事件进行filter过滤，我们可以订阅想要的路由事件消息</span></span><br><span class="line">router.events.filter(<span class="function"><span class="params">event</span> =&gt;</span> event <span class="keyword">instanceof</span> NavigationEnd).subscribe(<span class="function"><span class="params">event</span> =&gt;</span> &#123;&#125;);</span><br></pre></td></tr></table></figure>
+<p>若要写面包屑功能，可参考该文章<a href="http://brianflove.com/2016/10/23/angular2-breadcrumb-using-router/" target="_blank" rel="noopener">Angular2 Breadcrumb using Router</a>。</p>
+<h3 id="获取路由信息"><a href="#获取路由信息" class="headerlink" title="获取路由信息"></a>获取路由信息</h3><ul>
+<li>ActivatedRoute：一站式获取路由信息</li>
+</ul>
+<p>路由的路径和参数可以通过注入<code>ActivatedRoute</code>的路由服务来获取，包括：</p>
+<ul>
+<li>url: 该路由路径的Observable对象。它的值是一个由路径中各个部件组成的字符串数组</li>
+<li>data: 该路由提供的data对象的一个Observable对象。还包含从resolve中解析出来的值</li>
+<li>params: 包含该路由的必选参数和可选参数的Observable对象</li>
+<li>queryParams: 一个包含对所有路由都有效的查询参数的Observable对象</li>
+<li>fragment: 一个包含对所有路由都有效的片段值的Observable对象</li>
+<li>outlet: RouterOutlet的名字，用于指示渲染该路由的位置</li>
+<li>routeConfig: 与该路由的原始路径对应的配置信息</li>
+<li>firstChild: 包含子路由列表中的第一个ActivatedRoute对象</li>
+<li>children: 包含当前路由下激活的全部子路由</li>
+</ul>
+<p>通常我们可能这样使用：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; ActivatedRoute &#125; <span class="keyword">from</span> <span class="string">'@angular/router'</span>;</span><br><span class="line">... <span class="comment">// 其余代码</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 注入route</span></span><br><span class="line">  	<span class="keyword">constructor</span>(private route: ActivatedRoute) &#123;&#125;</span><br><span class="line">    ngOnInit() &#123;</span><br><span class="line">      <span class="keyword">this</span>.route.params</span><br><span class="line">        .subscribe(<span class="function">(<span class="params">params</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="comment">// 获取名为id的param参数</span></span><br><span class="line">          <span class="keyword">this</span>.id = <span class="built_in">parseInt</span>(params[<span class="string">'id'</span>]);</span><br><span class="line">         ... <span class="comment">// 其余代码</span></span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">... <span class="comment">// 其余代码</span></span><br></pre></td></tr></table></figure>
+<h3 id="lazyload"><a href="#lazyload" class="headerlink" title="lazyload"></a>lazyload</h3><p>对于一些路由子模块，我们可以通过懒加载来定义，这样就可以只在进入到该路由时进行加载，也算是首屏加载优化的一种方法吧。</p>
+<p>一般我们在路由中这样定义：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> AppRoutes: Routes = [</span><br><span class="line">    &#123;</span><br><span class="line">        path: <span class="string">''</span>, <span class="attr">component</span>: AppComponent, <span class="attr">children</span>: [</span><br><span class="line">            &#123; <span class="attr">path</span>: <span class="string">'home'</span>, <span class="attr">loadChildren</span>: <span class="string">'lazy/lazy.module#LazyModule'</span> &#125;,</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+<p>就可以对该部分进行懒加载了，当然懒加载还需要其他依赖或者一些另外的配置支持，其实安装一个<code>angular-router-loader</code>就好了：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev angular-router-loader</span><br></pre></td></tr></table></figure>
+<p>然后在webpack的rules中调整：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  test: <span class="regexp">/\.ts$/</span>,</span><br><span class="line">  use: [<span class="string">"babel-loader"</span>, <span class="string">"ts-loader"</span>, <span class="string">"angular2-template-loader"</span>, <span class="string">"angular-router-loader"</span>],</span><br><span class="line">  exclude: <span class="regexp">/node_modules/</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>打包的时候我们会发现，除了主文件<code>bundle.js</code>，每一个使用lazyload的文件都会单独打包成一个<code>n.bundle.js</code>文件（n为数字），用于异步请求和加载。</p>
+<h2 id="添加资源加载"><a href="#添加资源加载" class="headerlink" title="添加资源加载"></a>添加资源加载</h2><hr>
+<p>一般来说，项目多业务杂，我们总不能一个个插件都自己实现，故很多时候我们需要使用到像jQuery或者Bootstrap这样很常用的库。</p>
+<h3 id="全局注入js"><a href="#全局注入js" class="headerlink" title="全局注入js"></a>全局注入js</h3><p>本骚年使用了一种最蠢的方式来实现[捂脸]：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// jquery</span></span><br><span class="line"><span class="built_in">window</span>[<span class="string">'$'</span>] = <span class="built_in">window</span>[<span class="string">'jQuery'</span>] = <span class="built_in">require</span>(<span class="string">'./assets/js/jquery.min.js'</span>);</span><br><span class="line"><span class="comment">// boootstrap</span></span><br><span class="line"><span class="built_in">require</span>(<span class="string">'../node_modules/bootstrap/dist/js/bootstrap.min.js'</span>);</span><br></pre></td></tr></table></figure>
+<p>当然，身为懒癌晚期的我还使用了typescript的杀手锏[捂脸+1]：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// declation.d.ts</span></span><br><span class="line">declare <span class="keyword">var</span> $: any;</span><br><span class="line">declare <span class="keyword">var</span> JQuery: any;</span><br></pre></td></tr></table></figure>
+<p>其实在typescript中使用jQuery也有很多现成的<code>@types</code>库，大家可以一键安装使用就好了：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install @types/jquery</span><br></pre></td></tr></table></figure>
+<p>完整的项目还是需要完善的，像本骚年这种业余玩玩的小项目就另当其说了，而且说不定后面我也会完善的吧[摊手]。</p>
+<h3 id="全局注入css"><a href="#全局注入css" class="headerlink" title="全局注入css"></a>全局注入css</h3><p>像<code>import &#39;someStyle.css&#39;</code>这样的方法竟然没有成功，可能是本骚年的webpack配置或者是loader哪里出了问题吧。</p>
+<p>然后就找了一个懒方法，利用的是<code>ViewEncapsulation</code>，在组件中将<code>styleUrls</code>定义为全局生效，如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component, ViewEncapsulation &#125; <span class="keyword">from</span> <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app-root'</span>,</span><br><span class="line">  template: <span class="string">' &lt;router-outlet&gt;&lt;/router-outlet&gt;'</span>,</span><br><span class="line">  styleUrls: [</span><br><span class="line">      <span class="string">'../../../node_modules/bootstrap/dist/css/bootstrap.min.css'</span>,</span><br><span class="line">    <span class="string">'../../assets/css/common.css'</span>,</span><br><span class="line">    <span class="string">'../../assets/css/custom.css'</span></span><br><span class="line">  ],</span><br><span class="line">  encapsulation: ViewEncapsulation.None</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h2><hr>
+<h3 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h3><p>如图：<br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1495034687%281%29.png" alt="image"></p>
+<h3 id="其他配置文件调整"><a href="#其他配置文件调整" class="headerlink" title="其他配置文件调整"></a>其他配置文件调整</h3><ul>
+<li>package.json</li>
+</ul>
+<p>移除<code>@angular/compiler-cli</code>，该依赖为AOT使用，而目前本骚年还没做这方面的配置，光一个<code>compiler-cli</code>也是不够的，后面需要的时候再加吧</p>
+<ul>
+<li>tsconfig.json</li>
+</ul>
+<p>这个不得不说了，项目一直起不来提示如下：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">compiler.es5.js:15291 </span></span><br><span class="line"><span class="function"><span class="title">Uncaught</span> <span class="title">Error</span>: <span class="title">Can</span>'<span class="title">t</span> <span class="title">resolve</span> <span class="title">all</span> <span class="title">parameters</span> <span class="title">for</span> <span class="title">LoginComponent</span>: (?).</span></span><br><span class="line"><span class="function">    <span class="title">at</span> <span class="title">syntaxError</span> (<span class="title">webpack</span>:///./~/@<span class="title">angular</span>/<span class="title">compiler</span>/@<span class="title">angular</span>/<span class="title">compiler.es5.js</span>?:1724:34)</span></span><br><span class="line"><span class="function">    <span class="title">at</span> <span class="title">CompileMetadataResolver._getDependenciesMetadata</span> (<span class="title">webpack</span>:///./~/@<span class="title">angular</span>/<span class="title">compiler</span>/@<span class="title">angular</span>/<span class="title">compiler.es5.js</span>?:15061:35)</span></span><br><span class="line"><span class="function">    <span class="title">at</span> <span class="title">CompileMetadataResolver._getTypeMetadata</span> (<span class="title">webpack</span>:///./~/@<span class="title">angular</span>/<span class="title">compiler</span>/@<span class="title">angular</span>/<span class="title">compiler.es5.js</span>?:14929:26)</span></span><br><span class="line"><span class="function">    <span class="title">at</span> <span class="title">CompileMetadataResolver.getNonNormalizedDirectiveMetadata</span> (<span class="title">webpack</span>:///./~/@<span class="title">angular</span>/<span class="title">compiler</span>/@<span class="title">angular</span>/<span class="title">compiler.es5.js</span>?:14538:24)</span></span><br><span class="line"><span class="function">    <span class="title">at</span> <span class="title">CompileMetadataResolver._getEntryComponentMetadata</span> (<span class="title">webpack</span>:///./~/@<span class="title">angular</span>/<span class="title">compiler</span>/@<span class="title">angular</span>/<span class="title">compiler.es5.js</span>?:15182:45)</span></span><br><span class="line"><span class="function">    <span class="title">at</span> <span class="title">eval</span> (<span class="title">webpack</span>:///./~/@<span class="title">angular</span>/<span class="title">compiler</span>/@<span class="title">angular</span>/<span class="title">compiler.es5.js</span>?:15168:48)</span></span><br><span class="line"><span class="function">    <span class="title">at</span> <span class="title">Array.forEach</span> (<span class="title">native</span>)</span></span><br><span class="line"><span class="function">    <span class="title">at</span> <span class="title">CompileMetadataResolver._getEntryComponentsFromProvider</span> (<span class="title">webpack</span>:///./~/@<span class="title">angular</span>/<span class="title">compiler</span>/@<span class="title">angular</span>/<span class="title">compiler.es5.js</span>?:15167:30)</span></span><br><span class="line"><span class="function">    <span class="title">at</span> <span class="title">eval</span> (<span class="title">webpack</span>:///./~/@<span class="title">angular</span>/<span class="title">compiler</span>/@<span class="title">angular</span>/<span class="title">compiler.es5.js</span>?:15131:83)</span></span><br><span class="line"><span class="function">    <span class="title">at</span> <span class="title">Array.forEach</span> (<span class="title">native</span>)</span></span><br></pre></td></tr></table></figure>
+<p>哭死我了，后面是改了一个<code>tsconfig.json</code>配置解决的：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">"emitDecoratorMetadata": true, &lt;= 就是这家伙</span><br></pre></td></tr></table></figure>
+<p>大家也可以尽情嘲笑我，本骚年有时候就是转不过来。</p>
+<ul>
+<li>webpack.config.js</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 加了个插件，关闭之前的黄色warning</span></span><br><span class="line"><span class="keyword">new</span> webpack.ContextReplacementPlugin(</span><br><span class="line">  /angular(\\|\/)core(\\|\/)@angular/,</span><br><span class="line">  path.resolve(__dirname, <span class="string">'src'</span>),</span><br><span class="line">  &#123;&#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>登录页面也还是我们熟悉的：</p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/1495970476%281%29.png" alt="image"></p>
+<h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><hr>
+<p>这节主要讲了路由相关的介绍和使用，以及添加静态资源，和调整一些配置使得项目得以启动的过程。项目里代码讲得不多，大家可以自行查看。<br><a href="https://github.com/godbasin/godbasin.github.io/tree/blog-codes/angular2-free/3-init-routes-and-assets" target="_blank" rel="noopener">此处查看项目代码</a><br><a href="http://angular2-free.godbasin.com/3-init-routes-and-assets/index.html" target="_blank" rel="noopener">此处查看页面效果</a></p>
+  
+	</div>
+	<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/2code2.jpg" width="200" height="200" style="display:block;margin: 0 auto;" />
+	<p style="text-align: center;margin-top: 10px;margin-bottom: 20px;">码生艰难，写文不易，给我家猪囤点猫粮了喵~</p>
+	<div class="article-content">
+		<p style="margin-top:50px;">
+			查看Github有更多内容噢：<a href="https://github.com/godbasin">https://github.com/godbasin</a>
+			<br>
+			更欢迎来<a href="https://godbasin.github.io/front-end-playground">被删的前端游乐场</a>边撸猫边学前端噢
+			<br>
+			如果你想要关注日常生活中的我，欢迎关注“牧羊的猪”公众号噢
+		</p>
+	</div>
+	<div class="author-right">
+  		<p>作者：被删</p>
+  		<p>出处：<a href="https://godbasin.github.io">https://godbasin.github.io</a></p>
+  		<p>本文版权归作者所有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利。</p>
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/笔记/">笔记</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/angular2火锅/">angular2火锅</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  
+<!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a href="http://www.jiathis.com/share?uid=2134021" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config = {data_track_clickback:'true'};
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js?uid=2134021" charset="utf-8"></script>
+<!-- JiaThis Button END -->   
+
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2017/06/02/angular2-free-4-create-sidebar/" title="玩转Angular2(4)--制作左侧自动定位菜单">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  玩转Angular2(4)--制作左侧自动定位菜单</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2017/05/29/angular2-free-2-inprove-app-configuration/"  title="玩转Angular2(2)--改善应用配置">
+ <strong>NEXT:</strong><br/> 
+ <span>玩转Angular2(2)--改善应用配置
+</span>
+</a>
+</div>
+
+</nav>
+
+	<!-- 如果不是首页且没使用 `comments: false` 关闭评论，则尝试加载评论 -->
+
+    <!-- 配置中启用多说时，导入相应代码 -->
+    
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#使用路由"><span class="toc-number">1.</span> <span class="toc-text">使用路由</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#有关路由"><span class="toc-number">1.1.</span> <span class="toc-text">有关路由</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在视图中跳转"><span class="toc-number">1.2.</span> <span class="toc-text">在视图中跳转</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#注册路由模块"><span class="toc-number">1.3.</span> <span class="toc-text">注册路由模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用Router"><span class="toc-number">1.4.</span> <span class="toc-text">使用Router</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取路由信息"><span class="toc-number">1.5.</span> <span class="toc-text">获取路由信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lazyload"><span class="toc-number">1.6.</span> <span class="toc-text">lazyload</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加资源加载"><span class="toc-number">2.</span> <span class="toc-text">添加资源加载</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#全局注入js"><span class="toc-number">2.1.</span> <span class="toc-text">全局注入js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#全局注入css"><span class="toc-number">2.2.</span> <span class="toc-text">全局注入css</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#项目结构"><span class="toc-number">3.</span> <span class="toc-text">项目结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#目录"><span class="toc-number">3.1.</span> <span class="toc-text">目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他配置文件调整"><span class="toc-number">3.2.</span> <span class="toc-text">其他配置文件调整</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结束语"><span class="toc-number">4.</span> <span class="toc-text">结束语</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  	
+	<div class="archiveslist">
+		<p class="asidetitle">最近文章</p>
+			<ul class="archive-list">
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/03/13/angular-design-0-prestart/" title="Angular框架解读--预热篇">Angular框架解读--预热篇...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/02/27/network-design-dependency-decoupling/" title="在线文档的网络层开发思考--依赖关系梳理">在线文档的网络层开发思考--依赖关系...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/01/23/network-design-responsibility-driven-design/" title="在线文档的网络层开发思考--职责驱动设计">在线文档的网络层开发思考--职责驱动...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/01/10/about-writing/" title="前端这几年--写文章这件事">前端这几年--写文章这件事...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/11/01/task-runner-design/" title="如何设计一个任务管理器">如何设计一个任务管理器</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/10/10/why-spreadsheet-app-excited/" title="在线Excel项目到底有多刺激">在线Excel项目到底有多刺激...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/10/07/monitor-and-report/" title="前端监控体系搭建">前端监控体系搭建</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/08/30/about-front-end-10/" title="前端这几年--10.我的工作历险记">前端这几年--10.我的工作历险记...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/08/30/about-front-end-9/" title="前端这几年--9.提升工作效率">前端这几年--9.提升工作效率...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/08/29/front-end-performance-analyze/" title="补齐Web前端性能分析的工具盲点">补齐Web前端性能分析的工具盲点...</a>
+				</li>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+	</div>
+
+
+  
+  <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">归档</a></p>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">十月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">41</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">9</span></li></ul>
+  </div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle"><a href="/categories">分类</a></p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/Angular源码/" title="Angular源码">Angular源码<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/CSS炒饭/" title="CSS炒饭">CSS炒饭<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/D3小馒头/" title="D3小馒头">D3小馒头<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular2火锅/" title="angular2火锅">angular2火锅<sup>25</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular混搭/" title="angular混搭">angular混搭<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/box2djs方糖/" title="box2djs方糖">box2djs方糖<sup>34</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/cyclejs哈根达斯/" title="cyclejs哈根达斯">cyclejs哈根达斯<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/jQuery杂烩/" title="jQuery杂烩">jQuery杂烩<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/js什锦/" title="js什锦">js什锦<sup>26</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/react沙拉/" title="react沙拉">react沙拉<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/three-js奶茶/" title="three.js奶茶">three.js奶茶<sup>5</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/vue八宝粥/" title="vue八宝粥">vue八宝粥<sup>30</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/webpack宾治/" title="webpack宾治">webpack宾治<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/web乱炖/" title="web乱炖">web乱炖<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端满汉全席/" title="前端满汉全席">前端满汉全席<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端解决方案/" title="前端解决方案">前端解决方案<sup>13</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/喵/" title="喵">喵<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/小程序双皮奶/" title="小程序双皮奶">小程序双皮奶<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/工作这杯茶/" title="工作这杯茶">工作这杯茶<sup>19</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/应用巧克力盒/" title="应用巧克力盒">应用巧克力盒<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/思想棉花糖/" title="思想棉花糖">思想棉花糖<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/柴米油盐工具集/" title="柴米油盐工具集">柴米油盐工具集<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/自动化甜筒/" title="自动化甜筒">自动化甜筒<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/非前端钙片/" title="非前端钙片">非前端钙片<sup>7</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle">标签</p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/分享/" title="分享">分享<sup>44</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/功能设计/" title="功能设计">功能设计<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/原创部件/" title="原创部件">原创部件<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/心态/" title="心态">心态<sup>19</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/教程/" title="教程">教程<sup>80</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/晒猫/" title="晒猫">晒猫<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/笔记/" title="笔记">笔记<sup>121</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/算法/" title="算法">算法<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/自制插件/" title="自制插件">自制插件<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/逻辑实现/" title="逻辑实现">逻辑实现<sup>18</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+    <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">about</a></p>
+      <ul class="archive-list">
+      	<li class="archive-list-item">
+      		<a>wangbeishan@163.com</a>
+      		<a href="https://github.com/godbasin">github.com/godbasin</a>
+      	</li>
+      </ul>
+  </div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<section class="info">
+		<p> 即使梦想再小，却很伟大 ^_^ </p>
+	</section>
+	 
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2021 
+		
+		<a href="https://godbasin.github.io" target="_blank" title="被删">被删</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,1162 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  
+    <title>前端这几年--2.工作原则和选择 | Here. There.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="被删">
+    
+    <meta name="description" content="写故事是突发奇想，所以要怎么架构整个系列的内容也没有特别好的想法。所以就从我认为比较重要的开始讲起吧，很多有趣的故事，都是和自己原则的制定和死守相关的~">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Here. There." type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?3d902de4a19cf2bf179534ffd2dd7b7f";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+</html>
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/sun.png" alt="Here. There." title="Here. There."/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Here. There.">Here. There.</a></h1>
+				<h2 class="blog-motto">Love ice cream. Love sunshine. Love life. Love the world. Love myself. Love you.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="https://github.com/godbasin/godbasin.github.io">所有文章</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">分类</a></li>
+					
+						<li><a href="https://godbasin.github.io/front-end-playground">前端游乐场</a></li>
+					
+						<li><a href="/about">关于我</a></li>
+					
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2019/06/30/about-front-end-2-principle/" title="前端这几年--2.工作原则和选择" itemprop="url">前端这几年--2.工作原则和选择</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://godbasin.github.io" title="被删">被删</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2019-06-30T07:09:58.000Z" itemprop="datePublished">2019-06-30</time>
+    更新日期:<time datetime="2019-06-30T08:06:48.512Z" itemprop="dateModified">2019-06-30</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#要成为怎样的人"><span class="toc-number">1.</span> <span class="toc-text">要成为怎样的人</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#关于金钱的困惑"><span class="toc-number">1.1.</span> <span class="toc-text">关于金钱的困惑</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#钱很重要"><span class="toc-number">1.1.1.</span> <span class="toc-text">钱很重要</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#但它不是你要追求的东西"><span class="toc-number">1.1.2.</span> <span class="toc-text">但它不是你要追求的东西</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关于真诚的困惑"><span class="toc-number">1.2.</span> <span class="toc-text">关于真诚的困惑</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#环境很杂"><span class="toc-number">1.2.1.</span> <span class="toc-text">环境很杂</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#但坚持才会遇到你想要的环境"><span class="toc-number">1.2.2.</span> <span class="toc-text">但坚持才会遇到你想要的环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#面子是最不重要的东西"><span class="toc-number">1.2.3.</span> <span class="toc-text">面子是最不重要的东西</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结束语"><span class="toc-number">1.3.</span> <span class="toc-text">结束语</span></a></li></ol></li></ol>
+		</div>
+		
+		<p>写故事是突发奇想，所以要怎么架构整个系列的内容也没有特别好的想法。所以就从我认为比较重要的开始讲起吧，很多有趣的故事，都是和自己原则的制定和死守相关的~</p>
+<a id="more"></a>
+<h1 id="要成为怎样的人"><a href="#要成为怎样的人" class="headerlink" title="要成为怎样的人"></a>要成为怎样的人</h1><p>工作后遇到了很多事情，如果你要追求纯粹的技术和工作环境，其实都肯定遇到过类似的困扰。世界上最简单的事情，大概是别人告诉你要做什么、要怎么做，你只管做就好了。</p>
+<p>而世界上最有意思的，往往是你做什么遇到了什么困难，但你坚持下来了。</p>
+<h2 id="关于金钱的困惑"><a href="#关于金钱的困惑" class="headerlink" title="关于金钱的困惑"></a>关于金钱的困惑</h2><p>其实从小课本就有教，钱乃身外之物，一个人最大的一笔财富在于他本身。我们学到的知识、经验，还有思考方式、精神力量，才是人生中真正的财富。</p>
+<p>但这个社会又是很现实的，成功似乎越来越被和金钱挂上勾。现代世界，又有多少人会把坚韧而善良的内心、人与人间的真诚和信任、自身的成长和才华，当作一笔真正的财富呢？</p>
+<p>我常常说，金钱它不重要。在我的认知当中，一份工作，我应该关注怎么把它做好，关注怎么给社会创造更大的价值。而我付出的该收获多少，是应该由公司和老板负责的。如果我一边干活还得一边担心自己得不到回报，又怎么能做出好的成绩呢？</p>
+<p>当然，事实总不会如你所愿，大概是这个世界它也有叛逆期。</p>
+<h3 id="钱很重要"><a href="#钱很重要" class="headerlink" title="钱很重要"></a>钱很重要</h3><p>我第一份前端工作工资特别低，而转正的时候我跟老板说想要涨薪。老板破口大骂，说我竟然不懂得感恩，当初要不是他招了我，我怎么会有现在。</p>
+<p>后台几位大哥哥跟我说，去看看其他公司的工作吧，不过要跟他们要到两倍工资噢。（毕竟我当时的工资的确是少的可怜，挤在一个26人住的房子，只有一个洗手间 T_T）</p>
+<p>吭哧吭哧地找工作去了。技术面试过了，最终大佬面又到了谈工资阶段。大佬说，我可以给你想要的，但是这意味着我要去跟HR申请特殊流程。我说，如果需要特殊申请，那也希望你能去申请，我答应了几个后台哥们的，达不到我就继续跟他们干。</p>
+<p>最后当然是给了 offer，当然大佬有些不愿意还是给我申请了，因为技术总监比较看好我（那会前端不好找）。</p>
+<p>我还记得我跟老板提离职的时候，他先是说给我涨薪，见我已经下定决心之后，又开始破口大骂，说我不知感恩，还说什么深圳就这么大，你能走多远之类的。（说实话，当时毕业也才一年多，那瞬间真被吓到了）</p>
+<p>这个世界就是这样子，弱肉强食是很正常的事情。就像每次换工作的时候，HR 都会根据你之前的工资来给你发 offer，虽然都未必如愿但你都屁颠屁颠地接受了。虽然经常说钱不重要，但是有些时候它却偏偏占比很重，因为别人会因为你赚钱多少，来评估你的话语权。</p>
+<h3 id="但它不是你要追求的东西"><a href="#但它不是你要追求的东西" class="headerlink" title="但它不是你要追求的东西"></a>但它不是你要追求的东西</h3><p>从前那些最珍贵的东西，爱和信任、美好的品质、真挚的感情、自我追求，它们都是无价的。而如今却渐渐被标上价格，用来换取金钱和利益，这大概是这个社会最遗憾的矛盾吧。</p>
+<p>但正如《原则》一书所说：</p>
+<blockquote>
+<p>要记住金钱的唯一目的是使你得到你想要的东西，所以要想好你所珍视的是什么，把它置于金钱之上。</p>
+</blockquote>
+<p>本末倒置，无数人都会掉进这个陷阱。我们有很多想要的东西，这其中有很多很多都是需要用钱的，然后我们很容易会以为自己要的是钱，而忘记了初衷。</p>
+<p>关于金钱的原则，你要知道它只能是个附属品，在你追梦路上附带的，而不应该成为你在追求的东西，除非你只喜欢钱了哈哈（你真棒！）。</p>
+<p>身边也很多朋友聊到生活的困难，很多人会经常说到同届的其他人待遇多好，赚钱多厉害。当然，我也会经常疑惑，这个社会衡量一个人的方式，应该是以财富的方式，但财富从什么时候，就真的只剩下金钱二字了呢。</p>
+<p>如果说如今有什么能让我自己骄傲的地方，那大概是我一直都很清楚自己想要的是什么。金钱的确它能让我更加舒适地追求一些理想，但好在我没有把它当初一个终点。</p>
+<h2 id="关于真诚的困惑"><a href="#关于真诚的困惑" class="headerlink" title="关于真诚的困惑"></a>关于真诚的困惑</h2><p>我很喜欢真诚的对话，曾经也会为相互之间的争执而感到困惑。</p>
+<p>在商汤的时候，也遇到了相似的情况。但是在大家放下情绪，各自梳理和分享观点之后，才会惊叹原来是这样的，换了角度来看待之后，突然拓展开的思维其实也很美妙。</p>
+<p>从那时开始，对于吵架这件事，也多了不一样的看法。作为一名程序员，我们应该对开源分享有很好的体会。优秀的合集，能产生非常好的作品。思维和灵感也是，而这个过程一定是会产生摩擦的。</p>
+<h3 id="环境很杂"><a href="#环境很杂" class="headerlink" title="环境很杂"></a>环境很杂</h3><p>现在的工作环境里，很多人都喜欢说到“情商”这样的字眼。</p>
+<p>大多数人的工作分为两部分，一是把事情做好，二是让别人看到你把事情做好了。其实这是很低效的方式，但却偏偏是大环境中真实的一面。</p>
+<p>曾经我也会因为一些不同的想法，和导师起过一些争执。这对我来说是很正常的一件事，只要是不同的人就肯定有不一样的看法。而我也会在矛盾分析结束之后，询问导师的意见，问他这种沟通方式是否会让他不舒服，导师的回答是能有更好的观点产出就可以了。</p>
+<p>然而接下来的事情让我有些措不及防。某一天，有个其他组的同事突然跟我说，让我要注意下平时跟导师的态度。我说为什么呢，被告知我组长跟别人说我不尊重导师。</p>
+<p>这类的事情后面也屡次发生，关心我的人说让我适应下，因为每个地方都是这样的。而我最终也主动离开，换了个环境。他们说的也没错，即使换了环境，也会多多少少有这些事情。</p>
+<p>我想了很久为什么呢？</p>
+<p>大概是因为，并不是全部人都很胜任手上的工作。有些人的确是做得不够好，但他们还是要生活、要赚钱养家，只能通过别的方式来获得认同。踮脚效应便出现了，你要是不站起来，就没法看到前方。</p>
+<p>组织要怎么把控这种效应，还是说分不清、认为这样也没关系，这不是我该苦恼的事情。我只要不断寻找，直到能找到理想的团队。志同道合的价值观十分之来之不易，但不能因为遇不到而强行改变自身的价值观。</p>
+<h3 id="但坚持才会遇到你想要的环境"><a href="#但坚持才会遇到你想要的环境" class="headerlink" title="但坚持才会遇到你想要的环境"></a>但坚持才会遇到你想要的环境</h3><p>我毕业才五年，说实话工作环境基本上一年一换（or more）。很多老同学一段时间没见，聊起来的时候说，被删你怎么又换了？？？</p>
+<p>或许在一些人看来，频繁跳槽意味着这个人不够稳定，做事坚持不了很久。</p>
+<p>但正好相反，换这么多的工作，却恰好是因为一直在坚持着一些事情。回顾这些年来，我能看到自己一步步往前走的轨迹，清晰地指向一个方向。</p>
+<p>当然，一个环境不合适，就要马上离开吗？并不全是，当我在一点点成长的时候，总有一天，我可以把这一切扭转过来，变成我想要的一个环境。所以如果要问我有没有成功做到过，当然目前是还没有的，但我在尝试去做这些改变的时候，遇到了很多有趣的人，也沉淀了一些很棒的思考和想法。</p>
+<p>工作是双向选择的过程，我们不用觉得自己是弱势的一方，也不必要觉得委屈求全。我们对人对事，相对于抱怨，应该用更直接和爽快的方式去正面面对。</p>
+<p>如果你要问我，凭什么我说的这些就是对的呢？大概是上天比较照顾我，运气还不错的我，如今也终于遇到了一个很棒的团队。</p>
+<p>如果你要问我，在自己喜欢的环境里工作是什么感受？那大概是每天乐呵呵地来，哼着歌地走，工作做完了在工位呆着想点别的事情也很开心，走路都几乎一蹦一跳的。</p>
+<h3 id="面子是最不重要的东西"><a href="#面子是最不重要的东西" class="headerlink" title="面子是最不重要的东西"></a>面子是最不重要的东西</h3><p>我经常跟别人说，工作学会的最重要的一项技能，就是脸皮要厚。</p>
+<p>刚毕业的时候，我也是个很要面子的人。被指责批评了，会觉得委屈或是难堪，也会介意面子，而很多的话说不出口，烂在肚子里。</p>
+<p>开始工作之后，作为职场的小白菜，经常会遇到打脸的事情。一开始还会脸红，想找个洞钻进去。久而久之便发现，犯错是无法避免的，既然已经错了，就要让这个错误犯得更有价值。而要实现这一点的方法，就是好好反思改进的空间。</p>
+<p>如果说丢一次脸，能收获一次成长，那其实也是某种意义上赢了。</p>
+<h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><p>在艺术的历史里，或许你们都发现了，很多的艺术家在世时都不曾被重视。这大概是生活的悖论吧，就像一个人只有成功了，他说的话才有人愿意听。但是仔细想想，历史也大多数是由幸存的人撰写的，所以说不定也是自然选择的一种。</p>
+  
+	</div>
+	<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/2code2.jpg" width="200" height="200" style="display:block;margin: 0 auto;" />
+	<p style="text-align: center;margin-top: 10px;margin-bottom: 20px;">码生艰难，写文不易，给我家猪囤点猫粮了喵~</p>
+	<div class="article-content">
+		<p style="margin-top:50px;">
+			查看Github有更多内容噢：<a href="https://github.com/godbasin">https://github.com/godbasin</a>
+			<br>
+			更欢迎来<a href="https://godbasin.github.io/front-end-playground">被删的前端游乐场</a>边撸猫边学前端噢
+			<br>
+			如果你想要关注日常生活中的我，欢迎关注“牧羊的猪”公众号噢
+		</p>
+	</div>
+	<div class="author-right">
+  		<p>作者：被删</p>
+  		<p>出处：<a href="https://godbasin.github.io">https://godbasin.github.io</a></p>
+  		<p>本文版权归作者所有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利。</p>
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/心态/">心态</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/工作这杯茶/">工作这杯茶</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  
+<!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a href="http://www.jiathis.com/share?uid=2134021" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config = {data_track_clickback:'true'};
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js?uid=2134021" charset="utf-8"></script>
+<!-- JiaThis Button END -->   
+
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2019/07/11/vue-for-everyone-2/" title="9102全员学Vue--2.怎么三两下拼出一个页面">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  9102全员学Vue--2.怎么三两下拼出一个页面</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2019/06/27/vue-for-everyone-1/"  title="9102全员学Vue--1.如何理解前端和Vue">
+ <strong>NEXT:</strong><br/> 
+ <span>9102全员学Vue--1.如何理解前端和Vue
+</span>
+</a>
+</div>
+
+</nav>
+
+	<!-- 如果不是首页且没使用 `comments: false` 关闭评论，则尝试加载评论 -->
+
+    <!-- 配置中启用多说时，导入相应代码 -->
+    
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#要成为怎样的人"><span class="toc-number">1.</span> <span class="toc-text">要成为怎样的人</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#关于金钱的困惑"><span class="toc-number">1.1.</span> <span class="toc-text">关于金钱的困惑</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#钱很重要"><span class="toc-number">1.1.1.</span> <span class="toc-text">钱很重要</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#但它不是你要追求的东西"><span class="toc-number">1.1.2.</span> <span class="toc-text">但它不是你要追求的东西</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关于真诚的困惑"><span class="toc-number">1.2.</span> <span class="toc-text">关于真诚的困惑</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#环境很杂"><span class="toc-number">1.2.1.</span> <span class="toc-text">环境很杂</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#但坚持才会遇到你想要的环境"><span class="toc-number">1.2.2.</span> <span class="toc-text">但坚持才会遇到你想要的环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#面子是最不重要的东西"><span class="toc-number">1.2.3.</span> <span class="toc-text">面子是最不重要的东西</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结束语"><span class="toc-number">1.3.</span> <span class="toc-text">结束语</span></a></li></ol></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  	
+	<div class="archiveslist">
+		<p class="asidetitle">最近文章</p>
+			<ul class="archive-list">
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/03/13/angular-design-0-prestart/" title="Angular框架解读--预热篇">Angular框架解读--预热篇...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/02/27/network-design-dependency-decoupling/" title="在线文档的网络层开发思考--依赖关系梳理">在线文档的网络层开发思考--依赖关系...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/01/23/network-design-responsibility-driven-design/" title="在线文档的网络层开发思考--职责驱动设计">在线文档的网络层开发思考--职责驱动...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/01/10/about-writing/" title="前端这几年--写文章这件事">前端这几年--写文章这件事...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/11/01/task-runner-design/" title="如何设计一个任务管理器">如何设计一个任务管理器</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/10/10/why-spreadsheet-app-excited/" title="在线Excel项目到底有多刺激">在线Excel项目到底有多刺激...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/10/07/monitor-and-report/" title="前端监控体系搭建">前端监控体系搭建</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/08/30/about-front-end-10/" title="前端这几年--10.我的工作历险记">前端这几年--10.我的工作历险记...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/08/30/about-front-end-9/" title="前端这几年--9.提升工作效率">前端这几年--9.提升工作效率...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2020/08/29/front-end-performance-analyze/" title="补齐Web前端性能分析的工具盲点">补齐Web前端性能分析的工具盲点...</a>
+				</li>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+	</div>
+
+
+  
+  <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">归档</a></p>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">十月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">41</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">9</span></li></ul>
+  </div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle"><a href="/categories">分类</a></p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/Angular源码/" title="Angular源码">Angular源码<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/CSS炒饭/" title="CSS炒饭">CSS炒饭<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/D3小馒头/" title="D3小馒头">D3小馒头<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular2火锅/" title="angular2火锅">angular2火锅<sup>25</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular混搭/" title="angular混搭">angular混搭<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/box2djs方糖/" title="box2djs方糖">box2djs方糖<sup>34</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/cyclejs哈根达斯/" title="cyclejs哈根达斯">cyclejs哈根达斯<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/jQuery杂烩/" title="jQuery杂烩">jQuery杂烩<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/js什锦/" title="js什锦">js什锦<sup>26</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/react沙拉/" title="react沙拉">react沙拉<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/three-js奶茶/" title="three.js奶茶">three.js奶茶<sup>5</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/vue八宝粥/" title="vue八宝粥">vue八宝粥<sup>30</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/webpack宾治/" title="webpack宾治">webpack宾治<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/web乱炖/" title="web乱炖">web乱炖<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端满汉全席/" title="前端满汉全席">前端满汉全席<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端解决方案/" title="前端解决方案">前端解决方案<sup>13</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/喵/" title="喵">喵<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/小程序双皮奶/" title="小程序双皮奶">小程序双皮奶<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/工作这杯茶/" title="工作这杯茶">工作这杯茶<sup>19</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/应用巧克力盒/" title="应用巧克力盒">应用巧克力盒<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/思想棉花糖/" title="思想棉花糖">思想棉花糖<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/柴米油盐工具集/" title="柴米油盐工具集">柴米油盐工具集<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/自动化甜筒/" title="自动化甜筒">自动化甜筒<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/非前端钙片/" title="非前端钙片">非前端钙片<sup>7</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle">标签</p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/分享/" title="分享">分享<sup>44</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/功能设计/" title="功能设计">功能设计<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/原创部件/" title="原创部件">原创部件<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/心态/" title="心态">心态<sup>19</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/教程/" title="教程">教程<sup>80</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/晒猫/" title="晒猫">晒猫<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/笔记/" title="笔记">笔记<sup>121</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/算法/" title="算法">算法<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/自制插件/" title="自制插件">自制插件<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/逻辑实现/" title="逻辑实现">逻辑实现<sup>18</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+    <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">about</a></p>
+      <ul class="archive-list">
+      	<li class="archive-list-item">
+      		<a>wangbeishan@163.com</a>
+      		<a href="https://github.com/godbasin">github.com/godbasin</a>
+      	</li>
+      </ul>
+  </div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<section class="info">
+		<p> 即使梦想再小，却很伟大 ^_^ </p>
+	</section>
+	 
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2021 
+		
+		<a href="https://godbasin.github.io" target="_blank" title="被删">被删</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+
+
+
+
+
+  </body>
+</html>
