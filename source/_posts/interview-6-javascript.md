@@ -101,7 +101,7 @@ A: JavaScript 可以通过`prototype`和`__proto__`在两个对象之间创建�
 
 **Q: 如何判断对象类型？**
 A: 看情境可结合使用以下三种方法：
-1. `typeof`运算符，返回值有五种: `undefined`, `boolean`, `number`, `string`, `object`。问题：容易混淆`object`和`null`，会把`Array`还有用户自定义函数都返回为`object`。
+1. `typeof`运算符。问题：容易混淆`object`和`null`，会把`Array`还有用户自定义函数都返回为`object`。
 2. `instanceof`运算符，判断某一个对象是否是所给的构造函数的一个实例。
 3. `constructor`属性，返回对创建此对象的数组函数的引用。
 

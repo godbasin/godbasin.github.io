@@ -8,6 +8,8 @@
 如果你访问不了我的博客，可以[来这里看](http://www.godbasin.com)哦~
 
 ### 最新     
+> [《Angular框架解读--预热篇》](https://godbasin.github.io/2021/03/13/angular-design-0-prestart/)   
+> [《在线文档的网络层开发思考--依赖关系梳理》](https://godbasin.github.io/2021/02/27/network-design-dependency-decoupling/)   
 > [《在线文档的网络层开发思考--职责驱动设计》](https://godbasin.github.io/2021/01/23/network-design-responsibility-driven-design/)   
 > [《前端这几年--写文章这件事》](https://godbasin.github.io/2021/01/10/about-writing/)   
 > [《前端知识库--1.掌握浏览器的加载和渲染流程》](https://godbasin.github.io/2020/12/19/how-browser-works/)   
