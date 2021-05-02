@@ -7,7 +7,13 @@
 
 如果你访问不了我的博客，可以[来这里看](http://www.godbasin.com)哦~
 
+> 最近尝试在 B 站做点技术相关的小视频~
+> id：[被删](https://space.bilibili.com/42233366)   
+
 ### 最新     
+> [《Angular框架解读--Zone区域之zone.js》](https://godbasin.github.io/2021/05/01/angular-design-zonejs/)   
+> [《Angular框架解读--视图抽象定义》](https://godbasin.github.io/2021/04/05/angular-design-dom-define/)   
+> [《Angular框架解读--元数据和装饰器》](https://godbasin.github.io/2021/03/27/angular-design-metadata/)   
 > [《Angular框架解读--预热篇》](https://godbasin.github.io/2021/03/13/angular-design-0-prestart/)   
 > [《在线文档的网络层开发思考--依赖关系梳理》](https://godbasin.github.io/2021/02/27/network-design-dependency-decoupling/)   
 > [《在线文档的网络层开发思考--职责驱动设计》](https://godbasin.github.io/2021/01/23/network-design-responsibility-driven-design/)   
@@ -21,10 +27,12 @@
 > [《补齐Web前端性能分析的工具盲点》](https://godbasin.github.io/2020/08/29/front-end-performance-analyze/)   
 > [《在线文档的网络层设计思考》](https://godbasin.github.io/2020/08/23/online-doc-network/)   
 > [《VSCode 源码解读：IPC通信机制》](https://godbasin.github.io/2020/08/15/vscode-ipc/)   
-> [《前端面试这件事--6.Javascript相关》](https://godbasin.github.io/2020/07/26/interview-6-javascript/)   
-> [《VSCode 源码解读：事件系统设计》](https://godbasin.github.io/2020/07/05/vscode-event/)   
-> [《响应式编程在前端领域的应用》](https://godbasin.github.io/2020/07/04/reactive-programing/)   
-> [《谈谈依赖和解耦》](https://godbasin.github.io/2020/06/26/module-seperate/)   
+
+### Angular框架解读 
+> [《Angular框架解读--预热篇》](https://godbasin.github.io/2021/03/13/angular-design-0-prestart/)   
+> [《Angular框架解读--元数据和装饰器》](https://godbasin.github.io/2021/03/27/angular-design-metadata/)    
+> [《Angular框架解读--视图抽象定义》](https://godbasin.github.io/2021/04/05/angular-design-dom-define/)   
+> [《Angular框架解读--Zone区域之zone.js》](https://godbasin.github.io/2021/05/01/angular-design-zonejs/)   
 
 ### 深入理解Vue.js实战  
 > [前言 前端框架的出现](https://godbasin.github.io/vue-ebook/vue-ebook/0.html)  
@@ -47,9 +55,6 @@
 > [第15章 Vue 周边拓展](https://godbasin.github.io/vue-ebook/vue-ebook/15.html)  
 > [第16章 关于 Vue 3.0](https://godbasin.github.io/vue-ebook/vue-ebook/16.html)  
 > [后记 关于框架选型](https://godbasin.github.io/vue-ebook/vue-ebook/99.html)  
-
-### 前端知识库
-> [《前端知识库--1.掌握浏览器的加载和渲染流程》](https://godbasin.github.io/2020/12/19/how-browser-works/)   
 
 ### 前端杂谈    
 > [《在线文档的网络层开发思考--职责驱动设计》](https://godbasin.github.io/2021/01/23/network-design-responsibility-driven-design/)   
