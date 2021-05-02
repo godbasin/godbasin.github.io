@@ -7,6 +7,9 @@
 
 如果你访问不了我的博客，可以[来这里看](http://www.godbasin.com)哦~
 
+> 最近尝试在 B 站做点技术相关的小视频~
+> id：[被删](https://space.bilibili.com/42233366)   
+
 ### 最新     
 > [《Angular框架解读--Zone区域之zone.js》](https://godbasin.github.io/2021/05/01/angular-design-zonejs/)   
 > [《Angular框架解读--视图抽象定义》](https://godbasin.github.io/2021/04/05/angular-design-dom-define/)   
