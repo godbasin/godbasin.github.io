@@ -9,7 +9,7 @@
 
 > 最近尝试在 B 站做点技术相关的小视频~
 > id：[被删](https://space.bilibili.com/42233366)   
-> 我的新书[《前端的进击》](https://www.ituring.com.cn/book/2942)上架啦~欢迎阅读[背后的小故事](https://godbasin.github.io/2021/05/16/a-book-with-one-story/)~
+> 我的新书[《前端的进击》](https://www.ituring.com.cn/book/2942)上架啦！欢迎阅读[背后的小故事](https://godbasin.github.io/2021/05/16/a-book-with-one-story/)~
 
 ### 最新     
 > [《一本书和一个故事》](https://godbasin.github.io/2021/05/16/a-book-with-one-story/)   
