@@ -12,6 +12,7 @@
 > 我的新书[《前端的进击》](https://www.ituring.com.cn/book/2942)上架啦！欢迎阅读[背后的小故事](https://godbasin.github.io/2021/05/16/a-book-with-one-story/)~
 
 ### 最新     
+> [《Angular框架解读--模块化组织》](https://godbasin.github.io/2021/05/30/angular-design-module/)   
 > [《一本书和一个故事》](https://godbasin.github.io/2021/05/16/a-book-with-one-story/)   
 > [《Angular框架解读--Zone区域之zone.js》](https://godbasin.github.io/2021/05/01/angular-design-zonejs/)   
 > [《Angular框架解读--视图抽象定义》](https://godbasin.github.io/2021/04/05/angular-design-dom-define/)   
@@ -35,6 +36,7 @@
 > [《Angular框架解读--元数据和装饰器》](https://godbasin.github.io/2021/03/27/angular-design-metadata/)    
 > [《Angular框架解读--视图抽象定义》](https://godbasin.github.io/2021/04/05/angular-design-dom-define/)   
 > [《Angular框架解读--Zone区域之zone.js》](https://godbasin.github.io/2021/05/01/angular-design-zonejs/)   
+> [《Angular框架解读--模块化组织》](https://godbasin.github.io/2021/05/30/angular-design-module/)   
 
 ### 深入理解Vue.js实战  
 > [前言 前端框架的出现](https://godbasin.github.io/vue-ebook/vue-ebook/0.html)  
