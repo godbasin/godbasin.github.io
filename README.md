@@ -12,6 +12,7 @@
 > 我的新书[《前端的进击》](https://www.ituring.com.cn/book/2942)上架啦！欢迎阅读[背后的小故事](https://godbasin.github.io/2021/05/16/a-book-with-one-story/)~
 
 ### 最新     
+> [《Angular框架解读--依赖注入的基本概念》](https://godbasin.github.io/2021/06/27/angular-design-di-1-basic-concepts/)   
 > [《Angular框架解读--模块化组织》](https://godbasin.github.io/2021/06/13/angular-design-module/)   
 > [《Angular框架解读--Zone区域之ngZone》](https://godbasin.github.io/2021/05/30/angular-design-zone-ngzone/)   
 > [《一本书和一个故事》](https://godbasin.github.io/2021/05/16/a-book-with-one-story/)   
