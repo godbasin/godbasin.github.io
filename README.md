@@ -12,7 +12,9 @@
 > 我的新书[《前端的进击》](https://www.ituring.com.cn/book/2942)上架啦！欢迎阅读[背后的小故事](https://godbasin.github.io/2021/05/16/a-book-with-one-story/)~
 
 ### 最新     
+> [《Angular框架解读--依赖注入的引导过程》](https://godbasin.github.io/2021/07/25/angular-design-di-3-bootstrap/)   
 > [《Angular框架解读--多级依赖注入设计》](https://godbasin.github.io/2021/07/11/angular-design-di-2-hierarchical-di/)   
+> [《Angular框架解读--依赖注入的基本概念》](https://godbasin.github.io/2021/06/27/angular-design-di-1-basic-concepts/)   
 > [《Angular框架解读--模块化组织》](https://godbasin.github.io/2021/06/13/angular-design-module/)   
 > [《Angular框架解读--Zone区域之ngZone》](https://godbasin.github.io/2021/05/30/angular-design-zone-ngzone/)   
 > [《一本书和一个故事》](https://godbasin.github.io/2021/05/16/a-book-with-one-story/)   
@@ -28,10 +30,6 @@
 > [《在线Excel项目到底有多刺激》](https://godbasin.github.io/2020/10/10/why-spreadsheet-app-excited/)   
 > [《前端监控体系搭建》](https://godbasin.github.io/2020/10/07/monitor-and-report/)   
 > [《前端这几年--10.我的工作历险记》](https://godbasin.github.io/2020/08/30/about-front-end-10/)   
-> [《前端这几年--9.提升工作效率》](https://godbasin.github.io/2020/08/30/about-front-end-9/)   
-> [《补齐Web前端性能分析的工具盲点》](https://godbasin.github.io/2020/08/29/front-end-performance-analyze/)   
-> [《在线文档的网络层设计思考》](https://godbasin.github.io/2020/08/23/online-doc-network/)   
-> [《VSCode 源码解读：IPC通信机制》](https://godbasin.github.io/2020/08/15/vscode-ipc/)   
 
 ### Angular框架解读 
 > [《Angular框架解读--预热篇》](https://godbasin.github.io/2021/03/13/angular-design-0-prestart/)   
