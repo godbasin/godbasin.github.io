@@ -12,6 +12,7 @@
 > 我的新书[《前端的进击》](https://www.ituring.com.cn/book/2942)上架啦！欢迎阅读[背后的小故事](https://godbasin.github.io/2021/05/16/a-book-with-one-story/)~
 
 ### 最新     
+> [《Angular框架解读--Ivy编译器整体设计》](https://godbasin.github.io/2021/08/15/angular-design-ivy-0-design/)   
 > [《Angular框架解读--依赖注入的引导过程》](https://godbasin.github.io/2021/07/25/angular-design-di-3-bootstrap/)   
 > [《Angular框架解读--多级依赖注入设计》](https://godbasin.github.io/2021/07/11/angular-design-di-2-hierarchical-di/)   
 > [《Angular框架解读--依赖注入的基本概念》](https://godbasin.github.io/2021/06/27/angular-design-di-1-basic-concepts/)   
@@ -25,7 +26,6 @@
 > [《在线文档的网络层开发思考--依赖关系梳理》](https://godbasin.github.io/2021/02/27/network-design-dependency-decoupling/)   
 > [《在线文档的网络层开发思考--职责驱动设计》](https://godbasin.github.io/2021/01/23/network-design-responsibility-driven-design/)   
 > [《前端这几年--写文章这件事》](https://godbasin.github.io/2021/01/10/about-writing/)   
-> [《前端知识库--1.掌握浏览器的加载和渲染流程》](https://godbasin.github.io/2020/12/19/how-browser-works/)   
 > [《如何设计一个任务管理器》](https://godbasin.github.io/2020/11/01/task-runner-design/)   
 > [《在线Excel项目到底有多刺激》](https://godbasin.github.io/2020/10/10/why-spreadsheet-app-excited/)   
 > [《前端监控体系搭建》](https://godbasin.github.io/2020/10/07/monitor-and-report/)   
@@ -40,6 +40,8 @@
 > [《Angular框架解读--模块化组织》](https://godbasin.github.io/2021/06/13/angular-design-module/)   
 > [《Angular框架解读--依赖注入的基本概念》](https://godbasin.github.io/2021/06/27/angular-design-di-1-basic-concepts/)   
 > [《Angular框架解读--多级依赖注入设计》](https://godbasin.github.io/2021/07/11/angular-design-di-2-hierarchical-di/)   
+> [《Angular框架解读--依赖注入的引导过程》](https://godbasin.github.io/2021/07/25/angular-design-di-3-bootstrap/)   
+> [《Angular框架解读--Ivy编译器整体设计》](https://godbasin.github.io/2021/08/15/angular-design-ivy-0-design/)   
 
 ### 深入理解Vue.js实战  
 > [前言 前端框架的出现](https://godbasin.github.io/vue-ebook/vue-ebook/0.html)  
