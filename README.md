@@ -12,6 +12,7 @@
 > 我的新书[《前端的进击》](https://www.ituring.com.cn/book/2942)上架啦！欢迎阅读[背后的小故事](https://godbasin.github.io/2021/05/16/a-book-with-one-story/)~
 
 ### 最新     
+> [《前端这几年--11.关于一年一换的魔咒》](https://godbasin.github.io/2021/10/10/about-front-end-11/)   
 > [《Angular框架解读--Ivy编译器的视图数据和依赖解析》](https://godbasin.github.io/2021/09/19/angular-design-ivy-1-view-data-and-node-injector/)   
 > [《Angular框架解读--Ivy编译器整体设计》](https://godbasin.github.io/2021/08/15/angular-design-ivy-0-design/)   
 > [《Angular框架解读--依赖注入的引导过程》](https://godbasin.github.io/2021/07/25/angular-design-di-3-bootstrap/)   
@@ -21,16 +22,6 @@
 > [《Angular框架解读--Zone区域之ngZone》](https://godbasin.github.io/2021/05/30/angular-design-zone-ngzone/)   
 > [《一本书和一个故事》](https://godbasin.github.io/2021/05/16/a-book-with-one-story/)   
 > [《Angular框架解读--Zone区域之zone.js》](https://godbasin.github.io/2021/05/01/angular-design-zonejs/)   
-> [《Angular框架解读--视图抽象定义》](https://godbasin.github.io/2021/04/05/angular-design-dom-define/)   
-> [《Angular框架解读--元数据和装饰器》](https://godbasin.github.io/2021/03/27/angular-design-metadata/)   
-> [《Angular框架解读--预热篇》](https://godbasin.github.io/2021/03/13/angular-design-0-prestart/)   
-> [《在线文档的网络层开发思考--依赖关系梳理》](https://godbasin.github.io/2021/02/27/network-design-dependency-decoupling/)   
-> [《在线文档的网络层开发思考--职责驱动设计》](https://godbasin.github.io/2021/01/23/network-design-responsibility-driven-design/)   
-> [《前端这几年--写文章这件事》](https://godbasin.github.io/2021/01/10/about-writing/)   
-> [《如何设计一个任务管理器》](https://godbasin.github.io/2020/11/01/task-runner-design/)   
-> [《在线Excel项目到底有多刺激》](https://godbasin.github.io/2020/10/10/why-spreadsheet-app-excited/)   
-> [《前端监控体系搭建》](https://godbasin.github.io/2020/10/07/monitor-and-report/)   
-> [《前端这几年--10.我的工作历险记》](https://godbasin.github.io/2020/08/30/about-front-end-10/)   
 
 ### Angular框架解读 
 > [《Angular框架解读--预热篇》](https://godbasin.github.io/2021/03/13/angular-design-0-prestart/)   
