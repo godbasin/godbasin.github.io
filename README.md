@@ -9,30 +9,32 @@
 
 > 最近尝试在 B 站做点技术相关的小视频~
 > id：[被删](https://space.bilibili.com/42233366)   
+> 我的新书[《前端的进击》](https://www.ituring.com.cn/book/2942)上架啦！欢迎阅读[背后的小故事](https://godbasin.github.io/2021/05/16/a-book-with-one-story/)~
 
 ### 最新     
+> [《前端这几年--11.关于一年一换的魔咒》](https://godbasin.github.io/2021/10/10/about-front-end-11/)   
+> [《Angular框架解读--Ivy编译器的视图数据和依赖解析》](https://godbasin.github.io/2021/09/19/angular-design-ivy-1-view-data-and-node-injector/)   
+> [《Angular框架解读--Ivy编译器整体设计》](https://godbasin.github.io/2021/08/15/angular-design-ivy-0-design/)   
+> [《Angular框架解读--依赖注入的引导过程》](https://godbasin.github.io/2021/07/25/angular-design-di-3-bootstrap/)   
+> [《Angular框架解读--多级依赖注入设计》](https://godbasin.github.io/2021/07/11/angular-design-di-2-hierarchical-di/)   
+> [《Angular框架解读--依赖注入的基本概念》](https://godbasin.github.io/2021/06/27/angular-design-di-1-basic-concepts/)   
+> [《Angular框架解读--模块化组织》](https://godbasin.github.io/2021/06/13/angular-design-module/)   
+> [《Angular框架解读--Zone区域之ngZone》](https://godbasin.github.io/2021/05/30/angular-design-zone-ngzone/)   
+> [《一本书和一个故事》](https://godbasin.github.io/2021/05/16/a-book-with-one-story/)   
 > [《Angular框架解读--Zone区域之zone.js》](https://godbasin.github.io/2021/05/01/angular-design-zonejs/)   
-> [《Angular框架解读--视图抽象定义》](https://godbasin.github.io/2021/04/05/angular-design-dom-define/)   
-> [《Angular框架解读--元数据和装饰器》](https://godbasin.github.io/2021/03/27/angular-design-metadata/)   
-> [《Angular框架解读--预热篇》](https://godbasin.github.io/2021/03/13/angular-design-0-prestart/)   
-> [《在线文档的网络层开发思考--依赖关系梳理》](https://godbasin.github.io/2021/02/27/network-design-dependency-decoupling/)   
-> [《在线文档的网络层开发思考--职责驱动设计》](https://godbasin.github.io/2021/01/23/network-design-responsibility-driven-design/)   
-> [《前端这几年--写文章这件事》](https://godbasin.github.io/2021/01/10/about-writing/)   
-> [《前端知识库--1.掌握浏览器的加载和渲染流程》](https://godbasin.github.io/2020/12/19/how-browser-works/)   
-> [《如何设计一个任务管理器》](https://godbasin.github.io/2020/11/01/task-runner-design/)   
-> [《在线Excel项目到底有多刺激》](https://godbasin.github.io/2020/10/10/why-spreadsheet-app-excited/)   
-> [《前端监控体系搭建》](https://godbasin.github.io/2020/10/07/monitor-and-report/)   
-> [《前端这几年--10.我的工作历险记》](https://godbasin.github.io/2020/08/30/about-front-end-10/)   
-> [《前端这几年--9.提升工作效率》](https://godbasin.github.io/2020/08/30/about-front-end-9/)   
-> [《补齐Web前端性能分析的工具盲点》](https://godbasin.github.io/2020/08/29/front-end-performance-analyze/)   
-> [《在线文档的网络层设计思考》](https://godbasin.github.io/2020/08/23/online-doc-network/)   
-> [《VSCode 源码解读：IPC通信机制》](https://godbasin.github.io/2020/08/15/vscode-ipc/)   
 
 ### Angular框架解读 
 > [《Angular框架解读--预热篇》](https://godbasin.github.io/2021/03/13/angular-design-0-prestart/)   
 > [《Angular框架解读--元数据和装饰器》](https://godbasin.github.io/2021/03/27/angular-design-metadata/)    
 > [《Angular框架解读--视图抽象定义》](https://godbasin.github.io/2021/04/05/angular-design-dom-define/)   
 > [《Angular框架解读--Zone区域之zone.js》](https://godbasin.github.io/2021/05/01/angular-design-zonejs/)   
+> [《Angular框架解读--Zone区域之ngZone》](https://godbasin.github.io/2021/05/30/angular-design-zone-ngzone/)   
+> [《Angular框架解读--模块化组织》](https://godbasin.github.io/2021/06/13/angular-design-module/)   
+> [《Angular框架解读--依赖注入的基本概念》](https://godbasin.github.io/2021/06/27/angular-design-di-1-basic-concepts/)   
+> [《Angular框架解读--多级依赖注入设计》](https://godbasin.github.io/2021/07/11/angular-design-di-2-hierarchical-di/)   
+> [《Angular框架解读--依赖注入的引导过程》](https://godbasin.github.io/2021/07/25/angular-design-di-3-bootstrap/)   
+> [《Angular框架解读--Ivy编译器整体设计》](https://godbasin.github.io/2021/08/15/angular-design-ivy-0-design/)   
+> [《Angular框架解读--Ivy编译器的视图数据和依赖解析》](https://godbasin.github.io/2021/09/19/angular-design-ivy-1-view-data-and-node-injector/)   
 
 ### 深入理解Vue.js实战  
 > [前言 前端框架的出现](https://godbasin.github.io/vue-ebook/vue-ebook/0.html)  
