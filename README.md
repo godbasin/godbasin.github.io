@@ -12,6 +12,7 @@
 > 我的新书[《前端的进击》](https://www.ituring.com.cn/book/2942)上架啦！欢迎阅读[背后的小故事](https://godbasin.github.io/2021/05/16/a-book-with-one-story/)~
 
 ### 最新     
+> [《浏览器是如何进行页面渲染的》](https://godbasin.github.io/2021/10/16/web-browser-render/)   
 > [《前端这几年--11.关于一年一换的魔咒》](https://godbasin.github.io/2021/10/10/about-front-end-11/)   
 > [《Angular框架解读--Ivy编译器的视图数据和依赖解析》](https://godbasin.github.io/2021/09/19/angular-design-ivy-1-view-data-and-node-injector/)   
 > [《Angular框架解读--Ivy编译器整体设计》](https://godbasin.github.io/2021/08/15/angular-design-ivy-0-design/)   
@@ -61,6 +62,7 @@
 ### 前端杂谈    
 > [《在线文档的网络层开发思考--职责驱动设计》](https://godbasin.github.io/2021/01/23/network-design-responsibility-driven-design/)   
 > [《如何设计一个任务管理器》](https://godbasin.github.io/2020/11/01/task-runner-design/)   
+> [《在线Excel项目到底有多刺激》](https://godbasin.github.io/2020/10/10/why-spreadsheet-app-excited/)   
 > [《前端监控体系搭建》](https://godbasin.github.io/2020/10/07/monitor-and-report/)   
 > [《补齐Web前端性能分析的工具盲点》](https://godbasin.github.io/2020/08/29/front-end-performance-analyze/)   
 > [《在线文档的网络层设计思考》](https://godbasin.github.io/2020/08/23/online-doc-network/)   
@@ -90,6 +92,7 @@
 > [《前端这几年--8.工作中的矛盾》](https://godbasin.github.io/2020/04/18/about-front-end-8/)   
 > [《前端这几年--9.提升工作效率》](https://godbasin.github.io/2020/08/30/about-front-end-9/)   
 > [《前端这几年--10.我的工作历险记》](https://godbasin.github.io/2020/08/30/about-front-end-10/)   
+> [《前端这几年--11.关于一年一换的魔咒》](https://godbasin.github.io/2021/10/10/about-front-end-11/)   
 > [《前端这几年--写文章这件事》](https://godbasin.github.io/2021/01/10/about-writing/)   
 > [《写文章这件事》](https://godbasin.github.io/2019/03/10/work-2-article/)   
 > [《选择这件事》](https://godbasin.github.io/2018/12/16/work-1-choice/)   
@@ -155,6 +158,7 @@
 > [《认识数据库》](https://godbasin.github.io/2018/07/15/application-development-with-learning-database/)   
 
 ### 前端入门    
+> [《浏览器是如何进行页面渲染的》](https://godbasin.github.io/2021/10/16/web-browser-render/)   
 > [《前端入门8--Ajax和http》](https://godbasin.github.io/2018/05/19/front-end-8-http-and-ajax/)   
 > [《前端入门7--代码调试》](https://godbasin.github.io/2018/05/13/front-end-7-debug/)   
 > [《前端入门6--认识浏览器》](https://godbasin.github.io/2018/05/08/front-end-6-browser-render/)   
