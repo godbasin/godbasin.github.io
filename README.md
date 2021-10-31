@@ -12,6 +12,7 @@
 > 我的新书[《前端的进击》](https://www.ituring.com.cn/book/2942)上架啦！欢迎阅读[背后的小故事](https://godbasin.github.io/2021/05/16/a-book-with-one-story/)~
 
 ### 最新     
+> [《Angular框架解读--Ivy编译器之CLI编译器》](https://godbasin.github.io/2021/10/31/angular-design-ivy-2-cli-compiler/)   
 > [《浏览器是如何进行页面渲染的》](https://godbasin.github.io/2021/10/16/web-browser-render/)   
 > [《前端这几年--11.关于一年一换的魔咒》](https://godbasin.github.io/2021/10/10/about-front-end-11/)   
 > [《Angular框架解读--Ivy编译器的视图数据和依赖解析》](https://godbasin.github.io/2021/09/19/angular-design-ivy-1-view-data-and-node-injector/)   
