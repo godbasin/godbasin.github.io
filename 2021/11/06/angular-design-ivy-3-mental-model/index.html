@@ -1,0 +1,1212 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  
+    <title>Angular框架解读--Ivy编译器之心智模型 | Here. There.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="被删">
+    
+    <meta name="description" content="作为“为大型前端项目”而设计的前端框架，Angular 其实有许多值得参考和学习的设计，本系列主要用于研究这些设计和功能的实现原理。本文围绕 Angular 的核心功能 Ivy 编译器，介绍其中 Ivy 的心智模型。">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Here. There." type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?3d902de4a19cf2bf179534ffd2dd7b7f";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+</html>
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/sun.png" alt="Here. There." title="Here. There."/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Here. There.">Here. There.</a></h1>
+				<h2 class="blog-motto">Love ice cream. Love sunshine. Love life. Love the world. Love myself. Love you.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="https://github.com/godbasin/godbasin.github.io">所有文章</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">分类</a></li>
+					
+						<li><a href="https://godbasin.github.io/front-end-playground">前端游乐场</a></li>
+					
+						<li><a href="/about">关于我</a></li>
+					
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2021/11/06/angular-design-ivy-3-mental-model/" title="Angular框架解读--Ivy编译器之心智模型" itemprop="url">Angular框架解读--Ivy编译器之心智模型</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://godbasin.github.io" title="被删">被删</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2021-11-06T06:50:23.000Z" itemprop="datePublished">2021-11-06</time>
+    更新日期:<time datetime="2021-11-06T06:54:13.843Z" itemprop="dateModified">2021-11-06</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#View-Engine"><span class="toc-number">1.</span> <span class="toc-text">View Engine</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ivy-模板编译"><span class="toc-number">2.</span> <span class="toc-text">Ivy 模板编译</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Ivy-心智模型"><span class="toc-number">2.1.</span> <span class="toc-text">Ivy 心智模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#元数据"><span class="toc-number">2.2.</span> <span class="toc-text">元数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NPM-上现有代码的兼容"><span class="toc-number">2.3.</span> <span class="toc-text">NPM 上现有代码的兼容</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#转换元数据"><span class="toc-number">2.4.</span> <span class="toc-text">转换元数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#结束语"><span class="toc-number">2.5.</span> <span class="toc-text">结束语</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考"><span class="toc-number">2.6.</span> <span class="toc-text">参考</span></a></li></ol></li></ol>
+		</div>
+		
+		<p>作为“为大型前端项目”而设计的前端框架，Angular 其实有许多值得参考和学习的设计，本系列主要用于研究这些设计和功能的实现原理。本文围绕 Angular 的核心功能 Ivy 编译器，介绍其中 Ivy 的心智模型。</p>
+<a id="more"></a>
+<p>上一篇<a href="https://godbasin.github.io/2021/10/31/angular-design-ivy-2-cli-compiler/">Angular 框架解读–Ivy 编译器之 CLI 编译器</a>中，我们介绍了 Angular 基于 TypeScript 的<code>tsc</code>编译能力之上，实现了 Angular 本身的一些特性能力，包括支持模板的类型检查、将文件和模块依赖关系生成到<code>d.ts</code>文件中，等等。</p>
+<p>这部分的内容主要从 CLI 脚手架层面的编译出发，介绍在 Angular 中如何通过编译器处理代码的编译过程。本文我们主要关注 Angular 的模板编译过程，具体到装饰器的编译过程等。</p>
+<h2 id="View-Engine"><a href="#View-Engine" class="headerlink" title="View Engine"></a>View Engine</h2><p>在 View Engine 中，编译器执行整个程序分析并生成模板和注入器定义，这些定义使用此全局知识来扁平化注入器作用域定义、将指令内联到组件中、预计算查询、预计算内容投影等。全局知识要求在编译模块时生成模块和组件工厂作为最后的全局步骤。如果任何传递信息发生变化，则需要重新生成所有工厂。</p>
+<p>单独的组件和模块编译仅在模块定义级别和源代码中受支持。也就是说，npm 包必须包含生成工厂所需的元数据，它们本身不能包含生成的工厂。这是因为如果它们的任何依赖项发生变化，它们的工厂将无效，从而阻止它们在其依赖项中使用版本范围。</p>
+<p>在源代码中，Angular 将 View Engine 的这种代码生成风格称为 Renderer2，当我们看到 render2 相关的代码，便是 View Engine 相关实现。相对的，当我们看到 render3 相关的代码，便是 Ivy 编译器的相关实现。</p>
+<h2 id="Ivy-模板编译"><a href="#Ivy-模板编译" class="headerlink" title="Ivy 模板编译"></a>Ivy 模板编译</h2><p>在前面<a href="https://godbasin.github.io/2021/08/15/angular-design-ivy-0-design/">Angular 框架解读–Ivy 编译器整体设计</a>一文中，我有大概介绍 Ivy 编译的大概过程，包括：</p>
+<ol>
+<li>标记模板。</li>
+<li>将标记内容解析为 HTML AST。</li>
+<li>将 HTML AST 转换为 Angular 模板 AST。</li>
+<li>将 Angular 模板 AST 转换为模板函数。</li>
+</ol>
+<p>前面提到，View Engine 中编译器生成模板和注入器时依赖全局知识，因此工厂是在构建最终应用程序时生成的。</p>
+<p>Ivy 模板编译可以从字符串生成模板函数，而无需附加信息。但是，该字符串的正确解释需要选择器范围。选择器作用域是在运行时构建的（参考<a href="https://godbasin.github.io/2021/09/19/angular-design-ivy-1-view-data-and-node-injector/">《Angular 框架解读–Ivy 编译器的视图数据和依赖解析》</a>），允许运行时使用仅从字符串构建的函数，只要给它一个在实例化期间使用的选择器作用域（例如<code>NgModule</code>）。</p>
+<h3 id="Ivy-心智模型"><a href="#Ivy-心智模型" class="headerlink" title="Ivy 心智模型"></a>Ivy 心智模型</h3><p>在 Ivy 中，运行时的设计允许单独编译，通过在运行时执行之前由编译器预先计算的大部分内容。这允许更改组件的定义，而无需重新编译依赖于它们的模块和组件。</p>
+<p><strong>Ivy 的心智模型是：装饰器就是编译器。</strong></p>
+<p>也就是说，装饰器可以被认为是类转换器的参数，该类转换器通过基于装饰器参数生成定义来转换类：</p>
+<ul>
+<li><code>@Component</code>装饰器通过添加<code>ɵcmp</code>静态属性来转换类</li>
+<li><code>@Directive</code>添加<code>ɵdir</code></li>
+<li><code>@Pipe</code>添加<code>ɵpipe</code>等</li>
+</ul>
+<p>在大多数情况下，提供给装饰器的值足以生成定义。但是，在解释模板的情况下，编译器需要知道为模板范围内的每个组件、指令和管道定义的选择器。</p>
+<p>前面我们说过，Ivy 编译模型是将 Angular 装饰器（<code>@Injectable</code>等）编译为类 (<code>ɵprov</code>) 上的静态属性。此操作必须在没有全局程序知识的情况下进行，并且在大多数情况下仅需要知道该单个装饰器。因此在 Ivy 中，每个将单个装饰器转换为静态字段的“编译器”都将充当“纯函数”。</p>
+<p>对于这种情况，在 Angular 中可使用元数据来维护这些数据。给定有关特定类型和装饰器的输入元数据，它将生成一个对象，该对象描述要添加到该类型的字段，以及该字段的初始化值（采用 AST 格式）。</p>
+<h3 id="元数据"><a href="#元数据" class="headerlink" title="元数据"></a>元数据</h3><p>前面我在<a href="https://godbasin.github.io/2021/03/27/angular-design-metadata/">《Angular 框架解读–元数据和装饰器》</a>一文中介绍了编译时从装饰器产生元数据的过程，而在<a href="https://godbasin.github.io/2021/10/31/angular-design-ivy-2-cli-compiler/">《Angular 框架解读–Ivy 编译器之 CLI 编译器》</a>一文中介绍了 Angular 通过修改了 TypeScript 编译过程，从而将 Angular 中模块和文件间的依赖关系保存在生成的<code>d.ts</code>。</p>
+<p>Angular 会转换<code>.js</code>文件和<code>.d.ts</code>文件以反映 Angular 装饰器的内容，然后将其删除。除了在类型检查和引用反转期间，这种转换是逐个文件完成的，没有全局知识。</p>
+<p>比如，这样一个<code>Component</code>文件：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component, Input &#125; <span class="keyword">from</span> <span class="string">"@angular/core"</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  selector: <span class="string">"greet"</span>,</span><br><span class="line">  template: <span class="string">"&lt;div&gt; Hello, &#123;&#123;name&#125;&#125;! &lt;/div&gt;"</span>,</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> GreetComponent &#123;</span><br><span class="line">  <span class="meta">@Input</span>() name: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>经<code>ngtsc</code>编译后，会包括该组件的<code>.js</code>文件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> i0 = <span class="built_in">require</span>(<span class="string">"@angular/core"</span>);</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GreetComponent</span> </span>&#123;&#125;</span><br><span class="line">GreetComponent.ɵcmp = i0.ɵɵdefineComponent(&#123;</span><br><span class="line">  type: GreetComponent,</span><br><span class="line">  tag: <span class="string">"greet"</span>,</span><br><span class="line">  factory: <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">new</span> GreetComponent(),</span><br><span class="line">  template: <span class="function"><span class="keyword">function</span> (<span class="params">rf, ctx</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (rf &amp; RenderFlags.Create) &#123;</span><br><span class="line">      i0.ɵɵelementStart(<span class="number">0</span>, <span class="string">"div"</span>);</span><br><span class="line">      i0.ɵɵtext(<span class="number">1</span>);</span><br><span class="line">      i0.ɵɵelementEnd();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (rf &amp; RenderFlags.Update) &#123;</span><br><span class="line">      i0.ɵɵadvance(<span class="number">1</span>);</span><br><span class="line">      i0.ɵɵtextInterpolate1(<span class="string">"Hello "</span>, ctx.name, <span class="string">"!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>以及带有装饰器元数据信息的<code>.d.ts</code>文件：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> i0 <span class="keyword">from</span> <span class="string">"@angular/core"</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> GreetComponent &#123;</span><br><span class="line">  <span class="keyword">static</span> ɵcmp: i0.NgComponentDef&lt;GreetComponent, <span class="string">"greet"</span>, &#123; input: <span class="string">"input"</span> &#125;&gt;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>引用反转和类型检查所需的信息包含在<code>.d.ts</code>中<code>ɵcmp</code>的类型声明中。</p>
+<h3 id="NPM-上现有代码的兼容"><a href="#NPM-上现有代码的兼容" class="headerlink" title="NPM 上现有代码的兼容"></a>NPM 上现有代码的兼容</h3><p>如今存在于 NPM 上的 Angular 库以 Angular 包的格式分发，其中详细说明了所交付的工件，包括 ES2015 和 ESM（ES5 + ES2015 模块）风格的已编译<code>.js</code>文件、<code>.d.ts</code>文件和<code>.metadata.json</code>文件。其中，<code>.js</code>文件删除了 Angular 装饰器信息，而<code>.metadata.json</code>文件以替代格式保留装饰器元数据。</p>
+<p>我们已经知道，在 Ivy 中，在工厂中生成的信息现在在 Angular 中作为定义生成，在 Angular 装饰类中作为静态字段生成。View Engine(Renderer2) 要求在构建最终应用程序时，还要生成所有库的所有工厂。在 Ivy 中，定义是在编译库时生成的。</p>
+<p>Ivy 编译可以通过为它们生成工厂、并在运行时将静态属性回补到类中来适应 View Engine 目标库。比如：</p>
+<ul>
+<li>当应用程序包含 View Engine 目标库时，Ivy 定义需要回补到组件、指令、模块、管道和可注入类</li>
+<li>可以在生成它的同一位置生成<code>NgModuleFactory</code>的实现，<code>NgModuleFactory</code>的这个实现将在通过调用函数创建第一个模块实例时，对 View Engine 样式类进行回补丁</li>
+</ul>
+<p>同样的，Ivy 编译后的产物与 View Engine 的不同之处在于声明包含在生成的输出中，并且应该包含在发布到 npm 的包中。</p>
+<p>因此，编译后的产物仍然需要包含<code>.metadata.json</code>文件，它们会按如下所述进行转换：</p>
+<ul>
+<li>当编译器向类添加声明时，它也会转换<code>.metadata.json</code>文件以反映添加到类中的新静态字段</li>
+<li>一旦将静态字段添加到元数据中，Ivy 编译器就不再需要装饰器中的信息</li>
+</ul>
+<h3 id="转换元数据"><a href="#转换元数据" class="headerlink" title="转换元数据"></a>转换元数据</h3><p>View Engine 中使用<code>.metadata.json</code>文件来存储直接从<code>.ts</code>文件推断的信息，并包含 TypeScript 生成的<code>.d.ts</code>文件中未包含的值信息。</p>
+<p>Ivy 中，某个类的元数据被转换为 Ivy 编译器生成的转换后的<code>.js</code>文件的元数据。</p>
+<p>例如，一个组件的<code>@Component</code>被编译器删除并替换为<code>ɵcmp</code>，<code>.metadata.json</code>文件也进行了类似的转换，但省略了分配值的内容（例如<code>“ɵcmp”：{}</code>）。 编译器不记录为组件声明的选择器，但需要生成<code>ngModuleScope</code>以便记录信息。构建所需的信息需要<code>ngModuleScope</code>从指令和管道传送到声明它们的模块。</p>
+<p><code>@Component</code>组件的元数据通过以下方式转换：</p>
+<ol>
+<li>删除<code>@Component</code>指令。</li>
+<li>添加<code>&quot;ɵcmp&quot;: {}</code>静态字段。</li>
+<li>添加<code>&quot;ngSelector&quot;: &lt;selector-value&gt;</code>静态字段。</li>
+</ol>
+<p>比如以下例子：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// my.component.ts</span></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  selector: <span class="string">"my-comp"</span>,</span><br><span class="line">  template: <span class="string">`&lt;h1&gt;Hello, &#123;&#123; name &#125;&#125;!&lt;/h1&gt;`</span>,</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> MyComponent &#123;</span><br><span class="line">  <span class="meta">@Input</span>() name: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>会生成：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// my.component.js</span></span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">MyComponent</span> </span>&#123;</span><br><span class="line">  name: string;</span><br><span class="line">  <span class="keyword">static</span> ɵcmp = ɵɵdefineComponent(&#123;...&#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以及元数据信息：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"__symbolic"</span>: <span class="string">"module"</span>,</span><br><span class="line">  <span class="attr">"version"</span>: <span class="number">4</span>,</span><br><span class="line">  <span class="attr">"metadata"</span>: &#123;</span><br><span class="line">    <span class="attr">"MyComponent"</span>: &#123;</span><br><span class="line">      <span class="attr">"__symbolic"</span>: <span class="string">"class"</span>,</span><br><span class="line">      <span class="attr">"statics"</span>: &#123;</span><br><span class="line">        <span class="attr">"ɵcmp"</span>: &#123;&#125;,</span><br><span class="line">        <span class="attr">"ngSelector"</span>: <span class="string">"my-comp"</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>同样的，<code>@Directive</code>、<code>@Pipe</code>等其他装饰器也是相类似的处理，这里不多介绍。</p>
+<h3 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h3><p>Angular 的设计真的是太多太多啦，研究了好久还没研究到具体编译的地方，不过讲到目前这里，其实我们已经对 Ivy 编译器的整体情况有个大概的了解，包括基于 Ivy 编译模型下的组件、指令、管道等装饰器的编译过程和产物，以及它与 View Engine 更优的地方、兼容的处理。</p>
+<p>而关于 Ivy 中的变更检测、AOT/JIT、Tree-shaking 等内容，会在后面继续研究分析~</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
+<li><a href="https://github.com/angular/angular/blob/master/packages/compiler/design/architecture.md" target="_blank" rel="noopener">DESIGN DOC(Ivy): Compiler Architecture</a></li>
+<li><a href="https://github.com/angular/angular/blob/master/packages/compiler/design/separate_compilation.md" target="_blank" rel="noopener">DESIGN DOC (Ivy): Separate Compilation</a></li>
+<li><a href="https://indepth.dev/posts/1062/ivy-engine-in-angular-first-in-depth-look-at-compilation-runtime-and-change-detection" target="_blank" rel="noopener">Ivy engine in Angular: first in-depth look at compilation, runtime and change detection</a></li>
+</ul>
+  
+	</div>
+	<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/2code2.jpg" width="200" height="200" style="display:block;margin: 0 auto;" />
+	<p style="text-align: center;margin-top: 10px;margin-bottom: 10px;">码生艰难，写文不易，给我家猪囤点猫粮了喵~</p>
+	<p style="text-align: center;"><a href="https://space.bilibili.com/42233366">B站: 被删</a></p>
+	<div class="article-content">
+		<p style="margin-top:50px;">
+			查看Github有更多内容噢：<a href="https://github.com/godbasin">https://github.com/godbasin</a>
+			<br>
+			更欢迎来<a href="https://godbasin.github.io/front-end-playground">被删的前端游乐场</a>边撸猫边学前端噢
+			<br>
+			<br>
+			如果你想要关注日常生活中的我，欢迎关注“牧羊的猪”公众号噢
+		</p>
+	</div>
+	<div class="author-right">
+  		<p>作者：被删</p>
+  		<p>出处：<a href="https://godbasin.github.io">https://godbasin.github.io</a></p>
+  		<p>本文版权归作者所有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利。</p>
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/功能设计/">功能设计</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Angular源码/">Angular源码</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  
+<!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a href="http://www.jiathis.com/share?uid=2134021" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config = {data_track_clickback:'true'};
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js?uid=2134021" charset="utf-8"></script>
+<!-- JiaThis Button END -->   
+
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2021/10/31/angular-design-ivy-2-cli-compiler/"  title="Angular框架解读--Ivy编译器之CLI编译器">
+ <strong>NEXT:</strong><br/> 
+ <span>Angular框架解读--Ivy编译器之CLI编译器
+</span>
+</a>
+</div>
+
+</nav>
+
+	<!-- 如果不是首页且没使用 `comments: false` 关闭评论，则尝试加载评论 -->
+
+    <!-- 配置中启用多说时，导入相应代码 -->
+    
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#View-Engine"><span class="toc-number">1.</span> <span class="toc-text">View Engine</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ivy-模板编译"><span class="toc-number">2.</span> <span class="toc-text">Ivy 模板编译</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Ivy-心智模型"><span class="toc-number">2.1.</span> <span class="toc-text">Ivy 心智模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#元数据"><span class="toc-number">2.2.</span> <span class="toc-text">元数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NPM-上现有代码的兼容"><span class="toc-number">2.3.</span> <span class="toc-text">NPM 上现有代码的兼容</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#转换元数据"><span class="toc-number">2.4.</span> <span class="toc-text">转换元数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#结束语"><span class="toc-number">2.5.</span> <span class="toc-text">结束语</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考"><span class="toc-number">2.6.</span> <span class="toc-text">参考</span></a></li></ol></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  	
+	<div class="archiveslist">
+		<p class="asidetitle">最近文章</p>
+			<ul class="archive-list">
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/11/06/angular-design-ivy-3-mental-model/" title="Angular框架解读--Ivy编译器之心智模型">Angular框架解读--Ivy编译...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/10/31/angular-design-ivy-2-cli-compiler/" title="Angular框架解读--Ivy编译器之CLI编译器">Angular框架解读--Ivy编译...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/10/16/web-browser-render/" title="浏览器是如何进行页面渲染的">浏览器是如何进行页面渲染的...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/10/10/about-front-end-11/" title="前端这几年--11.关于一年一换的魔咒">前端这几年--11.关于一年一换的魔...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/09/19/angular-design-ivy-1-view-data-and-node-injector/" title="Angular框架解读--Ivy编译器的视图数据和依赖解析">Angular框架解读--Ivy编译...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/08/15/angular-design-ivy-0-design/" title="Angular框架解读--Ivy编译器整体设计">Angular框架解读--Ivy编译...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/07/25/angular-design-di-3-bootstrap/" title="Angular框架解读--依赖注入的引导过程">Angular框架解读--依赖注入的...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/07/11/angular-design-di-2-hierarchical-di/" title="Angular框架解读--多级依赖注入设计">Angular框架解读--多级依赖注...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/06/27/angular-design-di-1-basic-concepts/" title="Angular框架解读--依赖注入的基本概念">Angular框架解读--依赖注入的...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/06/13/angular-design-module/" title="Angular框架解读--模块化组织">Angular框架解读--模块化组织...</a>
+				</li>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+	</div>
+
+
+  
+  <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">归档</a></p>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">五月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">十月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">41</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">9</span></li></ul>
+  </div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle"><a href="/categories">分类</a></p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/Angular源码/" title="Angular源码">Angular源码<sup>13</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/CSS炒饭/" title="CSS炒饭">CSS炒饭<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/D3小馒头/" title="D3小馒头">D3小馒头<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular2火锅/" title="angular2火锅">angular2火锅<sup>25</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular混搭/" title="angular混搭">angular混搭<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/box2djs方糖/" title="box2djs方糖">box2djs方糖<sup>34</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/cyclejs哈根达斯/" title="cyclejs哈根达斯">cyclejs哈根达斯<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/jQuery杂烩/" title="jQuery杂烩">jQuery杂烩<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/js什锦/" title="js什锦">js什锦<sup>27</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/react沙拉/" title="react沙拉">react沙拉<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/three-js奶茶/" title="three.js奶茶">three.js奶茶<sup>5</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/vue八宝粥/" title="vue八宝粥">vue八宝粥<sup>30</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/webpack宾治/" title="webpack宾治">webpack宾治<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/web乱炖/" title="web乱炖">web乱炖<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端满汉全席/" title="前端满汉全席">前端满汉全席<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端解决方案/" title="前端解决方案">前端解决方案<sup>13</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/喵/" title="喵">喵<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/小程序双皮奶/" title="小程序双皮奶">小程序双皮奶<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/工作这杯茶/" title="工作这杯茶">工作这杯茶<sup>21</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/应用巧克力盒/" title="应用巧克力盒">应用巧克力盒<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/思想棉花糖/" title="思想棉花糖">思想棉花糖<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/柴米油盐工具集/" title="柴米油盐工具集">柴米油盐工具集<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/自动化甜筒/" title="自动化甜筒">自动化甜筒<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/非前端钙片/" title="非前端钙片">非前端钙片<sup>7</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle">标签</p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/分享/" title="分享">分享<sup>46</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/功能设计/" title="功能设计">功能设计<sup>13</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/原创部件/" title="原创部件">原创部件<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/心态/" title="心态">心态<sup>20</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/教程/" title="教程">教程<sup>80</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/晒猫/" title="晒猫">晒猫<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/笔记/" title="笔记">笔记<sup>121</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/算法/" title="算法">算法<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/自制插件/" title="自制插件">自制插件<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/逻辑实现/" title="逻辑实现">逻辑实现<sup>18</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+    <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">about</a></p>
+      <ul class="archive-list">
+      	<li class="archive-list-item">
+      		<a>wangbeishan@163.com</a>
+      		<a href="https://github.com/godbasin">github.com/godbasin</a>
+      	</li>
+      </ul>
+  </div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<section class="info">
+		<p> 即使梦想再小，却很伟大 ^_^ </p>
+	</section>
+	 
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2021 
+		
+		<a href="https://godbasin.github.io" target="_blank" title="被删">被删</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+
+
+
+
+
+  </body>
+</html>
