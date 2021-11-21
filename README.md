@@ -12,6 +12,7 @@
 > 我的新书[《前端的进击》](https://www.ituring.com.cn/book/2942)上架啦！欢迎阅读[背后的小故事](https://godbasin.github.io/2021/05/16/a-book-with-one-story/)~
 
 ### 最新     
+> [《Angular框架解读--Ivy编译器之AOT/JIT》](https://godbasin.github.io/2021/11/21/angular-design-ivy-4-aot-jit/)   
 > [《前端这几年--12.技术开发的门槛高吗》](https://godbasin.github.io/2021/11/12/about-front-end-12/)   
 > [《Angular框架解读--Ivy编译器之心智模型》](https://godbasin.github.io/2021/11/06/angular-design-ivy-3-mental-model/)   
 > [《Angular框架解读--Ivy编译器之CLI编译器》](https://godbasin.github.io/2021/10/31/angular-design-ivy-2-cli-compiler/)   
@@ -97,6 +98,7 @@
 > [《前端这几年--9.提升工作效率》](https://godbasin.github.io/2020/08/30/about-front-end-9/)   
 > [《前端这几年--10.我的工作历险记》](https://godbasin.github.io/2020/08/30/about-front-end-10/)   
 > [《前端这几年--11.关于一年一换的魔咒》](https://godbasin.github.io/2021/10/10/about-front-end-11/)   
+> [《前端这几年--12.技术开发的门槛高吗》](https://godbasin.github.io/2021/11/12/about-front-end-12/)   
 > [《前端这几年--写文章这件事》](https://godbasin.github.io/2021/01/10/about-writing/)   
 > [《写文章这件事》](https://godbasin.github.io/2019/03/10/work-2-article/)   
 > [《选择这件事》](https://godbasin.github.io/2018/12/16/work-1-choice/)   
