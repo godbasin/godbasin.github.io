@@ -12,6 +12,7 @@
 > 我的新书[《前端的进击》](https://www.ituring.com.cn/book/2942)上架啦！欢迎阅读[背后的小故事](https://godbasin.github.io/2021/05/16/a-book-with-one-story/)~
 
 ### 最新     
+> [《前端这几年--14.技术深度是伪命题吗》](https://godbasin.github.io/2021/12/12/about-front-end-14/)   
 > [《Angular框架解读--Ivy编译器之增量DOM》](https://godbasin.github.io/2021/12/05/angular-design-ivy-5-incremental-dom/)   
 > [《前端这几年--13.关于技术开发的职业发展》](https://godbasin.github.io/2021/11/28/about-front-end-13/)   
 > [《Angular框架解读--Ivy编译器之AOT/JIT》](https://godbasin.github.io/2021/11/21/angular-design-ivy-4-aot-jit/)   
