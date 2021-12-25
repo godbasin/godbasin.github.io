@@ -12,6 +12,7 @@
 > 我的新书[《前端的进击》](https://www.ituring.com.cn/book/2942)上架啦！欢迎阅读[背后的小故事](https://godbasin.github.io/2021/05/16/a-book-with-one-story/)~
 
 ### 最新     
+> [《2021 年度总结--冲啊打工人》](https://godbasin.github.io/2021/12/25/my-2021/)   
 > [《前端这几年--14.技术深度是伪命题吗》](https://godbasin.github.io/2021/12/12/about-front-end-14/)   
 > [《Angular框架解读--Ivy编译器之增量DOM》](https://godbasin.github.io/2021/12/05/angular-design-ivy-5-incremental-dom/)   
 > [《前端这几年--13.关于技术开发的职业发展》](https://godbasin.github.io/2021/11/28/about-front-end-13/)   
@@ -30,6 +31,26 @@
 > [《Angular框架解读--Zone区域之ngZone》](https://godbasin.github.io/2021/05/30/angular-design-zone-ngzone/)   
 > [《一本书和一个故事》](https://godbasin.github.io/2021/05/16/a-book-with-one-story/)   
 > [《Angular框架解读--Zone区域之zone.js》](https://godbasin.github.io/2021/05/01/angular-design-zonejs/)   
+
+
+### 工作杂谈    
+> [《前端这几年--1.转岗之路》](https://godbasin.github.io/2019/04/13/about-front-end-1-begin-in/)   
+> [《前端这几年--2.工作原则和选择》](https://godbasin.github.io/2019/06/30/about-front-end-2-principle/)   
+> [《前端这几年--3.关于成长和焦虑》](https://godbasin.github.io/2019/10/13/about-front-end-3-growth/)   
+> [《前端这几年--4.生命与健康》](https://godbasin.github.io/2019/11/30/about-front-end-4-health/)   
+> [《前端这几年--5.沉淀习惯养成》](https://godbasin.github.io/2020/03/22/about-front-end-5/)   
+> [《前端这几年--6.工作选择的困惑》](https://godbasin.github.io/2020/03/29/about-front-end-6/)   
+> [《前端这几年--7.情绪与保持清醒》](https://godbasin.github.io/2020/04/05/about-front-end-7/)   
+> [《前端这几年--8.工作中的矛盾》](https://godbasin.github.io/2020/04/18/about-front-end-8/)   
+> [《前端这几年--9.提升工作效率》](https://godbasin.github.io/2020/08/30/about-front-end-9/)   
+> [《前端这几年--10.我的工作历险记》](https://godbasin.github.io/2020/08/30/about-front-end-10/)   
+> [《前端这几年--11.关于一年一换的魔咒》](https://godbasin.github.io/2021/10/10/about-front-end-11/)   
+> [《前端这几年--12.技术开发的门槛高吗》](https://godbasin.github.io/2021/11/12/about-front-end-12/)   
+> [《前端这几年--13.关于技术开发的职业发展》](https://godbasin.github.io/2021/11/28/about-front-end-13/)   
+> [《前端这几年--14.技术深度是伪命题吗》](https://godbasin.github.io/2021/12/12/about-front-end-14/)   
+> [《前端这几年--写文章这件事》](https://godbasin.github.io/2021/01/10/about-writing/)   
+> [《写文章这件事》](https://godbasin.github.io/2019/03/10/work-2-article/)   
+> [《选择这件事》](https://godbasin.github.io/2018/12/16/work-1-choice/)   
 
 ### Angular框架解读 
 > [《Angular框架解读--预热篇》](https://godbasin.github.io/2021/03/13/angular-design-0-prestart/)   
@@ -90,23 +111,6 @@
 > [《前端模板引擎》](https://godbasin.github.io/2017/10/21/template-engine/)   
 > [《对话抽象》](https://godbasin.github.io/2017/10/14/dialogue-abstraction/)   
 > [《前端思维转变--从事件驱动到数据驱动》](https://godbasin.github.io/2017/09/29/data-driven-or-event-driven/)      
-
-### 工作杂谈    
-> [《前端这几年--1.转岗之路》](https://godbasin.github.io/2019/04/13/about-front-end-1-begin-in/)   
-> [《前端这几年--2.工作原则和选择》](https://godbasin.github.io/2019/06/30/about-front-end-2-principle/)   
-> [《前端这几年--3.关于成长和焦虑》](https://godbasin.github.io/2019/10/13/about-front-end-3-growth/)   
-> [《前端这几年--4.生命与健康》](https://godbasin.github.io/2019/11/30/about-front-end-4-health/)   
-> [《前端这几年--5.沉淀习惯养成》](https://godbasin.github.io/2020/03/22/about-front-end-5/)   
-> [《前端这几年--6.工作选择的困惑》](https://godbasin.github.io/2020/03/29/about-front-end-6/)   
-> [《前端这几年--7.情绪与保持清醒》](https://godbasin.github.io/2020/04/05/about-front-end-7/)   
-> [《前端这几年--8.工作中的矛盾》](https://godbasin.github.io/2020/04/18/about-front-end-8/)   
-> [《前端这几年--9.提升工作效率》](https://godbasin.github.io/2020/08/30/about-front-end-9/)   
-> [《前端这几年--10.我的工作历险记》](https://godbasin.github.io/2020/08/30/about-front-end-10/)   
-> [《前端这几年--11.关于一年一换的魔咒》](https://godbasin.github.io/2021/10/10/about-front-end-11/)   
-> [《前端这几年--12.技术开发的门槛高吗》](https://godbasin.github.io/2021/11/12/about-front-end-12/)   
-> [《前端这几年--写文章这件事》](https://godbasin.github.io/2021/01/10/about-writing/)   
-> [《写文章这件事》](https://godbasin.github.io/2019/03/10/work-2-article/)   
-> [《选择这件事》](https://godbasin.github.io/2018/12/16/work-1-choice/)   
 
 ### 前端面试
 > [《前端面试这件事--1.面试准备》](https://godbasin.github.io/2020/03/07/interview-1-ready/)   
