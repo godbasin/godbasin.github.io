@@ -1,0 +1,1234 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  
+    <title>我所理解的前端工程化 | Here. There.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="被删">
+    
+    <meta name="description" content="前端工程化这个词出现的频率越来越高，一直没有明确的定义，有些人认为是模块化和自动化的工具，比如 Webpack/Gulp、脚手架、组件化等，但工具只是一些辅助手段，并不能作为工程化来理解。">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Here. There." type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?3d902de4a19cf2bf179534ffd2dd7b7f";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+</html>
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/sun.png" alt="Here. There." title="Here. There."/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Here. There.">Here. There.</a></h1>
+				<h2 class="blog-motto">Love ice cream. Love sunshine. Love life. Love the world. Love myself. Love you.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="https://github.com/godbasin/godbasin.github.io">所有文章</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">分类</a></li>
+					
+						<li><a href="https://godbasin.github.io/front-end-playground">前端游乐场</a></li>
+					
+						<li><a href="/about">关于我</a></li>
+					
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2022/02/07/front-end-engineering/" title="我所理解的前端工程化" itemprop="url">我所理解的前端工程化</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://godbasin.github.io" title="被删">被删</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2022-02-07T07:22:23.000Z" itemprop="datePublished">2022-02-07</time>
+    更新日期:<time datetime="2022-02-07T07:25:11.992Z" itemprop="dateModified">2022-02-07</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前端项目开发常见问题"><span class="toc-number">1.</span> <span class="toc-text">前端项目开发常见问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#系统质量"><span class="toc-number">1.1.</span> <span class="toc-text">系统质量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#系统质量的下降"><span class="toc-number">1.1.1.</span> <span class="toc-text">系统质量的下降</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#提升系统质量"><span class="toc-number">1.1.2.</span> <span class="toc-text">提升系统质量</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开发效率"><span class="toc-number">1.2.</span> <span class="toc-text">开发效率</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#开发效率的下降"><span class="toc-number">1.2.1.</span> <span class="toc-text">开发效率的下降</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#提升开发效率"><span class="toc-number">1.2.2.</span> <span class="toc-text">提升开发效率</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结束语"><span class="toc-number">1.3.</span> <span class="toc-text">结束语</span></a></li></ol></li></ol>
+		</div>
+		
+		<p>前端工程化这个词出现的频率越来越高，一直没有明确的定义，有些人认为是模块化和自动化的工具，比如 Webpack/Gulp、脚手架、组件化等，但工具只是一些辅助手段，并不能作为工程化来理解。</p>
+<a id="more"></a>
+<p>个人认为，前端工程化致力于提升工程的开发效率、协作效率、项目质量，贯穿项目设计、开发、测试、上线、维护的整个过程。</p>
+<p>那么，工程化要解决的问题，便是我们在这些过程中遇到的一些问题了。</p>
+<h1 id="前端项目开发常见问题"><a href="#前端项目开发常见问题" class="headerlink" title="前端项目开发常见问题"></a>前端项目开发常见问题</h1><p>相信大家的日常工作中也能感受到，相比于从 0 到 1 搭建项目，我们的大部分工作都是在维护项目，基于现有的项目上进行迭代和开发。正所谓铁打的营盘流水的兵，每个项目都会经历很多开发的参与、协作和交接，在这个过程中常常会遇到很多的问题，这些问题可以分为两类：<strong>系统质量的下降</strong>，以及<strong>开发效率的下降</strong>。</p>
+<h2 id="系统质量"><a href="#系统质量" class="headerlink" title="系统质量"></a>系统质量</h2><blockquote>
+<p>“没有 BUG 的系统是不存在的。”  – 《被删的开发手册》</p>
+</blockquote>
+<h3 id="系统质量的下降"><a href="#系统质量的下降" class="headerlink" title="系统质量的下降"></a>系统质量的下降</h3><p>BUG 的出现有很多的可能性，比如需求设计不严谨、代码实现的逻辑有漏洞、不在预期之内的异常逻辑分支，等等。除了方案设计和思考的经验不足，BUG 很多时候也会因为对项目的不熟悉、对系统的理解不深入引入，这意味着以下的过程会导致 BUG 的增加：</p>
+<ol>
+<li>项目频繁地调整（新增或者更换）开发人员，由于不熟悉项目，每个新加入的小伙伴都可能会埋下新的 BUG。</li>
+<li>系统功能新增和迭代、不断壮大，各个模块间的耦合增加、复杂度增加。如果没法掌握系统的所有细节，很可能牵一发而动全身，产生自己认知以外的 BUG。</li>
+</ol>
+<p>对于处于快速迭代、不断拓展阶段的项目来说，不管是人员的变动、还是项目的拓展都是无法避免的。除此之外，为了降低系统的复杂度，当项目发展到一定阶段的时候，会对系统进行局部或是整体的架构调整，比如模块的拆分、各个模块间的依赖解耦、引入新的状态管理工具、重复逻辑进行抽象和封装等等。</p>
+<p>新技术的引入会缓解系统复杂度带来的稳定性问题，但同时也可能会引入新的问题，比如：</p>
+<ul>
+<li>部分功能无法与新技术兼容，成为历史遗留问题</li>
+<li>较大范围的架构调整影响面很广，可能埋下难以发现的 BUG</li>
+</ul>
+<p>可见，一个项目不断发展的过程中，都会面临系统质量下降的问题。</p>
+<h3 id="提升系统质量"><a href="#提升系统质量" class="headerlink" title="提升系统质量"></a>提升系统质量</h3><p>为了提升系统质量，我们需要对项目进行合理的架构调整，提升系统的可读性、可维护性、可测试行、稳定性，从而提升系统发布的稳定性。</p>
+<p>我们在进行架构设计时，需要根据项目的预期和现状来设计，保留拓展性的同时，避免过度设计。因此，随着项目不断发展，原有的架构设计可能不再适合，此时我们需要进行优化和调整，比如：</p>
+<ul>
+<li>引入新的技术和工具</li>
+<li>团队成员增加，沟通成本和对规范的理解出现差异</li>
+<li>项目代码量和文件数的增加</li>
+<li>进行自动化测试能力的覆盖</li>
+<li>搭建完善的监控和告警体系</li>
+</ul>
+<p>在这个过程中，我们可能分别引入了新的代码构建、代码规范和自动化测试工具，搭建了新的监控系统、发布系统、流程控制等，这些都属于前端工程化的一部分。</p>
+<p>但是对于开发来说，开发流程变得繁琐，意味着工作内容更复杂，同时还增加了很多新工具和系统的熟悉成本。那么，我们还可以通过优化项目的研发和发布流程，来提升项目的开发效率。</p>
+<h2 id="开发效率"><a href="#开发效率" class="headerlink" title="开发效率"></a>开发效率</h2><blockquote>
+<p>“今天又要加班了，因为今天的代码还没开始写。” – 《被删的开发手册》</p>
+</blockquote>
+<h3 id="开发效率的下降"><a href="#开发效率的下降" class="headerlink" title="开发效率的下降"></a>开发效率的下降</h3><p>系统上线之后，开发的工作内容重心，会从功能开发逐渐转向其它内容。除了新功能的评审和设计以外，还会包括：</p>
+<ul>
+<li>用户反馈问题跟进和定位</li>
+<li>线上 BUG 修复和紧急发布</li>
+<li>处理系统的监控告警，排查异常问题</li>
+<li>新功能灰度发布过程，自测、产品验证功能、提测、修复 BUG、灰度发布等各个流程都需要人工操作和主动关注</li>
+<li>为了保证系统质量，需要完善自动化测试能力，包括单元测试、UI 测试、集成测试等</li>
+<li>项目成员的调整，需要进行工作的交接、指导对方的工作内容等</li>
+</ul>
+<p>开发的工作内容变得复杂，需要关注的事情也更多，对于各个系统（监控告警系统、日志系统、测试系统、发布系统等）也都需要熟悉成本和操作成本。在各个工作内容之间切换，也常常容易出现步骤的遗漏，导致一些流程上的问题，比如：</p>
+<ol>
+<li>系统灰度到一半，处理其它事情忘了全量。</li>
+<li>系统发布之后，去处理紧急 BUG、忘记看监控，直到收到大量的用户反馈。</li>
+<li>线上紧急 BUG 修复了，急着发布忘了进行自动化测试。</li>
+</ol>
+<p>随着项目规模变大，系统的复杂度也随之上升，上面所提到的工作量也都会增加，开发效率会肉眼可见地受到影响。以前一天工作量的功能开发，如今需要三天时间才能完成，因为每天只有三分之一的时间（甚至更少）可以用来开发新功能。</p>
+<p>在这个项目阶段，开发每天的杂事太多、效率太低、浑浑噩噩不知道都做了些什么，团队面临着项目复杂度上升、系统质量不稳定、技术债务越来越多、团队工作效率下降等问题。</p>
+<h3 id="提升开发效率"><a href="#提升开发效率" class="headerlink" title="提升开发效率"></a>提升开发效率</h3><p>项目研发和发布流程优化的核心点在于：将一切需要手动操作和关注的内容自动化。</p>
+<p>那么，我们先来梳理下项目开发和发布过程中，到底有多少繁琐的工作可以进行自动化。一般来说，开发在接到产品需求单后，会涉及到分支管理、代码构建、环境部署、测试/验证、问题修复、灰度发布、监控告警、需求单状态扭转等各个流程。</p>
+<p>每一次功能发布，都需要花费很多的精力在各个流程步骤上。我们可以将这些步骤都转为自动化，就可以让开发的精力聚焦在功能的设计和实现上。对于流程自动化，业界比较成熟的解决方案是使用持续集成（continuous integration，简称 CI）和持续部署（continuous deployment，简称 CD）：</p>
+<ul>
+<li>持续集成（CI）：目的是让产品可以快速迭代，同时还能保持高质量</li>
+<li>持续部署（CD）：目的是代码在任何时刻都是可部署、可进入生产阶段</li>
+</ul>
+<p>CI 在项目中的实践，指团队成员频繁（一天多次）地提交代码到主干分支，每次提交后会自动触发自动化验证的任务集合，以便尽可能地提前发现问题；CD 在项目中的实践，指代码通过评审以后，可自动化、可控、多批次地部署到生产环境，CD 的前提是能自动化完成测试、构建、部署等步骤。</p>
+<p>CI/CD 在项目中的落地，很多时候会表现为流水线的开发模式：通过建立完整的 CI/CD 流水线，涵盖整个研发流程，可有效地提高效率。一般来说，我们可以搭建这样的 CI/CD 流水线：</p>
+<ul>
+<li>需求单分配：分配并自动拉取相应 Git 分支</li>
+<li>代码提交：代码规范检查 + 自动化测试 + 部署测试环境 + 根据需求单配置通知相应的产品和测试</li>
+<li>产品验证/功能测试：BUG 单自动关联需求单和分支 + 验证完成后，根据需求单通知开发侧</li>
+<li>BUG 修复：代码规范检查 + 自动化测试 + 部署测试环境 + 根据分支 BUG 单和需求单通知测试 + 验证完成后，根据需求单通知开发侧</li>
+<li>代码合入主干：向团队成员发起代码 Review + Review 通过后代码合入主干</li>
+<li>日常发布：定时器发起发布流程 + 预发布环境部署 + 进行自动化测试 + 测试通过后进入灰度过程</li>
+<li>灰度发布：根据配置比例进行灰度 + 灰度过程中自动化进行监控 + 可选择性进入快速回滚流程</li>
+<li>全量发布：自动扭转需求单状态，并将版本进行归档（Git Tag）</li>
+</ul>
+<p>通过将以上流程自动化，可以节省开发的很多人工操作时间、提升开发效率的同时，也避免了人工操作容易出现的遗漏和失误。将自动化流水线与通知/告警机器人、工作群、需求单系统、BUG 系统、代码管理系统、发布系统、监控系统结合，实现全研发和发布流程的自动化，开发可从各种杂事中释放，专注于功能开发的实现。</p>
+<p>越是大规模、系统建设完备的团队，开发流程中消耗在多人协作和各个系统的操作中的精力越多，搭建 CI/CD 后更能体会到自动化流程带来的便利。</p>
+<p>当然，搭建 CI/CD 的过程中，也需要投入不少的人力精力。因此，很多时候我们可以考虑性价比，从对研发效能影响最大的痛点开始进行建设，可以最快速和有效地提升团队的开发效率，让更多的人愿意参与到 CI/CD 的建设中。</p>
+<h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><blockquote>
+<p>“能用机器解决的问题，就不要依赖人。” – 《被删的开发手册》</p>
+</blockquote>
+<p>项目维护阶段的最大痛点，其实在于开发无法聚焦自身的工作内容，常常需要在各种系统中进行操作和切换，从而带来开发效率的下降，以及注意力分散、无法更全面的思考导致了不合理的设计、新的 BUG 引入，而影响了系统的质量。</p>
+<p>前端工程化的出现，正是为了解决系统质量和效率低下的问题。但前端工程化并不只是局限于代码构建和流水线，可以将其理解为解决项目开发过程中遇到的所有问题，目的在于提升系统质量和开发效率。</p>
+  
+	</div>
+	<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/2code2.jpg" width="200" height="200" style="display:block;margin: 0 auto;" />
+	<p style="text-align: center;margin-top: 10px;margin-bottom: 10px;">码生艰难，写文不易，给我家猪囤点猫粮了喵~</p>
+	<p style="text-align: center;"><a href="https://space.bilibili.com/42233366">B站: 被删</a></p>
+	<div class="article-content">
+		<p style="margin-top:50px;">
+			查看Github有更多内容噢：<a href="https://github.com/godbasin">https://github.com/godbasin</a>
+			<br>
+			更欢迎来<a href="https://godbasin.github.io/front-end-playground">被删的前端游乐场</a>边撸猫边学前端噢
+			<br>
+			<br>
+			如果你想要关注日常生活中的我，欢迎关注“牧羊的猪”公众号噢
+		</p>
+	</div>
+	<div class="author-right">
+  		<p>作者：被删</p>
+  		<p>出处：<a href="https://godbasin.github.io">https://godbasin.github.io</a></p>
+  		<p>本文版权归作者所有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利。</p>
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/逻辑实现/">逻辑实现</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/前端解决方案/">前端解决方案</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  
+<!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a href="http://www.jiathis.com/share?uid=2134021" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config = {data_track_clickback:'true'};
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js?uid=2134021" charset="utf-8"></script>
+<!-- JiaThis Button END -->   
+
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2022/01/09/angular-design-ivy-6-detect-change/"  title="Angular框架解读--Ivy编译器之变更检测">
+ <strong>NEXT:</strong><br/> 
+ <span>Angular框架解读--Ivy编译器之变更检测
+</span>
+</a>
+</div>
+
+</nav>
+
+	<!-- 如果不是首页且没使用 `comments: false` 关闭评论，则尝试加载评论 -->
+
+    <!-- 配置中启用多说时，导入相应代码 -->
+    
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前端项目开发常见问题"><span class="toc-number">1.</span> <span class="toc-text">前端项目开发常见问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#系统质量"><span class="toc-number">1.1.</span> <span class="toc-text">系统质量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#系统质量的下降"><span class="toc-number">1.1.1.</span> <span class="toc-text">系统质量的下降</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#提升系统质量"><span class="toc-number">1.1.2.</span> <span class="toc-text">提升系统质量</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开发效率"><span class="toc-number">1.2.</span> <span class="toc-text">开发效率</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#开发效率的下降"><span class="toc-number">1.2.1.</span> <span class="toc-text">开发效率的下降</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#提升开发效率"><span class="toc-number">1.2.2.</span> <span class="toc-text">提升开发效率</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结束语"><span class="toc-number">1.3.</span> <span class="toc-text">结束语</span></a></li></ol></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  	
+	<div class="archiveslist">
+		<p class="asidetitle">最近文章</p>
+			<ul class="archive-list">
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2022/02/07/front-end-engineering/" title="我所理解的前端工程化">我所理解的前端工程化</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2022/01/09/angular-design-ivy-6-detect-change/" title="Angular框架解读--Ivy编译器之变更检测">Angular框架解读--Ivy编译...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/12/25/my-2021/" title="2021 年度总结--冲啊打工人">2021 年度总结--冲啊打工人...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/12/12/about-front-end-14/" title="前端这几年--14.技术深度是伪命题吗">前端这几年--14.技术深度是伪命题...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/12/05/angular-design-ivy-5-incremental-dom/" title="Angular框架解读--Ivy编译器之增量DOM">Angular框架解读--Ivy编译...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/11/28/about-front-end-13/" title="前端这几年--13.关于技术开发的职业发展">前端这几年--13.关于技术开发的职...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/11/21/angular-design-ivy-4-aot-jit/" title="Angular框架解读--Ivy编译器之AOT/JIT">Angular框架解读--Ivy编译...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/11/12/about-front-end-12/" title="前端这几年--12.技术开发的门槛高吗">前端这几年--12.技术开发的门槛高...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/11/06/angular-design-ivy-3-mental-model/" title="Angular框架解读--Ivy编译器之心智模型">Angular框架解读--Ivy编译...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2021/10/31/angular-design-ivy-2-cli-compiler/" title="Angular框架解读--Ivy编译器之CLI编译器">Angular框架解读--Ivy编译...</a>
+				</li>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+	</div>
+
+
+  
+  <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">归档</a></p>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">二月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">五月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">十月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">41</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">9</span></li></ul>
+  </div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle"><a href="/categories">分类</a></p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/Angular源码/" title="Angular源码">Angular源码<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/CSS炒饭/" title="CSS炒饭">CSS炒饭<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/D3小馒头/" title="D3小馒头">D3小馒头<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular2火锅/" title="angular2火锅">angular2火锅<sup>25</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular混搭/" title="angular混搭">angular混搭<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/box2djs方糖/" title="box2djs方糖">box2djs方糖<sup>34</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/cyclejs哈根达斯/" title="cyclejs哈根达斯">cyclejs哈根达斯<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/jQuery杂烩/" title="jQuery杂烩">jQuery杂烩<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/js什锦/" title="js什锦">js什锦<sup>27</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/react沙拉/" title="react沙拉">react沙拉<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/three-js奶茶/" title="three.js奶茶">three.js奶茶<sup>5</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/vue八宝粥/" title="vue八宝粥">vue八宝粥<sup>30</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/webpack宾治/" title="webpack宾治">webpack宾治<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/web乱炖/" title="web乱炖">web乱炖<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端满汉全席/" title="前端满汉全席">前端满汉全席<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端解决方案/" title="前端解决方案">前端解决方案<sup>14</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/喵/" title="喵">喵<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/小程序双皮奶/" title="小程序双皮奶">小程序双皮奶<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/工作这杯茶/" title="工作这杯茶">工作这杯茶<sup>25</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/应用巧克力盒/" title="应用巧克力盒">应用巧克力盒<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/思想棉花糖/" title="思想棉花糖">思想棉花糖<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/柴米油盐工具集/" title="柴米油盐工具集">柴米油盐工具集<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/自动化甜筒/" title="自动化甜筒">自动化甜筒<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/非前端钙片/" title="非前端钙片">非前端钙片<sup>7</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle">标签</p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/分享/" title="分享">分享<sup>49</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/功能设计/" title="功能设计">功能设计<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/原创部件/" title="原创部件">原创部件<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/心态/" title="心态">心态<sup>21</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/教程/" title="教程">教程<sup>80</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/晒猫/" title="晒猫">晒猫<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/笔记/" title="笔记">笔记<sup>121</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/算法/" title="算法">算法<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/自制插件/" title="自制插件">自制插件<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/逻辑实现/" title="逻辑实现">逻辑实现<sup>19</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+    <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">about</a></p>
+      <ul class="archive-list">
+      	<li class="archive-list-item">
+      		<a>wangbeishan@163.com</a>
+      		<a href="https://github.com/godbasin">github.com/godbasin</a>
+      	</li>
+      </ul>
+  </div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<section class="info">
+		<p> 即使梦想再小，却很伟大 ^_^ </p>
+	</section>
+	 
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2022 
+		
+		<a href="https://godbasin.github.io" target="_blank" title="被删">被删</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+
+
+
+
+
+  </body>
+</html>
