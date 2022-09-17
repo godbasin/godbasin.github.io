@@ -12,6 +12,8 @@
 > 我的新书[《前端的进击》](https://www.ituring.com.cn/book/2942)上架啦！欢迎阅读[背后的小故事](https://godbasin.github.io/2021/05/16/a-book-with-one-story/)~
 
 ### 最新     
+
+> [《前端这几年--15.关于互联网寒冬》](https://godbasin.github.io/2022/09/17/about-front-end-15/)   
 > [《前端性能优化--容器篇》](https://godbasin.github.io/2022/08/14/front-end-performance-container/)   
 > [《前端性能优化--Canvas篇》](https://godbasin.github.io/2022/07/09/front-end-performance-canvas/)   
 > [《前端性能优化--卡顿篇》](https://godbasin.github.io/2022/06/04/front-end-performance-no-responding/)   
