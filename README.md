@@ -13,6 +13,7 @@
 
 ### 最新     
 
+> [《前端性能优化--SSR篇》](https://godbasin.github.io/2022/10/15/front-end-performance-ssr/)   
 > [《前端这几年--15.关于互联网寒冬》](https://godbasin.github.io/2022/09/17/about-front-end-15/)   
 > [《前端性能优化--容器篇》](https://godbasin.github.io/2022/08/14/front-end-performance-container/)   
 > [《前端性能优化--Canvas篇》](https://godbasin.github.io/2022/07/09/front-end-performance-canvas/)   
