@@ -12,16 +12,6 @@
 > 我的新书[《前端的进击》](https://www.ituring.com.cn/book/2942)上架啦！欢迎阅读[背后的小故事](https://godbasin.github.io/2021/05/16/a-book-with-one-story/)~
 
 ### 最新     
-
-> [《前端性能优化--项目管理篇》](https://godbasin.github.io/2022/11/20/front-end-performance-optimization-project/)   
-> [《前端性能优化--SSR篇》](https://godbasin.github.io/2022/10/15/front-end-performance-ssr/)   
-> [《前端这几年--15.关于互联网寒冬》](https://godbasin.github.io/2022/09/17/about-front-end-15/)   
-> [《前端性能优化--容器篇》](https://godbasin.github.io/2022/08/14/front-end-performance-container/)   
-> [《前端性能优化--Canvas篇》](https://godbasin.github.io/2022/07/09/front-end-performance-canvas/)   
-> [《前端性能优化--卡顿篇》](https://godbasin.github.io/2022/06/04/front-end-performance-no-responding/)   
-> [《前端性能优化--渲染篇》](https://godbasin.github.io/2022/05/15/front-end-performance-render/)   
-> [《前端性能优化--加载流程篇》](https://godbasin.github.io/2022/04/09/front-end-performance-startup/)   
-> [《前端性能优化--归纳篇》](https://godbasin.github.io/2022/03/06/front-end-performance-optimization/)   
 > [《前端这几年--答辩晋级这件事》](https://godbasin.github.io/2022/02/27/about-updating/)   
 > [《我所理解的前端工程化》](https://godbasin.github.io/2022/02/07/front-end-engineering/)   
 > [《Angular框架解读--Ivy编译器之变更检测》](https://godbasin.github.io/2022/01/09/angular-design-ivy-6-detect-change/)   
