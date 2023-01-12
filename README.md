@@ -13,6 +13,7 @@
 
 ### 最新     
 
+> [《如何设计与管理一个前端项目》](https://godbasin.github.io/2023/01/12/design-and-manage-front-end-project/)   
 > [《技术方案的调研和设计过程》](https://godbasin.github.io/2022/12/03/research-and-design-process/)   
 > [《前端性能优化--项目管理篇》](https://godbasin.github.io/2022/11/20/front-end-performance-optimization-project/)   
 > [《前端性能优化--SSR篇》](https://godbasin.github.io/2022/10/15/front-end-performance-ssr/)   
@@ -26,25 +27,6 @@
 > [《前端这几年--答辩晋级这件事》](https://godbasin.github.io/2022/02/27/about-updating/)   
 > [《我所理解的前端工程化》](https://godbasin.github.io/2022/02/07/front-end-engineering/)   
 > [《Angular框架解读--Ivy编译器之变更检测》](https://godbasin.github.io/2022/01/09/angular-design-ivy-6-detect-change/)   
-> [《2021 年度总结--冲啊打工人》](https://godbasin.github.io/2021/12/25/my-2021/)   
-> [《前端这几年--14.技术深度是伪命题吗》](https://godbasin.github.io/2021/12/12/about-front-end-14/)   
-> [《Angular框架解读--Ivy编译器之增量DOM》](https://godbasin.github.io/2021/12/05/angular-design-ivy-5-incremental-dom/)   
-> [《前端这几年--13.关于技术开发的职业发展》](https://godbasin.github.io/2021/11/28/about-front-end-13/)   
-> [《Angular框架解读--Ivy编译器之AOT/JIT》](https://godbasin.github.io/2021/11/21/angular-design-ivy-4-aot-jit/)   
-> [《前端这几年--12.技术开发的门槛高吗》](https://godbasin.github.io/2021/11/12/about-front-end-12/)   
-> [《Angular框架解读--Ivy编译器之心智模型》](https://godbasin.github.io/2021/11/06/angular-design-ivy-3-mental-model/)   
-> [《Angular框架解读--Ivy编译器之CLI编译器》](https://godbasin.github.io/2021/10/31/angular-design-ivy-2-cli-compiler/)   
-> [《浏览器是如何进行页面渲染的》](https://godbasin.github.io/2021/10/16/web-browser-render/)   
-> [《前端这几年--11.关于一年一换的魔咒》](https://godbasin.github.io/2021/10/10/about-front-end-11/)   
-> [《Angular框架解读--Ivy编译器的视图数据和依赖解析》](https://godbasin.github.io/2021/09/19/angular-design-ivy-1-view-data-and-node-injector/)   
-> [《Angular框架解读--Ivy编译器整体设计》](https://godbasin.github.io/2021/08/15/angular-design-ivy-0-design/)   
-> [《Angular框架解读--依赖注入的引导过程》](https://godbasin.github.io/2021/07/25/angular-design-di-3-bootstrap/)   
-> [《Angular框架解读--多级依赖注入设计》](https://godbasin.github.io/2021/07/11/angular-design-di-2-hierarchical-di/)   
-> [《Angular框架解读--依赖注入的基本概念》](https://godbasin.github.io/2021/06/27/angular-design-di-1-basic-concepts/)   
-> [《Angular框架解读--模块化组织》](https://godbasin.github.io/2021/06/13/angular-design-module/)   
-> [《Angular框架解读--Zone区域之ngZone》](https://godbasin.github.io/2021/05/30/angular-design-zone-ngzone/)   
-> [《一本书和一个故事》](https://godbasin.github.io/2021/05/16/a-book-with-one-story/)   
-> [《Angular框架解读--Zone区域之zone.js》](https://godbasin.github.io/2021/05/01/angular-design-zonejs/)   
 
 
 ### 工作杂谈    
