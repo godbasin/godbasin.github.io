@@ -13,6 +13,7 @@
 
 ### 最新     
 
+> [《为什么项目复盘很重要》](https://godbasin.github.io/2023/03/21/why-project-reviews-are-important/)   
 > [《如何设计与管理一个前端项目》](https://godbasin.github.io/2023/01/12/design-and-manage-front-end-project/)   
 > [《技术方案的调研和设计过程》](https://godbasin.github.io/2022/12/03/research-and-design-process/)   
 > [《前端性能优化--项目管理篇》](https://godbasin.github.io/2022/11/20/front-end-performance-optimization-project/)   
@@ -22,12 +23,16 @@
 > [《前端性能优化--Canvas篇》](https://godbasin.github.io/2022/07/09/front-end-performance-canvas/)   
 > [《前端性能优化--卡顿篇》](https://godbasin.github.io/2022/06/04/front-end-performance-no-responding/)   
 > [《前端性能优化--渲染篇》](https://godbasin.github.io/2022/05/15/front-end-performance-render/)   
+
+### 前端性能优化
+> [《前端性能优化--项目管理篇》](https://godbasin.github.io/2022/11/20/front-end-performance-optimization-project/)   
+> [《前端性能优化--SSR篇》](https://godbasin.github.io/2022/10/15/front-end-performance-ssr/)   
+> [《前端性能优化--容器篇》](https://godbasin.github.io/2022/08/14/front-end-performance-container/)   
+> [《前端性能优化--Canvas篇》](https://godbasin.github.io/2022/07/09/front-end-performance-canvas/)   
+> [《前端性能优化--卡顿篇》](https://godbasin.github.io/2022/06/04/front-end-performance-no-responding/)   
+> [《前端性能优化--渲染篇》](https://godbasin.github.io/2022/05/15/front-end-performance-render/)   
 > [《前端性能优化--加载流程篇》](https://godbasin.github.io/2022/04/09/front-end-performance-startup/)   
 > [《前端性能优化--归纳篇》](https://godbasin.github.io/2022/03/06/front-end-performance-optimization/)   
-> [《前端这几年--答辩晋级这件事》](https://godbasin.github.io/2022/02/27/about-updating/)   
-> [《我所理解的前端工程化》](https://godbasin.github.io/2022/02/07/front-end-engineering/)   
-> [《Angular框架解读--Ivy编译器之变更检测》](https://godbasin.github.io/2022/01/09/angular-design-ivy-6-detect-change/)   
-
 
 ### 工作杂谈    
 > [《前端这几年--1.转岗之路》](https://godbasin.github.io/2019/04/13/about-front-end-1-begin-in/)   
@@ -44,9 +49,34 @@
 > [《前端这几年--12.技术开发的门槛高吗》](https://godbasin.github.io/2021/11/12/about-front-end-12/)   
 > [《前端这几年--13.关于技术开发的职业发展》](https://godbasin.github.io/2021/11/28/about-front-end-13/)   
 > [《前端这几年--14.技术深度是伪命题吗》](https://godbasin.github.io/2021/12/12/about-front-end-14/)   
+> [《前端这几年--15.关于互联网寒冬》](https://godbasin.github.io/2022/09/17/about-front-end-15/)   
+> [《前端这几年--答辩晋级这件事》](https://godbasin.github.io/2022/02/27/about-updating/)   
 > [《前端这几年--写文章这件事》](https://godbasin.github.io/2021/01/10/about-writing/)   
 > [《写文章这件事》](https://godbasin.github.io/2019/03/10/work-2-article/)   
 > [《选择这件事》](https://godbasin.github.io/2018/12/16/work-1-choice/)   
+
+### 前端杂谈    
+> [《我所理解的前端工程化》](https://godbasin.github.io/2022/02/07/front-end-engineering/)   
+> [《在线文档的网络层开发思考--职责驱动设计》](https://godbasin.github.io/2021/01/23/network-design-responsibility-driven-design/)   
+> [《如何设计一个任务管理器》](https://godbasin.github.io/2020/11/01/task-runner-design/)   
+> [《在线Excel项目到底有多刺激》](https://godbasin.github.io/2020/10/10/why-spreadsheet-app-excited/)   
+> [《前端监控体系搭建》](https://godbasin.github.io/2020/10/07/monitor-and-report/)   
+> [《补齐Web前端性能分析的工具盲点》](https://godbasin.github.io/2020/08/29/front-end-performance-analyze/)   
+> [《在线文档的网络层设计思考》](https://godbasin.github.io/2020/08/23/online-doc-network/)   
+> [《VSCode 源码解读：IPC通信机制》](https://godbasin.github.io/2020/08/15/vscode-ipc/)   
+> [《VSCode 源码解读：事件系统设计》](https://godbasin.github.io/2020/07/05/vscode-event/)   
+> [《响应式编程在前端领域的应用》](https://godbasin.github.io/2020/07/04/reactive-programing/)   
+> [《谈谈依赖和解耦》](https://godbasin.github.io/2020/06/26/module-seperate/)   
+> [《大型前端项目要怎么跟踪和分析函数调用链》](https://godbasin.github.io/2020/06/21/trace-stash/)   
+> [《多人协作如何进行冲突处理》](https://godbasin.github.io/2020/06/14/operation-transform/)   
+> [《前端构建大型应用》](https://godbasin.github.io/2018/07/07/build-application/)   
+> [《数据抽离与数据管理》](https://godbasin.github.io/2018/06/17/component-communication-with-data-model/)   
+> [《组件配置化》](https://godbasin.github.io/2018/06/09/component-with-configuration/)   
+> [《一个组件的自我修养》](https://godbasin.github.io/2018/06/02/component-with-itself/)   
+> [《页面区块化与应用组件化》](https://godbasin.github.io/2018/05/26/app-component-isolation/)   
+> [《前端模板引擎》](https://godbasin.github.io/2017/10/21/template-engine/)   
+> [《对话抽象》](https://godbasin.github.io/2017/10/14/dialogue-abstraction/)   
+> [《前端思维转变--从事件驱动到数据驱动》](https://godbasin.github.io/2017/09/29/data-driven-or-event-driven/)      
 
 ### Angular框架解读 
 > [《Angular框架解读--预热篇》](https://godbasin.github.io/2021/03/13/angular-design-0-prestart/)   
@@ -63,6 +93,7 @@
 > [《Angular框架解读--Ivy编译器之心智模型》](https://godbasin.github.io/2021/11/06/angular-design-ivy-3-mental-model/)   
 > [《Angular框架解读--Ivy编译器之AOT/JIT》](https://godbasin.github.io/2021/11/21/angular-design-ivy-4-aot-jit/)   
 > [《Angular框架解读--Ivy编译器之增量DOM》](https://godbasin.github.io/2021/12/05/angular-design-ivy-5-incremental-dom/)   
+> [《Angular框架解读--Ivy编译器之变更检测》](https://godbasin.github.io/2022/01/09/angular-design-ivy-6-detect-change/)   
 
 ### 深入理解Vue.js实战  
 > [前言 前端框架的出现](https://godbasin.github.io/vue-ebook/vue-ebook/0.html)  
@@ -85,28 +116,6 @@
 > [第15章 Vue 周边拓展](https://godbasin.github.io/vue-ebook/vue-ebook/15.html)  
 > [第16章 关于 Vue 3.0](https://godbasin.github.io/vue-ebook/vue-ebook/16.html)  
 > [后记 关于框架选型](https://godbasin.github.io/vue-ebook/vue-ebook/99.html)  
-
-### 前端杂谈    
-> [《在线文档的网络层开发思考--职责驱动设计》](https://godbasin.github.io/2021/01/23/network-design-responsibility-driven-design/)   
-> [《如何设计一个任务管理器》](https://godbasin.github.io/2020/11/01/task-runner-design/)   
-> [《在线Excel项目到底有多刺激》](https://godbasin.github.io/2020/10/10/why-spreadsheet-app-excited/)   
-> [《前端监控体系搭建》](https://godbasin.github.io/2020/10/07/monitor-and-report/)   
-> [《补齐Web前端性能分析的工具盲点》](https://godbasin.github.io/2020/08/29/front-end-performance-analyze/)   
-> [《在线文档的网络层设计思考》](https://godbasin.github.io/2020/08/23/online-doc-network/)   
-> [《VSCode 源码解读：IPC通信机制》](https://godbasin.github.io/2020/08/15/vscode-ipc/)   
-> [《VSCode 源码解读：事件系统设计》](https://godbasin.github.io/2020/07/05/vscode-event/)   
-> [《响应式编程在前端领域的应用》](https://godbasin.github.io/2020/07/04/reactive-programing/)   
-> [《谈谈依赖和解耦》](https://godbasin.github.io/2020/06/26/module-seperate/)   
-> [《大型前端项目要怎么跟踪和分析函数调用链》](https://godbasin.github.io/2020/06/21/trace-stash/)   
-> [《多人协作如何进行冲突处理》](https://godbasin.github.io/2020/06/14/operation-transform/)   
-> [《前端构建大型应用》](https://godbasin.github.io/2018/07/07/build-application/)   
-> [《数据抽离与数据管理》](https://godbasin.github.io/2018/06/17/component-communication-with-data-model/)   
-> [《组件配置化》](https://godbasin.github.io/2018/06/09/component-with-configuration/)   
-> [《一个组件的自我修养》](https://godbasin.github.io/2018/06/02/component-with-itself/)   
-> [《页面区块化与应用组件化》](https://godbasin.github.io/2018/05/26/app-component-isolation/)   
-> [《前端模板引擎》](https://godbasin.github.io/2017/10/21/template-engine/)   
-> [《对话抽象》](https://godbasin.github.io/2017/10/14/dialogue-abstraction/)   
-> [《前端思维转变--从事件驱动到数据驱动》](https://godbasin.github.io/2017/09/29/data-driven-or-event-driven/)      
 
 ### 前端面试
 > [《前端面试这件事--1.面试准备》](https://godbasin.github.io/2020/03/07/interview-1-ready/)   
