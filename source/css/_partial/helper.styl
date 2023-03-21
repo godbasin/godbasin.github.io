@@ -1,0 +1,283 @@
+footer.article-footer
+  background color-section
+  padding 0 4%
+  margin 0
+  border-top 1px solid lighten(color-gray,30%)
+  
+//share
+.article-share
+    overflow hidden
+    clear both
+  @media phone
+    width 60%
+  @media mini
+    width 40%
+  
+.share 
+  span
+    float right
+    height 3em
+    width 1em
+    margin-right 0.5em
+    position relative
+    color lighten(color-gray,20%)
+    &:before
+      font-family font-icon-family
+      content "\f064"
+      font-size 1em
+      font-smoothing()
+      absolute-center(1.5em)
+  a
+    float right
+    width 3em
+    height 3em
+    display block
+    position relative
+    &:before
+      font-size font-size
+      font-family font-icon-family
+      text-align center
+      color color-font
+      font-smoothing()
+      absolute-center(1.5em)
+    &:hover:before
+      color color-white
+  
+.article-share-twitter
+  &:before
+    content "\f099"
+  &:hover
+    background color-twitter
+    text-shadow 0 1px darken(color-twitter, 20%)
+
+.article-share-facebook
+  &:before
+    content "\f09a"
+  &:hover
+    background color-facebook
+    text-shadow 0 1px darken(color-facebook, 20%)
+
+.article-share-weibo
+  &:before
+    content "\f18a"
+  &:hover
+    background color-weibo
+    text-shadow 0 1px darken(color-weibo, 20%)
+
+.article-share-qrcode
+  &:before
+    content "\f029"
+  &:hover
+    background color-qrcode
+    text-shadow 0 1px darken(color-qrcode, 20%)
+
+.article-back-to-top
+  &:before
+    content "\f062"
+  &:hover
+    background color-top
+    text-shadow 0 1px darken(color-top, 20%)
+
+//qrcode
+.qrcode
+  absolute-center(15em)
+  background color-white
+  border 2px solid color-gray
+  border-radius 3px
+  display inline-block
+  opacity 0
+  position fixed
+  text-align center
+  visibility hidden
+  z-index 10
+  transition opacity .5s
+  @media tablet
+    absolute-center(20em)
+    position fixed
+  span 
+    display block
+    width 80%
+    height 1.5em
+    font-size 80%
+    float left
+    &:before
+      content none
+  a
+    display block
+    width 16%
+    height 1.5em
+    float left
+  img
+    width 90%
+    height 90%
+
+.qrclose
+  &:before
+    font-family font-icon-family
+    font-smoothing()
+    content "\f057"
+    color color-gray
+  &:hover:before
+    color color-blue !important
+
+.overlay
+  display none !important
+
+.overlay:target+.qrcode
+  opacity 1
+  visibility visible
+
+//tags&categories
+.article-tags,.article-categories
+  padding 0.5em 0
+  float left
+  width 100%
+  @media phone
+    width 50%
+  @media mini
+    width 30%
+
+.article-tags
+  color lighten(color-gray,20%) 
+  span
+    position relative
+    float left
+    width 1em
+    height 2em
+    margin-right 0.5em
+    &:before
+      font-family font-icon-family
+      font-smoothing()
+      absolute-center(1.2em)
+      content "\f02c"
+  a
+    float left
+    padding 0 0.3em
+    margin 0.3em
+    background lighten(color-gray,50%)
+    &:hover
+      color color-white
+      background color-blue
+  
+.article-categories
+  color lighten(color-gray,20%)
+  margin-top 0.3em
+  span
+    &:before
+      font-family font-icon-family
+      font-smoothing()
+      content "\f07b"
+
+.article-category-link
+  padding 0.5em
+  margin 0 0.3em
+  &:hover
+    color color-white !important
+    background color-blue
+
+//page nav
+.article-nav
+  padding 0 10%
+  @media mini
+    padding 0 4%
+  strong
+    font-size 0.6em
+  a
+    display block
+    overflow hidden
+  .prev,.next
+    a
+      &:hover
+        background color-blue
+        color color-white
+  .prev
+    width 100%
+    float left
+    strong
+      padding-left 1.8em
+    span:before
+      font-family font-icon-family
+      font-smoothing()
+      content "\f100"
+      padding-right 0.5em
+    @media mini
+      width 45%
+      float left
+  .next
+    width 100%
+    float left
+    text-align left
+    strong
+      padding-left 1.5em
+    span:before
+      font-family font-icon-family
+      font-smoothing()
+      content "\f101"
+      padding-right 0.5em
+    @media mini
+      width 45%
+      float right
+      text-align right
+      strong
+        padding-right 1.8em
+      span:before
+        content none
+      span:after
+        font-family font-icon-family
+        font-smoothing()
+        content "\f101"
+        padding-left 0.5em
+
+//comment
+section.comment
+  padding 0 4%
+  margin 1em 0
+
+//toc
+.toc-article
+  background color-code
+  margin 2em 0 0 2em
+  padding 1em
+  strong
+    padding 0.3em 0
+    line-height 1.5em
+
+#toc
+  line-height 1em
+  font-size 0.8em
+  float right
+  .toc
+    padding 0 
+    li
+      list-style-type none
+      line-height 1.3em
+      background color-code
+  .toc-child 
+    padding-left 1.5em
+    background color-code
+
+#toc.toc-aside
+  display none
+  width 13%
+  position fixed
+  right 2%
+  top 320px
+  overflow hidden
+  line-height 1.5em
+  font-size 1em
+  color color-heading
+  opacity .6
+  transition opacity 1s ease-out
+  strong
+    padding 0.3em 0
+    color color-font
+  &:hover
+    transition opacity .3s ease-out
+    opacity 1
+  a
+    transition color 1s ease-out
+    &:hover
+      color color-theme
+      transition color .3s ease-out
+.active
+  color color-theme !important

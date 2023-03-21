@@ -1,0 +1,15 @@
+<%
+page.tag = ' ';
+%>
+<div class="archive-title" >
+<h2 class="tag-icon"><%= __('tags') %></h2>
+<% site.tags.sort('name').each(function(item){ %>
+<a data-src="<%- config.root %><%- item.path %>" href="#<%= item.name %>" title="<%= item.name %>"><%= item.name %><sup><%= item.posts.length %></sup></a>
+<% }); %>
+</div>
+<div id="main" class="archive-part">
+<div class="all-list-box"></div>
+</div>
+
+
+

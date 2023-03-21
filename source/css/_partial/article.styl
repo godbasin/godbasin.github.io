@@ -1,0 +1,184 @@
+.post,.page
+  background color-section
+  a
+    color color-blue 
+    &:hover
+      color color-theme
+
+article
+  header.article-info
+    @media mini
+      border-bottom 1px solid lighten(color-gray,30%)
+    >h1
+      padding 0.2em 3%
+      font-size font-size+70
+      line-height line-height
+      @media tablet
+        font-size font-size+100
+        padding-top 0.3em
+      word-wrap break-word 
+      word-break normal
+      font-smoothing antialiased
+      border-left 5px solid color-theme
+    >p.article-author
+      padding 0.3em 4% 0.3em 0
+      text-align right
+      border-bottom 1px solid lighten(color-gray,30%)
+      @media mini
+        float right
+        border-bottom none
+    >p.article-time
+      padding-top 0.5em
+      font-size 0.8em
+      text-align center
+      @media mini
+        float right
+        margin-right 1em
+        padding-top 0.5em
+        font-size 0.9em
+      &:before
+        font-family font-icon-family
+        font-size font-size+10
+        content "\f017"
+        font-smoothing() 
+  .author-right
+    padding: 1.5em 8%
+    line-height 1.5em
+    font-size font-size - 20
+    border solid 1px color-gray
+    background color-gray
+  .article-content
+    padding 1.5em 4%
+    .kb      
+      padding .1em .6em
+      border 1px solid color-gray
+      background-color code-color
+      color darken(color-gray,30%)
+      box-shadow 0 1px 0 rgba(0,0,0,0.2),0 0 0 2px color-white inset
+      border-radius 3px
+      display inline-block
+      margin 0 .1em;
+      text-shadow 0 1px 0 color-white
+      line-height line-height
+      white-space nowrap
+    h1,h2
+      font-size font-size+80
+      line-height 1.2em
+    h3,h4,h5,h6
+      font-size font-size+40
+      border-bottom dashed 1px #999
+    h1,h2,h3,h3,h4,h5,h6
+      color color-heading
+      font-smoothing antialiased
+      padding 0.3em 0
+      margin-top 2em
+      margin-bottom 0.2em
+      >code
+        color darken(color-gray,20%)
+    hr 
+      border 1px solid lighten(color-gray,30%)
+    strong
+      font-weight bold
+    em
+      font-style italic
+    acronym,abbr
+      border-bottom 1px dotted
+    blockquote
+      border-left .2em solid color-theme
+      margin 0.65em 0 0.65em 4%
+      padding-left 1%
+      line-height line-height
+      font-size font-size+10
+      footer
+        background color-section
+        padding 0
+        margin 0
+        font-size 80%
+        line-height 1em
+      cite
+        font-style italic
+        padding-left 0.5em
+    ul,ol
+      padding-left 2em
+      font-size font-size+5
+      background #ddd
+      color #555
+      @media mini
+        padding-left 1.5em
+    ul li
+      list-style disc
+      text-align match-parent
+      margin 0
+    ol li
+      list-style-type decimal
+      margin 0
+    dl dt
+      font-weight blod
+    ul li>code,ol li>code,p code,strong code,em code
+      font-family font-mono
+      background color-code
+      color darken(color-font,10%)
+      border 1px solid darken(color-code,10%)
+      padding 0 5px
+      margin 0 2px
+      font-size 90%
+      white-space nowrap
+      text-shadow 0 1px #fff
+    p
+      font-size font-size-5
+      line-height line-height+0.2
+      margin-top 2.7em
+      margin-bottom 2.2em
+      color color-dark
+      @media tablet
+        margin-top 2.2em
+        margin-bottom 2.5em
+    img,video,figure img
+      max-width 100%
+      display block
+      height auto
+      vertical-align middle
+      padding-top 0.5em
+      @media tablet 
+        padding-top 0.7em
+    figcaption,.caption
+      text-align center
+      display block
+      font-size 0.9em
+      font-weight blod
+    .video-container
+      position relative;
+      padding-top 56%
+      height 0
+      overflow hidden
+      iframe,object,embed
+        position absolute
+        top 0
+        left 0
+        width 100%
+        height 100%
+        margin-top 0
+    table
+      width 100%
+      border-collapse collapse
+      border-spacing 0
+      th
+        font-weight bold
+        border-bottom 3px solid lighten(color-gray,30%)
+        padding-bottom 0.5em
+      td 
+        border-bottom 1px solid lighten(color-gray,30%)
+        padding 10px 0
+    .pullquote
+      text-align left
+      width 45%
+      margin 0
+      border none
+    .left
+      margin-left 0.5em
+      margin-right 1em
+      float left
+    .right
+      margin-right 0.5em
+      margin-left 1em
+      float right

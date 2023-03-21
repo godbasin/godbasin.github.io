@@ -1,0 +1,206 @@
+//button
+.openaside
+  display none
+  position fixed
+  right 7.5%
+  top 260px
+  a
+    display block
+    color color-white
+    border 1px solid color-white
+    border-radius 5px
+    background color-theme
+    padding 0.2em 0.55em
+    &::before
+      font-family font-icon-family
+      font-smoothing()
+      content "\f0c9"
+
+.closeaside
+  display none
+  a
+    color color-theme
+    &:hover
+      color color-blue
+    &::before
+      font-family font-icon-family
+      font-smoothing()
+      content "\f0c9"
+  @media tablet
+    display block
+    position absolute
+    right 25px
+    top 22px
+
+//sidebar
+#asidepart
+  background color-section
+  margin 1em 0 0
+  padding 2em 2% 1em
+  @media tablet
+    position relative
+    float left
+    width 18%
+    margin 2em 0 0 3%
+
+.asidetitle
+  font-size 1.1em
+  color color-blue
+  padding 0 0 0.3125em 0
+  border-bottom 0.1875em solid color-gray
+  a
+    color color-blue
+    &:hover
+      color color-theme
+      transition color .5s
+
+//categories
+.categorieslist
+  @media mini
+    width 45%
+    float left
+    margin 0 5% 0 0
+  @media tablet 
+    width 100%
+    float none
+    margin 1em 0 0
+  li 
+    border-bottom 1px solid color-gray
+    a
+      display block
+      padding 0.5em 5%
+      &:hover
+        color color-theme
+
+//tag
+.tagslist
+  margin 1em 0 0
+  @media mini
+    width 45%
+    float left
+    margin 0 5% 0 0
+  @media tablet 
+    width 100%
+    float none
+    margin 1em 0 0
+  ul
+    padding 0.5em 0
+  ul li
+    float left
+    a
+      display block
+      margin 0.3125em
+      padding 0.125em 0.3125em
+      background lighten(color-gray, 30%)
+      &:hover
+        color color-theme
+        background lighten(color-gray, 50%)
+
+//rss
+.rsspart
+  background color-theme
+  width 100%
+  @media mini
+    float left
+    width 45%
+    margin 0 5% 0 0
+  @media tablet 
+    width 100%
+    float none
+    margin 1em 0 0
+  a
+    color color-white
+    display block
+    padding 0.625em 0
+    text-align center
+    &:hover
+      color color-theme
+      background color-section
+    &::before
+      font-family font-icon-family
+      font-smoothing()
+      padding-right 0.5em
+      content "\f09e"
+
+//archive
+.archiveslist
+  @media mini
+    width 45%
+    float left
+    margin 0 5% 0 0
+  @media tablet 
+    width 100%
+    float none
+    margin 1em 0 0
+  li 
+    font-size 0.8em
+    line-height 2em
+    a
+      padding 0.5em
+      &:hover
+        color color-theme
+        transition color .25s
+  .archive-list-link  	
+    padding 0.5em
+    &:hover
+      color color-theme
+      transition color .25s
+  .archive-list-count
+    &:before
+      content "("
+    &:after
+      content ")"
+          
+.archive-list 
+  padding 0.5em 0 
+
+.archive-float 
+  ul
+    padding 0 
+  li
+    float left
+    margin 0.3em
+    @media tablet
+      float none
+
+//tagcloud
+.tagcloudlist
+  @media mini
+    width 45%
+    float left
+    margin 0 5% 0 0
+  @media tablet 
+    width 100%
+    float none
+    margin 1em 0 0
+  .tagcloudlist
+    a
+      padding 0.2em
+      display block
+      float left
+      &:hover
+        color color-theme
+        transition color .25s
+
+//links
+.linkslist
+  margin-top 0.5em 
+  @media mini
+    width 45%
+    float left
+    margin 0 5% 0 0
+  @media tablet 
+    width 100%
+    float none
+    margin 1em 0 0
+  ul
+    padding 0.5em 0
+    a
+      font-size 1em
+      line-height line-height
+      display block
+      padding 0 3%
+      &:hover
+        color color-theme
+        transition color .25s
+

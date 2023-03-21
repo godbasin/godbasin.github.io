@@ -1,0 +1,66 @@
+<!-- 如果不是首页且没使用 `comments: false` 关闭评论，则尝试加载评论 -->
+<% if (page.comments){ %>
+    <!-- 配置中启用多说时，导入相应代码 -->
+    <% if (theme.duoshuo.on) { %> 
+      <section class="comment">
+	    <div class="ds-thread"></div>
+      </section>
+    <!-- 配置中仅启用友言时，导入相应代码 -->
+    <% } else if (theme.youyan.on) { %>
+        <!-- UY BEGIN -->
+        <div id="uyan_frame"></div>
+        <script type="text/javascript" src="//v2.uyan.cc/code/uyan.js?uid=2134021"></script>
+        <!-- UY END -->
+    <% }else if (theme.gitment && theme.gitment.on) { %>
+        <div style="padding: 1.5em 4%;">
+            <div id="gitment-container"></div>
+        </div>
+        <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+        <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+        <script>
+            var gitment = new Gitment({
+            id: '<%- page.canonical_path %>', // 可选。默认为 location.href
+            owner: 'godbasin',
+            repo: 'gitment-comments',
+            oauth: {
+                client_id: '14aba13f2c12943885ba',
+                client_secret: 'cd3ccc6ddd72581d02d7add4b678f4b927105921',
+            },
+            })
+            gitment.render('gitment-container')
+        </script>
+    <% }else if (theme.changyan && theme.changyan.on) { %>
+        <!--PC版-->
+        <div style="padding: 1.5em 4%;">
+            <div id="SOHUCS" sid="<%- page.canonical_path %>" styles="padding: 1.5em 4%;"></div>
+        </div>
+        <script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
+        <script type="text/javascript">
+            window.changyan.api.config({
+                appid: 'cyucuwQ9I',
+                conf: 'prod_33202c62db8445bb6729cc5b4eb8a685'
+            });
+        </script>
+    <% }else if (theme.livere && theme.livere.on) { %>
+        <!-- 来必力City版安装代码 -->
+        <div style="padding: 1.5em 4%;">
+            <div id="lv-container" data-id="city" data-uid="MTAyMC80Mzk0Mi8yMDQ3OA==">
+        </div>
+            <script type="text/javascript">
+        (function(d, s) {
+            var j, e = d.getElementsByTagName(s)[0];
+
+            if (typeof LivereTower === 'function') { return; }
+
+            j = d.createElement(s);
+            j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+            j.async = true;
+
+            e.parentNode.insertBefore(j, e);
+        })(document, 'script');
+            </script>
+        <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+        </div>
+        <!-- City版安装代码已完成 -->
+    <% } %>
+<% } %>

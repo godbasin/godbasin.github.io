@@ -1,0 +1,113 @@
+footer
+  margin-top 1em
+  background color-footer
+  padding 0 2% 0.5em
+
+#footer
+  width 95%
+  margin 0 auto
+  overflow hidden
+  position relative
+  .line
+    width 100%
+    height 14em
+    margin 0 auto
+    @media mini
+      width 10em
+      float left
+      position relative
+    span
+      display block
+      width 0.5em
+      height 6.25em
+      margin 0 auto
+      @media mini
+        position absolute
+        left 3em
+        margin 0 0 1.5em
+
+.author
+  width w=(110/16)em
+  height w
+  margin 0 auto
+  if dataURI
+    background no-repeat url(author-img-data) left top
+  else
+    background no-repeat url(root+author-img) left top 
+  background-size w w
+  border-radius (w/2)
+  transition transform 2s ease-out
+  &:hover
+    transform rotateZ(360deg)
+  @media mini
+    position: absolute;
+    top 6em
+    margin 0 0 1.5em
+
+.info
+  if ShowCustomFont
+    font-family font-custom-family
+    font-smoothing()   
+  else
+    font-family font-default
+    line-height line-height+0.15
+  width 90%
+  font-size font-size+20
+  line-height 2em
+  text-align center
+  margin 0 auto
+  color color-white
+  @media mini
+    margin 3em 0 2em 0
+    float left
+    width 100%
+
+.social-font
+  width 100%
+  margin 0 auto
+  float left
+  padding-left 3%
+  @media phone
+    padding-left 20%
+  @media mini
+    width 18em 
+    position absolute  
+    right -3em
+    top 3em
+  a
+    float left
+    display block
+    width 14%
+    color color-white
+    font-size font-size+80
+    padding 0.5em
+    @media tablet
+      padding 0.3em
+    &:hover:before
+      color color-blue
+    &[title="weibo"]::before,&[title="twitter"]::before,&[title="github"]::before,&[title="facebook"]::before,&[title="linkedin"]::before
+      font-family font-icon-family
+      font-smoothing()
+    &[title="weibo"]::before
+      content "\f18a"
+    &[title="twitter"]::before
+      content "\f099"
+    &[title="github"]::before
+      content "\f09b"
+    &[title="facebook"]::before
+      content "\f09a"
+    &[title="linkedin"]::before
+      content "\f08c"
+ 
+.copyright
+  font-family font-default
+  font-size 0.6em
+  width 100%
+  color color-white
+  text-align center
+  @media mini
+    float left
+  a
+    color color-white
+    &:hover
+      color color-blue

@@ -1,0 +1,15 @@
+<div class="openaside"><a class="navbutton" href="#" title="<%= __('showsidebar') %>"></a></div>
+<% if( table&&(item.toc !== false) && theme.toc.aside){ %>
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title"><%= __('contents') %></strong>
+  <%- toc(item.content) %>
+  </div>
+<% } %>
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="<%= __('hidesidebar') %>"></a></div>
+<aside class="clearfix">
+<% theme.widgets.forEach(function(widget){ %>
+  <%- partial('../_widget/' + widget) %>
+<% }); %>
+</aside>
+</div>

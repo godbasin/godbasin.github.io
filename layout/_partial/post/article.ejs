@@ -1,0 +1,36 @@
+<div id="main" class="<%= item.layout %>" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<%- partial('header') %>
+	<div class="article-content">
+		<%- partial('gallery') %>
+		<% if( table&&(item.toc !== false) && theme.toc.article){ %>
+		<div id="toc" class="toc-article">
+			<strong class="toc-title"><%= __('contents') %></strong>
+		<%- toc(item.content) %>
+		</div>
+		<% } %>
+		<%- item.content %>  
+	</div>
+	<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/2code2.jpg" width="200" height="200" style="display:block;margin: 0 auto;" />
+	<p style="text-align: center;margin-top: 10px;margin-bottom: 10px;">码生艰难，写文不易，给我家猪囤点猫粮了喵~</p>
+	<p style="text-align: center;"><a href="https://space.bilibili.com/42233366">B站: 被删</a></p>
+	<div class="article-content">
+		<p style="margin-top:50px;">
+			查看Github有更多内容噢：<a href="https://github.com/godbasin">https://github.com/godbasin</a>
+			<br>
+			更欢迎来<a href="https://godbasin.github.io/front-end-playground">被删的前端游乐场</a>边撸猫边学前端噢
+			<br>
+			<br>
+			如果你想要关注日常生活中的我，欢迎关注“牧羊的猪”公众号噢
+		</p>
+	</div>
+	<div class="author-right">
+  		<p>作者：被删</p>
+  		<p>出处：<a href="https://godbasin.github.io">https://godbasin.github.io</a></p>
+  		<p>本文版权归作者所有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利。</p>
+	</div>
+		<%- partial('footer') %>   	       
+	</article>
+	<%- partial('pagination') %>
+	<%- partial('comment') %>
+</div>  

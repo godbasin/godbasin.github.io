@@ -1,0 +1,14 @@
+<div id="footer" >
+	<% if(theme.author.intro_line1){ %>
+	<section class="info">
+		<p> <%= theme.author.intro_line1 %> </p>
+	</section>
+	 <% } %>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © <%= new Date().getFullYear() %> 
+		<% if (config.author) { %>
+		<a href="<%= config.url %>" target="_blank" title="<%= config.author %>"><%= config.author %></a>
+		<% } else {%>
+		<a href="<%= config.url %>" title="<%= config.title %>"><%= config.title %></a>
+		<% } %>
+		</p>
+</div>

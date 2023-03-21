@@ -1,0 +1,30 @@
+/*! custom Font*/
+font-url(filename)
+  return '../font/' + filename
+
+customfont(family, filename)
+  @font-face
+    font-family family
+    font-weight normal
+    font-style normal
+    src url(font-url(filename + '.eot'))
+    src url(font-url(filename + '.eot?#iefix')) format('embedded-opentype'),
+    url(font-url(filename + '.svg#'+ family)) format('svg'), 
+    url(font-url(filename + '.woff')) format('woff'), 
+    url(font-url(filename + '.ttf')) format('truetype')    
+    
+customfont(font-custom-family,font-custom-filename)
+
+/*! icon Font */
+iconfont(family, filename,font-icon-version)
+  @font-face
+    font-family family
+    font-style normal
+    font-weight normal
+    src url(font-url(filename + ".eot?v=#" + font-icon-version))
+    src url(font-url(filename + ".eot?#iefix&v=#" + font-icon-version)) format("embedded-opentype"),
+         url(font-url(filename + ".woff?v=#" + font-icon-version)) format("woff"),
+         url(font-url(filename + ".ttf?v=#" + font-icon-version)) format("truetype"),
+         url(font-url(filename + ".svg#fontawesomeregular?v=#" + font-icon-version)) format("svg")
+
+iconfont(font-icon-family,font-icon-filename,font-icon-version)

@@ -1,0 +1,131 @@
+body
+  >header
+    width 100%
+    box-shadow 2px 4px 5px hsla(0,1%,1%,.2)
+    background color-theme
+    color color-white
+    padding 1em 0 0.8em 
+    @media tablet
+      padding 1.8em 0 1.5em
+    >div
+      width 95%
+      margin 0 auto
+      position relative
+      overflow hidden
+      @media tablet
+        width 93%
+    a
+      display block
+      color color-white
+
+#imglogo
+  float left
+  width 4em
+  height 4em
+  @media mini
+    width @width+1
+  @media tablet
+    width @width+1.5
+  img
+    width 4em
+    @media mini
+      width @width+1
+    @media tablet
+      width @width+1.5
+
+#textlogo
+  float left
+  width 75%
+  margin-left 0.5em
+  h1.site-name
+    width 86%
+    if ShowCustomFont
+      font-family font-custom-family
+      font-size font-size+100
+      line-height line-height
+      font-smoothing()
+      @media mini
+        font-size font-size+140
+      @media tablet
+        font-size font-size+180
+    else
+      font-family font-default
+      font-size font-size+60
+      line-height line-height+0.4
+      font-weight normal
+      @media mini
+        font-size font-size+90
+      @media tablet
+        font-size font-size+120
+  h2.blog-motto
+    font-size 0.7em
+    font-weight normal
+    @media mini
+      font-size font-size
+    @media tablet
+      font-size font-size+10
+
+.navbar
+  position absolute
+  width 2em
+  right 0em
+  top 1em
+  padding 0.5em
+  @media tablet
+    display none
+
+.navbutton::before
+  font-family font-icon-family
+  font-smoothing()
+  content "\f0c9"
+
+.navmobile::before
+  padding-left 1em
+
+header nav
+  float left    
+  width 100%
+  @media phone
+    width 50%
+  @media tablet
+    float right
+    width auto
+    margin-top 1em
+    max-height none
+  font-size font-size+12.5
+  padding-top 0.5em
+  max-height 0.01em
+  transition max-height 1s ease-out
+  ul
+    @media tablet
+      float right
+  ul li
+    @media tablet
+      float left
+  ul li a
+    padding 0.2em 0 0.2em 1em
+    @media tablet
+      padding 0.2em 1.5em
+    &:hover
+      background color-white
+      color color-theme
+
+.shownav
+  max-height 40em
+
+.search
+  padding 0.1em 0 0 1em
+  input
+    line-height line-height+0.2
+    border 1px solid color-white
+    color color-white
+    background transparent
+    width 80%
+    padding-left 0.5em
+    @media tablet
+      width 8em
+      transition .5s width
+      &:focus
+        width 15em
+  label
+    display none

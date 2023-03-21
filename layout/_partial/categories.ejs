@@ -1,0 +1,15 @@
+<%
+page.category = ' ';
+%>
+<div class="archive-title" >
+<h2 class="category-icon"><%= __('categories') %></h2>
+<div class="archiveslist archive-float clearfix">
+<% site.categories.sort('name').each(function(item){ %>
+  <li><a class="archive-list-link" data-src="<%- config.root %><%- item.path %>" href="#<%= item.name %>" title="<%= item.name %>"><%= item.name %><sup><%= item.posts.length %></sup></a></li>
+<% }); %> 
+</div>
+</div>
+<div id="main" class="all-list-box"><!--class: archive-part-->
+<div class=""></div><!--class: all-list-box-->
+</div>
+

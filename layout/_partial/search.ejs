@@ -1,0 +1,21 @@
+<% if(theme.google_cse.enable) { %>
+<div  id="main" class="page">
+  <div id='cse' style='width:100%;text-align:center'>正在加载搜索结果，请稍等。</div>
+</div>
+<script src="http://www.google.com.hk/jsapi" type="text/javascript"></script>
+<script type="text/javascript">
+google.load('search', '1', {language : 'zh-CN',style: google.loader.themes.MINIMALIST});
+google.setOnLoadCallback(function(){
+  var customSearchControl = new google.search.CustomSearchControl('<%= theme.google_cse.cx %>');
+  customSearchControl.setResultSetSize(google.search.Search.FILTERED_CSE_RESULTSET);
+  var options = new google.search.DrawOptions();
+  options.setAutoComplete(true);
+  customSearchControl.draw('cse', options);
+  var match = location.search.match(/q=([^&]*)(&|$)/);
+  if(match && match[1]){
+    var search = decodeURIComponent(match[1]); 
+    customSearchControl.execute(search);
+  }
+},true);
+</script>
+<% } %>

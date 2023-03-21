@@ -1,0 +1,21 @@
+<% if (item.tags && item.tags.length){ %>
+  <div class="article-tags">
+  <% var tags = [];
+    item.tags.forEach(function(tag){
+      tags.push('<a href="' + config.root + tag.path + '">' + tag.name + '</a>');
+    }); %>
+  <span></span> <%- tags.join('') %>
+  </div>
+<% } %>
+<% if (item.categories && item.categories.length){ %>
+<div class="article-categories">
+  <span></span>
+  <%- list_categories(item.categories, {
+      show_count: false,
+      class: 'article-category',
+      style: 'none',
+      separator: '►'
+  }) %>
+</div>
+<% } %>
+

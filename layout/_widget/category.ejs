@@ -1,0 +1,12 @@
+<% if (site.categories.length){ %>
+<div class="archiveslist">
+	<p class="asidetitle"><a href="/categories"><%= __('categories') %></a></p>
+		<ul class="archive-list">
+		<% site.categories.sort('name').each(function(item){ %>
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="<%- config.root %><%- item.path %>" title="<%= item.name %>"><%= item.name %><sup><%= item.posts.length %></sup></a>
+			</li>
+		<% }); %>
+		</ul>
+</div>
+<% } %>

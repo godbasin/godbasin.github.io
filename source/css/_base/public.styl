@@ -1,0 +1,120 @@
+//public method
+absolute-center(width, height = width)
+  width width
+  height height
+  position absolute
+  top 50%
+  left 50%
+  margin-top width * -0.5
+  margin-left height * -0.5
+
+font-smoothing()
+  -webkit-font-smoothing antialiased
+  -moz-osx-font-smoothing grayscale
+
+/*! Public style */
+* 
+  -webkit-margin-before 0
+  -webkit-margin-after 0
+
+body
+  background color-background
+  font-family font-default
+  font-size font-size
+  color color-font
+  line-height line-height
+  min-height 100%
+
+small
+  font-size 80%
+
+sub,sup 
+  font-size 75%
+  line-height 0
+  position relative
+  vertical-align baseline
+
+sup
+  top -0.5em
+  padding-left 0.3em
+
+sub
+  bottom -0.25em
+
+a
+  text-decoration none
+  color color-font
+  &:hover,&:focus
+    outline 0
+    text-decoration none
+    transition color .25s,background .5s
+  &:hover:before
+    transition color .25s,background .5s
+
+input:focus
+  outline none
+
+input, button
+  margin: 0
+  padding: 0
+  &::-moz-focus-inner
+    border: 0
+    padding: 0
+
+h1
+  font-size 1.5em
+
+.fa
+  display inline-block
+  font-family FontAwesome
+  font-style normal
+  font-weight normal
+  line-height 1
+  -webkit-font-smoothing antialiased
+  -moz-osx-font-smoothing grayscale
+
+.clearfix
+  clearfix()
+
+::-webkit-input-placeholder { color:color-white; padding: 2px 0 0 4px;}
+::-moz-placeholder { color:color-white; padding: 2px 0 0 4px;} 
+:-ms-input-placeholder { color:color-white; padding: 2px 0 0 4px;}
+::-webkit-input-placeholder::before{font-family:font-icon-family;font-smoothing();content: "\f002";padding-right: 4px;}
+::-moz-placeholder:before{font-family:font-icon-family;font-smoothing();content: "\f002";padding-right: 4px;}
+:-ms-input-placeholder::before{font-family:font-icon-family;font-smoothing();content: "\f002";padding-right: 4px;}
+
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration
+  -webkit-appearance none
+::-webkit-search-cancel-button:after 
+    font-family font-icon-family
+    font-smoothing()
+    content '\f00d'
+    color color-white
+    padding-right 4px 
+    
+/*! css3 animate */
+.animated
+  animation-fill-mode both
+  animation-duration 1s
+
+@-webkit-keyframes fadeIn
+  0%
+    opacity 0
+  100%
+    opacity 1
+
+.fadeIn
+  animation-name fadeIn
+
+@keyframes fadeInDown
+  0%
+    opacity 0
+    transform translateY(-20px)
+  100% 
+    opacity 1
+    transform translateY(0)
+
+.fadeOut
+  animation-name fadeOut
+

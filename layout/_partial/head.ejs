@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html <% if (config.language) { %>lang="<%= config.language %>"<% } %>>
+<head>
+  <meta charset="UTF-8">
+  <%
+  var title = page.title;
+
+  if (is_archive()){
+    title = 'Archives';
+
+    if (is_month()){
+      title += ': ' + page.year + '/' + page.month;
+    } else if (is_year()){
+      title += ': ' + page.year;
+    }
+  } else if (is_category()){
+    title = 'Category: ' + page.category;
+  } else if (is_tag()){
+    title = 'Tag: ' + page.tag;
+  }
+  %>
+    <title><% if (title){ %><%= title %> | <% } %><%= config.title %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    <% if (config.author){ %>
+    <meta name="author" content="<%= config.author %>"><% } %>
+    <% if (page.description){ %>
+    <meta name="description" itemprop="description" content="<%= page.description %>">
+    <% } else if (config.description&&(!is_post())){ %>
+    <meta name="description" content="<%= config.description %>">
+    <% } else if (page.excerpt){ %>
+    <meta name="description" content="<%= strip_html(page.excerpt).replace(/^\s*/, '').replace(/\s*$/, '') %>">
+    <% } else if (page.content){ %>
+    <meta name="description" content="<%= strip_html(page.content).replace(/^\s*/, '').replace(/\s*$/, '').substring(0, 150) %>">
+    <% } %>
+    <% if (page.keywords){ %><meta name="keywords" content="<%= page.keywords %>"><% } %>
+    <% if (theme.author.twitter){ %>
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="<%= theme.author.twitter %>" />
+    <meta name="twitter:title" content="<% if (title){ %><%= title %> | <% } %><%= config.title %>" />
+      <% if (page.description){ %>
+        <meta name="twitter:description" content="<%= page.description %>" />
+      <% } %>
+    <% } %>
+    <% if (theme.rss){ %>
+    <link rel="alternate" href="<%- theme.rss %>" title="<%= config.title %>" type="application/atom+xml">
+    <% } %>
+    <% if (theme.favicon){ %>
+    <link rel="icon" href="<%- config.root %><%- theme.favicon %>">
+    <% } %>
+    <% if (theme.apple_icon){ %>
+    <link rel="apple-touch-icon" href="<%- config.root %><%- theme.apple_icon %>">
+    <link rel="apple-touch-icon-precomposed" href="<%- config.root %><%- theme.apple_icon %>">
+    <% } %>
+    <%- css('css/style') %>
+    <%- partial('baidu_tongji') %>
+</head>

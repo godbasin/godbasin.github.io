@@ -1,0 +1,11 @@
+<footer class="article-footer clearfix">
+<%- partial('catetags') %>
+<div class="article-share" id="share">
+<% if(theme.jiathis.enable){ %>
+  <%- partial('jiathis') %>
+<% } else { %>
+  <div data-url="<%- item.permalink %>" data-title="<% if (item.title){ %><%= item.title %> | <% } %><%= config.title %>" data-tsina="<%= theme.author.tsina %>" class="share clearfix">
+  </div>
+<% } %>
+</div>
+</footer>
