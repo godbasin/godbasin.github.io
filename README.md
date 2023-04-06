@@ -13,6 +13,7 @@
 
 ### 最新     
 
+> [《如何进行前端职业规划》](https://godbasin.github.io/2023/04/06/front-end-career-planning/)   
 > [《为什么项目复盘很重要》](https://godbasin.github.io/2023/03/21/why-project-reviews-are-important/)   
 > [《如何设计与管理一个前端项目》](https://godbasin.github.io/2023/01/12/design-and-manage-front-end-project/)   
 > [《技术方案的调研和设计过程》](https://godbasin.github.io/2022/12/03/research-and-design-process/)   
