@@ -13,6 +13,7 @@
 
 ### 最新     
 
+> [《复杂渲染引擎架构与设计--1.收集与渲染》](https://godbasin.github.io/2023/05/13/render-engine-render-and-collect/)   
 > [《如何进行前端职业规划》](https://godbasin.github.io/2023/04/06/front-end-career-planning/)   
 > [《为什么项目复盘很重要》](https://godbasin.github.io/2023/03/21/why-project-reviews-are-important/)   
 > [《如何设计与管理一个前端项目》](https://godbasin.github.io/2023/01/12/design-and-manage-front-end-project/)   
@@ -22,8 +23,14 @@
 > [《前端这几年--15.关于互联网寒冬》](https://godbasin.github.io/2022/09/17/about-front-end-15/)   
 > [《前端性能优化--容器篇》](https://godbasin.github.io/2022/08/14/front-end-performance-container/)   
 > [《前端性能优化--Canvas篇》](https://godbasin.github.io/2022/07/09/front-end-performance-canvas/)   
-> [《前端性能优化--卡顿篇》](https://godbasin.github.io/2022/06/04/front-end-performance-no-responding/)   
-> [《前端性能优化--渲染篇》](https://godbasin.github.io/2022/05/15/front-end-performance-render/)   
+
+### 前端技能提升
+
+> [《如何进行前端职业规划》](https://godbasin.github.io/2023/04/06/front-end-career-planning/)   
+> [《为什么项目复盘很重要》](https://godbasin.github.io/2023/03/21/why-project-reviews-are-important/)   
+> [《如何设计与管理一个前端项目》](https://godbasin.github.io/2023/01/12/design-and-manage-front-end-project/)   
+> [《技术方案的调研和设计过程》](https://godbasin.github.io/2022/12/03/research-and-design-process/)   
+
 
 ### 前端性能优化
 > [《前端性能优化--项目管理篇》](https://godbasin.github.io/2022/11/20/front-end-performance-optimization-project/)   
