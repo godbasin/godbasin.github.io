@@ -13,6 +13,7 @@
 
 ### 最新     
 
+> [《复杂渲染引擎架构与设计--2.插件的实现》](https://godbasin.github.io/2023/06/15/render-engine-plugin-design/)   
 > [《复杂渲染引擎架构与设计--1.收集与渲染》](https://godbasin.github.io/2023/05/13/render-engine-render-and-collect/)   
 > [《如何进行前端职业规划》](https://godbasin.github.io/2023/04/06/front-end-career-planning/)   
 > [《为什么项目复盘很重要》](https://godbasin.github.io/2023/03/21/why-project-reviews-are-important/)   
