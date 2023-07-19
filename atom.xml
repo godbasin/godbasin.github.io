@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://godbasin.github.io/"/>
-  <updated>2023-07-01T11:39:36.532Z</updated>
+  <updated>2023-07-19T03:08:27.277Z</updated>
   <id>https://godbasin.github.io/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>复杂渲染引擎架构与设计--3.底层渲染适配</title>
+    <link href="https://godbasin.github.io/2023/07/19/render-engine-bottom-render-architecture/"/>
+    <id>https://godbasin.github.io/2023/07/19/render-engine-bottom-render-architecture/</id>
+    <published>2023-07-19T03:07:52.000Z</published>
+    <updated>2023-07-19T03:08:27.277Z</updated>
+    
+    <content type="html"><![CDATA[<p>前面我们介绍了复杂渲染引擎中，使用的收集和渲染、以及插件等架构设计。至于底层具体的绘制实现，前面提到的多是 Canvas，实际上我们还可以适配不同的绘制引擎。</p><a id="more"></a><h2 id="多渲染方式适配"><a href="#多渲染方式适配" class="headerlink" title="多渲染方式适配"></a>多渲染方式适配</h2><p>关于渲染引擎整体架构和插件架构的设计，已在<a href="https://godbasin.github.io/front-end-playground/front-end-basic/render-engine/render-engine-render-and-collect.html">《收集与渲染》</a>、<a href="https://godbasin.github.io/front-end-playground/front-end-basic/render-engine/render-engine-plugin-design.html">《插件的实现》</a>两篇文章中介绍过，渲染引擎架构如图：</p><p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/render-engine-plugin-design-1.jpg" alt></p><p>底层渲染引擎由收集器和渲染器组成，其中收集器收集需要渲染的渲染数据，渲染器则负责将收集到的数据进行直接渲染。</p><p>本文我们将会介绍渲染器的多种渲染方式的适配，其中常见的就包括：</p><ul><li>Canvas 渲染</li><li>SVG 渲染</li><li>DOM 渲染</li><li>其他渲染方式（如 WEBGL 渲染等）</li></ul><h3 id="适配架构设计"><a href="#适配架构设计" class="headerlink" title="适配架构设计"></a>适配架构设计</h3><p>对于多种渲染方式的适配，架构设计上还比较简单：</p><p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/render-engine-bottom-render-architecture-1.jpg" alt></p><p>从收集器收集到的数据，通过适配的方式，转换成不同的绘制结果。举个例子，同样是一个单元格内容：</p><ul><li>Canvas 将需要分别绘制单元格背景（矩形）、单元格边框（线段）、单元格内容（文本）</li><li>SVG 与 Canvas 相似，但 SVG 需要注意元素的层级关系，组合成单元格</li><li>DOM 则可以通过一个<code>&lt;div&gt;</code>元素或是<code>&lt;table&gt;/&lt;tr&gt;/&lt;td&gt;</code>等表格元素来绘制</li></ul><p>一般来说，我们如果使用多种渲染方式，还需要考虑渲染一致性。渲染一致性是指，使用 Canvas 绘制的结果，需要与 SVG、DOM 绘制渲染的结果保持一致，不能出现太大的跳动或是位置、样式不一致的结果。</p><p>因此，我们在进行渲染的时候，根据选择的渲染方式，还需要做不同的兼容适配。</p><p>以上几种渲染方式中，DOM 渲染会受浏览器自身的排版引擎影响，这种影响可能是正面的，也可能是负面的。比如，我们 Canvas 排版方式是尽量接近浏览器原生的方式，那么当我们适配 DOM 渲染的时候则比较省力气。但如果说像在线表格这种场景，使用 DOM 进行表格的排版，则可能会遇到比较多的问题。</p><p>举个例子，我们都知道 DOM 里的表格元素（<code>&lt;table&gt;</code>/<code>&lt;tr&gt;</code>/<code>&lt;td&gt;</code>等）是最难驾驭的，因为浏览器对它们的处理总是在意料之外，宽高难以控制意味着我们将很难将其与 Canvas/SVG 的渲染效果对齐。因此，我们很可能需要在表格元素里嵌套绝对定位的<code>&lt;div&gt;</code>元素，来使得表格最终渲染不会被轻易撑开导致偏差。</p><p>除此之外，我们还需要注意文字的排版、换行等情况在 Canvas/SVG 和 DOM 渲染中需要尽量保持一致。</p><h3 id="各种渲染方式的选择"><a href="#各种渲染方式的选择" class="headerlink" title="各种渲染方式的选择"></a>各种渲染方式的选择</h3><p>每种渲染方式都有各自的优缺点。</p><p>在图表渲染引擎中，最常见的是 Canvas 渲染和 SVG 渲染，我们也可以从 ECharts 官网中找到两者的对比描述：</p><blockquote><ol><li>一般来说，Canvas 更适合绘制图形元素数量较多（这一般是由数据量大导致）的图表（如热力图、地理坐标系或平行坐标系上的大规模线图或散点图等），也利于实现某些视觉特效。</li><li>但在不少场景中，SVG 具有重要的优势：它的内存占用更低（这对移动端尤其重要）、并且用户使用浏览器内置的缩放功能时不会模糊。</li></ol><p>选择哪种渲染器，可以根据软硬件环境、数据量、功能需求综合考虑：</p><ul><li>在软硬件环境较好，数据量不大的场景下，两种渲染器都可以适用，并不需要太多纠结</li><li>在环境较差，出现性能问题需要优化的场景下，可以通过试验来确定使用哪种渲染器。比如：<ul><li>在需要创建很多 ECharts 实例且浏览器易崩溃的情况下（可能是因为 Canvas 数量多导致内存占用超出手机承受能力），可以使用 SVG 渲染器来进行改善</li><li>如果图表运行在低端安卓机，或者我们在使用一些特定图表如水球图等，SVG 渲染器可能效果更好</li><li>数据量较大（经验判断 &gt; 1k）、较多交互时，建议选择 Canvas 渲染器</li></ul></li></ul></blockquote><p>而在在线表格的场景，我们会发现不同的团队会选择不同的渲染方式：</p><ul><li>谷歌表格使用了 Canvas/DOM 两种渲染方式，其中 DOM 渲染主要用于首屏直出</li><li>金山表格使用了 Canvas/SVG 两种渲染方式，其中 SVG 渲染主要用于首屏直出</li><li>飞书表格使用了 Canvas 渲染</li></ul><p>其实我们可以发现，这些团队很多在使用几种渲染方式，原因几乎都是因为使用了 Canvas 绘制作为主要渲染方式。但考虑到首屏渲染的情况，Canvas 则需要一系列的数据计算和渲染过程，不适合首屏直出的方式，因此会适配上 DOM 或者 SVG 进行首屏直出。</p><p>实际上，Canvas 渲染有一个比较致命的弱点：交互性很差。比如用户选择某个格子，进行拖拽、调整宽高、右键菜单等操作，在 Canvas 上是很难命中具体的元素的。因为 Canvas 绘制过程中并不像 DOM 和 SVG 一样有层次结构，最终的渲染结果也只是一个图像。因此，在线表格场景下大多数 Canvas 绘制都需要结合 DOM 引擎一起，获取到用户选择的元素、处理用户交互事件，然后进行二次计算和响应。</p><p>关于首屏直出，后面有空也可以简单唠唠。</p><h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><p>本文介绍了渲染引擎架构中，使用多种渲染方式以及底层渲染器适配的设计。</p><p>我们常常说给项目选择最优的解决方案，实际上我们也会发现，正因为往往没有所谓最优解，这些产品才会针对不同的场景下提供了不同的解决办法。比如，考虑到性能问题 ECharts 提供了 Canvas/SVG 两种绘制方式；又比如考虑到首屏直出的效率，各个在线表格的团队分别适配了更合适的渲染方式。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;前面我们介绍了复杂渲染引擎中，使用的收集和渲染、以及插件等架构设计。至于底层具体的绘制实现，前面提到的多是 Canvas，实际上我们还可以适配不同的绘制引擎。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="前端解决方案" scheme="https://godbasin.github.io/categories/%E5%89%8D%E7%AB%AF%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"/>
+    
+    
+      <category term="性能优化" scheme="https://godbasin.github.io/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
+    
+  </entry>
   
   <entry>
     <title>大型前端项目的常见问题和解决方案</title>
@@ -448,28 +470,6 @@
     
     
       <category term="功能设计" scheme="https://godbasin.github.io/tags/%E5%8A%9F%E8%83%BD%E8%AE%BE%E8%AE%A1/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>2021 年度总结--冲啊打工人</title>
-    <link href="https://godbasin.github.io/2021/12/25/my-2021/"/>
-    <id>https://godbasin.github.io/2021/12/25/my-2021/</id>
-    <published>2021-12-25T08:00:13.000Z</published>
-    <updated>2021-12-25T08:01:10.447Z</updated>
-    
-    <content type="html"><![CDATA[<p>工作很忙的时候，我们总以为自己除了忙碌以外，什么都没有。但当你仔细去回顾，就会发现：其实每一刻每一秒，我们都没有辜负。</p><a id="more"></a><h2 id="总的来说"><a href="#总的来说" class="headerlink" title="总的来说"></a>总的来说</h2><p>总结一下我的 2021，细细看发现也做了不少事情：</p><ol><li>和别人合写的<a href="https://item.jd.com/13289582.html" target="_blank" rel="noopener">《程序开发原理与实战》</a>这本书历经 2 年终于出版了！！</li><li>自己最喜欢的<a href="https://www.ituring.com.cn/book/2942" target="_blank" rel="noopener">《前端的进击》</a>这本书，最终遗憾地以电子书的方式出版了（::sad::）。</li><li>在编辑的邀请下，第一次尝试做了课程<a href="https://kaiwu.lagou.com/course/courseInfo.htm?courseId=822" target="_blank" rel="noopener">《前端的进击笔记》</a>。</li><li>挤了时间研究自己最喜欢的 Angular 框架，并写了一系列的<a href="http://www.godbasin.com/angular/deep-into-angular/angular-design-0-prestart.html" target="_blank" rel="noopener">《Angular 框架解读》</a>。</li><li>开始玩 B 站（<a href="https://space.bilibili.com/42233366" target="_blank" rel="noopener">id: 被删</a>），尝试做一些前端入门和深入的讲解视频。</li><li>帮忙拍摄《递归》系列视频，主题为<a href="https://mp.weixin.qq.com/s/_BySol8lXoU5Bre-40Lskw" target="_blank" rel="noopener">《保持生长不焦虑，非科班程序媛的进击》</a>。</li><li>给我家猫猫画表情包——<a href="https://sticker.weixin.qq.com/cgi-bin/mmemoticon-bin/emoticonview?oper=single&amp;t=shop/detail&amp;productid=aL2PCfwK/89qO7sF6/+I+UDhfwEjhec2ZNvdnLLJRd/Mc1uPro/vaqwIvQ4/JvfucH1+P4XxvWH+nmdDocf83TL09YaAo13vnpYiiZLoocgY=" target="_blank" rel="noopener">牧羊猪的打工日记系列</a>。</li></ol><p>嗯，大概这就是我的 2021，工作中和工作外都有不少的收获和成长。那么下面，如果你感兴趣的话，听我细细道来呀~</p><h2 id="关于工作"><a href="#关于工作" class="headerlink" title="关于工作"></a>关于工作</h2><h3 id="1-工作经历"><a href="#1-工作经历" class="headerlink" title="1. 工作经历"></a>1. 工作经历</h3><p>这一年的工作经历，和以往有一个共同点：<strong>遇到过新的问题，然后有了新的体会和感受</strong>。</p><p>从 2014 年毕业，后裸辞工作之后自学前端，然后开始慢慢深入学习和开发，一直到如今 2021 年，我几乎每年都有工作变动，几乎都是自己主动发起的调整。</p><p>越来越发现，刚毕业的时候我们都充满热情，到最后大家却逐渐地对“妥协”二字妥协了。这几年互联网行业的确很卷，竞争力和压力也增加了不少，很多人都充满了迷茫和焦虑，而我也增加了不少的疑惑。</p><p>今年的主要思考是：</p><ul><li>作为一名前端开发/程序员，我想要走向哪里？</li><li>职业发展上常说的广度和深度，是不是伪命题？</li><li>团队管理中，一个开发能做的有多少？</li></ul><p>关于这些，每一个点讲起来都可以长篇大论了，我之前在博客有讲相关的内容，包括《关于一年一换的魔咒》、《技术开发的门槛高吗》、《关于技术开发的职业发展》、《技术深度是伪命题吗》，这些你可以在我的<a href="http://www.godbasin.com/front-end-work/front-end-days/about-front-end-11.html" target="_blank" rel="noopener">“被删前端游乐场–前端这几年”</a>分享里找到。</p><h3 id="2-项目经历"><a href="#2-项目经历" class="headerlink" title="2. 项目经历"></a>2. 项目经历</h3><p>这一年的工作经历，和以往也有不同点：第一次接触大型前端项目的难题。</p><p>目前在文档团队，在线文档的编辑和协同对前端来说有不小的挑战。之前也有简单地整理了一篇了解在线文档的文章：<a href="http://www.godbasin.com/front-end-basic/deep-learning/why-spreadsheet-app-excited.html" target="_blank" rel="noopener">《在线 Excel 项目到底有多刺激》</a>，简单来说会包括：</p><ul><li>协同过程中的冲突处理算法</li><li>多人协作时的版本管理和维护</li><li>大文档下的加载和渲染性能、卡顿问题</li><li>文档数据结构的设计和算法</li><li>Canvas 渲染和 DOM 渲染的一致性</li><li>排版引擎的设计和优化</li></ul><p>除了文档本身功能逻辑的难题之外，这样的项目还涉及到代码量过大（100W+）、开发团队人员过多、协作开发和管理等各种各样的难题，包括：</p><ul><li>如何对模块之间进行功能解耦</li><li>如何进行大项目的代码组织和架构设计</li><li>大型前端项目的代码加载流程如何优化</li><li>大团队里多人协作导致的问题和解决方案</li><li>如何保证大型项目的开发效率/可维护性/可读性</li></ul><p>团队里优秀的小伙伴很多，真就每天都能学到不少的知识。即使到今天，我已经来这个团队一年多了，依然对整个项目还有许多地方了解得比较浅。总的来说，<strong>非常有幸参与到这样的项目里，让我可以在前端领域工作的第 6 年里，依然有无数种让自己获得成长的方式</strong>。</p><p>以上便是是工作相关的，虽然今年也有介于团队调整空白期的懈怠，但在即将结束的 2021 年底前，顺利地将自己的状态调整过来，这是值得开心的事情。</p><h3 id="3-工作外的技术成长"><a href="#3-工作外的技术成长" class="headerlink" title="3. 工作外的技术成长"></a>3. 工作外的技术成长</h3><p>主要有三点：</p><ol><li>技术博客的更新–<a href="https://github.com/godbasin/front-end-playground" target="_blank" rel="noopener">被删的前端游乐场</a>。</li><li>技术书的出版。</li><li>技术课程的制作–<a href="https://kaiwu.lagou.com/course/courseInfo.htm?courseId=822" target="_blank" rel="noopener">《前端的进击笔记》</a>。</li><li>技术视频的制作–<a href="https://space.bilibili.com/42233366/channel/seriesdetail?sid=372770" target="_blank" rel="noopener">《前端开发那些事》</a>。</li></ol><p>2021 年，我的技术博客一如既往地在更新，今年在业余时间去研究了下自己很喜欢的 Angular 框架，并写了一系列的<a href="http://www.godbasin.com/angular/deep-into-angular/angular-design-0-prestart.html" target="_blank" rel="noopener">《Angular 框架解读》</a>。除此之外，我也写了一些工作上的思考内容，更新了好久没写的前端工作系列。</p><p>今年出版了两本书，一本纸质书和一本电子书，算上之前写的一本开源书，目前我一个写了三本技术书了：</p><ul><li><a href="https://item.jd.com/13289582.html" target="_blank" rel="noopener">纸质书《程序开发原理与实战》</a></li><li><a href="https://www.ituring.com.cn/book/2942" target="_blank" rel="noopener">电子书《前端的进击》</a></li><li><a href="http://www.godbasin.com/vue-ebook/" target="_blank" rel="noopener">开源书《深入理解 Vue.js 实战》</a></li></ul><p>其中，我最喜欢的书是《前端的进击》这一本。最开始为什么想写这本书呢？主要是因为自己这几年的工作经历也比较折腾，认识和学到了很多。但反观身边的很多小伙伴，尤其是刚毕业的应届生们，他们会存在很多很多的疑惑，也没有人告诉他们该怎么做，很多时候会陷入自我怀疑的困境。</p><p>他们遇到的这些问题，有些只需要调整下自身的工作方式和状态，有一些需要通过有效的沟通去解决，还有一些则是大环境下的常见问题。职场工作和校园学习相差很远，刚开始工作的那几年，很可能就决定了以后对工作、对这个行业的认知和价值观。</p><p><strong>很多很多的事情，它们都没有标准答案，都需要每个人自己去进行探索和思考。</strong></p><p>因此，我把自己的工作方法和思考写下来，希望能对一些正感到困惑的人给到帮助。这就是这本书的初衷，我非常希望在遇到一些“不对劲”的事情时，他们能少一些的自我怀疑，接受预期之外的事情发生，同时能坚持住自己的初心。</p><p>后来，在编辑的鼓励下，我给这本书画了很多的插画，包括这本书封面的猫猫也是我画的:</p><p>&lt;img src=<a href="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/%E5%89%8D%E7%AB%AF%E7%9A%84%E8%BF%9B%E5%87%BB.jpg" target="_blank" rel="noopener">https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/%E5%89%8D%E7%AB%AF%E7%9A%84%E8%BF%9B%E5%87%BB.jpg</a> width=60% /&gt;</p><p>再后来，这本书因为审核时出版社考虑成本的原因，无法进行纸质书的销售，尝试加上了加一些硬技能的内容，变成了三大部分：前端基础和入门、提升硬实力、必备软实力。但还是无法出版纸质书，最终以电子书的方式出版了，这大概是我和编辑小姐姐都特别遗憾的事情了。</p><blockquote><p>如果你对这本书的写作过程感兴趣，也可以来看看<a href="http://www.godbasin.com/front-end-work/front-end-days/a-book-with-one-story.html" target="_blank" rel="noopener">《一本书和一个故事》</a>。</p></blockquote><h2 id="生活中的新尝试"><a href="#生活中的新尝试" class="headerlink" title="生活中的新尝试"></a>生活中的新尝试</h2><p>如果要概括 2021 年的生活，主题大概是：<strong>多去尝试做一些新的事情</strong>。</p><p>今年这些事情包括：拍视频、画插画、做视频、画表情包，这些都是我以前没有尝试过去做的，但是做的时候觉得特别开心。</p><h3 id="1-画的表情包和插画"><a href="#1-画的表情包和插画" class="headerlink" title="1. 画的表情包和插画"></a>1. 画的表情包和插画</h3><p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/%E5%86%8D%E8%A7%812020_LOGO_%E7%94%BB%E6%9D%BF%201_%E7%94%BB%E6%9D%BF%201.png" alt></p><p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/biaoqingbao123.jpg" alt></p><h3 id="2-做了很多视频"><a href="#2-做了很多视频" class="headerlink" title="2. 做了很多视频"></a>2. 做了很多视频</h3><ul><li><a href="https://space.bilibili.com/42233366/channel/detail?cid=182293" target="_blank" rel="noopener">前端开发那些事</a>：主要是一些入门和深入的技术路线，比较推荐前端进阶路线、前端算法等内容</li><li><a href="https://space.bilibili.com/42233366/channel/detail?cid=186484" target="_blank" rel="noopener">程序员段子</a>:主要是一些日常工作里的灵感段子，自己配音常常笑到肚子疼</li><li><a href="https://space.bilibili.com/42233366/channel/detail?cid=190754" target="_blank" rel="noopener">程序员日志</a>：主要是自己的工作相关的心路历程和思考</li><li><a href="https://space.bilibili.com/42233366/channel/detail?cid=197803" target="_blank" rel="noopener">Angular 冷知识</a>：介绍前端  Angular 框架中比较有意思的设计和实现原理，基于最近在研究的 Angular 源码整理讲的，会比博客上的文章容易理解一些</li><li><a href="https://space.bilibili.com/42233366/channel/detail?cid=184764" target="_blank" rel="noopener">牧羊猪猫猫</a>：我家猫猫的日常，特别可爱欢迎在线吸猫哈哈哈哈</li></ul><h3 id="3-偶尔写些生活记录"><a href="#3-偶尔写些生活记录" class="headerlink" title="3. 偶尔写些生活记录"></a>3. 偶尔写些生活记录</h3><p>生活上的事情，会记录在自己的公众号（叫“牧羊的猪”）里。</p><p>公众号写了很多年了，偶尔会写一些最近的生活和工作状态。虽然没什么人关注，但感觉是属于自己的一个世界，很喜欢在写生活记录时，这样自己和自己对话的过程。</p><h3 id="4-猪猪真的太可爱了"><a href="#4-猪猪真的太可爱了" class="headerlink" title="4. 猪猪真的太可爱了"></a>4. 猪猪真的太可爱了</h3><p>2021 我的超人：猪猪！！</p><p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/368f7230e349a45b3ff48e789f1f516.jpg" alt></p><p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/0b0c53771f81f51344e82bce9fb4bf0.jpg" alt></p><h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><p>原本我以为，今年过得好像有点浑浑噩噩，没什么成长和长进。</p><p>但是当我开始这么一点点回顾和记录 2021 这一年来的事情时，我发现自己其实还是做了很多事情的。下周就会迎来新的一年了，希望明年也能保持这样一个劲头，多去尝试多去体验，做一个开开心心的自己！！</p><p>最后祝各位 2022 年一切都顺利！！！</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;工作很忙的时候，我们总以为自己除了忙碌以外，什么都没有。但当你仔细去回顾，就会发现：其实每一刻每一秒，我们都没有辜负。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="工作这杯茶" scheme="https://godbasin.github.io/categories/%E5%B7%A5%E4%BD%9C%E8%BF%99%E6%9D%AF%E8%8C%B6/"/>
-    
-    
-      <category term="心态" scheme="https://godbasin.github.io/tags/%E5%BF%83%E6%80%81/"/>
     
   </entry>
   
