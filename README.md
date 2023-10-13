@@ -13,6 +13,7 @@
 
 ### 最新     
 
+> [《复杂渲染引擎架构与设计--7.离屏渲染》](https://godbasin.github.io/2023/10/13/render-engine-offscreen-render/)   
 > [《复杂渲染引擎架构与设计--6.增量渲染》](https://godbasin.github.io/2023/10/11/render-engine-diff-render/)   
 > [《复杂渲染引擎架构与设计--5.分片计算》](https://godbasin.github.io/2023/09/16/render-engine-calculate-split/)   
 > [《复杂渲染引擎架构与设计--4.渲染计算》](https://godbasin.github.io/2023/08/17/render-engine-calculate/)   
@@ -36,6 +37,7 @@
 > [《复杂渲染引擎架构与设计--4.渲染计算》](https://godbasin.github.io/2023/08/17/render-engine-calculate/)   
 > [《复杂渲染引擎架构与设计--5.分片计算》](https://godbasin.github.io/2023/09/16/render-engine-calculate-split/)   
 > [《复杂渲染引擎架构与设计--6.增量渲染》](https://godbasin.github.io/2023/10/11/render-engine-diff-render/)   
+> [《复杂渲染引擎架构与设计--7.离屏渲染》](https://godbasin.github.io/2023/10/13/render-engine-offscreen-render/)   
 
 ### 前端技能提升
 
