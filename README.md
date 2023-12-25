@@ -13,6 +13,7 @@
 
 ### 最新     
 
+> [《从面试角度了解前端基础知识体系》](https://godbasin.github.io/2023/12/25/learn-front-end-develop-from-interview/)   
 > [《复杂渲染引擎架构与设计--8.元素与事件》](https://godbasin.github.io/2023/11/25/render-engine-element-and-event/)   
 > [《复杂渲染引擎架构与设计--7.离屏渲染》](https://godbasin.github.io/2023/10/13/render-engine-offscreen-render/)   
 > [《复杂渲染引擎架构与设计--6.增量渲染》](https://godbasin.github.io/2023/10/11/render-engine-diff-render/)   
