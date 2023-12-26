@@ -102,19 +102,19 @@ var _hmt = _hmt || [];
 		
 		<p>前面<a href="https://godbasin.github.io/2023/05/13/render-engine-render-and-collect/">《收集与渲染》</a>一文中，我们简单提到说在一些复杂场景下，从服务端获取的数据还需要进行计算，比如依赖 Web 浏览器的计算，亦或是游戏引擎中的碰撞检测。</p>
 <p>本文我们详细针对复杂计算的场景来考虑渲染引擎的优化。</p>
-<a id="more"></a>
+<span id="more"></span>
 <h2 id="渲染引擎完整的数据流向"><a href="#渲染引擎完整的数据流向" class="headerlink" title="渲染引擎完整的数据流向"></a>渲染引擎完整的数据流向</h2><p>对于需要进行较复杂计算的渲染场景，结合收集和渲染的架构设计，我们完整的渲染流程大概应该是这样的：</p>
-<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/render-engine-calculate-1.jpg" alt></p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/render-engine-calculate-1.jpg" alt=""></p>
 <p>可见，完整的渲染流程里，计算的复杂程度会直接影响渲染是否及时，最终影响到用户的交互体验。在这里，我们还是以在线表格为例子，详细介绍下为什么有如此大的计算任务。</p>
 <h3 id="渲染引擎为什么需要计算"><a href="#渲染引擎为什么需要计算" class="headerlink" title="渲染引擎为什么需要计算"></a>渲染引擎为什么需要计算</h3><p>在表格中，画布绘制所需的数据，并不能完全从数据层中获取得到。对于以下一些情况，需要经过渲染引擎的计算处理才能正确绘制到画布上，包括：</p>
 <h4 id="1-分行-换行计算（计算范围：格子）"><a href="#1-分行-换行计算（计算范围：格子）" class="headerlink" title="1. 分行/换行计算（计算范围：格子）"></a>1. 分行/换行计算（计算范围：格子）</h4><p>如下图，当单元格设置了自动换行，当格子内容超过一行会被自动换到下一行。由于内容宽度的测量依赖浏览器环境，因此也是需要在渲染引擎进行计算的：</p>
-<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/render-splitter-calculate-2.jpg" alt></p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/render-splitter-calculate-2.jpg" alt=""></p>
 <h4 id="2-行高计算（计算范围：整行）"><a href="#2-行高计算（计算范围：整行）" class="headerlink" title="2. 行高计算（计算范围：整行）"></a>2. 行高计算（计算范围：整行）</h4><p>当某个行没有设置固定的行高时，该行内容的高度可能会存在被自动换行的单元格撑高的情况，因此真实渲染的行高也需要根据分行/换行结果进行计算。</p>
 <h4 id="3-覆盖格-隐藏格计算（计算范围：整行）"><a href="#3-覆盖格-隐藏格计算（计算范围：整行）" class="headerlink" title="3. 覆盖格/隐藏格计算（计算范围：整行）"></a>3. 覆盖格/隐藏格计算（计算范围：整行）</h4><p>如下图，在没有设置自动换行的情况下，当单元格内容超出当前格子，会根据对齐的方向、该方向上的格子是否有内容，向对应的方向拓展内容，呈现向左右两边覆盖的情况：</p>
-<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/render-splitter-calculate-1.jpg" alt></p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/render-splitter-calculate-1.jpg" alt=""></p>
 <h4 id="4-边框线计算（计算范围：整行）"><a href="#4-边框线计算（计算范围：整行）" class="headerlink" title="4. 边框线计算（计算范围：整行）"></a>4. 边框线计算（计算范围：整行）</h4><p>受覆盖格影响，覆盖格和隐藏格（即被覆盖的格子）间的边框线会被超出的内容遮挡，因此对应的边框线也会受影响。</p>
 <p>以调整列宽为例子，该操作涉及的计算包括：</p>
-<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/render-splitter-calculate-3.jpg" alt></p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/render-splitter-calculate-3.jpg" alt=""></p>
 <p>可见，除了分行计算只涉及该列格子，一次列宽操作几乎涉及全表内容的计算，在大表下可能会导致几秒的卡顿，在一些低性能的机器上甚至会达到十几秒。由于该过程为同步计算，网页会表现为无响应，甚至严重的情况下会弹窗提示。</p>
 <h2 id="计算过程优化"><a href="#计算过程优化" class="headerlink" title="计算过程优化"></a>计算过程优化</h2><p>之前我在<a href="https://godbasin.github.io/2022/06/04/front-end-performance-no-responding/">《前端性能优化–卡顿篇》</a>一文中，有详细介绍对于大任务计算的优化方向，包括：</p>
 <ol>

@@ -102,7 +102,7 @@ var _hmt = _hmt || [];
 		
 		<p>对于渲染引擎来说，如果每次都进行完整内容的计算和绘制，在低端机器或是负责页面的时候可能会出现卡顿。</p>
 <p>因此，我们可以考虑设计一套增量渲染的能力，来实现改多少、重绘多少，减少每次渲染的耗时，提升用户的体验。</p>
-<a id="more"></a>
+<span id="more"></span>
 <h2 id="增量渲染设计"><a href="#增量渲染设计" class="headerlink" title="增量渲染设计"></a>增量渲染设计</h2><p>所谓增量渲染，或许你已经从 React/Vue 等框架中有所耳闻，即更新仅需要更新的部分内容，而不是每次都重新计算和渲染。</p>
 <h3 id="React-增量渲染"><a href="#React-增量渲染" class="headerlink" title="React 增量渲染"></a>React 增量渲染</h3><p>React 里结合了虚拟 DOM 以及 Fiber 引擎来实现完整的 Diff 计算和渲染调度，这些我之前在其他文章也有说过。在 React 里，状态的更新机制主要由两个步骤组成：</p>
 <ol>
@@ -123,7 +123,7 @@ var _hmt = _hmt || [];
 <li>绘制收集后的渲染数据。</li>
 </ol>
 <p>而前面在<a href="https://godbasin.github.io/2023/06/15/render-engine-plugin-design/">《2.插件的实现》</a>中也提到，渲染引擎整体的架构如图：</p>
-<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/render-engine-plugin-design-1.jpg" alt></p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/render-engine-plugin-design-1.jpg" alt=""></p>
 <p>在该架构图中，渲染引擎支持提供绘制特定范围的能力。而要实现这样的能力，我们需要做到：</p>
 <ol>
 <li>支持特定范围的渲染数据收集。</li>
@@ -150,7 +150,7 @@ var _hmt = _hmt || [];
 </ol>
 <h3 id="页面滚动"><a href="#页面滚动" class="headerlink" title="页面滚动"></a>页面滚动</h3><p>页面滚动与纯某个特定范围的修改不大一样，因为页面滚动过程中，所有单元格的位置都会发生改变。</p>
 <p>一般来说，在滚动过程我们会产生局部可复用的单元格绘制结果，如图：</p>
-<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/render-engine-diff-render-1.jpg" alt></p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/render-engine-diff-render-1.jpg" alt=""></p>
 <p>对于这样的情况，我们可以有两种解决方案：</p>
 <ol>
 <li>复用局部 Canvas 绘制结果。</li>

@@ -99,7 +99,7 @@ var _hmt = _hmt || [];
 		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%95%E7%BA%BF%E7%A8%8B%E7%9A%84-Javascript"><span class="toc-number">1.</span> <span class="toc-text">单线程的 Javascript</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%82%E6%AD%A5%E4%BB%BB%E5%8A%A1"><span class="toc-number">1.1.</span> <span class="toc-text">异步任务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#EventLoop"><span class="toc-number">1.2.</span> <span class="toc-text">EventLoop</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Web-Workers-Service-Workers"><span class="toc-number">1.3.</span> <span class="toc-text">Web Workers&#x2F;Service Workers</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Javascript-%E7%9A%84%E8%AE%BE%E8%AE%A1"><span class="toc-number">2.</span> <span class="toc-text">Javascript 的设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E5%9E%8B%E5%92%8C%E7%BB%A7%E6%89%BF"><span class="toc-number">2.1.</span> <span class="toc-text">原型和继承</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%9C%E7%94%A8%E5%9F%9F%E4%B8%8E%E9%97%AD%E5%8C%85"><span class="toc-number">2.2.</span> <span class="toc-text">作用域与闭包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E-this"><span class="toc-number">2.3.</span> <span class="toc-text">关于 this</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ES6"><span class="toc-number">2.4.</span> <span class="toc-text">ES6+</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E6%9D%9F%E8%AF%AD"><span class="toc-number">3.</span> <span class="toc-text">结束语</span></a></li></ol>
 		</div>
 		
-		<p>这些年也有不少的面试别人和面试自己的经历，也有好些人来咨询一些前端的面试题目和准备，所以整理一下记录下来。本文针对面试中 Javascript 相关的内容，进行详细的描述。<br><a id="more"></a></p>
+		<p>这些年也有不少的面试别人和面试自己的经历，也有好些人来咨询一些前端的面试题目和准备，所以整理一下记录下来。本文针对面试中 Javascript 相关的内容，进行详细的描述。<br><span id="more"></span></p>
 <p>不管是小前端还是大前端，我们的开发都离不开 Javascript。关于 Javascript 有太多内容可以讲了，每一个点都可以讲很久很久。本文主要是围绕知识点，来讲述面试可能出现的一些题目。 </p>
 <h2 id="单线程的-Javascript"><a href="#单线程的-Javascript" class="headerlink" title="单线程的 Javascript"></a>单线程的 Javascript</h2><p>要怎么理解 Javascript 是单线程这个概念呢？大概可以从浏览器来说起。</p>
 <p><strong>Q:为什么 Javascript 是单线程？</strong><br>A:作为浏览器脚本语言，JavaScript 的主要用途是与用户互动，以及操作 DOM。如果 Javascript 是多线程，当页面更新内容的时候、用户又触发了交互，这时候线程间的同步问题会变得很复杂，为了避免复杂性，Javascript 被设计为单线程。</p>
@@ -126,10 +126,10 @@ var _hmt = _hmt || [];
 <blockquote>
 <p>篇幅关系，大家可以从以下文章中获取更详细的内容说明：</p>
 <ul>
-<li><a href="http://www.ruanyifeng.com/blog/2013/10/event_loop.html" target="_blank" rel="noopener">什么是 Event Loop？</a></li>
-<li><a href="http://www.ruanyifeng.com/blog/2014/10/event-loop.html" target="_blank" rel="noopener">JavaScript 运行机制详解：再谈Event Loop</a></li>
-<li><a href="https://juejin.im/post/5c3d8956e51d4511dc72c200" target="_blank" rel="noopener">一次弄懂Event Loop（彻底解决此类面试问题）</a></li>
-<li><a href="https://juejin.im/post/5b8f76675188255c7c653811" target="_blank" rel="noopener">带你彻底弄懂Event Loop</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2013/10/event_loop.html">什么是 Event Loop？</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2014/10/event-loop.html">JavaScript 运行机制详解：再谈Event Loop</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.im/post/5c3d8956e51d4511dc72c200">一次弄懂Event Loop（彻底解决此类面试问题）</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.im/post/5b8f76675188255c7c653811">带你彻底弄懂Event Loop</a></li>
 </ul>
 </blockquote>
 <p>这里可能会出各式各样的题目，考察包括：</p>
@@ -146,8 +146,8 @@ var _hmt = _hmt || [];
 <blockquote>
 <p>参考内容：</p>
 <ul>
-<li><a href="http://www.ruanyifeng.com/blog/2018/07/web-worker.html" target="_blank" rel="noopener">Web Worker 使用教程</a></li>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Service_Worker_API" target="_blank" rel="noopener">Service Worker API</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2018/07/web-worker.html">Web Worker 使用教程</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/Service_Worker_API">Service Worker API</a></li>
 </ul>
 </blockquote>
 <h2 id="Javascript-的设计"><a href="#Javascript-的设计" class="headerlink" title="Javascript 的设计"></a>Javascript 的设计</h2><p>理解 Javascript 的一些基本设计，日常工作中也有很多帮助，例如可以更优雅地实现一些逻辑，也可以在遇到一些问题的时候快速定位。</p>
@@ -164,7 +164,7 @@ var _hmt = _hmt || [];
 <blockquote>
 <p><code>__proto__</code>与<code>prototype</code>可以考的点也很多，这里也不详述了，可以参考下：</p>
 <ul>
-<li><a href="https://github.com/creeperyang/blog/issues/9" target="_blank" rel="noopener">从<strong>proto</strong>和prototype来深入理解JS对象和原型链</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/creeperyang/blog/issues/9">从<strong>proto</strong>和prototype来深入理解JS对象和原型链</a></li>
 </ul>
 </blockquote>
 <p><strong>Q: 如何判断对象类型？</strong><br>A: 看情境可结合使用以下三种方法：</p>
@@ -177,7 +177,7 @@ var _hmt = _hmt || [];
 <blockquote>
 <p>考察内容可包括：全局作用域、函数作用域、块级作用域、词法作用域、动态作用域，可参考：</p>
 <ul>
-<li><a href="https://juejin.im/post/5abb99e9f265da2392366824" target="_blank" rel="noopener">谈谈 JavaScript 的作用域</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.im/post/5abb99e9f265da2392366824">谈谈 JavaScript 的作用域</a></li>
 </ul>
 </blockquote>
 <p><strong>Q: 什么场景需要使用闭包？</strong><br>A: 由于 Javascript 特殊的变量作用域，函数内部可以直接读取全局变量，但在函数外部自然无法读取函数内的局部变量。闭包用途:</p>
@@ -189,8 +189,8 @@ var _hmt = _hmt || [];
 <blockquote>
 <p>可参考:</p>
 <ul>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Closures" target="_blank" rel="noopener">闭包</a></li>
-<li><a href="https://www.ruanyifeng.com/blog/2009/08/learning_javascript_closures.html" target="_blank" rel="noopener">学习Javascript闭包（Closure）</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Closures">闭包</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.ruanyifeng.com/blog/2009/08/learning_javascript_closures.html">学习Javascript闭包（Closure）</a></li>
 </ul>
 </blockquote>
 <h3 id="关于-this"><a href="#关于-this" class="headerlink" title="关于 this"></a>关于 this</h3><p><strong>Q: 简单描述 this 在不同场景下的指向。</strong><br>A: Javascript 中 <code>this</code>指针代表的是执行当前代码的对象的所有者，可简单理解为<code>this</code>永远指向最后调用它的那个对象。<br>根据 JavaScript 中函数的调用方式不同，分为以下情况：</p>
@@ -205,10 +205,10 @@ var _hmt = _hmt || [];
 <blockquote>
 <p>关于 Javascript 的一些设计，可以参考：</p>
 <ul>
-<li><a href="https://github.com/mqyqingfeng/Blog/issues/17" target="_blank" rel="noopener">JavaScript深入系列15篇正式完结！</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/mqyqingfeng/Blog/issues/17">JavaScript深入系列15篇正式完结！</a></li>
 </ul>
 </blockquote>
-<h3 id="ES6"><a href="#ES6" class="headerlink" title="ES6+"></a>ES6+</h3><p>ES6/ES7/…/ESn这些都是不断发展的语法糖，虽然可能很多人都没有大量用到，但是一些基本的还是需要掌握的。<br>推荐阮大神的<a href="https://es6.ruanyifeng.com/" target="_blank" rel="noopener">ES6 入门教程</a>，里面讲的特别详细和清晰。</p>
+<h3 id="ES6"><a href="#ES6" class="headerlink" title="ES6+"></a>ES6+</h3><p>ES6/ES7/…/ESn这些都是不断发展的语法糖，虽然可能很多人都没有大量用到，但是一些基本的还是需要掌握的。<br>推荐阮大神的<a target="_blank" rel="noopener" href="https://es6.ruanyifeng.com/">ES6 入门教程</a>，里面讲的特别详细和清晰。</p>
 <p><strong>Q: 为什么要使用 Promise？</strong><br>Javascript 的单线程设计，导致网络请求、事件监听等都需要异步执行。异步执行通常用回调函数实现，多层的回调会导致回调金字塔的出现。<br>Promise 允许我们为异步操作的成功和失败分别绑定相应的处理方法（handlers），同时可以通过<code>Promise.all()</code>、<code>Promise.race()</code>等方法来同时处理多个异步操作的结果。</p>
 <p><strong>Q: 手写代码 or 讲解 Promise、async/await 的实现。</strong><br>对于<code>Promise</code>、<code>async</code>/<code>await</code>理解的考察，最简单的就是让描述或者手写它们的实现方式。具体可以参考 MDN 上的内容，也可以找一些 polyfill 来看，也可以看其他人的文章分享，这里就不多说啦。</p>
 <p>除此之外，关于已下内容也可以去了解一下，这里也不多说了：</p>
@@ -218,7 +218,7 @@ var _hmt = _hmt || [];
 <li>Set 和 Map 数据结构</li>
 <li>浏览器兼容性与 Babel</li>
 </ul>
-<h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><p>除了以上问题以外，Javascript 还有一个典型的浮点数运算精确度的问题，大家可参考<a href="https://github.com/camsong/blog/issues/9" target="_blank" rel="noopener">JavaScript 浮点数陷阱及解法</a>。<br>Javascript 这块的内容太多了，大家平时可以多关注一下自己对这些内容的理解和掌握程度，平时工作中也可以多进行思考，基础性的内容不建议临时抱佛脚哦。</p>
+<h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><p>除了以上问题以外，Javascript 还有一个典型的浮点数运算精确度的问题，大家可参考<a target="_blank" rel="noopener" href="https://github.com/camsong/blog/issues/9">JavaScript 浮点数陷阱及解法</a>。<br>Javascript 这块的内容太多了，大家平时可以多关注一下自己对这些内容的理解和掌握程度，平时工作中也可以多进行思考，基础性的内容不建议临时抱佛脚哦。</p>
   
 	</div>
 	<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/2code2.jpg" width="200" height="200" style="display:block;margin: 0 auto;" />

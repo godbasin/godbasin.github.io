@@ -99,7 +99,7 @@ var _hmt = _hmt || [];
 		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%B4%E7%BB%95%E7%BA%BF%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">围绕线程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="toc-number">1.1.</span> <span class="toc-text">多线程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E7%BA%BF%E7%A8%8B"><span class="toc-number">1.2.</span> <span class="toc-text">单线程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%BB%E5%A1%9E%E4%B8%8E%E9%9D%9E%E9%98%BB%E5%A1%9E%E3%80%81%E5%90%8C%E6%AD%A5%E4%B8%8E%E5%BC%82%E6%AD%A5"><span class="toc-number">1.3.</span> <span class="toc-text">阻塞与非阻塞、同步与异步</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IO"><span class="toc-number">1.4.</span> <span class="toc-text">IO</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">1.5.</span> <span class="toc-text">参考</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E6%9D%9F%E8%AF%AD"><span class="toc-number">2.</span> <span class="toc-text">结束语</span></a></li></ol>
 		</div>
 		
-		<p>《纯前端的进军》系列主要作为曾经的纯前端，对后台和底层的一些弥补，涉及进程、网络通信，以及对node.js和相关框架的学习。本节我们学习一下单线程与多线程、阻塞、同步/异步和IO等内容。<br><a id="more"></a></p>
+		<p>《纯前端的进军》系列主要作为曾经的纯前端，对后台和底层的一些弥补，涉及进程、网络通信，以及对node.js和相关框架的学习。本节我们学习一下单线程与多线程、阻塞、同步/异步和IO等内容。<br><span id="more"></span></p>
 <h2 id="围绕线程"><a href="#围绕线程" class="headerlink" title="围绕线程"></a>围绕线程</h2><hr>
 <h3 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h3><p>多线程，即便处理器只能运行一个线程，操作系统也可以通过快速的在不同线程之间进行切换，由于时间间隔很小，来给用户造成一种多个线程同时运行的假象。这样的程序运行机制被称为软件多线程。</p>
 <p><strong>多线程的假象</strong><br>大部分操作系统都支持多进程并发运行，现代的操作系统几乎都支持同时运行多个任务对于一个CPU而言，它在某个时间点上只能执行一个程序，也就是说，只能运行一个进程，CPU不断地在这些进程之间轮换执行。<br>因为CPU的执行速度快，所以CPU在多个进程之间轮换执行，但感觉到(宏观上)好像多个进程在同时执行。当然，如果启动的程序足够多，依然可以感觉到程序的运行速度下降。<br>现代的操作系统都支持多进程的并发(轮换执行)，但在具体的实现细节上可能因为硬件和操作系统的不同而采用不同的策略。目前操作系统大多采用效率更高的抢占式多任务策略。</p>
@@ -156,13 +156,13 @@ var _hmt = _hmt || [];
 <p>五种IO模型的比较：<br>前4种模型的主要区别在于第一阶段，因为它们的第二阶段是一样的：都是阻塞于recvfrom调用，将数据从内核拷贝到用户进程缓冲区。</p>
 <p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/20160718170600861" alt="images"></p>
 <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
-<li><a href="http://www.jianshu.com/p/7d9686cfcfbf" target="_blank" rel="noopener">《单线程和多线程的简单理解》</a></li>
-<li><a href="https://zh.wikipedia.org/wiki/%E5%A4%9A%E7%BA%BF%E7%A8%8B" target="_blank" rel="noopener">多线程- 维基百科</a></li>
-<li><a href="https://www.zhihu.com/question/19732473" target="_blank" rel="noopener">怎样理解阻塞非阻塞与同步异步的区别？</a></li>
-<li><a href="https://github.com/calidion/calidion.github.io/issues/40" target="_blank" rel="noopener">《同步，异步，阻塞，非阻塞等关系轻松理解》</a></li>
-<li><a href="http://www.jianshu.com/p/fa7bdc4f3de7" target="_blank" rel="noopener">《程序员应该这样理解IO》</a></li>
-<li><a href="https://songlee24.github.io/2016/07/19/explanation-of-5-IO-models/" target="_blank" rel="noopener">《IO模型：同步、异步、阻塞、非阻塞》</a></li>
-<li><a href="http://blog.sina.com.cn/s/blog_4e8b57db0100o1ji.html" target="_blank" rel="noopener">《单线程和多线程的优缺点》</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.jianshu.com/p/7d9686cfcfbf">《单线程和多线程的简单理解》</a></li>
+<li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%A4%9A%E7%BA%BF%E7%A8%8B">多线程- 维基百科</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/19732473">怎样理解阻塞非阻塞与同步异步的区别？</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/calidion/calidion.github.io/issues/40">《同步，异步，阻塞，非阻塞等关系轻松理解》</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.jianshu.com/p/fa7bdc4f3de7">《程序员应该这样理解IO》</a></li>
+<li><a target="_blank" rel="noopener" href="https://songlee24.github.io/2016/07/19/explanation-of-5-IO-models/">《IO模型：同步、异步、阻塞、非阻塞》</a></li>
+<li><a target="_blank" rel="noopener" href="http://blog.sina.com.cn/s/blog_4e8b57db0100o1ji.html">《单线程和多线程的优缺点》</a></li>
 </ul>
 <h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><hr>
 <p>这一节主要作为对线程的补充，收集了相关的一些IO等的资料。<br>身为一个JSer，对多线程、阻塞、同步等的理解都很少，整理笔记的同时也强迫学习了一波。</p>

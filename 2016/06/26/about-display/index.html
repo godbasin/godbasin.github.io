@@ -37,7 +37,7 @@ var _hmt = _hmt || [];
 })();
 </script>
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
   <body>
     <header>
@@ -99,9 +99,9 @@ var _hmt = _hmt || [];
 		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS-display%E5%B1%9E%E6%80%A7"><span class="toc-number">1.</span> <span class="toc-text">CSS display属性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#w3c%E7%9A%84display"><span class="toc-number">1.1.</span> <span class="toc-text">w3c的display</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E8%81%94%E5%85%83%E7%B4%A0%E5%92%8C%E5%9D%97%E7%8A%B6%E5%85%83%E7%B4%A0"><span class="toc-number">1.2.</span> <span class="toc-text">内联元素和块状元素</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E7%9A%84display%E5%B1%9E%E6%80%A7"><span class="toc-number">2.</span> <span class="toc-text">常用的display属性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#block%EF%BC%9A%E5%9D%97%E7%8A%B6%E5%85%83%E7%B4%A0"><span class="toc-number">2.1.</span> <span class="toc-text">block：块状元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#inline%EF%BC%9A%E5%86%85%E8%81%94%E5%85%83%E7%B4%A0"><span class="toc-number">2.2.</span> <span class="toc-text">inline：内联元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#inline-block%E5%85%83%E7%B4%A0"><span class="toc-number">2.3.</span> <span class="toc-text">inline-block元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96display%E5%B1%9E%E6%80%A7"><span class="toc-number">2.4.</span> <span class="toc-text">其他display属性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#float%E6%B5%AE%E5%8A%A8"><span class="toc-number">3.</span> <span class="toc-text">float浮动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E6%9D%9F%E8%AF%AD"><span class="toc-number">4.</span> <span class="toc-text">结束语</span></a></li></ol>
 		</div>
 		
-		<p>上一篇主要讲<a href="/2016/06/25/about-position/">CSS的position和z-index</a>，刚好想到了display。<br>本文主要讲述块状元素和内联元素的说明，并补充float浮动相关。<br><a id="more"></a></p>
+		<p>上一篇主要讲<a href="/2016/06/25/about-position/">CSS的position和z-index</a>，刚好想到了display。<br>本文主要讲述块状元素和内联元素的说明，并补充float浮动相关。<br><span id="more"></span></p>
 <h2 id="CSS-display属性"><a href="#CSS-display属性" class="headerlink" title="CSS display属性"></a>CSS display属性</h2><hr>
-<h3 id="w3c的display"><a href="#w3c的display" class="headerlink" title="w3c的display"></a>w3c的display</h3><p>这里借用<a href="http://www.w3school.com.cn/cssref/pr_class_display.asp" target="_blank" rel="noopener">w3c</a>上的说明</p>
+<h3 id="w3c的display"><a href="#w3c的display" class="headerlink" title="w3c的display"></a>w3c的display</h3><p>这里借用<a target="_blank" rel="noopener" href="http://www.w3school.com.cn/cssref/pr_class_display.asp">w3c</a>上的说明</p>
 <ul>
 <li>display属性规定元素应该生成的框的类型</li>
 <li>这个属性用于定义建立布局时元素生成的显示框类型</li>
@@ -201,24 +201,22 @@ var _hmt = _hmt || [];
 </ul>
 <p>这里我们又得拿起文档流来讲讲了。<br>给元素的float属性赋值后，就是脱离文档流，进行左右浮动，紧贴着父元素的边框或者是上一个同级同浮动元素的边框。</p>
 <ul>
-<li>float与block<ul>
-<li>设置float浮动的元素自动获取display: block样式</li>
-<li>当一个元素浮动之后，不会影响到块级框的布局<br>如图：<br>HTML<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span>1<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"float"</span>&gt;</span>2<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"float"</span>&gt;</span>3<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span>4<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span>5<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"float"</span>&gt;</span>6<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-<p>CSS<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">div</span> &#123; <span class="attribute">border</span>: solid <span class="number">1px</span> red; <span class="attribute">width</span>: <span class="number">50px</span>; <span class="attribute">height</span>: <span class="number">50px</span>; &#125; </span><br><span class="line"><span class="selector-class">.float</span> &#123; <span class="attribute">float</span>: left; &#125;</span><br></pre></td></tr></table></figure></p>
-<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/KSQKV%7D%253L%25Z6XE_C4FWXCRI.png" alt="image"></p>
+<li><p>float与block</p>
 <ul>
-<li>float与inline-block<ul>
+<li>设置float浮动的元素自动获取display: block样式</li>
+<li>当一个元素浮动之后，不会影响到块级框的布局<br>如图：<br>HTML<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span>1<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;float&quot;</span>&gt;</span>2<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;float&quot;</span>&gt;</span>3<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span>4<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span>5<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;float&quot;</span>&gt;</span>6<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+CSS<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">div</span> &#123; <span class="attribute">border</span>: solid <span class="number">1px</span> red; <span class="attribute">width</span>: <span class="number">50px</span>; <span class="attribute">height</span>: <span class="number">50px</span>; &#125; </span><br><span class="line"><span class="selector-class">.float</span> &#123; <span class="attribute">float</span>: left; &#125;</span><br></pre></td></tr></table></figure>
+<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/KSQKV%7D%253L%25Z6XE_C4FWXCRI.png" alt="image"></li>
+</ul>
+</li>
+<li><p>float与inline-block</p>
+<ul>
 <li>当一个元素浮动之后，会影响内联框（通常是文本）的排列和布局</li>
 <li>float浮动若未指明宽度会尽可能地窄，而inline-block元素会带来空白问题</li>
 </ul>
 </li>
 </ul>
-<p>如图：<br>CSS(给div添加display=inline-block)<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">div</span> &#123; <span class="attribute">border</span>: solid <span class="number">1px</span> red; <span class="attribute">width</span>: <span class="number">50px</span>; <span class="attribute">height</span>: <span class="number">50px</span>; <span class="attribute">display</span>: display: inline-block;&#125;</span><br></pre></td></tr></table></figure></p>
-<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/O1%297R8%7BZ%7DAH%25C0F%28U%25M%7D8XX.png" alt="image"></p>
+<p>如图：<br>CSS(给div添加display=inline-block)<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">div</span> &#123; <span class="attribute">border</span>: solid <span class="number">1px</span> red; <span class="attribute">width</span>: <span class="number">50px</span>; <span class="attribute">height</span>: <span class="number">50px</span>; <span class="attribute">display</span>: display: inline-block;&#125; </span><br></pre></td></tr></table></figure><br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/O1%297R8%7BZ%7DAH%25C0F%28U%25M%7D8XX.png" alt="image"></p>
 <ul>
 <li><p>float撑开父元素的方法<br>本属于普通流中的元素浮动之后，包含框内部由于不存在其他普通流元素了，也就表现出高度为0（高度塌陷）<br>相信使用float的童鞋们都遇到过父元素高度塌陷的问题，这是因为浮动元素不占位的问题引起的。本骚年用过的解决办法如下：</p>
 <ul>
@@ -238,7 +236,7 @@ var _hmt = _hmt || [];
 </li>
 </ul>
 </li>
-<li><p>参考<br><a href="http://www.jb51.net/css/67471.html" target="_blank" rel="noopener">《浮动从何而来 我们为何要清除浮动 清除浮动的原理是什么》</a> </p>
+<li><p>参考<br><a target="_blank" rel="noopener" href="http://www.jb51.net/css/67471.html">《浮动从何而来 我们为何要清除浮动 清除浮动的原理是什么》</a> </p>
 </li>
 </ul>
 <h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><p>虽然说这些很简单也很基础的东西，但对于写页面的时候解决各种不明bug和现象很有帮助的哦。</p>

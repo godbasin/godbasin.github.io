@@ -99,7 +99,7 @@ var _hmt = _hmt || [];
 		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">进程与线程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%B5%84%E6%BA%90"><span class="toc-number">1.1.</span> <span class="toc-text">计算机资源</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B"><span class="toc-number">1.2.</span> <span class="toc-text">进程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B"><span class="toc-number">1.3.</span> <span class="toc-text">线程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B-VS-%E7%BA%BF%E7%A8%8B"><span class="toc-number">1.4.</span> <span class="toc-text">进程 VS 线程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%90%86%E8%A7%A3%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B"><span class="toc-number">1.5.</span> <span class="toc-text">理解进程与线程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">1.6.</span> <span class="toc-text">参考</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E6%9D%9F%E8%AF%AD"><span class="toc-number">2.</span> <span class="toc-text">结束语</span></a></li></ol>
 		</div>
 		
-		<p>《纯前端的进军》系列主要作为曾经的纯前端，对后台和底层的一些弥补，涉及进程、网络通信，以及对node.js和相关框架的学习。首先我们来补充点进程、线程的知识。<br><a id="more"></a></p>
+		<p>《纯前端的进军》系列主要作为曾经的纯前端，对后台和底层的一些弥补，涉及进程、网络通信，以及对node.js和相关框架的学习。首先我们来补充点进程、线程的知识。<br><span id="more"></span></p>
 <h2 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h2><hr>
 <p>作为一个非科班纯前端，本骚年最初也是理解不了“讲一下socket的工作原理”这样的问题是什么意思的[捂脸]（当然这里面涉及的东西要多少有多少）。<br>但是还好骚年也算是个上进的娃儿，挖也要挖一下稍微底层的一些知识来补补营养。</p>
 <h3 id="计算机资源"><a href="#计算机资源" class="headerlink" title="计算机资源"></a>计算机资源</h3><p>进程和线程涉及系统资源相关，我们先来看看计算机资源。</p>
@@ -143,7 +143,7 @@ var _hmt = _hmt || [];
 <li>一个应用程序可以有多个进程，执行多个程序代码，多个线程只能执行一个程序代码，共享进程的代码段。</li>
 <li>进程采用父子结构，线程采用对等结构。</li>
 </ol>
-<p>需要快速理解进程和线程的话，阮大神的<a href="http://www.ruanyifeng.com/blog/2013/04/processes_and_threads.html" target="_blank" rel="noopener">《进程与线程的一个简单解释》</a>里面描述挺形象的。</p>
+<p>需要快速理解进程和线程的话，阮大神的<a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2013/04/processes_and_threads.html">《进程与线程的一个简单解释》</a>里面描述挺形象的。</p>
 <p><strong>线程相对于进程的优点：</strong></p>
 <ol>
 <li>开销小。</li>
@@ -159,11 +159,11 @@ var _hmt = _hmt || [];
 <p><strong>进程是操作系统分配资源的最小单元，线程是操作系统调度的最小单元。</strong><br>进程是具有一定独立功能的程序关于某个数据集合上的一次运行活动，进程是系统进行资源分配和调度的一个独立单位。<br>线程是进程的一个实体，是CPU调度和分派的基本单位，它是比进程更小的能独立运行的基本单位。线程自己基本上不拥有系统资源，只拥有一点在运行中必不可少的资源(如程序计数器，一组寄存器和栈)，但是它可与同属一个进程的其他的线程共享进程所拥有的全部资源。<br>一个线程可以创建和撤销另一个线程；同一个进程中的多个线程之间可以并发执行。</p>
 <p>进程是面向磁盘的，是操作系统分配存储资源的最小单元。<br>为什么不是线程呢，因为线程是在进程的基础上派生出来的。线程占有的是进程的资源，进程占有的是系统分配的资源，跟调度相关的就是CPU了。</p>
 <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
-<li><a href="http://www.cnblogs.com/lmule/archive/2010/08/18/1802774.html" target="_blank" rel="noopener">《进程和线程的区别》</a></li>
-<li><a href="http://www.cnblogs.com/tiankong101/p/4229584.html" target="_blank" rel="noopener">《深入理解进程和线程》</a></li>
-<li><a href="https://zh.wikipedia.org/wiki/%E8%A1%8C%E7%A8%8B" target="_blank" rel="noopener">进程- 维基百科</a></li>
-<li><a href="https://zh.wikipedia.org/wiki/%E7%BA%BF%E7%A8%8B" target="_blank" rel="noopener">线程- 维基百科</a></li>
-<li><a href="http://www.jianshu.com/p/7d9686cfcfbf" target="_blank" rel="noopener">《单线程和多线程的简单理解》</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.cnblogs.com/lmule/archive/2010/08/18/1802774.html">《进程和线程的区别》</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.cnblogs.com/tiankong101/p/4229584.html">《深入理解进程和线程》</a></li>
+<li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E8%A1%8C%E7%A8%8B">进程- 维基百科</a></li>
+<li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E7%BA%BF%E7%A8%8B">线程- 维基百科</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.jianshu.com/p/7d9686cfcfbf">《单线程和多线程的简单理解》</a></li>
 </ul>
 <h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><hr>
 <p>这一节主要针对进程、线程进行了介绍，但其实里面的每一个点都可以深入探究或是发散调研。<br>在这个时候非科班的劣势就出来了，但其实知道缺少什么也是件好事情，也希望本骚年后面可以深入学习和理解这些原理吧。</p>

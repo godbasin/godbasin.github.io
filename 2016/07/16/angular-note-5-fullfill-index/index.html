@@ -37,7 +37,7 @@ var _hmt = _hmt || [];
 })();
 </script>
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
   <body>
     <header>
@@ -99,7 +99,7 @@ var _hmt = _hmt || [];
 		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%89%E5%85%B3angularJS%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="toc-number">1.</span> <span class="toc-text">有关angularJS作用域</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#rootscope%E7%9B%B8%E5%85%B3%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B"><span class="toc-number">1.1.</span> <span class="toc-text">rootscope相关执行过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Scope%E5%AF%B9%E8%B1%A1"><span class="toc-number">1.2.</span> <span class="toc-text">Scope对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%91%E6%8E%A7%E5%AF%B9%E8%B1%A1%E5%B1%9E%E6%80%A7"><span class="toc-number">1.3.</span> <span class="toc-text">监控对象属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%9C%E7%94%A8%E5%9F%9F%E6%A0%91"><span class="toc-number">1.4.</span> <span class="toc-text">作用域树</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">1.5.</span> <span class="toc-text">参考</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%B6%E4%BD%9Cindex%E9%A1%B5%E9%9D%A2"><span class="toc-number">2.</span> <span class="toc-text">制作index页面</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0index%E6%8E%A7%E5%88%B6%E5%99%A8"><span class="toc-number">2.1.</span> <span class="toc-text">添加index控制器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E4%BE%A7%E8%BE%B9%E8%8F%9C%E5%8D%95"><span class="toc-number">2.2.</span> <span class="toc-text">添加侧边菜单</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E9%A1%B5%E9%9D%A2%E5%86%85%E5%AE%B9"><span class="toc-number">2.3.</span> <span class="toc-text">添加页面内容</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E5%99%A8%E9%80%BB%E8%BE%91"><span class="toc-number">2.4.</span> <span class="toc-text">控制器逻辑</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E6%9D%9F%E8%AF%AD"><span class="toc-number">3.</span> <span class="toc-text">结束语</span></a></li></ol>
 		</div>
 		
-		<p>最近的一个项目使用AngularJS(v1.2.6)作为前端的框架，《Angular使用笔记》系列用于记录过程中的一些使用和解决方法。<br>本文记录简单介绍作用域，以及制作首页的过程。<br><a id="more"></a></p>
+		<p>最近的一个项目使用AngularJS(v1.2.6)作为前端的框架，《Angular使用笔记》系列用于记录过程中的一些使用和解决方法。<br>本文记录简单介绍作用域，以及制作首页的过程。<br><span id="more"></span></p>
 <h2 id="有关angularJS作用域"><a href="#有关angularJS作用域" class="headerlink" title="有关angularJS作用域"></a>有关angularJS作用域</h2><hr>
 <h3 id="rootscope相关执行过程"><a href="#rootscope相关执行过程" class="headerlink" title="rootscope相关执行过程"></a>rootscope相关执行过程</h3><ul>
 <li>调用compile(element)(scope)</li>
@@ -158,19 +158,19 @@ var _hmt = _hmt || [];
 </li>
 </ul>
 <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
-<li><a href="http://www.ituring.com.cn/article/39865" target="_blank" rel="noopener">《构建自己的AngularJS，第一部分：作用域和digest》</a></li>
-<li><a href="http://www.html-js.com/article/2365" target="_blank" rel="noopener">《angularjs1.3.0源码解析之scope》</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.ituring.com.cn/article/39865">《构建自己的AngularJS，第一部分：作用域和digest》</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.html-js.com/article/2365">《angularjs1.3.0源码解析之scope》</a></li>
 </ul>
 <h2 id="制作index页面"><a href="#制作index页面" class="headerlink" title="制作index页面"></a>制作index页面</h2><hr>
 <p>页面结构如下：<br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/F3A2.tmp.png" alt="image"></p>
 <h3 id="添加index控制器"><a href="#添加index控制器" class="headerlink" title="添加index控制器"></a>添加index控制器</h3><ul>
 <li>在scripts文件夹内添加一个indexCtrl.js文件，并添加控制器</li>
 </ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.controller(<span class="string">'IndexCtrl'</span>, [<span class="string">'$scope'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">$scope</span>) </span>&#123;&#125;]);</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.<span class="title function_">controller</span>(<span class="string">&#x27;IndexCtrl&#x27;</span>, [<span class="string">&#x27;$scope&#x27;</span>,<span class="keyword">function</span>(<span class="params">$scope</span>) &#123;&#125;]);</span><br></pre></td></tr></table></figure>
 <ul>
 <li>在app.js文件中对应路由添加上控制器</li>
 </ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">.when(<span class="string">'/index'</span>, &#123;</span><br><span class="line">  templateUrl: <span class="string">'views/index.html'</span>, <span class="comment">//index的html页面</span></span><br><span class="line">  controller: <span class="string">'IndexCtrl'</span> <span class="comment">//index的控制器，现在暂时不加</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">.<span class="title function_">when</span>(<span class="string">&#x27;/index&#x27;</span>, &#123;</span><br><span class="line">  <span class="attr">templateUrl</span>: <span class="string">&#x27;views/index.html&#x27;</span>, <span class="comment">//index的html页面</span></span><br><span class="line">  <span class="attr">controller</span>: <span class="string">&#x27;IndexCtrl&#x27;</span> <span class="comment">//index的控制器，现在暂时不加</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <ul>
 <li>在index.html页面内引入indexCtrl.js文件</li>
 </ul>
@@ -193,7 +193,7 @@ var _hmt = _hmt || [];
 <li>click: function对象，点击菜单时绑定的事件</li>
 <li>menus: obj对象，一级菜单下的二级菜单<ul>
 <li>title: string，二级菜单的名称</li>
-<li>click: function对象，点击菜单时绑定的事件<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">app.controller(<span class="string">'IndexCtrl'</span>, [<span class="string">'$scope'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$scope</span>) </span>&#123;</span><br><span class="line">  $scope.loading = <span class="string">'init'</span>; <span class="comment">//$scope.loading储存当前位置</span></span><br><span class="line">  $scope.asidemenus = [&#123;</span><br><span class="line">    title: <span class="string">''</span>, <span class="comment">//一级菜单的名称</span></span><br><span class="line">    click: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125;, <span class="comment">//点击菜单时绑定的事件</span></span><br><span class="line">    menus: [&#123; <span class="comment">//二级菜单</span></span><br><span class="line">      text: <span class="string">''</span>, <span class="comment">//二级菜单的名称</span></span><br><span class="line">      click: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125; <span class="comment">//点击菜单时绑定的事件</span></span><br><span class="line">    &#125;]</span><br><span class="line">  &#125;];</span><br><span class="line">&#125;]);</span><br></pre></td></tr></table></figure>
+<li>click: function对象，点击菜单时绑定的事件<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">app.<span class="title function_">controller</span>(<span class="string">&#x27;IndexCtrl&#x27;</span>, [<span class="string">&#x27;$scope&#x27;</span>, <span class="keyword">function</span>(<span class="params">$scope</span>) &#123;</span><br><span class="line">  $scope.<span class="property">loading</span> = <span class="string">&#x27;init&#x27;</span>; <span class="comment">//$scope.loading储存当前位置</span></span><br><span class="line">  $scope.<span class="property">asidemenus</span> = [&#123;</span><br><span class="line">    <span class="attr">title</span>: <span class="string">&#x27;&#x27;</span>, <span class="comment">//一级菜单的名称</span></span><br><span class="line">    <span class="attr">click</span>: <span class="keyword">function</span>(<span class="params"></span>) &#123;&#125;, <span class="comment">//点击菜单时绑定的事件</span></span><br><span class="line">    <span class="attr">menus</span>: [&#123; <span class="comment">//二级菜单</span></span><br><span class="line">      <span class="attr">text</span>: <span class="string">&#x27;&#x27;</span>, <span class="comment">//二级菜单的名称</span></span><br><span class="line">      <span class="attr">click</span>: <span class="keyword">function</span>(<span class="params"></span>) &#123;&#125; <span class="comment">//点击菜单时绑定的事件</span></span><br><span class="line">    &#125;]</span><br><span class="line">  &#125;];</span><br><span class="line">&#125;]);</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
@@ -201,7 +201,7 @@ var _hmt = _hmt || [];
 </li>
 </ul>
 <h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><hr>
-<p>AngularJS中用得最爽的莫过于模板引擎的数据和事件绑定了，当你熟悉了angular之后你会喜欢上他的哦。<br><a href="https://github.com/godbasin/godbasin.github.io/tree/blog-codes/angular-notes/5-fullfill-index" target="_blank" rel="noopener">此处查看项目代码（仅包含app部分）</a><br><a href="http://angular-notes.godbasin.com/5-fullfill-index/index.html#/index" target="_blank" rel="noopener">此处查看页面效果</a></p>
+<p>AngularJS中用得最爽的莫过于模板引擎的数据和事件绑定了，当你熟悉了angular之后你会喜欢上他的哦。<br><a target="_blank" rel="noopener" href="https://github.com/godbasin/godbasin.github.io/tree/blog-codes/angular-notes/5-fullfill-index">此处查看项目代码（仅包含app部分）</a><br><a target="_blank" rel="noopener" href="http://angular-notes.godbasin.com/5-fullfill-index/index.html#/index">此处查看页面效果</a></p>
   
 	</div>
 	<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/2code2.jpg" width="200" height="200" style="display:block;margin: 0 auto;" />

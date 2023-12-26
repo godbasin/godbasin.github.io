@@ -99,7 +99,7 @@ var _hmt = _hmt || [];
 		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%8B%B7%E8%B4%9D"><span class="toc-number">1.</span> <span class="toc-text">对象的拷贝</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95"><span class="toc-number">1.1.</span> <span class="toc-text">方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1%E6%8B%B7%E8%B4%9D%E7%9A%84%E5%BA%94%E7%94%A8"><span class="toc-number">1.2.</span> <span class="toc-text">对象拷贝的应用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%9A%84%E5%88%A4%E6%96%AD"><span class="toc-number">2.</span> <span class="toc-text">数据的判断</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95-1"><span class="toc-number">2.1.</span> <span class="toc-text">方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E6%9D%9F%E8%AF%AD"><span class="toc-number">3.</span> <span class="toc-text">结束语</span></a></li></ol>
 		</div>
 		
-		<p>AngularJS(v1.5.8)已经成为项目们的基本框架，《玩转Angular1》系列用于记录项目中的一些好玩或者比较特别的思路。<br>本文简单介绍一些常用的angular方法，包括<code>angular.extend()</code>、<code>angular.merge()</code>，等等。<br><a id="more"></a></p>
+		<p>AngularJS(v1.5.8)已经成为项目们的基本框架，《玩转Angular1》系列用于记录项目中的一些好玩或者比较特别的思路。<br>本文简单介绍一些常用的angular方法，包括<code>angular.extend()</code>、<code>angular.merge()</code>，等等。<br><span id="more"></span></p>
 <h2 id="对象的拷贝"><a href="#对象的拷贝" class="headerlink" title="对象的拷贝"></a>对象的拷贝</h2><hr>
 <h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><p>在angular中，有以下这些方法可以进行对象的拷贝：</p>
 <ul>
@@ -108,21 +108,21 @@ var _hmt = _hmt || [];
 </blockquote>
 </li>
 </ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">angular.extend(&#123;&#125;, object1, object2)</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">angular.<span class="title function_">extend</span>(&#123;&#125;, object1, object2)</span><br></pre></td></tr></table></figure>
 <ul>
 <li><code>angular.merge()</code><blockquote>
 <p>方法可以把任意多个的源对象自身的可枚举属性拷贝给目标对象，然后返回目标对象。<br>为深拷贝。</p>
 </blockquote>
 </li>
 </ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">angular.merge(&#123;&#125;, object1, object2)</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">angular.<span class="title function_">merge</span>(&#123;&#125;, object1, object2)</span><br></pre></td></tr></table></figure>
 <ul>
 <li><code>angular.copy()</code><blockquote>
 <p>方法可以对一源对象或数组进行拷贝，然后返回拷贝后对象。<br>为深拷贝。</p>
 </blockquote>
 </li>
 </ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">angular.copy(object)</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">angular.<span class="title function_">copy</span>(object)</span><br></pre></td></tr></table></figure>
 <p>而除了在angular中，ES6也提供了一些浅拷贝的方法：</p>
 <ul>
 <li><code>Object.assign()</code><blockquote>
@@ -130,9 +130,9 @@ var _hmt = _hmt || [];
 </blockquote>
 </li>
 </ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.assign(&#123;&#125;, object1, object2)</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Object</span>.<span class="title function_">assign</span>(&#123;&#125;, object1, object2)</span><br></pre></td></tr></table></figure>
 <ul>
-<li><code>{...object}</code><blockquote>
+<li><code>&#123;...object&#125;</code><blockquote>
 <p>等同于<code>Object.assign()</code>和<code>angular.extend()</code><br>浅拷贝</p>
 </blockquote>
 </li>
@@ -141,15 +141,15 @@ var _hmt = _hmt || [];
 <ul>
 <li>不可更改的状态<br>在组件设计中，组件对外提供查询状态接口，该状态应该是不可更改影响原状态的，此时我们需要在查询的时候提供一个状态的深拷贝对象：</li>
 </ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 状态的查询，返回原状态的深拷贝</span></span><br><span class="line">states.get = <span class="function"><span class="params">()</span> =&gt;</span> angular.copy(statesObj);</span><br><span class="line"><span class="comment">// 当状态维护在不只一个对象中时</span></span><br><span class="line">states.get = <span class="function"><span class="params">()</span> =&gt;</span> angular.merge(&#123;&#125;, statesObj1, statesObj2);</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 状态的查询，返回原状态的深拷贝</span></span><br><span class="line">states.<span class="property">get</span> = <span class="function">() =&gt;</span> angular.<span class="title function_">copy</span>(statesObj);</span><br><span class="line"><span class="comment">// 当状态维护在不只一个对象中时</span></span><br><span class="line">states.<span class="property">get</span> = <span class="function">() =&gt;</span> angular.<span class="title function_">merge</span>(&#123;&#125;, statesObj1, statesObj2);</span><br></pre></td></tr></table></figure>
 <ul>
 <li>有条件的初始化<br>在数据的初始化中，我们则可以通过固定的原始对象数据，合入初始化的数据后，然后再进行数据和状态的初始化：</li>
 </ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 原始对象数据，位于constant文件中的一部分</span></span><br><span class="line"><span class="keyword">import</span> constant <span class="keyword">from</span> <span class="string">'constant.ts'</span>;</span><br><span class="line"><span class="keyword">const</span> &#123;genders, nations, races, ages&#125; = constant;</span><br><span class="line"><span class="comment">// 初始化的对象数据，从后台获取，这里假设数据同步返回</span></span><br><span class="line"><span class="keyword">const</span> dataObject = getService();</span><br><span class="line"><span class="comment">// 初始化事件时，将其合入模板数据</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">init</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    angular.extend(VM, genders, nations, races, ages, &#123;...dataObject&#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 原始对象数据，位于constant文件中的一部分</span></span><br><span class="line"><span class="keyword">import</span> constant <span class="keyword">from</span> <span class="string">&#x27;constant.ts&#x27;</span>;</span><br><span class="line"><span class="keyword">const</span> &#123;genders, nations, races, ages&#125; = constant;</span><br><span class="line"><span class="comment">// 初始化的对象数据，从后台获取，这里假设数据同步返回</span></span><br><span class="line"><span class="keyword">const</span> dataObject = <span class="title function_">getService</span>();</span><br><span class="line"><span class="comment">// 初始化事件时，将其合入模板数据</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">init</span>(<span class="params"></span>)&#123;</span><br><span class="line">    angular.<span class="title function_">extend</span>(<span class="variable constant_">VM</span>, genders, nations, races, ages, &#123;...dataObject&#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
 <li>数据的更新<br>有些时候，我们维护一个完整的对象数据，而当我们从后台获取更新的时候，只返回了更新的那部分，这时候我们可以合入到原对象：</li>
 </ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 待更新的对象数据，从后台获取，这里假设数据同步返回</span></span><br><span class="line"><span class="keyword">const</span> updatedObject = getServiceUpdated();</span><br><span class="line"><span class="comment">// 将更新的对象数据合入原数据</span></span><br><span class="line"><span class="built_in">Object</span>.assign(originalObject, updatedObject);</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 待更新的对象数据，从后台获取，这里假设数据同步返回</span></span><br><span class="line"><span class="keyword">const</span> updatedObject = <span class="title function_">getServiceUpdated</span>();</span><br><span class="line"><span class="comment">// 将更新的对象数据合入原数据</span></span><br><span class="line"><span class="title class_">Object</span>.<span class="title function_">assign</span>(originalObject, updatedObject);</span><br></pre></td></tr></table></figure>
 <h2 id="数据的判断"><a href="#数据的判断" class="headerlink" title="数据的判断"></a>数据的判断</h2><hr>
 <h3 id="方法-1"><a href="#方法-1" class="headerlink" title="方法"></a>方法</h3><ul>
 <li><p><code>angular.isObject()</code></p>
@@ -175,7 +175,7 @@ var _hmt = _hmt || [];
 </li>
 </ul>
 <h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><hr>
-<p>这节主要简单介绍常用的angular方法，主要涉及对象的拷贝等等。<br>在ES6出来之后，angular原有设计的一些方法会有重复，如<code>angular.merge()</code>和<code>Object.assign()</code>、<code>{...object}</code>等，使用过程中我们可以约定好用哪种方法。</p>
+<p>这节主要简单介绍常用的angular方法，主要涉及对象的拷贝等等。<br>在ES6出来之后，angular原有设计的一些方法会有重复，如<code>angular.merge()</code>和<code>Object.assign()</code>、<code>&#123;...object&#125;</code>等，使用过程中我们可以约定好用哪种方法。</p>
   
 	</div>
 	<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/2code2.jpg" width="200" height="200" style="display:block;margin: 0 auto;" />

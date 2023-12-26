@@ -99,7 +99,7 @@ var _hmt = _hmt || [];
 		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9A%E4%BD%93"><span class="toc-number">1.</span> <span class="toc-text">刚体</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9A%E4%BD%93%E5%AE%9A%E4%B9%89-b2BodyDef"><span class="toc-number">1.1.</span> <span class="toc-text">刚体定义(b2BodyDef)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%B1%E5%BD%A2%E7%8A%B6%E5%88%B0%E5%88%9A%E4%BD%93"><span class="toc-number">2.</span> <span class="toc-text">由形状到刚体</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#b2BodyDef"><span class="toc-number">2.1.</span> <span class="toc-text">b2BodyDef</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%94%E5%9B%9E%E6%80%BB%E7%9B%AE%E5%BD%95"><span class="toc-number">2.2.</span> <span class="toc-text">返回总目录</span></a></li></ol></li></ol>
 		</div>
 		
-		<p>本节主要介绍刚体的一些属性，以及从形状到刚体的过程。<br><a id="more"></a></p>
+		<p>本节主要介绍刚体的一些属性，以及从形状到刚体的过程。<br><span id="more"></span></p>
 <h2 id="刚体"><a href="#刚体" class="headerlink" title="刚体"></a>刚体</h2><hr>
 <h3 id="刚体定义-b2BodyDef"><a href="#刚体定义-b2BodyDef" class="headerlink" title="刚体定义(b2BodyDef)"></a>刚体定义(b2BodyDef)</h3><p>在创建刚体之前你需要创建一个刚体定义(b2BodyDef)。你可以把刚体定义创建在栈上，也可以在你的游戏数据结构中保存它们。这取决于你的选择。<br>Box2D会从刚体定义中拷贝出数据，这意味着你可以循环使用一个刚体定义去创建多个刚体。</p>
 <ul>
@@ -116,26 +116,26 @@ var _hmt = _hmt || [];
 </ul>
 <p>物体定义为你提供了一个在创建时初始化位置的机会，这要比在世界原点创建物体而后移动它到某个位置更具性能。</p>
 <p>一个物体上主要有两个令人感兴趣的点。其中一个是物体的原点，形状和关节都相对于物体的原点而被附加。另一个点是物体的质心。质心取决于物体上形状的质量分配，或显式地由b2MassData设置。<br>Box2D内部的许多计算都要使用物体的质心，例如b2Body会存储质心的线速度。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bodyDef.position.Set(x, y); <span class="comment">// 设置刚体的初始位置</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bodyDef.<span class="property">position</span>.<span class="title class_">Set</span>(x, y); <span class="comment">// 设置刚体的初始位置</span></span><br></pre></td></tr></table></figure>
 <p>当你构造物体定义的时候，可能你并不知道质心在哪里，因此你会指定物体的原点。你可能也会以弧度指定物体的角度，角度并不受质心位置的影响。<br>如果随后你改变了物体的质量性质，那么质心也会随之移动，但是原点以及物体上的形状和关节都不会改变。</p>
 <ul>
 <li>阻尼</li>
 </ul>
 <p>阻尼用于减小物体在世界中的速率。阻尼与摩擦是不同的，因为摩擦仅在物体有接触的时候才会发生，而阻尼的模拟要比摩擦便宜多了。然而，阻尼并不能取代摩擦，往往这两个效果需要同时使用。</p>
 <p>阻尼参数的范围可以在0到无穷之间，0的就是没有阻尼，无穷就是满阻尼。通常来说，阻尼的值应该在0到0.1之间，我通常不使用线性阻尼，因为它会使物体看起来发飘。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bodyDef.linearDamping = <span class="number">0.0</span>;</span><br><span class="line">bodyDef.angularDamping = <span class="number">0.01</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bodyDef.<span class="property">linearDamping</span> = <span class="number">0.0</span>;</span><br><span class="line">bodyDef.<span class="property">angularDamping</span> = <span class="number">0.01</span>;</span><br></pre></td></tr></table></figure>
 <p>阻尼相似于稳定性与性能，阻尼值较小的时候阻尼效应几乎不依赖于时间步，而阻尼值较大的时候阻<br>尼效应将随着时间步而变化。</p>
 <ul>
 <li>休眠参数</li>
 </ul>
 <p>休眠是什么意思？好的。模拟物体的成本是高昂的，所以如果物体更少，那模拟的效果就能更好。当一个物体停止了运动时，我们喜欢停止去模拟它。</p>
 <p>当Box2D确定一个物体(或一组物体)已经停止移动时，物体就会进入休眠状态，消耗很小的CPU开销。如果一个醒着的物体接触到了一个休眠中的物体，那么休眠中的物体就会醒来。当物体上的关节或触点被摧毁的时候，它们同样会醒来。你也可以手动地唤醒物体。<br>通过物体定义，你可以指定一个物体是否可以休眠，或者创建一个休眠的物体。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bodyDef.allowSleep = <span class="literal">true</span>;</span><br><span class="line">bodyDef.isSleeping = <span class="literal">false</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bodyDef.<span class="property">allowSleep</span> = <span class="literal">true</span>;</span><br><span class="line">bodyDef.<span class="property">isSleeping</span> = <span class="literal">false</span>;</span><br></pre></td></tr></table></figure>
 <h2 id="由形状到刚体"><a href="#由形状到刚体" class="headerlink" title="由形状到刚体"></a>由形状到刚体</h2><hr>
 <h3 id="b2BodyDef"><a href="#b2BodyDef" class="headerlink" title="b2BodyDef"></a>b2BodyDef</h3><p>之前虽然创建了形状，但是这些形状并不会直接在世界里面显示出来。</p>
 <p>下面利用这些形状来组成一些刚体，然后把它们放入到世界里面去。</p>
 <p>首先，利用b2BodyDef创建一个刚体，然后设置刚体的初始位置并加入之间已创建的形状，然后使用CreateBody将刚体放入到世界里面，这样就可以看到一些模拟刚体了。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> BodyDef= <span class="keyword">new</span> b2BodyDef();   <span class="comment">// 利用b2BodyDef类创建一个刚体</span></span><br><span class="line">BodyDef.position.Set(<span class="number">0</span>, <span class="number">600</span>);     <span class="comment">// 设置刚体的初始位置，这里把BodyDef放在（0，600）</span></span><br><span class="line">BodyDef.AddShape(Shape);      <span class="comment">// 在刚体BodyDef中加入形状Shape</span></span><br><span class="line">Body= world.CreateBody(BodyDef); <span class="comment">// 把刚体BodyDef放到world中</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="title class_">BodyDef</span>= <span class="keyword">new</span> <span class="title function_">b2BodyDef</span>();   <span class="comment">// 利用b2BodyDef类创建一个刚体</span></span><br><span class="line"><span class="title class_">BodyDef</span>.<span class="property">position</span>.<span class="title class_">Set</span>(<span class="number">0</span>, <span class="number">600</span>);     <span class="comment">// 设置刚体的初始位置，这里把BodyDef放在（0，600）</span></span><br><span class="line"><span class="title class_">BodyDef</span>.<span class="title class_">AddShape</span>(<span class="title class_">Shape</span>);      <span class="comment">// 在刚体BodyDef中加入形状Shape</span></span><br><span class="line"><span class="title class_">Body</span>= world.<span class="title class_">CreateBody</span>(<span class="title class_">BodyDef</span>); <span class="comment">// 把刚体BodyDef放到world中</span></span><br></pre></td></tr></table></figure>
 <h3 id="返回总目录"><a href="#返回总目录" class="headerlink" title="返回总目录"></a><a href="/2017/02/17/box2d-tutorial-0-catalog/">返回总目录</a></h3>  
 	</div>
 	<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/2code2.jpg" width="200" height="200" style="display:block;margin: 0 auto;" />

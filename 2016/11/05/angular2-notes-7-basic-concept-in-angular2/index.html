@@ -99,7 +99,7 @@ var _hmt = _hmt || [];
 		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Angular%E5%BA%94%E7%94%A8%E4%B8%AD%E7%9A%84%E6%9E%84%E9%80%A0%E5%9D%97"><span class="toc-number">1.</span> <span class="toc-text">Angular应用中的构造块</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E5%9D%97"><span class="toc-number">1.1.</span> <span class="toc-text">模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6"><span class="toc-number">1.2.</span> <span class="toc-text">组件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E6%9D%BF"><span class="toc-number">1.3.</span> <span class="toc-text">模板</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%83%E6%95%B0%E6%8D%AE"><span class="toc-number">1.4.</span> <span class="toc-text">元数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A"><span class="toc-number">1.5.</span> <span class="toc-text">数据绑定</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E4%BB%A4"><span class="toc-number">1.6.</span> <span class="toc-text">指令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1"><span class="toc-number">1.7.</span> <span class="toc-text">服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5"><span class="toc-number">1.8.</span> <span class="toc-text">依赖注入</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E6%9D%9F%E8%AF%AD"><span class="toc-number">2.</span> <span class="toc-text">结束语</span></a></li></ol>
 		</div>
 		
-		<p>最近在学习Angular2作为前端的框架，《Angular2使用笔记》系列用于记录过程中的一些使用和解决方法。<br>本文记录一些Angular2中的基本概念和基础知识。<br><a id="more"></a></p>
+		<p>最近在学习Angular2作为前端的框架，《Angular2使用笔记》系列用于记录过程中的一些使用和解决方法。<br>本文记录一些Angular2中的基本概念和基础知识。<br><span id="more"></span></p>
 <h2 id="Angular应用中的构造块"><a href="#Angular应用中的构造块" class="headerlink" title="Angular应用中的构造块"></a>Angular应用中的构造块</h2><hr>
 <p>首先我们来看一张图。<br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/overview2.png" alt="image"><br>使用Angular2的小伙伴们肯定很熟悉，这是张架构图，展现了 Angular 应用中的8个主要构造块。</p>
 <h3 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h3><p>前面我们也提到过模块化。<br>Angualr应用是模块化的，并且Angular有自己的模块系统，它被称为Angular模块或NgModules。</p>
@@ -138,7 +138,7 @@ var _hmt = _hmt || [];
 <li>组件控制视图</li>
 <li>组件通过一些由属性和方法组成的API与视图交互</li>
 <li>Angular会创建、更新和销毁组件<br>开发人员可以通过生命周期钩子在组件生命周期的各个时间点上插入自己的操作。</li>
-<li><a href="https://angular.cn/docs/ts/latest/cookbook/component-communication.html" target="_blank" rel="noopener">组件间的通讯</a><ul>
+<li><a target="_blank" rel="noopener" href="https://angular.cn/docs/ts/latest/cookbook/component-communication.html">组件间的通讯</a><ul>
 <li>使用输入型绑定，把数据从父组件传到子组件</li>
 <li>通过setter拦截输入属性值的变化</li>
 <li>使用ngOnChanges拦截输入属性值的变化</li>
@@ -151,7 +151,7 @@ var _hmt = _hmt || [];
 </ul>
 <h3 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h3><p>我们通过组件的自带的模板来定义视图。模板以HTML形式存在，用来告诉Angular如何渲染组件(视图)。</p>
 <ul>
-<li><a href="https://angular.cn/docs/ts/latest/guide/template-syntax.html" target="_blank" rel="noopener">Angular模板语法</a><ul>
+<li><a target="_blank" rel="noopener" href="https://angular.cn/docs/ts/latest/guide/template-syntax.html">Angular模板语法</a><ul>
 <li>插值表达式、模板表达式</li>
 <li>模板语句：用来响应由绑定目标(如HTML元素、组件或指令)触发的事件对象</li>
 <li>绑定语法：单向（从数据源到视图目标、从视图目标到数据源）、双向</li>
@@ -160,7 +160,7 @@ var _hmt = _hmt || [];
 <li>事件绑定：由等号左侧带圆括号的目标事件，和右侧一个引号中的模板语句组成</li>
 <li>使用NgModel进行双向数据绑定</li>
 <li>内建指令（NgClass/NgStyle/NgIf/NgSwitch/NgFor）</li>
-<li>*与<template>：内建指令的展开和简化</template></li>
+<li>*与<template>：内建指令的展开和简化</li>
 <li>模板引用变量：模板中对DOM元素或指令的引用</li>
 <li>输入输出属性</li>
 <li>模板表达式操作符：管道操作符(|)、安全导航操作符(?.)</li>

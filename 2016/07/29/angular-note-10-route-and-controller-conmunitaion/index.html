@@ -37,7 +37,7 @@ var _hmt = _hmt || [];
 })();
 </script>
 
-</head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
   <body>
     <header>
@@ -99,7 +99,7 @@ var _hmt = _hmt || [];
 		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ngRoute"><span class="toc-number">1.</span> <span class="toc-text">ngRoute</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ngRoute%E5%8C%85%E6%8B%AC%E7%9A%84%E5%86%85%E5%AE%B9"><span class="toc-number">1.1.</span> <span class="toc-text">ngRoute包括的内容</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#routeProvider"><span class="toc-number">1.2.</span> <span class="toc-text">$routeProvider</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#route"><span class="toc-number">1.3.</span> <span class="toc-text">$route</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#routeParams"><span class="toc-number">1.4.</span> <span class="toc-text">$routeParams</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#location"><span class="toc-number">1.5.</span> <span class="toc-text">$location</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">1.6.</span> <span class="toc-text">参考</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Controller%E9%97%B4%E9%80%9A%E4%BF%A1"><span class="toc-number">2.</span> <span class="toc-text">Controller间通信</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#angular%E6%8E%A7%E5%88%B6%E5%99%A8%E9%80%9A%E4%BF%A1%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="toc-number">2.1.</span> <span class="toc-text">angular控制器通信的方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E4%BD%9C%E7%94%A8%E5%9F%9F%E7%9A%84%E7%BB%A7%E6%89%BF%E6%96%B9%E5%BC%8F"><span class="toc-number">2.2.</span> <span class="toc-text">利用作用域的继承方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E4%BA%8B%E4%BB%B6%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="toc-number">2.3.</span> <span class="toc-text">基于事件的方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#angular%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="toc-number">2.4.</span> <span class="toc-text">angular服务的方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83-1"><span class="toc-number">2.5.</span> <span class="toc-text">参考</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E6%9D%9F%E8%AF%AD"><span class="toc-number">3.</span> <span class="toc-text">结束语</span></a></li></ol>
 		</div>
 		
-		<p>最近的一个项目使用AngularJS(v1.2.6)作为前端的框架，《Angular使用笔记》系列用于记录过程中的一些使用和解决方法。<br>本文记录使用有关路由以及控制器间通信的过程。<br><a id="more"></a></p>
+		<p>最近的一个项目使用AngularJS(v1.2.6)作为前端的框架，《Angular使用笔记》系列用于记录过程中的一些使用和解决方法。<br>本文记录使用有关路由以及控制器间通信的过程。<br><span id="more"></span></p>
 <h2 id="ngRoute"><a href="#ngRoute" class="headerlink" title="ngRoute"></a>ngRoute</h2><hr>
 <p>前面篇章我们已经讲述过路由的简单使用方法，这里我们将对路由传参等进行更详细的介绍。</p>
 <h3 id="ngRoute包括的内容"><a href="#ngRoute包括的内容" class="headerlink" title="ngRoute包括的内容"></a>ngRoute包括的内容</h3><p>ng的路由机制是靠ngRoute提供的，通过hash和history两种方式实现了路由，可以检测浏览器是否支持history来灵活调用相应的方式。</p>
@@ -127,7 +127,7 @@ var _hmt = _hmt || [];
 </ul>
 </li>
 </ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">resolve: &#123;</span><br><span class="line">  <span class="comment">//设置三秒的延迟Promise，该页面在3秒后才会加载成功</span></span><br><span class="line">  delay: <span class="function"><span class="keyword">function</span>(<span class="params">$q, $timeout</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> delay = $q.defer();</span><br><span class="line">    $timeout(delay.resolve, <span class="number">3000</span>);</span><br><span class="line">    <span class="keyword">return</span> delay.promise;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">resolve</span>: &#123;</span><br><span class="line">  <span class="comment">//设置三秒的延迟Promise，该页面在3秒后才会加载成功</span></span><br><span class="line">  <span class="attr">delay</span>: <span class="keyword">function</span>(<span class="params">$q, $timeout</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> delay = $q.<span class="title function_">defer</span>();</span><br><span class="line">    $timeout(delay.<span class="property">resolve</span>, <span class="number">3000</span>);</span><br><span class="line">    <span class="keyword">return</span> delay.<span class="property">promise</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
 <li>otherwise：配置其他的路径跳转，即default</li>
 </ul>
@@ -142,10 +142,10 @@ var _hmt = _hmt || [];
 </ul>
 </li>
 </ul>
-<h3 id="routeParams"><a href="#routeParams" class="headerlink" title="$routeParams"></a>$routeParams</h3><p>$routeParams服务可获取路由中的参数，当路由成功后才能获取。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.when(<span class="string">'/example/:id'</span>,&#123;&#125;) <span class="comment">//设置路由参数id</span></span><br><span class="line"><span class="comment">//控制器中获取参数</span></span><br><span class="line">app.controller(<span class="string">'ExampleController'</span>, [<span class="string">'$routeParams'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">$routeParams</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> id = $routeParams.id;</span><br><span class="line">    <span class="comment">//使用id获取相关id值</span></span><br><span class="line">&#125;]);</span><br></pre></td></tr></table></figure></p>
+<h3 id="routeParams"><a href="#routeParams" class="headerlink" title="$routeParams"></a>$routeParams</h3><p>$routeParams服务可获取路由中的参数，当路由成功后才能获取。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.<span class="title function_">when</span>(<span class="string">&#x27;/example/:id&#x27;</span>,&#123;&#125;) <span class="comment">//设置路由参数id</span></span><br><span class="line"><span class="comment">//控制器中获取参数</span></span><br><span class="line">app.<span class="title function_">controller</span>(<span class="string">&#x27;ExampleController&#x27;</span>, [<span class="string">&#x27;$routeParams&#x27;</span>, <span class="keyword">function</span>(<span class="params">$routeParams</span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> id = $routeParams.<span class="property">id</span>;</span><br><span class="line">    <span class="comment">//使用id获取相关id值</span></span><br><span class="line">&#125;]);</span><br></pre></td></tr></table></figure></p>
 <ul>
 <li>$routeParams和$route.current.params<blockquote>
-<p>$route.current.params在路由发生变化时会改变<br>$routeParams只有当路由成功时才会改变<br>这里有个很好的<a href="https://docs.angularjs.org/api/ngRoute/service/$route#example" target="_blank" rel="noopener">例子</a></p>
+<p>$route.current.params在路由发生变化时会改变<br>$routeParams只有当路由成功时才会改变<br>这里有个很好的<a target="_blank" rel="noopener" href="https://docs.angularjs.org/api/ngRoute/service/$route#example">例子</a></p>
 </blockquote>
 </li>
 </ul>
@@ -161,9 +161,9 @@ var _hmt = _hmt || [];
 <li>可用（protocol, host, port, path, search, hash）获取URL对象的具体内容</li>
 </ul>
 <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
-<li><a href="http://www.2cto.com/kf/201312/265979.html" target="_blank" rel="noopener">《走进AngularJs(八) ng的路由机制》</a></li>
-<li><a href="http://www.cnblogs.com/xing901022/p/5154358.html?utm_source=tuicool&amp;utm_medium=referral" target="_blank" rel="noopener">《AngularJs ng-route路由详解》</a></li>
-<li><a href="http://www.angularjs.cn/A00M" target="_blank" rel="noopener">《AngularJS开发指南27：使用$location》</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.2cto.com/kf/201312/265979.html">《走进AngularJs(八) ng的路由机制》</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.cnblogs.com/xing901022/p/5154358.html?utm_source=tuicool&amp;utm_medium=referral">《AngularJs ng-route路由详解》</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.angularjs.cn/A00M">《AngularJS开发指南27：使用$location》</a></li>
 </ul>
 <h2 id="Controller间通信"><a href="#Controller间通信" class="headerlink" title="Controller间通信"></a>Controller间通信</h2><hr>
 <h3 id="angular控制器通信的方式"><a href="#angular控制器通信的方式" class="headerlink" title="angular控制器通信的方式"></a>angular控制器通信的方式</h3><ul>
@@ -186,7 +186,7 @@ var _hmt = _hmt || [];
 </li>
 </ul>
 <h3 id="angular服务的方式"><a href="#angular服务的方式" class="headerlink" title="angular服务的方式"></a>angular服务的方式</h3><p>angular服务中生成一个对象，该对象就可以利用依赖注入的方式在所有的控制器中共享。</p>
-<h3 id="参考-1"><a href="#参考-1" class="headerlink" title="参考"></a>参考</h3><p><a href="https://segmentfault.com/a/1190000000639592" target="_blank" rel="noopener">《AngularJS控制器controller如何通信？》</a></p>
+<h3 id="参考-1"><a href="#参考-1" class="headerlink" title="参考"></a>参考</h3><p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000000639592">《AngularJS控制器controller如何通信？》</a></p>
 <h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><hr>
 <p>路由参数的传递以及控制器直接的通信，配合使用能获得更多的功能呢。</p>
   

@@ -99,7 +99,7 @@ var _hmt = _hmt || [];
 		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Operational-transformation-OT"><span class="toc-number">1.</span> <span class="toc-text">Operational transformation(OT)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8F%E5%90%8C%E8%BD%AF%E4%BB%B6%E7%9A%84%E5%86%B2%E7%AA%81"><span class="toc-number">1.1.</span> <span class="toc-text">协同软件的冲突</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E7%9A%84%E6%8B%86%E5%88%86"><span class="toc-number">1.2.</span> <span class="toc-text">操作的拆分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E9%97%B4%E7%9A%84%E5%86%B2%E7%AA%81%E5%A4%84%E7%90%86"><span class="toc-number">1.3.</span> <span class="toc-text">操作间的冲突处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E7%BB%88%E4%B8%80%E8%87%B4%E6%80%A7%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.4.</span> <span class="toc-text">最终一致性的实现</span></a></li></ol></li></ol>
 		</div>
 		
-		<p>最近接触到一些针对多人同时操作进行冲突处理的场景，简单介绍下相关的实现方式。<br><a id="more"></a></p>
+		<p>最近接触到一些针对多人同时操作进行冲突处理的场景，简单介绍下相关的实现方式。<br><span id="more"></span></p>
 <h2 id="Operational-transformation-OT"><a href="#Operational-transformation-OT" class="headerlink" title="Operational transformation(OT)"></a>Operational transformation(OT)</h2><p>OT 算法最初是为在纯文本文档的协作编辑中的一致性维护和并发控制而发明的，在本文中我们也主要掌握一致性维护相关的一些方法。</p>
 <h3 id="协同软件的冲突"><a href="#协同软件的冲突" class="headerlink" title="协同软件的冲突"></a>协同软件的冲突</h3><p>想必大家都知道，在多人协同场景下，必然会出现各种各样的冲突场景。</p>
 <p>举个例子，团队接到一个超大型的项目需要开发，老板说10分钟给出排期和分工。然后瑟瑟发抖的大家二话不说打开腾讯文档，创建了一个表格，让每个模块负责人先针对自己模块来进行工作量拆分和预估。</p>
@@ -131,8 +131,8 @@ var _hmt = _hmt || [];
 <li>对于李四本地，需要进行的操作是：<code>重命名 + 插入 + 移动</code></li>
 <li>对于服务器，需要进行的操作是：<code>插入</code>更新后的子表</li>
 </ul>
-<p>我们来看看这个 OT 算法的简略说明图：<br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/google_ot.jpg" alt></p>
-<p>我们代入到张三李四这个场景下：<br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/sheet_ot.png" alt></p>
+<p>我们来看看这个 OT 算法的简略说明图：<br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/google_ot.jpg" alt=""></p>
+<p>我们代入到张三李四这个场景下：<br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/sheet_ot.png" alt=""></p>
 <p>可以看到，对于服务端来说，最终就是新增了两个子表，一个是张三的“工作表2”，另一个是李四的“工作表2（自动重命名）”。</p>
 <p>除此之外，这个场景中还存在比较细致的时间问题。上面我们说李四收到服务器发来的张三的操作之后，在本地进行<code>重命名 + 插入 + 移动</code>，然后告诉服务器的操作是<code>插入</code>更新后的子表。但是还有个可能性，就是李四收到服务器的消息之前，就已经把自己<code>插入</code>“工作表2”的操作发出去给服务器了。这种情况下，服务器也需要具备处理冲突的能力，来维持最终一致性。</p>
 <p>也就是说，我们在本地和服务器都有一套一致的冲突处理逻辑，才能保证算法的最终一致性。</p>

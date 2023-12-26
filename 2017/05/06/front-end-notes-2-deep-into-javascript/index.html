@@ -99,19 +99,19 @@ var _hmt = _hmt || [];
 		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3javascript"><span class="toc-number">1.</span> <span class="toc-text">深入理解javascript</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E7%BA%BF%E7%A8%8B%E4%B8%8EEvent-Loop"><span class="toc-number">1.1.</span> <span class="toc-text">单线程与Event Loop</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E6%9C%BA%E5%88%B6"><span class="toc-number">1.2.</span> <span class="toc-text">浏览器机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#javascript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.3.</span> <span class="toc-text">javascript设计模式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E6%9D%9F%E8%AF%AD"><span class="toc-number">2.</span> <span class="toc-text">结束语</span></a></li></ol>
 		</div>
 		
-		<p>该篇主要整理javascript的部分深入理解，以及一些分享。<br><a id="more"></a></p>
+		<p>该篇主要整理javascript的部分深入理解，以及一些分享。<br><span id="more"></span></p>
 <h2 id="深入理解javascript"><a href="#深入理解javascript" class="headerlink" title="深入理解javascript"></a>深入理解javascript</h2><hr>
 <h3 id="单线程与Event-Loop"><a href="#单线程与Event-Loop" class="headerlink" title="单线程与Event Loop"></a>单线程与Event Loop</h3><p>单线程这样的概念，其实本骚年在被问到之前一直是模糊的。</p>
 <p>当然这也是因为非科班，对线程、进程这些都不曾真正去了解和学习过，至于单线程，最大的感受就是异步事件、回调等等。</p>
-<p>你有想过为什么javascript是单线程的吗？其实更多是因为对页面交互的同步处理吧，具体大家可以参考一下<a href="http://www.ruanyifeng.com/blog/2014/10/event-loop.html" target="_blank" rel="noopener">《JavaScript 运行机制详解：再谈Event Loop》</a>。</p>
+<p>你有想过为什么javascript是单线程的吗？其实更多是因为对页面交互的同步处理吧，具体大家可以参考一下<a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2014/10/event-loop.html">《JavaScript 运行机制详解：再谈Event Loop》</a>。</p>
 <ul>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/EventLoop" target="_blank" rel="noopener">并发模型与Event Loop</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/EventLoop">并发模型与Event Loop</a></li>
 </ul>
 <p>这里我们需要知道事件循环event loop、栈与队列、主线程等等，当我们继续查阅文章的时候，会涉及到其他的概念如宏任务和微任务。</p>
 <ul>
 <li>microtask与macrotask</li>
 </ul>
-<p>关于宏任务和微任务，其实大致有个了解就差不多了，在我们编码过程遇到相关的问题时，再针对性地去研究吧。或者大家也可以看看一些文章：<br><a href="https://juejin.im/entry/58332d560ce46300610e4bad" target="_blank" rel="noopener">《理解 js 事件循环二 (macrotask 和 microtask)》</a><br><a href="https://zhuanlan.zhihu.com/p/24460769" target="_blank" rel="noopener">《HTML系列：macrotask和microtask》</a></p>
+<p>关于宏任务和微任务，其实大致有个了解就差不多了，在我们编码过程遇到相关的问题时，再针对性地去研究吧。或者大家也可以看看一些文章：<br><a target="_blank" rel="noopener" href="https://juejin.im/entry/58332d560ce46300610e4bad">《理解 js 事件循环二 (macrotask 和 microtask)》</a><br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/24460769">《HTML系列：macrotask和microtask》</a></p>
 <p>思考问题：</p>
 <ol>
 <li>简单描述Event Loop过程。</li>
@@ -121,7 +121,7 @@ var _hmt = _hmt || [];
 <ul>
 <li>浏览器渲染机制</li>
 </ul>
-<p>对于想做简单认识的，可以参考<a href="http://coolshell.cn/articles/9666.html" target="_blank" rel="noopener">《浏览器的渲染原理简介》</a>。想要深入理解的，可以看<a href="http://taligarsiel.com/Projects/howbrowserswork1.htm" target="_blank" rel="noopener">《How browsers work》</a>以及译文系列<a href="http://ued.ctrip.com/blog/how-browsers-work-i-basic-knowledge.html" target="_blank" rel="noopener">《浏览器是怎样工作的（一）：基础知识》</a>。</p>
+<p>对于想做简单认识的，可以参考<a target="_blank" rel="noopener" href="http://coolshell.cn/articles/9666.html">《浏览器的渲染原理简介》</a>。想要深入理解的，可以看<a target="_blank" rel="noopener" href="http://taligarsiel.com/Projects/howbrowserswork1.htm">《How browsers work》</a>以及译文系列<a target="_blank" rel="noopener" href="http://ued.ctrip.com/blog/how-browsers-work-i-basic-knowledge.html">《浏览器是怎样工作的（一）：基础知识》</a>。</p>
 <p>这里面有几个概念需要理解，包括：Rendering tree渲染树、CSS规则树、Repaint和Reflow等等。</p>
 <p>思考问题：</p>
 <ol>
@@ -132,7 +132,7 @@ var _hmt = _hmt || [];
 <ul>
 <li>javascript在浏览器中的加载</li>
 </ul>
-<p>浏览的渲染线程和JS执行线程是互斥的，并且JavaScript默认是阻塞加载的。对于这个过程，相关文章阅读<a href="http://coolshell.cn/articles/9749.html#jtss-tsina" target="_blank" rel="noopener">《JAVASCRIPT 装载和执行》</a>、<a href="http://delai.me/code/js-and-performance/" target="_blank" rel="noopener">《S一定要放在Body的最底部么？聊聊浏览器的渲染机制》</a>，或者谷歌查询。</p>
+<p>浏览的渲染线程和JS执行线程是互斥的，并且JavaScript默认是阻塞加载的。对于这个过程，相关文章阅读<a target="_blank" rel="noopener" href="http://coolshell.cn/articles/9749.html#jtss-tsina">《JAVASCRIPT 装载和执行》</a>、<a target="_blank" rel="noopener" href="http://delai.me/code/js-and-performance/">《S一定要放在Body的最底部么？聊聊浏览器的渲染机制》</a>，或者谷歌查询。</p>
 <p>对于这个我们会经常遇到一些问题，如：</p>
 <ol>
 <li>为什么js要放在最后面加载？为什么css放前面？</li>
@@ -146,7 +146,7 @@ var _hmt = _hmt || [];
 </ul>
 <p>其实上面这些内容更加涉及http相关多一些，但是其实http也是前端的一部分啦。这些统一放到后面http部分一起进行整理吧。</p>
 <h3 id="javascript设计模式"><a href="#javascript设计模式" class="headerlink" title="javascript设计模式"></a>javascript设计模式</h3><p>关于javascript的设计，其实跟大多数的编程语言都是相通的。很多时候我们都会使用，但是或许我们并没有什么感觉。<br>只是当项目越来越大，重复的代码或是杂乱的代码总会让我们开始对其进行整理、抽象、封装等等工作，便于拓展也提升了开发效率，同时对项目整体的理解也更加深入了。</p>
-<p>这里面本骚年也不想细说，感兴趣的大家可以参考<a href="http://www.alloyteam.com/2012/10/common-javascript-design-patterns/" target="_blank" rel="noopener">《【Javascript设计模式1】-单例模式》</a>系列文章，当然还有其他文章，找谷歌或者度娘去吧。<br>其实很多时候我们使用的一些插件、框架和库，里面就使用了很多的设计模式，大家不妨也可以多去了解一下。</p>
+<p>这里面本骚年也不想细说，感兴趣的大家可以参考<a target="_blank" rel="noopener" href="http://www.alloyteam.com/2012/10/common-javascript-design-patterns/">《【Javascript设计模式1】-单例模式》</a>系列文章，当然还有其他文章，找谷歌或者度娘去吧。<br>其实很多时候我们使用的一些插件、框架和库，里面就使用了很多的设计模式，大家不妨也可以多去了解一下。</p>
 <h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><hr>
 <p>其实仔细研究javascript，总会发现你所不了解的角落。即使是本骚年所认为的深入理解，到头来也只是某个浅尝的部分，越是相处时间长了，越能发现其中的美妙和乐趣吧。</p>
   

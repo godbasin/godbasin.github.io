@@ -99,9 +99,9 @@ var _hmt = _hmt || [];
 		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#javascript%E5%85%A5%E9%97%A8"><span class="toc-number">1.</span> <span class="toc-text">javascript入门</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%A5%E9%97%A8%E6%89%8B%E5%86%8C%E3%80%81%E6%96%87%E6%A1%A3%E4%B8%8E%E4%B9%A6%E7%B1%8D"><span class="toc-number">1.1.</span> <span class="toc-text">入门手册、文档与书籍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%90%86%E8%A7%A3javascript"><span class="toc-number">1.2.</span> <span class="toc-text">理解javascript</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%8C%E6%8F%A1%E4%B8%80%E4%BA%9BAPI"><span class="toc-number">1.3.</span> <span class="toc-text">掌握一些API</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E6%9D%9F%E8%AF%AD"><span class="toc-number">2.</span> <span class="toc-text">结束语</span></a></li></ol>
 		</div>
 		
-		<p>该篇主要围绕整理javascript相关的一些基础、原理，以及分享。<br><a id="more"></a></p>
+		<p>该篇主要围绕整理javascript相关的一些基础、原理，以及分享。<br><span id="more"></span></p>
 <h2 id="javascript入门"><a href="#javascript入门" class="headerlink" title="javascript入门"></a>javascript入门</h2><hr>
-<h3 id="入门手册、文档与书籍"><a href="#入门手册、文档与书籍" class="headerlink" title="入门手册、文档与书籍"></a>入门手册、文档与书籍</h3><p>重要的事情多说几遍：<br>一般来说，入门的话，不管是html/css，还是javascript，都能从<a href="http://www.w3school.com.cn" target="_blank" rel="noopener">w3c</a>和<a href="https://developer.mozilla.org/zh-CN/" target="_blank" rel="noopener">mdn</a>上找到。<br>相对地说，mdn会更加详细和明确一些，也涉及不少较深入的内容呢。</p>
+<h3 id="入门手册、文档与书籍"><a href="#入门手册、文档与书籍" class="headerlink" title="入门手册、文档与书籍"></a>入门手册、文档与书籍</h3><p>重要的事情多说几遍：<br>一般来说，入门的话，不管是html/css，还是javascript，都能从<a target="_blank" rel="noopener" href="http://www.w3school.com.cn">w3c</a>和<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/">mdn</a>上找到。<br>相对地说，mdn会更加详细和明确一些，也涉及不少较深入的内容呢。</p>
 <p>相关入门书籍的话，当然是最经典的《Javascript高级程序设计》和《Javascript权威指南》啦。</p>
 <p>本骚年还看过其他的一些书包括：<br>《Javascript数据结构》<br>《Javascript忍者秘籍》<br>《Javascript设计模式与开发实践》<br>《Javascript DOM编程艺术》<br>…</p>
 <p>要问收获的话，其实都是有的，更重要的是个人的思考和总结吧。</p>
@@ -111,11 +111,11 @@ var _hmt = _hmt || [];
 </ul>
 <p>关于javascript的原型的继承，总有说也说不完的具体细节和场景。我猜，说不定这可以从”javascript中一切皆为对象”这句话的理解开始吧。<br>而面向对象编程与函数式编程之间的爱恨情仇，也足够讲上好些日子吧，总之小伙伴们有兴趣可以自行谷歌相关的说明。</p>
 <p>关于原型和继承的话题，一些需要深入理解的概念包括：构造函数constructor、prototype、<strong>proto</strong>，以及一些方法包括instance of、typeof等等吧。</p>
-<p>至于继承，大可大方阅读MDN的<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Inheritance_and_the_prototype_chain" target="_blank" rel="noopener">《继承与原型链》</a>：</p>
+<p>至于继承，大可大方阅读MDN的<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Inheritance_and_the_prototype_chain">《继承与原型链》</a>：</p>
 <blockquote>
 <p>当谈到继承时，Javascript只有一种结构：对象。<br>每个对象都有一个内部链接到另一个对象，称为它的原型prototype。该原型对象有自己的原型，等等，直到达到一个以null为原型的对象。根据定义，null没有原型，并且作为这个原型链prototype chain中的最终链接。</p>
 </blockquote>
-<p>也可以参考阮一峰的<a href="http://www.ruanyifeng.com/blog/2011/06/designing_ideas_of_inheritance_mechanism_in_javascript.html" target="_blank" rel="noopener">《Javascript继承机制的设计思想》</a>、[《Javascript 面向对象编程系列》])(<a href="http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_encapsulation.html)等等。" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_encapsulation.html)等等。</a></p>
+<p>也可以参考阮一峰的<a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2011/06/designing_ideas_of_inheritance_mechanism_in_javascript.html">《Javascript继承机制的设计思想》</a>、[《Javascript 面向对象编程系列》])(<a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_encapsulation.html)等等。">http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_encapsulation.html)等等。</a></p>
 <p>其实像很多其他的事物一样，即使是各种各样的设计和方法，都不过为一些达到目的的手段，我们的目标当然是更优秀的体验效果和性能啦。</p>
 <ul>
 <li>作用域/原型链</li>
@@ -134,22 +134,22 @@ var _hmt = _hmt || [];
 <p>这些概念说是基础，但是要理解其实还是需要一定的时间和实践的。本骚年建议可以先初步了解，后续每隔一段时间可以做些回顾和总结，你会发现你看到的，是越来越深入的认识、越来越辽阔的视野。</p>
 <h3 id="掌握一些API"><a href="#掌握一些API" class="headerlink" title="掌握一些API"></a>掌握一些API</h3><p>除了javascript语言自带的语法，还有一些很重要的API，包括以下相关的。</p>
 <ul>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Document_Object_Model" target="_blank" rel="noopener">DOM对象</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/Document_Object_Model">DOM对象</a></li>
 </ul>
 <p>文档对象模型(DOM)是HTML和XML文档的编程接口。它给文档（结构树）提供了一个结构化的表述并且定义了一种方式—程序可以对结构树进行访问，以改变文档的结构，样式和内容。<br>DOM提供了一种表述形式—将文档作为一个结构化的节点组以及包含属性和方法的对象。从本质上说，它将web页面和脚本或编程语言连接起来了。</p>
 <ul>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Window" target="_blank" rel="noopener">Window对象</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/Window">Window对象</a></li>
 </ul>
 <p>Window对象表示一个包含DOM文档的窗口，其document属性指向窗口中载入的DOM文档 。使用document.defaultView属性可以获取指定文档所在窗口。<br>Window对象其实只是javascript涉及的其中一个环境对象，当我们开始学习Nodejs的时候会涉及更多系统层面的内容吧。</p>
 <p>其实Window对象也只是BOM对象中的一种，BOM对象包括window/location/navigator/screen/histiry等等，都是需要掌握的。</p>
 <ul>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/AJAX" target="_blank" rel="noopener">AJAX/XHR</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/AJAX">AJAX/XHR</a></li>
 </ul>
-<p>异步JavaScript + XML, 虽然它本身不是一种技术, 是一个术语, 描述了一种将新的现有技术一起使用的“新”方法，包括: HTML 或 XHTML, CSS, JavaScript, DOM, XML, XSLT, 最重要的是<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest" target="_blank" rel="noopener">XMLHttpRequest对象</a>。</p>
+<p>异步JavaScript + XML, 虽然它本身不是一种技术, 是一个术语, 描述了一种将新的现有技术一起使用的“新”方法，包括: HTML 或 XHTML, CSS, JavaScript, DOM, XML, XSLT, 最重要的是<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest">XMLHttpRequest对象</a>。</p>
 <ul>
 <li>正则表达式</li>
 </ul>
-<p>正则表达式可谓是编程利器，可惜本骚年对它总是束手无策，入门级别可参考文章<a href="http://deerchao.net/tutorials/regex/regex.htm" target="_blank" rel="noopener">《正则表达式30分钟入门教程》</a>。</p>
+<p>正则表达式可谓是编程利器，可惜本骚年对它总是束手无策，入门级别可参考文章<a target="_blank" rel="noopener" href="http://deerchao.net/tutorials/regex/regex.htm">《正则表达式30分钟入门教程》</a>。</p>
 <h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><hr>
 <p>其实掌握javascript的关键在于多实践和总结，一边学一边练的效果总是最棒的。关于入门其实本骚年也忘得差不多了，这里有当年总结过的一篇<a href="https://godbasin.github.io/2016/06/24/front-end-getting-started/">《我的前端入门之路》</a>。<br>两年多了，作为一个前端到现在，依然感觉更重要的是热情以及学习方法。</p>
   

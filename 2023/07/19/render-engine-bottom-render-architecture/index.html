@@ -100,9 +100,9 @@ var _hmt = _hmt || [];
 		</div>
 		
 		<p>前面我们介绍了复杂渲染引擎中，使用的收集和渲染、以及插件等架构设计。至于底层具体的绘制实现，前面提到的多是 Canvas，实际上我们还可以适配不同的绘制引擎。</p>
-<a id="more"></a>
+<span id="more"></span>
 <h2 id="多渲染方式适配"><a href="#多渲染方式适配" class="headerlink" title="多渲染方式适配"></a>多渲染方式适配</h2><p>关于渲染引擎整体架构和插件架构的设计，已在<a href="https://godbasin.github.io/front-end-playground/front-end-basic/render-engine/render-engine-render-and-collect.html">《收集与渲染》</a>、<a href="https://godbasin.github.io/front-end-playground/front-end-basic/render-engine/render-engine-plugin-design.html">《插件的实现》</a>两篇文章中介绍过，渲染引擎架构如图：</p>
-<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/render-engine-plugin-design-1.jpg" alt></p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/render-engine-plugin-design-1.jpg" alt=""></p>
 <p>底层渲染引擎由收集器和渲染器组成，其中收集器收集需要渲染的渲染数据，渲染器则负责将收集到的数据进行直接渲染。</p>
 <p>本文我们将会介绍渲染器的多种渲染方式的适配，其中常见的就包括：</p>
 <ul>
@@ -112,7 +112,7 @@ var _hmt = _hmt || [];
 <li>其他渲染方式（如 WEBGL 渲染等）</li>
 </ul>
 <h3 id="适配架构设计"><a href="#适配架构设计" class="headerlink" title="适配架构设计"></a>适配架构设计</h3><p>对于多种渲染方式的适配，架构设计上还比较简单：</p>
-<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/render-engine-bottom-render-architecture-1.jpg" alt></p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/render-engine-bottom-render-architecture-1.jpg" alt=""></p>
 <p>从收集器收集到的数据，通过适配的方式，转换成不同的绘制结果。举个例子，同样是一个单元格内容：</p>
 <ul>
 <li>Canvas 将需要分别绘制单元格背景（矩形）、单元格边框（线段）、单元格内容（文本）</li>

@@ -100,7 +100,7 @@ var _hmt = _hmt || [];
 		</div>
 		
 		<p>前面提到了渲染引擎的几种渲染方式，如果我们要在与用户交互的过程中识别到具体的元素，又该如何处理呢？</p>
-<a id="more"></a>
+<span id="more"></span>
 <h2 id="Canvas-元素选择的难题"><a href="#Canvas-元素选择的难题" class="headerlink" title="Canvas 元素选择的难题"></a>Canvas 元素选择的难题</h2><p>在<a href="https://godbasin.github.io/2023/07/19/render-engine-bottom-render-architecture/">《复杂渲染引擎架构与设计–3.底层渲染适配》</a>一文中，我们介绍了不同的渲染方式，包括 Canvas 渲染、DOM 渲染、SVG 渲染甚至是 WebGL 渲染等。对于不同的渲染方式，要实现元素选取的代价十分不一样。</p>
 <p>对于 DOM/SVG 渲染，我们可以直接使用浏览器提供的元素选择能力。在这样的场景下，不管是父子元素的管理、事件冒泡和捕获等都比较容易实现。因此，我们今天主要讨论 Canvas 渲染要如何实现元素选择。</p>
 <p>对于 Canvas 渲染里进行元素选取，我们常见有几种方式：</p>
@@ -111,8 +111,8 @@ var _hmt = _hmt || [];
 </ol>
 <h3 id="几何检测法"><a href="#几何检测法" class="headerlink" title="几何检测法"></a>几何检测法</h3><p>几何检测法是许多游戏引擎或者说物理引擎的解决方案，我们常常又称为碰撞检测法。</p>
 <p>在元素选取的场景下，我们只需要判断用户触发事件的位置，是否落在某个元素几何里。因此，我们面临的问题是：确定某个点是否位于给定的多边形内。</p>
-<p>一般来说，某个点是否在某个多边形内，常见的便是交叉数法（也称射线判断法）：从所讨论的点 P 向任何方向射出一条射线（半线），判断该射线与元素几何相交的线段数奇偶情况。在该方法中，我们需要确保射线不会直接射到多边形的任何顶点，这个是比较难做到的。因此，也有不少改良的方案，具体可以参考<a href="https://web.cs.ucdavis.edu/~okreylos/TAship/Spring2000/PointInPolygon.html" target="_blank" rel="noopener">《When is a Point Inside a Polygon?》</a>。</p>
-<p>除了交叉数法，还有环绕数法，这里不进行详细解释了，具体可以参考<a href="https://zhuanlan.zhihu.com/p/436494294" target="_blank" rel="noopener">《Canvas 中判断点是否在图形上》</a>。</p>
+<p>一般来说，某个点是否在某个多边形内，常见的便是交叉数法（也称射线判断法）：从所讨论的点 P 向任何方向射出一条射线（半线），判断该射线与元素几何相交的线段数奇偶情况。在该方法中，我们需要确保射线不会直接射到多边形的任何顶点，这个是比较难做到的。因此，也有不少改良的方案，具体可以参考<a target="_blank" rel="noopener" href="https://web.cs.ucdavis.edu/~okreylos/TAship/Spring2000/PointInPolygon.html">《When is a Point Inside a Polygon?》</a>。</p>
+<p>除了交叉数法，还有环绕数法，这里不进行详细解释了，具体可以参考<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/436494294">《Canvas 中判断点是否在图形上》</a>。</p>
 <p>几何检测法在渲染引擎中使用，优势在于内存消耗小。但它也存在一些问题：</p>
 <ol>
 <li>需要维护一个图形检测算法库。</li>

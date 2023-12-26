@@ -100,7 +100,7 @@ var _hmt = _hmt || [];
 		</div>
 		
 		<p>加入腾讯文档 Excel 开发团队已经有好几个月了，刚开始代码下载下来 100+W 行，代码量很大但模块设计和代码质量比我想象中好好多了，今天跟大家分享下一个 Excel 项目到底可以有多好玩。</p>
-<a id="more"></a>
+<span id="more"></span>
 <h1 id="实时协同编辑的挑战"><a href="#实时协同编辑的挑战" class="headerlink" title="实时协同编辑的挑战"></a>实时协同编辑的挑战</h1><p>说到实时协同编辑的难点，大家的第一反应基本上是协同冲突处理。</p>
 <h2 id="冲突处理"><a href="#冲突处理" class="headerlink" title="冲突处理"></a>冲突处理</h2><p>冲突处理的解决方案其实已经相对成熟，包括：</p>
 <ol>
@@ -173,16 +173,16 @@ var _hmt = _hmt || [];
 <p>业界比较出名的 handsontable 开源库就是基于 DOM 实现绘制，但显而易见十万、百万单元格的 DOM 渲染会产生较大的性能问题。因此，如今很多 Web 版的电子表格实现都是基于 canvas + 叠加 DOM 来实现的，使用 canvas 实现同样需要考虑可视区域、滚动操作、画布层级关系，也有 canvas 自身面临的一些性能问题，包括 canvas 如何进行直出等。</p>
 <p>表格渲染涉及合并单元格、选区、缩放、冻结、富文本与自动换行等各种各样的场景，我们来看看其中到底有多复杂。</p>
 <h2 id="自动换行"><a href="#自动换行" class="headerlink" title="自动换行"></a>自动换行</h2><p>一般来说，一个单元格自动换行体现在数据存储上，只包括：单元格内容+换行属性。但这样一个数据需要渲染出来的时候，则面临着自动换行的一些计算：</p>
-<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/why-spreadsheet-app-excited-1.jpg" alt></p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/why-spreadsheet-app-excited-1.jpg" alt=""></p>
 <p>我们需要找到该列的列宽，然后根据该单元格内容情况来进行渲染层的分行。如图，这样一串文本会根据分行逻辑的计算分成了三行。而自动换行之后，还可能涉及该单元格所在行的行高被撑起导致的调整，行高的调整可能还会影响该行其他单元格一些居中属性的渲染结果，需要重新计算。</p>
 <p>因此，当我们对一列格子设置了自动换行，可能会导致大规模的重新计算和渲染，同样会涉及较大的性能消耗。</p>
 <h2 id="冻结区域"><a href="#冻结区域" class="headerlink" title="冻结区域"></a>冻结区域</h2><p>冻结功能可以将我们的表格分成四个区域，左右和上下划分了冻结和非冻结区域。冻结区域的复杂度主要在于边界的一些特殊情况处理，包括区域的选择、图片的切割等。我们来看一个图：</p>
-<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/why-spreadsheet-app-excited-2.png" alt></p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/why-spreadsheet-app-excited-2.png" alt=""></p>
 <p>如图，对于一个图片来说，虽然它是直接放在整个表格上，但落到数据层中的时候，它其实只属于某一个格子。在冻结区域的编辑上，我们需要对它进行切分，但不管是哪个区域中选中它，我们依然需要展示它的原图：</p>
-<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/why-spreadsheet-app-excited-3.jpg" alt></p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/why-spreadsheet-app-excited-3.jpg" alt=""></p>
 <p>这意味着在 canvas 中，我们获取到鼠标点击的位置时，还需要计算出对应点击的格子是否属于图片覆盖范围内。</p>
 <h2 id="对齐与单元格溢出"><a href="#对齐与单元格溢出" class="headerlink" title="对齐与单元格溢出"></a>对齐与单元格溢出</h2><p>一个单元格的水平对齐方式一般分为三种：左对齐、居中对齐、右对齐。当单元格没有设置自动换行，其内容又超出了该格子的宽度时，会出现覆盖到其他格子的情况：</p>
-<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/why-spreadsheet-app-excited-4.jpg" alt></p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/why-spreadsheet-app-excited-4.jpg" alt=""></p>
 <p>也就是说，我们在绘制某个格子的时候，同样需要计算附近的格子有没有溢出到当前格子的情况，如果有溢出则需要在这个格子里进行绘制。除此之外，当某列格子被隐藏的时候，溢出的逻辑可能还需要进行调整和更新。</p>
 <p>以上列出的，都只是某一些比较细节的点，而表格的渲染还涉及单元格和行列的隐藏、拖拽、缩放、选区等各种逻辑，还有单元格边框的一些复杂计算。除此之外，由于 canvas 渲染是一屏的内容，涉及页面的滚动、协同数据的更新等会同样可能导致画布频繁更新绘制。</p>
 <h1 id="数据管理的难题"><a href="#数据管理的难题" class="headerlink" title="数据管理的难题"></a>数据管理的难题</h1><p>当每个格子都支持富文本内容，在十万、百万单元格的场景下，对落盘数据的存储、用户操作的数据变更也提出了不小的挑战。</p>
@@ -197,7 +197,7 @@ var _hmt = _hmt || [];
 <li>…</li>
 </ul>
 <p>只要拆分得足够仔细，对于子表的所有用户行为，都可以由这些操作来组合成最终的效果，这些不再可拆分的操作便是最终的原子操作。例如，复制粘贴一张子表，可以拆分为<code>插入-重命名-更新内容</code>；剪切一张子表，可以拆分为<code>插入-更新内容-删除-移动其他子表</code>。通过分析用户行为，我们可以提取出这些基本操作，来看个具体的例子：</p>
-<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/sheet_ot.png" alt></p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/sheet_ot.png" alt=""></p>
 <p>如图，对于服务端来说，最终就是新增了两个子表，一个是张三的“工作表 2”，另一个是李四的“工作表 2（自动重命名）”。</p>
 <p>在实现上，一般使用 tranform 函数来处理并发操作，该函数接受已应用于同一文档状态（但在不同客户端上）的两个操作，并计算可以在第二个操作之后应用并保留第一个操作的新操作操作的预期更改。</p>
 <p>在不同的 OT 系统中使用的 OT 函数的名称可能有所不同，但是可以将其分为两类：</p>
@@ -225,7 +225,7 @@ var _hmt = _hmt || [];
 <p>最后，欢迎大家各式各样的讨论和交流~</p>
 <p>PS：我们腾讯文档团队还在招人噢~~</p>
 <blockquote>
-<p>感兴趣的可以联系我，QQ: 1780096742，也可以投递简历到 <a href="mailto:wangbeishan@163.com" target="_blank" rel="noopener">wangbeishan@163.com</a>（邮件可能回复不及时）</p>
+<p>感兴趣的可以联系我，QQ: 1780096742，也可以投递简历到 <a href="mailto:wangbeishan@163.com">wangbeishan@163.com</a>（邮件可能回复不及时）</p>
 </blockquote>
   
 	</div>

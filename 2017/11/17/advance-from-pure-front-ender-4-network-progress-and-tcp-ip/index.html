@@ -99,7 +99,7 @@ var _hmt = _hmt || [];
 		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1"><span class="toc-number">1.</span> <span class="toc-text">网络通信</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1"><span class="toc-number">1.1.</span> <span class="toc-text">网络进程间通信</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TCP-IP%E5%8D%8F%E8%AE%AE%E6%97%8F"><span class="toc-number">1.2.</span> <span class="toc-text">TCP&#x2F;IP协议族</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TCP%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.3.</span> <span class="toc-text">TCP协议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DNS"><span class="toc-number">1.4.</span> <span class="toc-text">DNS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">1.5.</span> <span class="toc-text">参考</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E6%9D%9F%E8%AF%AD"><span class="toc-number">2.</span> <span class="toc-text">结束语</span></a></li></ol>
 		</div>
 		
-		<p>《纯前端的进军》系列主要作为曾经的纯前端，对后台和底层的一些弥补，涉及进程、网络通信，以及对node.js和相关框架的学习。这一节我们来补充网络通信和TCP、IP协议、DNS相关知识。<br><a id="more"></a></p>
+		<p>《纯前端的进军》系列主要作为曾经的纯前端，对后台和底层的一些弥补，涉及进程、网络通信，以及对node.js和相关框架的学习。这一节我们来补充网络通信和TCP、IP协议、DNS相关知识。<br><span id="more"></span></p>
 <h2 id="网络通信"><a href="#网络通信" class="headerlink" title="网络通信"></a>网络通信</h2><hr>
 <p>前面一节我们学习了进程、线程等，以及进程之间的通信，这节我们来了解一下网络通信。</p>
 <h3 id="网络进程间通信"><a href="#网络进程间通信" class="headerlink" title="网络进程间通信"></a>网络进程间通信</h3><p>网间进程通信要解决的是不同主机进程间的相互通信问题（可把同机进程通信看作是其中的特例）。为此，首先要解决的是网间进程标识问题。<br>同一主机上，不同进程可用进程号（process ID）唯一标识。但在网络环境下，各主机独立分配的进程号不能唯一标识该进程。</p>
@@ -139,10 +139,10 @@ var _hmt = _hmt || [];
 <p>我们所讲的DNS解析主要是第一个步骤，即让用户通过URL找到文件存放的服务器。</p>
 <p>DNS解析主要有递归查询，就是在某个DNS服务器缓存中查找不到相应的域名与IP地址对应关系时，自动跳转到到下一步骤通过下一个DNS服务器进行查找。</p>
 <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
-<li><a href="https://zh.wikipedia.org/zh-hans/TCP/IP%E5%8D%8F%E8%AE%AE%E6%97%8F" target="_blank" rel="noopener">Wiki-TCP/IP协议族</a></li>
-<li><a href="http://www.cnblogs.com/zmlctt/p/3690998.html" target="_blank" rel="noopener">《TCP三次握手四次挥手详解》</a></li>
-<li><a href="http://www.ecdoer.com/post/dns.html" target="_blank" rel="noopener">《DNS解析过程原理【深入浅出详解】》</a></li>
-<li><a href="http://www.jianshu.com/p/4394aaf97492" target="_blank" rel="noopener">《DNS 服务原理详解》</a></li>
+<li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/zh-hans/TCP/IP%E5%8D%8F%E8%AE%AE%E6%97%8F">Wiki-TCP/IP协议族</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.cnblogs.com/zmlctt/p/3690998.html">《TCP三次握手四次挥手详解》</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.ecdoer.com/post/dns.html">《DNS解析过程原理【深入浅出详解】》</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.jianshu.com/p/4394aaf97492">《DNS 服务原理详解》</a></li>
 <li><a href="https://godbasin.github.io/2017/05/19/front-end-notes-6-network-protocol/">《前端阶段性总结之「网络协议基础」》</a></li>
 </ul>
 <h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><hr>

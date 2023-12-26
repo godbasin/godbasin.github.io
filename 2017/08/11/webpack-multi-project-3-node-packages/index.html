@@ -99,29 +99,29 @@ var _hmt = _hmt || [];
 		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#npm%E6%A8%A1%E5%9D%97"><span class="toc-number">1.</span> <span class="toc-text">npm模块</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ora%E6%A8%A1%E5%9D%97"><span class="toc-number">1.1.</span> <span class="toc-text">ora模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rimraf%E6%A8%A1%E5%9D%97"><span class="toc-number">1.2.</span> <span class="toc-text">rimraf模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#chalk%E6%A8%A1%E5%9D%97"><span class="toc-number">1.3.</span> <span class="toc-text">chalk模块</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#node-js%E6%A8%A1%E5%9D%97"><span class="toc-number">2.</span> <span class="toc-text">node.js模块</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#path%E6%A8%A1%E5%9D%97"><span class="toc-number">2.1.</span> <span class="toc-text">path模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#process%E6%A8%A1%E5%9D%97"><span class="toc-number">2.2.</span> <span class="toc-text">process模块</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E6%9D%9F%E8%AF%AD"><span class="toc-number">3.</span> <span class="toc-text">结束语</span></a></li></ol>
 		</div>
 		
-		<p>最近项目中需要搭建一个多页面的环境，包括本地路由服务和分页面打包。<br>本节实现单个页面或是完整页面的打包过程的过程。<br><a id="more"></a></p>
+		<p>最近项目中需要搭建一个多页面的环境，包括本地路由服务和分页面打包。<br>本节实现单个页面或是完整页面的打包过程的过程。<br><span id="more"></span></p>
 <h2 id="npm模块"><a href="#npm模块" class="headerlink" title="npm模块"></a>npm模块</h2><hr>
 <p>打包页面需要用到一些npm模块（需单独安装），这里我们简单介绍一下。</p>
-<h3 id="ora模块"><a href="#ora模块" class="headerlink" title="ora模块"></a><a href="https://www.npmjs.com/package/ora" target="_blank" rel="noopener"><code>ora</code>模块</a></h3><p>主要用来实现<code>node.js</code>命令行环境的loading效果，和显示各种状态的图标等。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> ora = <span class="built_in">require</span>(<span class="string">'ora'</span>)</span><br><span class="line"><span class="comment">// 开始显示</span></span><br><span class="line"><span class="keyword">const</span> spinner = ora(<span class="string">'Loading unicorns'</span>).start()</span><br><span class="line"> </span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 一秒后设置颜色和内容</span></span><br><span class="line">    spinner.color = <span class="string">'yellow'</span></span><br><span class="line">    spinner.text = <span class="string">'Loading rainbows'</span></span><br><span class="line">&#125;, <span class="number">1000</span>)</span><br></pre></td></tr></table></figure>
-<p>更多的选项，大家到<a href="https://www.npmjs.com/package/ora" target="_blank" rel="noopener">官方说明</a>上面看吧。</p>
-<h3 id="rimraf模块"><a href="#rimraf模块" class="headerlink" title="rimraf模块"></a><a href="https://www.npmjs.com/package/rimraf" target="_blank" rel="noopener"><code>rimraf</code>模块</a></h3><p>实现<code>node.js</code>环境的UNIX命令<code>rm -rf</code>。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rimraf(f, [opts], callback)</span><br></pre></td></tr></table></figure>
+<h3 id="ora模块"><a href="#ora模块" class="headerlink" title="ora模块"></a><a target="_blank" rel="noopener" href="https://www.npmjs.com/package/ora"><code>ora</code>模块</a></h3><p>主要用来实现<code>node.js</code>命令行环境的loading效果，和显示各种状态的图标等。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> ora = <span class="built_in">require</span>(<span class="string">&#x27;ora&#x27;</span>)</span><br><span class="line"><span class="comment">// 开始显示</span></span><br><span class="line"><span class="keyword">const</span> spinner = <span class="title function_">ora</span>(<span class="string">&#x27;Loading unicorns&#x27;</span>).<span class="title function_">start</span>()</span><br><span class="line"> </span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 一秒后设置颜色和内容</span></span><br><span class="line">    spinner.<span class="property">color</span> = <span class="string">&#x27;yellow&#x27;</span></span><br><span class="line">    spinner.<span class="property">text</span> = <span class="string">&#x27;Loading rainbows&#x27;</span></span><br><span class="line">&#125;, <span class="number">1000</span>)</span><br></pre></td></tr></table></figure>
+<p>更多的选项，大家到<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/ora">官方说明</a>上面看吧。</p>
+<h3 id="rimraf模块"><a href="#rimraf模块" class="headerlink" title="rimraf模块"></a><a target="_blank" rel="noopener" href="https://www.npmjs.com/package/rimraf"><code>rimraf</code>模块</a></h3><p>实现<code>node.js</code>环境的UNIX命令<code>rm -rf</code>。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">rimraf</span>(f, [opts], callback)</span><br></pre></td></tr></table></figure>
 <ul>
 <li><code>f</code>，可为<code>glob</code>匹配规则的文件</li>
-<li><code>[opts]</code>，一些选项，具体可参考<a href="https://www.npmjs.com/package/rimraf" target="_blank" rel="noopener">官方说明</a></li>
+<li><code>[opts]</code>，一些选项，具体可参考<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/rimraf">官方说明</a></li>
 <li><code>callback</code>，若执行过程中出错，则回调参数为<code>error</code></li>
 </ul>
 <p>如果大家用过<code>shalljs</code>，这是一个<code>node.js</code>环境的<code>Unix shell</code>命令，里面当然已经包括<code>rm</code>命令了。</p>
-<h3 id="chalk模块"><a href="#chalk模块" class="headerlink" title="chalk模块"></a><a href="https://www.npmjs.com/package/chalk" target="_blank" rel="noopener"><code>chalk</code>模块</a></h3><p>命令行输出各种样式的字符串。</p>
+<h3 id="chalk模块"><a href="#chalk模块" class="headerlink" title="chalk模块"></a><a target="_blank" rel="noopener" href="https://www.npmjs.com/package/chalk"><code>chalk</code>模块</a></h3><p>命令行输出各种样式的字符串。</p>
 <ul>
 <li>使用方式</li>
 </ul>
 <p><code>chalk.&lt;style&gt;[.&lt;style&gt;...](string, [string...])</code></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 例如，红色带下划线的粗体字</span></span><br><span class="line">chalk.red.bold.underline(<span class="string">'Hello'</span>, <span class="string">'world'</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 例如，红色带下划线的粗体字</span></span><br><span class="line">chalk.<span class="property">red</span>.<span class="property">bold</span>.<span class="title function_">underline</span>(<span class="string">&#x27;Hello&#x27;</span>, <span class="string">&#x27;world&#x27;</span>)</span><br></pre></td></tr></table></figure>
 <h2 id="node-js模块"><a href="#node-js模块" class="headerlink" title="node.js模块"></a>node.js模块</h2><hr>
 <p>介绍将使用到的node.js自带API和内置模块（无需安装）。</p>
-<h3 id="path模块"><a href="#path模块" class="headerlink" title="path模块"></a><a href="https://nodejs.org/api/path.html" target="_blank" rel="noopener"><code>path</code>模块</a></h3><p><code>path</code>模块提供了一些工具函数，用于处理文件与目录的路径。这是<code>node.js</code>一个自带的模块。</p>
+<h3 id="path模块"><a href="#path模块" class="headerlink" title="path模块"></a><a target="_blank" rel="noopener" href="https://nodejs.org/api/path.html"><code>path</code>模块</a></h3><p><code>path</code>模块提供了一些工具函数，用于处理文件与目录的路径。这是<code>node.js</code>一个自带的模块。</p>
 <p><code>path</code>模块的默认操作会根据<code>Node.js</code>应用程序运行的操作系统的不同而变化。比如，当运行在<code>Windows</code>操作系统上时，<code>path</code>模块会认为使用的是<code>Windows</code>风格的路径。</p>
 <ul>
 <li><code>path.join([...paths])</code></li>
@@ -139,7 +139,7 @@ var _hmt = _hmt || [];
 <li><code>path.dirname(path)</code></li>
 </ul>
 <p>返回一个<code>path</code>的目录名，类似于<code>Unix</code>中的<code>dirname</code>命令。</p>
-<h3 id="process模块"><a href="#process模块" class="headerlink" title="process模块"></a><a href="https://nodejs.org/api/process.html" target="_blank" rel="noopener"><code>process</code>模块</a></h3><p><code>process</code>对象是一个<code>global</code>（全局变量），提供有关信息，控制当前<code>Node.js</code>进程。<br>作为一个对象，它对于<code>Node.js</code>应用程序始终是可用的，故无需使用<code>require()</code>。</p>
+<h3 id="process模块"><a href="#process模块" class="headerlink" title="process模块"></a><a target="_blank" rel="noopener" href="https://nodejs.org/api/process.html"><code>process</code>模块</a></h3><p><code>process</code>对象是一个<code>global</code>（全局变量），提供有关信息，控制当前<code>Node.js</code>进程。<br>作为一个对象，它对于<code>Node.js</code>应用程序始终是可用的，故无需使用<code>require()</code>。</p>
 <ul>
 <li><code>process.execPath</code></li>
 </ul>
@@ -148,7 +148,7 @@ var _hmt = _hmt || [];
 <li><code>process.argv</code></li>
 </ul>
 <p><code>process.argv</code>属性返回一个数组，这个数组包含了启动<code>Node.js</code>进程时的命令行参数。第一个元素为<code>process.execPath</code>。<br>如果需要获取<code>argv[0]</code>的值请参见<code>process.argv0</code>。第二个元素为当前执行的JavaScript文件路径，剩余的元素为其他命令行参数。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 运行以下命令，启动进程：</span></span><br><span class="line">$ node process-args.js one two=three four</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将输出：</span></span><br><span class="line"><span class="number">0</span>: <span class="regexp">/usr/</span>local/bin/node</span><br><span class="line"><span class="number">1</span>: <span class="regexp">/Users/m</span>jr/work/node/process-args.js</span><br><span class="line"><span class="number">2</span>: one</span><br><span class="line"><span class="number">3</span>: two=three</span><br><span class="line"><span class="number">4</span>: four</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 运行以下命令，启动进程：</span></span><br><span class="line">$ node process-args.<span class="property">js</span> one two=three four</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将输出：</span></span><br><span class="line"><span class="number">0</span>: <span class="regexp">/usr/</span>local/bin/node</span><br><span class="line"><span class="number">1</span>: <span class="regexp">/Users/m</span>jr/work/node/process-args.<span class="property">js</span></span><br><span class="line"><span class="number">2</span>: one</span><br><span class="line"><span class="number">3</span>: two=three</span><br><span class="line"><span class="number">4</span>: four</span><br></pre></td></tr></table></figure>
 <ul>
 <li><code>process.env</code></li>
 </ul>
@@ -156,9 +156,9 @@ var _hmt = _hmt || [];
 <ul>
 <li>输入流<code>process.stdin</code>和输出流<code>process.stdout</code></li>
 </ul>
-<p><code>process</code>还有更多的进程管理相关的方法和参数，大家可以参考<a href="http://nodejs.cn/api/process.html" target="_blank" rel="noopener">官方说明</a>。</p>
+<p><code>process</code>还有更多的进程管理相关的方法和参数，大家可以参考<a target="_blank" rel="noopener" href="http://nodejs.cn/api/process.html">官方说明</a>。</p>
 <h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><hr>
-<p>本节主要介绍了后面打包页面时会使用到的一些node.js内置和依赖模块，包括终端输出样式、命令、<code>path</code>、<code>process</code>等。后面一节也会用到来进行页面的打包。<br>可参考代码<a href="https://github.com/godbasin/vue-multi-pages/blob/master/build/build.js" target="_blank" rel="noopener">github-vue-multi-pages</a>，主要是这套环境使用在vue上的demo。</p>
+<p>本节主要介绍了后面打包页面时会使用到的一些node.js内置和依赖模块，包括终端输出样式、命令、<code>path</code>、<code>process</code>等。后面一节也会用到来进行页面的打包。<br>可参考代码<a target="_blank" rel="noopener" href="https://github.com/godbasin/vue-multi-pages/blob/master/build/build.js">github-vue-multi-pages</a>，主要是这套环境使用在vue上的demo。</p>
   
 	</div>
 	<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/2code2.jpg" width="200" height="200" style="display:block;margin: 0 auto;" />

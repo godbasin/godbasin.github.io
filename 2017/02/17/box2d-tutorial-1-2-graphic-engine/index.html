@@ -99,12 +99,12 @@ var _hmt = _hmt || [];
 		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%89%E5%85%B3%E5%9B%BE%E5%83%8F%E5%BC%95%E6%93%8E"><span class="toc-number">1.</span> <span class="toc-text">有关图像引擎</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E7%BB%B4%E5%9B%BE%E5%83%8F%E5%BC%95%E6%93%8E"><span class="toc-number">1.1.</span> <span class="toc-text">二维图像引擎</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%99%BE%E5%BA%A6%E7%99%BE%E7%A7%91-%E4%BA%8C%E7%BB%B4%E5%9B%BE%E5%83%8F%E5%BC%95%E6%93%8E"><span class="toc-number">1.2.</span> <span class="toc-text">百度百科-二维图像引擎</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E7%BB%B4%E5%9B%BE%E5%83%8F%E5%BC%95%E6%93%8E"><span class="toc-number">1.3.</span> <span class="toc-text">三维图像引擎</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%94%E5%9B%9E%E6%80%BB%E7%9B%AE%E5%BD%95"><span class="toc-number">1.4.</span> <span class="toc-text">返回总目录</span></a></li></ol></li></ol>
 		</div>
 		
-		<p>本节简单介绍一下图像引擎。<br><a id="more"></a></p>
+		<p>本节简单介绍一下图像引擎。<br><span id="more"></span></p>
 <h2 id="有关图像引擎"><a href="#有关图像引擎" class="headerlink" title="有关图像引擎"></a>有关图像引擎</h2><hr>
 <h3 id="二维图像引擎"><a href="#二维图像引擎" class="headerlink" title="二维图像引擎"></a>二维图像引擎</h3><p>二维图像引擎是主要使用在二维游戏中，绘制图像，并向外部表达图像的系统。在三维游戏中，亦有使用二维引擎来绘制游戏界面以及一些二维元素。</p>
 <p>由于二维游戏的图像都是平面结构，所以图像引擎在显示图像之前也往往只对图像本身进行处理，而不像三维游戏那样还要处理图像周围的环境。这种处理一般是将图像伸缩，变形，色彩处理，图像合成等。</p>
 <p>二维图像引擎由角色图像、场景地图、动态、光影和特效组成，功能强大。</p>
-<h3 id="百度百科-二维图像引擎"><a href="#百度百科-二维图像引擎" class="headerlink" title="百度百科-二维图像引擎"></a><a href="http://baike.baidu.com/view/4432674.htm" target="_blank" rel="noopener">百度百科-二维图像引擎</a></h3><p>一般来说，一套引擎可以使用在多个不同的游戏中，即“可重用性”，由于引擎研发的投资较大，一个商业公司往往开发一款引擎，反复用于多款游戏，从而获得较高利润。如大宇公司的《轩辕剑系列》其正传和外传就是采用同一款引擎开发。也有本身不制作游戏，专门开发引擎并出售的公司。这样的引擎也称作“商业引擎”。出于游戏开发周期和开发成本的考虑，一些商业游戏公司更愿意购买“商业引擎”。</p>
+<h3 id="百度百科-二维图像引擎"><a href="#百度百科-二维图像引擎" class="headerlink" title="百度百科-二维图像引擎"></a><a target="_blank" rel="noopener" href="http://baike.baidu.com/view/4432674.htm">百度百科-二维图像引擎</a></h3><p>一般来说，一套引擎可以使用在多个不同的游戏中，即“可重用性”，由于引擎研发的投资较大，一个商业公司往往开发一款引擎，反复用于多款游戏，从而获得较高利润。如大宇公司的《轩辕剑系列》其正传和外传就是采用同一款引擎开发。也有本身不制作游戏，专门开发引擎并出售的公司。这样的引擎也称作“商业引擎”。出于游戏开发周期和开发成本的考虑，一些商业游戏公司更愿意购买“商业引擎”。</p>
 <p>游戏引擎的程序基础是建立在使用图形API函数基础之上的，而不是直接控制显卡，主要适用于2D图像的API是DirectX，而纯2D图形API往往不能提供更丰富的图像操作支持，一些引擎也使用用于3D图像的API如OpenGL，Direct3D等来模拟2D。</p>
 <h3 id="三维图像引擎"><a href="#三维图像引擎" class="headerlink" title="三维图像引擎"></a>三维图像引擎</h3><p>目前，计算机图形学已进入三维时代，三维图形在人们周围无所不在。编写三维图形应用一般使用OpenGL或DirectX，但是它们在系统开发中仍存在一些缺点：</p>
 <ol>

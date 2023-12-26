@@ -100,18 +100,18 @@ var _hmt = _hmt || [];
 		</div>
 		
 		<p>最近依然在研究大型项目，而大型项目最容易遇到的问题便是性能问题。一般来说，当我们遇到性能瓶颈的时候，才会开始去进行相应的分析。分析的方向除了业务本身的特点相关之外，常见的我们还可以借助一些工具来发现问题。本文一起来研究下，前端性能分析可以怎么走~</p>
-<a id="more"></a>
+<span id="more"></span>
 <h1 id="前端性能分析工具（Chrome-DevTools）"><a href="#前端性能分析工具（Chrome-DevTools）" class="headerlink" title="前端性能分析工具（Chrome DevTools）"></a>前端性能分析工具（Chrome DevTools）</h1><p>一般来说，前端的性能分析通常可以从<strong>时间</strong>和<strong>空间</strong>两个角度来进行：</p>
 <ul>
 <li><strong>时间</strong>：常见耗时，如页面加载耗时、渲染耗时、网络耗时、脚本执行耗时等</li>
 <li><strong>空间</strong>：资源占用，包括 CPU 占用、内存占用、本地缓存占用等</li>
 </ul>
-<p>那么，下面来看看有哪些常见的工具可以借来用用。由于我们的网页基本上跑在浏览器中，所以基本上大多数的工具都来源于浏览器自身提供，首当其冲的当然是 <a href="https://developers.google.com/web/tools/chrome-devtools" target="_blank" rel="noopener">Chrome DevTools</a>。本文我们也主要围绕 Chrome DevTools 来进行说明。</p>
-<h2 id="Lighthouse"><a href="#Lighthouse" class="headerlink" title="Lighthouse"></a>Lighthouse</h2><p><a href="https://github.com/GoogleChrome/lighthouse" target="_blank" rel="noopener">Lighthouse</a> 的前身是 Chrome DevTools 面板中的 Audits。在 Chrome 60 之前的版本中, 这个面板只包含网络使用率和页面性能两个测量类别，从 Chrome 60 版本开始， Audits 面板已经被 Lighthouse 的集成版取代。而在最新版本的 Chrome 中，则需要单独安装 Lighthouse 拓展程序来使用，也可以通过脚本来使用。</p>
+<p>那么，下面来看看有哪些常见的工具可以借来用用。由于我们的网页基本上跑在浏览器中，所以基本上大多数的工具都来源于浏览器自身提供，首当其冲的当然是 <a target="_blank" rel="noopener" href="https://developers.google.com/web/tools/chrome-devtools">Chrome DevTools</a>。本文我们也主要围绕 Chrome DevTools 来进行说明。</p>
+<h2 id="Lighthouse"><a href="#Lighthouse" class="headerlink" title="Lighthouse"></a>Lighthouse</h2><p><a target="_blank" rel="noopener" href="https://github.com/GoogleChrome/lighthouse">Lighthouse</a> 的前身是 Chrome DevTools 面板中的 Audits。在 Chrome 60 之前的版本中, 这个面板只包含网络使用率和页面性能两个测量类别，从 Chrome 60 版本开始， Audits 面板已经被 Lighthouse 的集成版取代。而在最新版本的 Chrome 中，则需要单独安装 Lighthouse 拓展程序来使用，也可以通过脚本来使用。</p>
 <h3 id="架构"><a href="#架构" class="headerlink" title="架构"></a>架构</h3><p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/front-end-performance-analyze_7.png" alt="Lighthouse 架构"></p>
 <p>下面是 Lighthouse 的组成部分：</p>
 <ul>
-<li>驱动（Driver）：和 <a href="https://chromedevtools.github.io/devtools-protocol/" target="_blank" rel="noopener">Chrome Debugging Protocol</a> 进行交互的接口</li>
+<li>驱动（Driver）：和 <a target="_blank" rel="noopener" href="https://chromedevtools.github.io/devtools-protocol/">Chrome Debugging Protocol</a> 进行交互的接口</li>
 <li>收集器（Gatherers）：使用驱动程序收集页面的信息，收集器的输出结果被称为 Artifact</li>
 <li>审查器（Audits）：将 Artifact 作为输入，审查器会对其运行测试，然后分配通过/失败/得分的结果</li>
 <li>报告（Report）：将审查的结果分组到面向用户的报告中（如最佳实践），对该部分应用加权和总体然后得出评分</li>
@@ -121,23 +121,23 @@ var _hmt = _hmt || [];
 <p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/front-end-performance-analyze_2.png" alt="Lighthouse 架构"></p>
 <p>这份报告从 5 个方面来分析页面： <strong>性能</strong>、<strong>辅助功能</strong>、<strong>最佳实践</strong>、<strong>搜索引擎优化</strong>和 <strong>PWA</strong>。像性能方面，会给出一些常见的耗时统计。除此以外，还会给到一些详细的优化方向。</p>
 <p>如果你希望短时间内对你的网站进行较全面的评估，可以使用 Lighthouse 来跑一下分数，确定大致的优化方向。</p>
-<h2 id="Performance-面板"><a href="#Performance-面板" class="headerlink" title="Performance 面板"></a>Performance 面板</h2><p><a href="https://developers.google.com/web/tools/chrome-devtools/evaluate-performance/reference" target="_blank" rel="noopener">Performance</a> 面板同样有个前身，叫 <a href="https://developers.google.com/web/tools/chrome-devtools/evaluate-performance/timeline-tool?hl=zh-cn" target="_blank" rel="noopener">Timeline</a>。该面板用于记录和分析<strong>运行时性能</strong>，运行时性能是页面运行时（而不是加载）的性能。</p>
+<h2 id="Performance-面板"><a href="#Performance-面板" class="headerlink" title="Performance 面板"></a>Performance 面板</h2><p><a target="_blank" rel="noopener" href="https://developers.google.com/web/tools/chrome-devtools/evaluate-performance/reference">Performance</a> 面板同样有个前身，叫 <a target="_blank" rel="noopener" href="https://developers.google.com/web/tools/chrome-devtools/evaluate-performance/timeline-tool?hl=zh-cn">Timeline</a>。该面板用于记录和分析<strong>运行时性能</strong>，运行时性能是页面运行时（而不是加载）的性能。</p>
 <h3 id="使用步骤"><a href="#使用步骤" class="headerlink" title="使用步骤"></a>使用步骤</h3><p>Performance 面板功能特别多，具体的分析也可以单独讲一篇了。这里我们简单说一下使用的步骤：</p>
 <ol>
 <li>在隐身模式下打开 Chrome。隐身模式可确保 Chrome 以干净状态运行，例如浏览器的扩展可能会在性能评估中产生影响。</li>
-<li>在 DevTools 中，单击“Performance”选项卡，并进行一些基础配置（更多参考<a href="https://developers.google.com/web/tools/chrome-devtools/evaluate-performance" target="_blank" rel="noopener">官方说明</a>）。</li>
+<li>在 DevTools 中，单击“Performance”选项卡，并进行一些基础配置（更多参考<a target="_blank" rel="noopener" href="https://developers.google.com/web/tools/chrome-devtools/evaluate-performance">官方说明</a>）。</li>
 <li>按照提示单击记录，开始记录。进行完相应的操作之后，点击停止。</li>
 <li>当页面运行时，DevTools 捕获性能指标。停止记录后，DevTools 处理数据，然后在 Performance 面板上显示结果。</li>
 </ol>
 <h3 id="主要功能-1"><a href="#主要功能-1" class="headerlink" title="主要功能"></a>主要功能</h3><p>关于 Performance 怎么使用的文章特别多，大家网上随便搜一下就能搜到。一般来说，主要使用以下功能：</p>
-<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/front-end-performance-analyze_5.jpg" alt></p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/front-end-performance-analyze_5.jpg" alt=""></p>
 <ul>
 <li><strong>查看 FPS 图表</strong>：当在 FPS 上方看到红色条形时，表示帧速率下降得太低，以至于可能损害用户体验。通常，绿色条越高，FPS 越高</li>
 <li><strong>查看 CPU 图表</strong>：CPU 图表在 FPS 图表下方。CPU 图表的颜色对应于性能板的底部的 Summary 选项卡</li>
 <li><strong>查看 火焰图</strong>：火焰图直观地表示出了内部的 CPU 分析，横轴是时间，纵轴是调用指针，调用栈最顶端的函数在最下方。启用 JS 分析器后，火焰图会显示调用的每个 JavaScript 函数，可用于分析具体函数</li>
 <li><strong>查看 Buttom-up</strong>：此视图可以看到某些函数对性能影响最大，并能够检查这些函数的调用路径</li>
 </ul>
-<p>具体要怎么定位某些性能瓶颈，可以参考<a href="https://developers.google.com/web/tools/chrome-devtools/evaluate-performance/reference" target="_blank" rel="noopener">官方文档系列文章</a>，这里就不详细介绍啦。</p>
+<p>具体要怎么定位某些性能瓶颈，可以参考<a target="_blank" rel="noopener" href="https://developers.google.com/web/tools/chrome-devtools/evaluate-performance/reference">官方文档系列文章</a>，这里就不详细介绍啦。</p>
 <h3 id="Performance-Monitor"><a href="#Performance-Monitor" class="headerlink" title="Performance Monitor"></a>Performance Monitor</h3><p>打开 Chrome 控制台后，按组合键<code>ctrl + p</code>(Mac 快捷键为<code>command + p</code>)，输入<code>&gt; Show Performance Monitor</code>，就可以打开 Performance Monitor 性能监视器。主要的监控指标包括：</p>
 <ul>
 <li>CPU usage：CPU 占用率</li>
@@ -151,7 +151,7 @@ var _hmt = _hmt || [];
 <h2 id="合成监控"><a href="#合成监控" class="headerlink" title="合成监控"></a>合成监控</h2><p>合成监控就是在一个模拟场景里，去提交一个需要做性能审计的页面，通过一系列的工具、规则去运行你的页面，提取一些性能指标，得出一个审计报告。例如上面介绍的 Lighthouse 就是合成监控。</p>
 <p>合成监控的使用场景不多，一般可能出现在开发和测试的过程中，例如结合流水线跑性能报告、定位性能问题时本地跑的一些简单任务分析等。该方式的优点显而易见：</p>
 <ul>
-<li>可采集更丰富的数据指标，例如结合 <a href="https://chromedevtools.github.io/devtools-protocol/" target="_blank" rel="noopener">Chrome Debugging Protocol</a> 获取到的数据</li>
+<li>可采集更丰富的数据指标，例如结合 <a target="_blank" rel="noopener" href="https://chromedevtools.github.io/devtools-protocol/">Chrome Debugging Protocol</a> 获取到的数据</li>
 <li>较成熟的解决方案和工具，实现成本低</li>
 <li>不影响真实用户的性能体验</li>
 </ul>
@@ -169,9 +169,9 @@ var _hmt = _hmt || [];
 <h1 id="性能分析自动化"><a href="#性能分析自动化" class="headerlink" title="性能分析自动化"></a>性能分析自动化</h1><p>我们在开发过程中，也常常需要进行性能分析。而前端的性能分析上手成本也不低，除了基本的页面加载耗时、网络耗时，更具体的定位往往需要结合前面介绍的 Performance 面板、FPS、CPU、火焰图等一点点来分析。</p>
 <p>如果这一块想要往自动化方向发展，我们可以怎么做呢？</p>
 <h2 id="使用-Lighthouse"><a href="#使用-Lighthouse" class="headerlink" title="使用 Lighthouse"></a>使用 Lighthouse</h2><p>前面也有介绍 Lighthouse，它提供了脚本的方式使用。因此，我们可以通过自动化任务跑脚本的方式，使用 Lighthouse 跑分析报告，通过对比以往的数据来进行功能变更、性能优化等场景的性能回归。</p>
-<p>使用 Lighthouse 的优势在于开发成本低，只需要按照<a href="https://github.com/GoogleChrome/lighthouse/blob/master/docs/configuration.md" target="_blank" rel="noopener">官方提供的配置</a>来调整、获取自己需要的一些数据，就可以快速接入较全面的 Lighthouse 拥有的性能分析能力。</p>
+<p>使用 Lighthouse 的优势在于开发成本低，只需要按照<a target="_blank" rel="noopener" href="https://github.com/GoogleChrome/lighthouse/blob/master/docs/configuration.md">官方提供的配置</a>来调整、获取自己需要的一些数据，就可以快速接入较全面的 Lighthouse 拥有的性能分析能力。</p>
 <p>不过由于 Lighthouse 同样基于 CDP(Chrome DevTools Protocol)，因此除了实现成本降低了，CDP 缺失的一些能力它也一样会缺失。</p>
-<h2 id="Chrome-DevTools-Protocol"><a href="#Chrome-DevTools-Protocol" class="headerlink" title="Chrome DevTools Protocol"></a>Chrome DevTools Protocol</h2><p><a href="https://chromedevtools.github.io/devtools-protocol/" target="_blank" rel="noopener">Chrome DevTools Protocol</a> 允许第三方对基于 Chrome 的 Web 应用程序进行检测、检查、调试、分析等。有了这个协议，我们就可以自己开发工具获取 Chrome 的数据了。</p>
+<h2 id="Chrome-DevTools-Protocol"><a href="#Chrome-DevTools-Protocol" class="headerlink" title="Chrome DevTools Protocol"></a>Chrome DevTools Protocol</h2><p><a target="_blank" rel="noopener" href="https://chromedevtools.github.io/devtools-protocol/">Chrome DevTools Protocol</a> 允许第三方对基于 Chrome 的 Web 应用程序进行检测、检查、调试、分析等。有了这个协议，我们就可以自己开发工具获取 Chrome 的数据了。</p>
 <h3 id="认识-Chrome-DevTools-协议"><a href="#认识-Chrome-DevTools-协议" class="headerlink" title="认识 Chrome DevTools 协议"></a>认识 Chrome DevTools 协议</h3><p>Chrome DevTools 协议基于 WebSocket，利用 WebSocket 建立连接 DevTools 和浏览器内核的快速数据通道。</p>
 <p>我们使用的 Chrome DevTools 其实也是一个 Web 应用。我们使用 DevTools 的时候，浏览器内核 Chromium 本身会作为一个服务端，我们看到的浏览器调试工具界面，通过 Websocket 和 Chromium 进行通信。建立过程如下：</p>
 <ol>
@@ -185,7 +185,7 @@ var _hmt = _hmt || [];
 <ul>
 <li>获取 JS 的 Runtime 数据，常用的如<code>window.performance</code>和<code>window.chrome.loadTimes()</code>等</li>
 <li>获取<code>Network</code>及<code>Performance</code>数据，进行自动性能分析</li>
-<li>使用 <a href="https://github.com/GoogleChrome/lighthouse/blob/master/docs/puppeteer.md" target="_blank" rel="noopener">Puppeteer</a> 的 <a href="https://pptr.dev/#?product=Puppeteer&amp;version=v1.13.0&amp;show=api-class-cdpsession" target="_blank" rel="noopener">CDPSession</a>，与浏览器的协议通信会变得更加简单</li>
+<li>使用 <a target="_blank" rel="noopener" href="https://github.com/GoogleChrome/lighthouse/blob/master/docs/puppeteer.md">Puppeteer</a> 的 <a target="_blank" rel="noopener" href="https://pptr.dev/#?product=Puppeteer&amp;version=v1.13.0&amp;show=api-class-cdpsession">CDPSession</a>，与浏览器的协议通信会变得更加简单</li>
 </ul>
 <h3 id="与性能相关的域"><a href="#与性能相关的域" class="headerlink" title="与性能相关的域"></a>与性能相关的域</h3><p>本文讲性能分析相关，因此这里我们只关注和性能相关的域。</p>
 <p><strong>1. Performance。</strong><br>从<code>Performance</code>域中<code>Performance.getMetrics()</code>可以拿到获取运行时性能指标包括：</p>
@@ -205,21 +205,21 @@ var _hmt = _hmt || [];
 <li><code>JSHeapTotalSize</code>: JavaScript 栈总大小</li>
 </ul>
 <p><strong>2. Tracing。</strong><br><code>Tracing</code>域可获取页面加载的 DevTools 性能跟踪。可以使用<code>Tracing.start</code>和<code>Tracing.stop</code>创建可在 Chrome DevTools 或时间轴查看器中打开的跟踪文件。</p>
-<p>我们能看到生成的 JSON 文件长这样：<br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/front-end-performance-analyze_8.png" alt></p>
-<p>这样的 JSON 文件，我们可以丢到 <a href="https://chromedevtools.github.io/timeline-viewer/" target="_blank" rel="noopener">DevTools Timeline Viewer</a> 中，可以看到对应的时间轴和火焰图：</p>
-<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/front-end-performance-analyze_9.jpg" alt></p>
+<p>我们能看到生成的 JSON 文件长这样：<br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/front-end-performance-analyze_8.png" alt=""></p>
+<p>这样的 JSON 文件，我们可以丢到 <a target="_blank" rel="noopener" href="https://chromedevtools.github.io/timeline-viewer/">DevTools Timeline Viewer</a> 中，可以看到对应的时间轴和火焰图：</p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/front-end-performance-analyze_9.jpg" alt=""></p>
 <p><strong>3. Runtime。</strong><br><code>Runtime</code>域通过远程评估和镜像对象暴露 JavaScript 的运行时。可以通过<code>Runtime.getHeapUsage</code>获取 JavaScript 栈的使用情况，通过<code>Runtime.evaluate</code>计算全局对象的表达式，通过<code>Runtime.queryObjects</code>迭代 JavaScript 栈并查找具有给定原型的所有对象（可用于计算原型链中某处具有相同原型的所有对象，衡量 JavaScript 内存泄漏）。</p>
 <p>除了上面介绍的这些，还有<code>Network</code>可以分析网络相关的性能，以及其他可能涉及 DOM 节点、JS 执行等各种各样的数据分析，更多的可能需要大家自己去研究了。</p>
 <h3 id="自动化性能分析"><a href="#自动化性能分析" class="headerlink" title="自动化性能分析"></a>自动化性能分析</h3><p>通过使用 Chrome DevTools 协议，我们可以获取 DevTools 提供的很多数据，包括网络数据、性能数据、运行时数据。</p>
-<p>对于如何使用该协议，其实已经有很多大神针对这个协议封装出不同语言的库，包括 Node.js、Python、Java等，可以根据需要在 <a href="https://github.com/ChromeDevTools/awesome-chrome-devtools#chrome-devtools-protocol" target="_blank" rel="noopener">awesome-chrome-devtools</a> 这个项目中找到。</p>
+<p>对于如何使用该协议，其实已经有很多大神针对这个协议封装出不同语言的库，包括 Node.js、Python、Java等，可以根据需要在 <a target="_blank" rel="noopener" href="https://github.com/ChromeDevTools/awesome-chrome-devtools#chrome-devtools-protocol">awesome-chrome-devtools</a> 这个项目中找到。</p>
 <p>至于我们到底能拿到怎样的数据，可以做到怎样的自动化程度，就不在本文里讲述啦，后面有机会再开篇文章详细讲讲。</p>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
-<li><a href="https://www.zcfy.cc/article/the-new-chrome-devtool-feature-you-want-to-know-about-3318.html" target="_blank" rel="noopener">你一定要知道的 Chrome DevTool 新功能</a></li>
-<li><a href="https://juejin.im/post/6844904045774110733" target="_blank" rel="noopener">前端性能分析利器-Chrome性能分析&amp;性能监视器</a></li>
-<li><a href="https://www.infoq.cn/article/Dxa8aM44oz*Lukk5Ufhy" target="_blank" rel="noopener">蚂蚁金服如何把前端性能监控做到极致?</a></li>
-<li><a href="https://testerhome.com/topics/15817" target="_blank" rel="noopener">chrome devtools protocol——Web 性能自动化实践介绍</a></li>
-<li><a href="https://chromedevtools.github.io/devtools-protocol/" target="_blank" rel="noopener">Chrome DevTools Protocol</a></li>
-<li><a href="https://addyosmani.com/blog/puppeteer-recipes/#measuring-memory-leaks" target="_blank" rel="noopener">Web Performance Recipes With Puppeteer</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.zcfy.cc/article/the-new-chrome-devtool-feature-you-want-to-know-about-3318.html">你一定要知道的 Chrome DevTool 新功能</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.im/post/6844904045774110733">前端性能分析利器-Chrome性能分析&amp;性能监视器</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.infoq.cn/article/Dxa8aM44oz*Lukk5Ufhy">蚂蚁金服如何把前端性能监控做到极致?</a></li>
+<li><a target="_blank" rel="noopener" href="https://testerhome.com/topics/15817">chrome devtools protocol——Web 性能自动化实践介绍</a></li>
+<li><a target="_blank" rel="noopener" href="https://chromedevtools.github.io/devtools-protocol/">Chrome DevTools Protocol</a></li>
+<li><a target="_blank" rel="noopener" href="https://addyosmani.com/blog/puppeteer-recipes/#measuring-memory-leaks">Web Performance Recipes With Puppeteer</a></li>
 </ul>
 <h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p>前端性能分析相关的文章不算多，而由于性能分析本身的场景就跟业务特性结合比较紧密，可以用来借鉴的内容、较统一的解决方案也不多。而性能的监控、自动化等方向的介绍比较少，也希望这篇文章能给到你们一些方向吧~</p>
   

@@ -100,7 +100,7 @@ var _hmt = _hmt || [];
 		</div>
 		
 		<p>整理了下前端监控的一些项目经验，结合自己的想法输出了这篇文章，跟大家分享下。</p>
-<a id="more"></a>
+<span id="more"></span>
 <h1 id="前端监控体系搭建"><a href="#前端监控体系搭建" class="headerlink" title="前端监控体系搭建"></a>前端监控体系搭建</h1><p>通常前端建立搭建监控体系，主要是为了解决两个问题：<strong>如何及时发现问题</strong>、<strong>如何快速定位并解决问题</strong>。</p>
 <p>一般来说，结合开发和产品的角度来看，前端监控体系需要做的事情包括：</p>
 <ol>
@@ -154,7 +154,7 @@ var _hmt = _hmt || [];
 </ul>
 <p>除此之外，当初始的 HTML 文档被完全加载和解析完成之后，<code>DOMContentLoaded</code>事件被触发，而无需等待样式表、图像和子框架的完全加载。由于前端框架的出现，很多时候页面的渲染交给框架来控制，因此<code>DOMContentLoaded</code>事件已经失去了原本的作用，很多时候我们会在框架本身提供的生命周期函数中进行数据的收集。</p>
 <p>我们还可以使用<code>MutationObserver</code>接口，该提供了监听页面 DOM 树变化的能力，结合<code>performance</code>获取到具体的时间：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 注册监听函数</span></span><br><span class="line"><span class="keyword">const</span> observer = <span class="keyword">new</span> MutationObserver(<span class="function">(<span class="params">mutations</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`时间：<span class="subst">$&#123;performance.now()&#125;</span>，DOM树发生了变化！有以下变化类型:`</span>);</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; mutations.length; i++) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(mutations[<span class="number">0</span>].type);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 开始监听document的节点变化</span></span><br><span class="line">observer.observe(<span class="built_in">document</span>, &#123;</span><br><span class="line">  childList: <span class="literal">true</span>,</span><br><span class="line">  subtree: <span class="literal">true</span>,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 注册监听函数</span></span><br><span class="line"><span class="keyword">const</span> observer = <span class="keyword">new</span> <span class="title class_">MutationObserver</span>(<span class="function">(<span class="params">mutations</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`时间：<span class="subst">$&#123;performance.now()&#125;</span>，DOM树发生了变化！有以下变化类型:`</span>);</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; mutations.<span class="property">length</span>; i++) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(mutations[<span class="number">0</span>].<span class="property">type</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 开始监听document的节点变化</span></span><br><span class="line">observer.<span class="title function_">observe</span>(<span class="variable language_">document</span>, &#123;</span><br><span class="line">  <span class="attr">childList</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">subtree</span>: <span class="literal">true</span>,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <h3 id="HTTP-测速数据"><a href="#HTTP-测速数据" class="headerlink" title="HTTP 测速数据"></a>HTTP 测速数据</h3><p>请求相关的数据，我们同样可以通过 PerformanceTiming 属性获取：</p>
 <ul>
 <li><code>PerformanceTiming.redirectStart</code>：返回第一个 HTTP 跳转开始时的时间戳</li>
@@ -178,9 +178,9 @@ var _hmt = _hmt || [];
 </ol>
 <p>日志通常用户定位用户问题的时候使用，但我们常常需要提前在代码中打印日志。否则，当我们需要定位问题的时候，才发现自己并没有输出相关的日志，有些问题由于复现困难，再补上日志发布后也未必能复现，这样就会比较被动。</p>
 <p>可以通过全局挟持关键模块和函数等方式来进行日志的自动打印，举个例子：</p>
-<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/monitor-and-report-3.jpg" alt></p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/monitor-and-report-3.jpg" alt=""></p>
 <p>在每个功能模块运行时，通过使用约定的格式来打印输入参数、执行信息、输出参数，则可以通过解析日志的方式，梳理本次操作的完整调用关系、功能模块执行信息：</p>
-<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/monitor-and-report-4.jpg" alt></p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/monitor-and-report-4.jpg" alt=""></p>
 <h2 id="埋点方案"><a href="#埋点方案" class="headerlink" title="埋点方案"></a>埋点方案</h2><p>前端常见的埋点方案包括三种：</p>
 <table>
 <thead>
@@ -229,7 +229,7 @@ var _hmt = _hmt || [];
 <p>通过这些行为信息，可以实时计算出每个用户在时间轴上的操作顺序，以及每个步骤的操作时间、操作内容等，通过可视化系统直观地展示用户的链路情况，包括系统的入口来源、打开或关闭的页面、每个功能点的点击和操作时间、功能异常的情况等。</p>
 <p>使用标准化的方式获取用户点击流以及页面使用情况，将页面和每个功能的操作行为上报到服务器，实时对操作时间、操作名称等信息来分析得到用户的操作链路、每个页面和功能操作步骤间的耗时和转化率，并进行有效监控。通过该方式，可以高效直观地观察产品的使用情况、分析用户的行为习惯，然后确定产品方向、完善产品功能。</p>
 <h2 id="数据上报"><a href="#数据上报" class="headerlink" title="数据上报"></a>数据上报</h2><p>数据采集完成后，我们需要将这些数据上报到后台服务：</p>
-<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/monitor-and-report-2.jpg" alt></p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/monitor-and-report-2.jpg" alt=""></p>
 <p>如图，当页面打开、更新、关闭等生命周期、用户在页面中的操作行为、系统异常等触发时，系统底层通过埋点监听这些事件，获取相关数据数据并进行标准化处理后，进行本地收集然后上报到实时数据分析系统。</p>
 <p>相关的数据信息包括时间、名称、会话标记、版本号等信息，通过这些数据，可以实时计算出每个埋点的使用数量、埋点间的执行时间、埋点间的转换率等，通过可视化系统直观地展示完整的页面使用情况，包括每个页面打开、更新、关闭情况、每个功能点的点击和加载情况、功能异常的情况等。</p>
 <h3 id="上报方式"><a href="#上报方式" class="headerlink" title="上报方式"></a>上报方式</h3><p>一般来说，我们埋点的数据、运行的日志都需要通过上报发送到后台服务再进行转换、存储和监控。</p>
@@ -261,7 +261,7 @@ var _hmt = _hmt || [];
 <li>分版本监控观察：功能是否覆盖完整、灰度占比是否正常、新旧版本的转化率是否一致</li>
 </ul>
 <p>在灰度发布过程中，我们就能通过上报数据功能曲线是否正常、异常是否在预期范围、曲线突变跟灰度时间点是否吻合等，来确认是否有异常、哪里可能有异常。当出现数据异常的时候，可配合相应的告警渠道来及时通知相应的负责人，及时修复功能异常。</p>
-<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/monitor-and-report-1.jpg" alt></p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/monitor-and-report-1.jpg" alt=""></p>
 <h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p>很多时候，前端项目中都会进行一些异常、耗时测速等监控，也会进行一些用户行为的数据上报。其实我们还可以思考将这些过程更加自动化地实现，同时数据在上报之后还可以进行筛选、统计、转换，计算出产品各种维度的使用情况，甚至还可以做全链路监控、或是给到一些实用的产品方向引导。</p>
   
 	</div>

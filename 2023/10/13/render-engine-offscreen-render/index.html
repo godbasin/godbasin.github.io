@@ -102,7 +102,7 @@ var _hmt = _hmt || [];
 		
 		<p>前面我们介绍了增量渲染的解决方案，其中有提到复用 Canvas 进行性能优化的解决方案。</p>
 <p>本文我们将结合 Canvas 的能力提出进一步的优化方案：离屏渲染。</p>
-<a id="more"></a>
+<span id="more"></span>
 <p>上一篇<a href="https://godbasin.github.io/2023/10/11/render-engine-diff-render/">《6.增量渲染》</a>提到页面滚动时 Canvas 复用的场景，这种场景下我们还可以考虑两种方式：</p>
 <ol>
 <li>使用 Canvas 上一帧画像，直接转换成图片复用到下一帧的绘制中。</li>
@@ -111,16 +111,16 @@ var _hmt = _hmt || [];
 <p>第二种方式中，当前渲染的 Canvas 与隐藏的缓存 Canvas 交替渲染，由于会使用一个屏幕外（非可视）的 Canvas 进行提前绘制，我们也可以称之为离屏渲染。</p>
 <h2 id="离屏渲染"><a href="#离屏渲染" class="headerlink" title="离屏渲染"></a>离屏渲染</h2><p>离屏渲染可以提前将更大范围的内容绘制好，在滚动时可直接取对应的区域进行截取和绘制。</p>
 <p>当然，两个 Canvas 的维护和绘制成本会比一个 Canvas 要更高，同时如果需要提前绘制更大区域的单元格范围，那么必然会面临一个问题：需要更多的计算和渲染消耗。</p>
-<p>我们可以考虑另外一个优化方案：使用 <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/OffscreenCanvas" target="_blank" rel="noopener">OffscreenCanvas</a> 实现真正的离屏。</p>
+<p>我们可以考虑另外一个优化方案：使用 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/OffscreenCanvas">OffscreenCanvas</a> 实现真正的离屏。</p>
 <h3 id="OffscreenCanvas-API-能力"><a href="#OffscreenCanvas-API-能力" class="headerlink" title="OffscreenCanvas API 能力"></a>OffscreenCanvas API 能力</h3><p>OffscreenCanvas 是一个实验中的新特性，主要用于提升 Canvas 2D/3D 绘图应用和 H5 游戏的渲染性能和使用体验。OffscreenCanvas 目前主要用于两种不同的使用场景：</p>
 <ol>
 <li>同步显示 OffscreenCanvas 中的帧。在 Worker 线程创建一个 OffscreenCanvas 做后台渲染，然后再把渲染好的缓冲区 Transfer 回主线程显示。</li>
 <li>异步显示 OffscreenCanvas 中的帧。主线程从当前 DOM 树中的 Canvas 元素产生一个 OffscreenCanvas，再把这个 OffscreenCanvas 发送给 Worker 线程进行渲染，渲染的结果直接 Commit 到浏览器的 Display Compositor 输出到当前窗口，相当于在 Worker 线程直接更新 Canvas 元素的内容。</li>
 </ol>
-<p>整体的离屏方案依赖 <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/OffscreenCanvas" target="_blank" rel="noopener">OffscreenCanvas</a> 提供的能力，关于此能力现有的技术方案和文档较少，可参考：</p>
+<p>整体的离屏方案依赖 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/OffscreenCanvas">OffscreenCanvas</a> 提供的能力，关于此能力现有的技术方案和文档较少，可参考：</p>
 <ul>
-<li><a href="https://zhuanlan.zhihu.com/p/34698375" target="_blank" rel="noopener">OffscreenCanvas - 概念说明及使用解析</a></li>
-<li><a href="https://developers.google.com/web/updates/2018/08/offscreen-canvas" target="_blank" rel="noopener"></a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/34698375">OffscreenCanvas - 概念说明及使用解析</a></li>
+<li><a target="_blank" rel="noopener" href="https://developers.google.com/web/updates/2018/08/offscreen-canvas"></a></li>
 </ul>
 <p>在我们的架构设计下，更适合使用第一种方案，即同步显示 OffscreenCanvas 中的帧。这样设计的优势在于：当主线程繁忙时，依然可以通过 OffscreenCanvas 在 worker 中更新画布内容，避免给用户造成页面卡顿的体验。</p>
 <p>除此之外，还可以进一步考虑在兼容性支持的情况下，通过将局部计算运行在 worker 中，减少渲染引擎的计算耗时，提升渲染引擎的渲染性能。</p>

@@ -102,7 +102,7 @@ var _hmt = _hmt || [];
 		
 		<p>作为前端开发，我们的日常工作中除了写代码之外，几乎大多数的时间都在跟浏览器打交道。当然，现在我们甚至写代码都可以直接在浏览器里完成，一个浏览器走天下。</p>
 <p>因此，我们应该对浏览器的了解要更加深入，除了了解怎么使用和调试浏览器，我们还要掌握它是怎样将我们编写的代码渲染到页面中的。</p>
-<a id="more"></a>
+<span id="more"></span>
 <h2 id="认识浏览器"><a href="#认识浏览器" class="headerlink" title="认识浏览器"></a>认识浏览器</h2><p>浏览器的主要功能，是通过向服务器请求并在浏览器窗口中展示 Web 资源内容，通常包括 HTML 文档、PDF、图片等，我们也可以通过插件的方式加载更多其他的资源类型（比如播放视频）。</p>
 <p>对于浏览器的问题，HTTP 请求相关的，想必各位在面试的时候都被问烂了吧，这里直接过一下浏览器中的 HTTP 请求过程：</p>
 <ol>
@@ -123,7 +123,7 @@ var _hmt = _hmt || [];
 <p>除了这些，实际上我们和浏览器的几乎所有操作，都涉及到浏览器的渲染过程。为了更深刻地认识这些过程，我们先来认识下浏览器的结构。</p>
 <p>HTML 和 CSS 规范中规定了浏览器解析和渲染 HTML 文档的方式，曾经各个浏览器都只遵循其中一部分，因此前端开发经常需要兼容各种浏览器。现在这些问题已经得到改善，同时配合 Babel 等一些兼容性处理编译过程，我们可以更加关注网站的功能实现和优化。</p>
 <h3 id="浏览器的结构"><a href="#浏览器的结构" class="headerlink" title="浏览器的结构"></a>浏览器的结构</h3><p>从结构上来说，浏览器主要包括了八个子系统：用户界面、浏览器引擎、渲染引擎、网络子系统、JavaScript 解释器、XML 解析器、显示后端、数据持久性子系统。</p>
-<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/how-browser-works-1.jpg" alt></p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/how-browser-works-1.jpg" alt=""></p>
 <p>这些子系统组合构成了我们的浏览器，而谈到页面的加载和渲染，则离不开网络子系统、渲染引擎、JavaScript 解释器和浏览器引擎等。</p>
 <p>如今大多数用户主要使用的浏览器包括两类：</p>
 <ul>
@@ -132,7 +132,7 @@ var _hmt = _hmt || [];
 </ul>
 <p>下面我们以前端开发最常使用的 Chrome 浏览器为例（因为 Chrome 浏览器太牛啦，而且它们还要官方文章介绍做参考），进行更详细的介绍。</p>
 <h3 id="Chrome-多进程架构"><a href="#Chrome-多进程架构" class="headerlink" title="Chrome 多进程架构"></a>Chrome 多进程架构</h3><p>应该很多前端开发都知道，Chrome 浏览器使用了多进程架构，包括浏览器进程、渲染器进程、插件进程和 GPU 进程：</p>
-<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/browserui.png" alt></p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/browserui.png" alt=""></p>
 <p>如今，基本上所有的浏览器都支持多个选项卡。在 Chrome 中，每个选项卡在单独的渲染器进程中运行，渲染器进程主要用于控制和处理选项卡中的网站内容显示。渲染器进程支持多线程，包括：</p>
 <ul>
 <li>GUI 渲染线程：负责对浏览器界面进行渲染</li>
@@ -197,7 +197,7 @@ var _hmt = _hmt || [];
 <h4 id="光栅化"><a href="#光栅化" class="headerlink" title="光栅化"></a>光栅化</h4><p>通过解析、布局和绘制过程，浏览器获得了文档的结构、每个元素的样式、绘制顺序等信息。将这些信息转换为屏幕上的像素，这个过程被称为光栅化。</p>
 <p>光栅化可以被 GPU 加速，光栅化后的位图会被存储在 GPU 内存中。根据前面介绍的渲染流程，当页面布局变更了会触发重排和重绘，还需要重新进行光栅化。此时如果页面中有动画，则主线程中过多的计算任务很可能会影响动画的性能。</p>
 <p>因此，现代的浏览器通常使用合成的方式，将页面的各个部分分成若干层，分别对其进行栅格化（将它们分割成了不同的瓦片），并通过合成器线程进行页面的合成：</p>
-<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/how-browser-works-2.jpg" alt></p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/how-browser-works-2.jpg" alt=""></p>
 <p>合成过程如下：</p>
 <ol>
 <li>当主线程创建了合成层并确定了绘制顺序，便将这些信息提交给合成线程。</li>
@@ -211,8 +211,8 @@ var _hmt = _hmt || [];
 <h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><p>这里主要介绍了浏览器的组成和结构，并从浏览器内部分工角度来介绍页面的渲染过程。掌握页面的渲染过程，有利于我们进行一些性能优化，尤其如果涉及动画、游戏等频繁绘制的场景，渲染性能往往是需要不断进行优化的瓶颈。</p>
 <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>对于介绍浏览器的渲染过程相关的内容，非常推荐大家参考两篇文章：</p>
 <ul>
-<li><a href="https://www.html5rocks.com/en/tutorials/internals/howbrowserswork/" target="_blank" rel="noopener">《How Browsers Work: Behind the scenes of modern web browsers》</a></li>
-<li><a href="https://developers.google.com/web/updates/2018/09/inside-browser-part1" target="_blank" rel="noopener">《Inside look at modern web browser》</a>（分为四篇，左侧导航栏可以找到）</li>
+<li><a target="_blank" rel="noopener" href="https://www.html5rocks.com/en/tutorials/internals/howbrowserswork/">《How Browsers Work: Behind the scenes of modern web browsers》</a></li>
+<li><a target="_blank" rel="noopener" href="https://developers.google.com/web/updates/2018/09/inside-browser-part1">《Inside look at modern web browser》</a>（分为四篇，左侧导航栏可以找到）</li>
 </ul>
 <p>这篇文章也是参考了这两篇文章以及一些论文，以我自己的理解来进行总结输出，推荐大家也要阅读原文哦。</p>
   

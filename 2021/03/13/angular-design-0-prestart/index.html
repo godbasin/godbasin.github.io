@@ -100,10 +100,10 @@ var _hmt = _hmt || [];
 		</div>
 		
 		<p>作为“为大型前端项目”而设计的前端框架，Angular 其实有许多值得参考和学习的设计，本系列主要用于研究这些设计和功能的实现原理。本文作为背景和铺垫，先简单以我自身的了解来介绍一下 Angular 这个框架把吧。</p>
-<a id="more"></a>
+<span id="more"></span>
 <h2 id="前端框架"><a href="#前端框架" class="headerlink" title="前端框架"></a>前端框架</h2><h3 id="三大前端“框架”"><a href="#三大前端“框架”" class="headerlink" title="三大前端“框架”"></a>三大前端“框架”</h3><p>虽然这几年前端的发展和变化十分迅猛，但被公认为前端“框架”的 Top3 位置却没有什么变化，依然是 Angular/React/Vue。</p>
 <p>其中，React/Vue 专注于构建用户界面，在一定程度上来说为一个 Javascript 库；而 Angular 则提供了前端项目开发中较完整的解决方案。我们可以简单粗暴地这样认为：</p>
-<figure class="highlight dsconfig"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">Angular </span>= <span class="string">React/</span><span class="string">Vue </span>+ 路由库（<span class="string">react-router/</span><span class="string">vue-router）</span> + 状态管理（<span class="string">Redux/</span><span class="string">Flux/</span><span class="string">Mobx/</span><span class="string">Vuex）</span> + 脚手架/构建（<span class="built_in">create-react-app/Vue</span> <span class="string">CLI/</span><span class="string">Webpack）</span> + ...</span><br></pre></td></tr></table></figure>
+<figure class="highlight dsconfig"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">Angular</span> = <span class="string">React</span>/<span class="string">Vue</span> + 路由库（<span class="string">react-router</span>/<span class="string">vue-router</span>） + 状态管理（<span class="string">Redux</span>/<span class="string">Flux</span>/<span class="string">Mobx</span>/<span class="string">Vuex</span>） + 脚手架/构建（<span class="built_in">create-react-app/Vue</span> <span class="string">CLI</span>/<span class="string">Webpack</span>） + ...</span><br></pre></td></tr></table></figure>
 <h3 id="低热度的-Angular"><a href="#低热度的-Angular" class="headerlink" title="低热度的 Angular"></a>低热度的 Angular</h3><p>作为三大前端框架之一，Angular 在国内的热度实在是低。个人认为原因包括：</p>
 <ul>
 <li>AngularJS 到 Angular2 的断崖式升级，失去了很多开发者的信任</li>
@@ -122,7 +122,7 @@ var _hmt = _hmt || [];
 <p>我接触过各式各样的项目，而当这些项目在面对项目的规模变大的时候，虽然新人的加入、每个人都按照自己的想法去开发，最终总会变得难以维护，历史债务十分严重。而 Angular 则是唯一一个能限制开发的自由发挥的，可以让经验不足和经验丰富的开发都写出一样易维护的代码。</p>
 <p>回归主题，既然 Angular 提供了大型前端应用的完整解决方案，那么我们不妨多些对它的学习和了解，当我们真正遇到问题的时候，便多了一个可落地方案的参考，这也是为什么我们要不断汲取新知识和技术的原因。</p>
 <h2 id="Angular-框架解读"><a href="#Angular-框架解读" class="headerlink" title="Angular 框架解读"></a>Angular 框架解读</h2><p>源码阅读对很多人来说，都是一件挑战很大的事情，对我来说也一样。</p>
-<p>虽然我有较多地阅读过 Vue 的源码（可参考<a href="http://www.godbasin.com/vue-ebook/" target="_blank" rel="noopener">《深入理解 Vue.js 实战》</a>这本书），但前提是我对这个框架有足够多的理解和使用经验，在尝试介绍和解说时，也更是倾向使用者的角度来进行。而对于 React，则是因为理解和使用经验的缺乏，未曾有机会深入地去了解它，但也有阅读过写得不错的源码解读（可参考<a href="https://github.com/BetaSu/just-react" target="_blank" rel="noopener">《React 技术揭秘》</a>一书）。</p>
+<p>虽然我有较多地阅读过 Vue 的源码（可参考<a target="_blank" rel="noopener" href="http://www.godbasin.com/vue-ebook/">《深入理解 Vue.js 实战》</a>这本书），但前提是我对这个框架有足够多的理解和使用经验，在尝试介绍和解说时，也更是倾向使用者的角度来进行。而对于 React，则是因为理解和使用经验的缺乏，未曾有机会深入地去了解它，但也有阅读过写得不错的源码解读（可参考<a target="_blank" rel="noopener" href="https://github.com/BetaSu/just-react">《React 技术揭秘》</a>一书）。</p>
 <p>对于阅读源码来说，最好的方式便是从已知的理解和认知中开始。阅读源码，并不是为了熟悉掌握源码本身，更是为了掌握其中的一些值得借鉴的思考方式和设计，因此我也尽可能减少代码占据的篇幅，使用自己理解后的方式来进行描述。</p>
 <p>那么，后面我会从自己认为最值得参考和学习的地方开始，一点点学习其中的精华。以我当前有限的认知，大概会包括以下内容：</p>
 <ul>

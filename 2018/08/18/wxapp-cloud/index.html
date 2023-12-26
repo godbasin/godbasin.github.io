@@ -100,7 +100,7 @@ var _hmt = _hmt || [];
 		</div>
 		
 		<p>小程序云开发开始公测啦，欢呼欢呼。这里针对云开发小程序的能力整理出了一个简单的报告，欢迎大家一起来探讨~</p>
-<a id="more"></a>
+<span id="more"></span>
 <h2 id="关于-serverless"><a href="#关于-serverless" class="headerlink" title="关于 serverless"></a>关于 serverless</h2><p>无服务器运算（Serverless computing），又被称为功能即服务（FaaS），是云计算的一种模型。以平台即服务（PaaS）为基础，无服务器运算提供一个微型的架构，终端客户不需要部署、配置或管理服务器服务，代码运行所需要的服务器服务皆由云端平台来提供。</p>
 <h2 id="云开发小程序的能力"><a href="#云开发小程序的能力" class="headerlink" title="云开发小程序的能力"></a>云开发小程序的能力</h2><p><strong>云开发是微信团队和腾讯云团队共同研发的一套小程序基础能力，简言之就是：云能力将会成为小程序的基础能力。</strong></p>
 <p>小程序云开发目前提供三大基础能力支持：</p>
@@ -109,8 +109,8 @@ var _hmt = _hmt || [];
 <li>数据库：一个既可在小程序前端操作，也能在云函数中读写的 JSON 数据库</li>
 <li>文件存储：在小程序前端直接上传/下载云端文件，在云开发控制台可视化管理</li>
 </ul>
-<p>大家可以去看看小程序的文档，也可以参加下公测申请哈：<a href="https://developers.weixin.qq.com/miniprogram/dev/wxcloud/basis/getting-started.html" target="_blank" rel="noopener">《小程序·云开发》</a>。</p>
-<h2 id="解决了什么"><a href="#解决了什么" class="headerlink" title="解决了什么"></a>解决了什么</h2><h3 id="天然鉴权"><a href="#天然鉴权" class="headerlink" title="天然鉴权"></a>天然鉴权</h3><p>小程序中，要使用第三方服务器，需要走较多的流程，如图（参考<a href="https://developers.weixin.qq.com/miniprogram/dev/api/api-login.html" target="_blank" rel="noopener">官网</a>）：<br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/%E6%8E%88%E6%9D%83%E6%97%B6%E5%BA%8F%E5%9B%BE.jpg" alt="授权时序图"></p>
+<p>大家可以去看看小程序的文档，也可以参加下公测申请哈：<a target="_blank" rel="noopener" href="https://developers.weixin.qq.com/miniprogram/dev/wxcloud/basis/getting-started.html">《小程序·云开发》</a>。</p>
+<h2 id="解决了什么"><a href="#解决了什么" class="headerlink" title="解决了什么"></a>解决了什么</h2><h3 id="天然鉴权"><a href="#天然鉴权" class="headerlink" title="天然鉴权"></a>天然鉴权</h3><p>小程序中，要使用第三方服务器，需要走较多的流程，如图（参考<a target="_blank" rel="noopener" href="https://developers.weixin.qq.com/miniprogram/dev/api/api-login.html">官网</a>）：<br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/%E6%8E%88%E6%9D%83%E6%97%B6%E5%BA%8F%E5%9B%BE.jpg" alt="授权时序图"></p>
 <p>在云开发小程序中，使用云函数则无需考虑长长的授权链路，可专心写业务代码。</p>
 <h3 id="零部署，零维护"><a href="#零部署，零维护" class="headerlink" title="零部署，零维护"></a>零部署，零维护</h3><p>一个小程序的上线，除了大家看到的小程序，背后还有网关、计算服务、基础设施管理、数据库、文件服务、缓存服务等等。日常开发中，随便找个后台服务架构之类的交互图，都会长这么复杂（图文无关，来自随便谷歌的图片）：<br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84.jpg" alt="可怕的服务架构"></p>
 <p>除去这些服务的部署成本，当然少不了还有它们的维护成本。当然，也可以选择各种第三方服务来组合实现，这里面也会有服务的熟悉、比对等各种烦恼。</p>
@@ -124,7 +124,7 @@ var _hmt = _hmt || [];
 <li>无服务器云函数支持毫秒级别的实时弹性伸缩，完全根据请求量扩容或缩容</li>
 <li>动态负载均衡将请求分发至后端近乎无限的函数实例上，完全无需任何手动配置和操作，满足并发量从 0 到成千上万的不同场景</li>
 </ul>
-<p>更多的能力可参考<a href="https://cloud.tencent.com/product/scf/details" target="_blank" rel="noopener">腾讯云 SCF</a>。</p>
+<p>更多的能力可参考<a target="_blank" rel="noopener" href="https://cloud.tencent.com/product/scf/details">腾讯云 SCF</a>。</p>
 <p>云开发小程序的云函数，是通过 Node.js 来执行的。目前来说，涉及的依赖和安装包，都需要在本地安装后，再上传部署方可使用。不过开发小哥哥们说了，后续会提供线上安装的功能。</p>
 <h3 id="便利的权限控制"><a href="#便利的权限控制" class="headerlink" title="便利的权限控制"></a>便利的权限控制</h3><p>在大多数业务中，都会存在权限控制以及身份管理，如管理员、用户、数据创建者。<strong>而小程序云开发的数据库和文件存储，提供了以下的权限管理方式：</strong><br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86.jpg" alt="权限管理方式"></p>
 <h3 id="万能的-Javascript"><a href="#万能的-Javascript" class="headerlink" title="万能的 Javascript"></a>万能的 Javascript</h3><p>大家都说，全栈只是前端里才有的定义。Node.js 其实只是降低了语言的学习成本，但做服务搭建，该学习的还是学习，该掌握的还是得掌握。前端与后台的差距，并不在于语言，即使是一个很简单的系统架构，前端考虑的会欠缺了很多（个人体验，不能代表各种大神）。</p>

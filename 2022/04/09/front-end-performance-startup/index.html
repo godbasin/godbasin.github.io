@@ -100,7 +100,7 @@ var _hmt = _hmt || [];
 		</div>
 		
 		<p>对于前端应用的性能优化，大多数时候我们都是从加载流程开始优化起。</p>
-<a id="more"></a>
+<span id="more"></span>
 <p>前面我有给大家整体地讲过<a href="https://godbasin.github.io/2022/03/06/front-end-performance-optimization/">《前端性能优化–归纳篇》</a>，其实里面已经囊括了大多数场景下的一些性能优化的方向。</p>
 <p>越是交互复杂、用户量大的业务，对性能的要求就越是严格。大多数的前端性能优化，都是从页面的启动和加载流程开始梳理和定位，对于功能复杂的业务来说，这样的梳理尤为重要。</p>
 <blockquote>
@@ -122,7 +122,7 @@ var _hmt = _hmt || [];
 </ul>
 <h3 id="资源大小"><a href="#资源大小" class="headerlink" title="资源大小"></a>资源大小</h3><p>一般来说，前端都会在打包的时候做资源大小的优化，资源类型包括 HTML、JavaScript、CSS、图片等。优化的方向包括：</p>
 <p>(1) 合理的对资源进行分包。</p>
-<p>首次渲染时只保留当前页面渲染需要的资源，将可以异步加载、延迟加载的资源拆离。通常我们会在代码编译打包的时候做处理，比如<a href="https://webpack.docschina.org/guides/code-splitting/" target="_blank" rel="noopener">使用 Webpack 将代码拆到不同的 bundle 包中</a>。</p>
+<p>首次渲染时只保留当前页面渲染需要的资源，将可以异步加载、延迟加载的资源拆离。通常我们会在代码编译打包的时候做处理，比如<a target="_blank" rel="noopener" href="https://webpack.docschina.org/guides/code-splitting/">使用 Webpack 将代码拆到不同的 bundle 包中</a>。</p>
 <p>(2) 移除不需要的代码。</p>
 <p>我们项目中常常会引入许多开源代码，同时我们自己也会实现很多的工具方法，但是实际上并不是全部相关的代码都是最终需要执行的代码，所以我们可以在打包的时候移除不需要的代码。现在基本大多数的打包工具都提供了类似的能力，比如 Tree-shaking。</p>
 <p>除此之外，如果我们的项目较大，使用和依赖了多个不同的仓库。如果在不同的代码仓库里，都依赖了同样的 npm 代码包，那么我们可能会遇到打包时引入多次同样的 npm 包的情况。一般来说，我们在管理依赖包的时候，可以使用<code>peerDependency</code>来进行管理，避免多次安装依赖、以及版本不一致导致的多次打包和安装等情况。</p>
@@ -160,7 +160,7 @@ var _hmt = _hmt || [];
 <p>延迟加载可分为两种方式进行加载：懒加载和预加载。因此，资源懒加载和预加载也是加载流程中很重要的一部分。</p>
 <h3 id="资源懒加载"><a href="#资源懒加载" class="headerlink" title="资源懒加载"></a>资源懒加载</h3><p>我们常说的懒加载其实又被称为按需加载，顾名思义就是需要用到的时候才会进行加载。通过将非必要功能进行懒加载的方式，可以有效地减少页面的初始加载速度，提升页面加载的性能。</p>
 <p>常见的场景比如某些组件在渲染时不具备完整的功能，当用户点击的时候，才进行对应逻辑的获取和加载。遇到点击时未加载完成的情况下，可以通过适当的方式提示用户功能正在加载中。</p>
-<p>资源懒加载常常也是跟资源分包一起进行，大多数前端框架（比如 Vue、React、Angular）也都提供了懒加载的能力，也可以<a href="https://webpack.docschina.org/guides/lazy-loading/" target="_blank" rel="noopener">配合 Webpack 打包</a>做处理。</p>
+<p>资源懒加载常常也是跟资源分包一起进行，大多数前端框架（比如 Vue、React、Angular）也都提供了懒加载的能力，也可以<a target="_blank" rel="noopener" href="https://webpack.docschina.org/guides/lazy-loading/">配合 Webpack 打包</a>做处理。</p>
 <h3 id="资源预加载"><a href="#资源预加载" class="headerlink" title="资源预加载"></a>资源预加载</h3><p>资源预加载也称为闲时加载，很多时候我们可以在页面空闲的时候，对一些用户可能会用到的资源做提前加载，以加快后续渲染或者操作的时间。</p>
 <p>仔细一看，资源预加载和资源懒加载都比较相似，都会通过将资源拆离的方式做成异步延迟的方式加载。两者的区别在于：</p>
 <ul>

@@ -99,14 +99,14 @@ var _hmt = _hmt || [];
 		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#node-js"><span class="toc-number">1.</span> <span class="toc-text">node.js</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFNode-js"><span class="toc-number">1.1.</span> <span class="toc-text">什么是Node.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E6%8A%80%E6%9C%AF%E7%82%B9"><span class="toc-number">1.2.</span> <span class="toc-text">相关技术点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CommonJS"><span class="toc-number">1.3.</span> <span class="toc-text">CommonJS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Node-js%E6%A8%A1%E5%9D%97"><span class="toc-number">1.4.</span> <span class="toc-text">Node.js模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">1.5.</span> <span class="toc-text">参考</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E6%9D%9F%E8%AF%AD"><span class="toc-number">2.</span> <span class="toc-text">结束语</span></a></li></ol>
 		</div>
 		
-		<p>《纯前端的进军》系列主要作为曾经的纯前端，对后台和底层的一些弥补，涉及进程、网络通信，以及对node.js和相关框架的学习。前面已经科普过网络进程通信、TCP/IP、HTTP和Socket等，本节我们来简单熟悉一下node.js吧。<br><a id="more"></a></p>
+		<p>《纯前端的进军》系列主要作为曾经的纯前端，对后台和底层的一些弥补，涉及进程、网络通信，以及对node.js和相关框架的学习。前面已经科普过网络进程通信、TCP/IP、HTTP和Socket等，本节我们来简单熟悉一下node.js吧。<br><span id="more"></span></p>
 <h2 id="node-js"><a href="#node-js" class="headerlink" title="node.js"></a>node.js</h2><hr>
 <h3 id="什么是Node-js"><a href="#什么是Node-js" class="headerlink" title="什么是Node.js"></a>什么是Node.js</h3><ul>
 <li>Node.js是一个基于Chrome V8引擎的JavaScript运行环境。 </li>
 <li>Node.js使用了一个事件驱动、非阻塞式I/O的模型，使其轻量又高效。 </li>
 <li>Node.js的包管理器npm，是全球最大的开源库生态系统。</li>
 </ul>
-<p>以上是<a href="http://nodejs.cn/" target="_blank" rel="noopener">Node.js官网</a>的说明。</p>
+<p>以上是<a target="_blank" rel="noopener" href="http://nodejs.cn/">Node.js官网</a>的说明。</p>
 <p><strong>Node.js大部分基本模块都用JavaScript语言编写。</strong><br>在Node.js出现之前，JavaScript通常作为客户端程序设计语言使用，以JavaScript写出的程序常在用户的浏览器上运行。<br>Node.js的出现使JavaScript也能用于服务器端编程。Node.js含有一系列内置模块，使得程序可以脱离Apache HTTP Server或IIS，作为独立服务器运行。</p>
 <p><strong>Node.js允许通过JavaScript和一系列模块来编写服务器端应用和网络相关的应用。</strong><br>核心模块包括文件系统I/O、网络（HTTP、TCP、UDP、DNS、TLS/SSL等）、二进制数据流、加密算法、数据流等等。</p>
 <p>使用框架可以加速开发。常用的框架有Express.js、Socket.IO和Connect等。</p>
@@ -186,10 +186,10 @@ var _hmt = _hmt || [];
 </ol>
 <p><strong>三、Node.js模块与前端模块的异同</strong><br>通常有一些模块可以同时适用于前后端，但是在浏览器端通过script标签的载入JavaScript文件的方式与Node.js不同。<br>Node.js在载入到最终的执行中，进行了包装，使得每个文件中的变量天然的形成在一个闭包之中，不会污染全局变量。而浏览器端则通常是裸露的JavaScript代码片段。<br>所以为了解决前后端一致性的问题，类库开发者需要将类库代码包装在一个闭包内。</p>
 <h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
-<li><a href="https://zh.wikipedia.org/wiki/Node.js" target="_blank" rel="noopener">Node.js - 维基百科，自由的百科全书</a></li>
-<li><a href="http://www.ruanyifeng.com/blog/2014/10/event-loop.html" target="_blank" rel="noopener">《JavaScript 运行机制详解：再谈Event Loop》</a></li>
-<li><a href="http://www.infoq.com/cn/articles/nodejs-module-mechanism" target="_blank" rel="noopener">《深入浅出Node.js（三）：深入Node.js的模块机制》</a></li>
-<li><a href="https://github.com/muwenzi/Program-Blog/issues/94" target="_blank" rel="noopener">《浅析NodeJS模块加载机制 》</a></li>
+<li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/Node.js">Node.js - 维基百科，自由的百科全书</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2014/10/event-loop.html">《JavaScript 运行机制详解：再谈Event Loop》</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.infoq.com/cn/articles/nodejs-module-mechanism">《深入浅出Node.js（三）：深入Node.js的模块机制》</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/muwenzi/Program-Blog/issues/94">《浅析NodeJS模块加载机制 》</a></li>
 </ul>
 <h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><hr>
 <p>本节我们主要介绍了Node.js，了解模块加载机制及异步编程，至于具体的核心模块（例如http和fs模块），在后面缘分到了再详细讲。<br>作为一名纯前端，Node.js与浏览器中JS除了语法等较相似，却又很多不一样和缺少理解的地方，如果真正到使用到的时候，或许会有不一样的理解吧。</p>
