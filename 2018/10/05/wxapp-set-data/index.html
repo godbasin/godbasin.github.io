@@ -1,0 +1,1316 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>解剖小程序的 setData | Here. There.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="被删">
+    
+    <meta name="description" content="小程序的双线程，之前也有详细讲过了。而双线程的设计，使得逻辑层和渲染层无法直接进行数据传输。那双线程的渲染机制、通信机制，setData 的出现、工作原理、使用建议等，应该要怎么去理解呢？">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Here. There." type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?3d902de4a19cf2bf179534ffd2dd7b7f";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/sun.png" alt="Here. There." title="Here. There."/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Here. There.">Here. There.</a></h1>
+				<h2 class="blog-motto">Love ice cream. Love sunshine. Love life. Love the world. Love myself. Love you.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">首页</a></li>
+					
+						<li><a target="_blank" rel="noopener" href="https://github.com/godbasin/godbasin.github.io">所有文章</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">分类</a></li>
+					
+						<li><a href="https://godbasin.github.io/front-end-playground">前端游乐场</a></li>
+					
+						<li><a href="/about">关于我</a></li>
+					
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/10/05/wxapp-set-data/" title="解剖小程序的 setData" itemprop="url">解剖小程序的 setData</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://godbasin.github.io" title="被删">被删</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2018-10-05T10:56:59.000Z" itemprop="datePublished">2018-10-05</time>
+    更新日期:<time datetime="2018-10-05T10:57:10.329Z" itemprop="dateModified">2018-10-05</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%97%A0%E5%A4%84%E4%B8%8D%E5%9C%A8%E7%9A%84-setData"><span class="toc-number">1.</span> <span class="toc-text">无处不在的 setData</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9A%84%E8%99%9A%E6%8B%9F-DOM"><span class="toc-number">1.1.</span> <span class="toc-text">小程序的虚拟 DOM</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8C%E7%BA%BF%E7%A8%8B%E7%9A%84%E9%9A%BE%E9%A2%98"><span class="toc-number">1.1.1.</span> <span class="toc-text">双线程的难题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E6%9D%BF%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A"><span class="toc-number">1.1.2.</span> <span class="toc-text">模板数据绑定</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F-DOM-%E6%9C%BA%E5%88%B6"><span class="toc-number">1.1.3.</span> <span class="toc-text">虚拟 DOM 机制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1%E4%B8%8E%E6%B8%B2%E6%9F%93%E6%9C%BA%E5%88%B6"><span class="toc-number">1.2.</span> <span class="toc-text">小程序的数据通信与渲染机制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8C%E7%BA%BF%E7%A8%8B%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F"><span class="toc-number">1.2.1.</span> <span class="toc-text">双线程通信方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8C%E7%BA%BF%E7%A8%8B%E6%B8%B2%E6%9F%93%E6%9C%BA%E5%88%B6"><span class="toc-number">1.2.2.</span> <span class="toc-text">双线程渲染机制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E7%94%9F%E7%BB%84%E4%BB%B6%E7%9A%84%E5%87%BA%E7%8E%B0"><span class="toc-number">1.3.</span> <span class="toc-text">原生组件的出现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%91%E7%B9%81%E4%BA%A4%E4%BA%92%E7%9A%84%E6%80%A7%E8%83%BD"><span class="toc-number">1.3.1.</span> <span class="toc-text">频繁交互的性能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95%E5%85%A5%E5%8E%9F%E7%94%9F%E7%BB%84%E4%BB%B6"><span class="toc-number">1.3.2.</span> <span class="toc-text">引入原生组件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">1.3.3.</span> <span class="toc-text">参考</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E6%9D%9F%E8%AF%AD"><span class="toc-number">1.4.</span> <span class="toc-text">结束语</span></a></li></ol></li></ol>
+		</div>
+		
+		<p>小程序的双线程，之前也有详细讲过了。而双线程的设计，使得逻辑层和渲染层无法直接进行数据传输。那双线程的渲染机制、通信机制，setData 的出现、工作原理、使用建议等，应该要怎么去理解呢？<br><a id="more"></a></p>
+<h1 id="无处不在的-setData"><a href="#无处不在的-setData" class="headerlink" title="无处不在的 setData"></a>无处不在的 setData</h1><hr>
+<p>几乎每个开发者都会用到<code>setData</code>，要是在复杂的页面中，写了很多的<code>setData</code>，然后我们会发现页面真的是延迟严重，甚至卡顿、假死。</p>
+<p><a href="https://developers.weixin.qq.com/miniprogram/dev/framework/performance/tips.html" target="_blank" rel="noopener">官方</a>在性能优化中有提到：</p>
+<ol>
+<li><strong>避免频繁的去 setData。</strong></li>
+<li><strong>避免每次 setData 都传递大量新数据。</strong></li>
+<li><strong>后台态页面进行 setData。</strong></li>
+</ol>
+<p>但是到底是为什么呢？<code>setData</code>的出现、设计方案是怎样的，又为何要这么设计呢？一切都还是要从双线程说起。</p>
+<h2 id="小程序的虚拟-DOM"><a href="#小程序的虚拟-DOM" class="headerlink" title="小程序的虚拟 DOM"></a>小程序的虚拟 DOM</h2><h3 id="双线程的难题"><a href="#双线程的难题" class="headerlink" title="双线程的难题"></a>双线程的难题</h3><p>我们知道，小程序的双线程设计，主要为了管控安全，避免操作 DOM。（可参考<a href="https://godbasin.github.io/2018/09/02/wxapp-technology-architecture/">《小程序的底层框架》</a>）</p>
+<p>把开发者的 JS 逻辑代码放到单独的线程去运行，因为不在 Webview 线程里，所以这个环境没有 Webview 任何接口，自然开发者就没法直接操作 DOM，也就没法动态去更改界面。</p>
+<p>但是，这样就产生了新的问题。<strong>没法操作 DOM，那用户交互需要界面变化的话怎么办呢？</strong></p>
+<h3 id="模板数据绑定"><a href="#模板数据绑定" class="headerlink" title="模板数据绑定"></a>模板数据绑定</h3><p>模版数据绑定的方案，已经成为前端框架中最基础的功能。</p>
+<p><strong>数据绑定的过程其实不复杂：</strong></p>
+<ol>
+<li><strong>解析语法生成 AST。</strong></li>
+<li><strong>根据 AST 结果生成 DOM。</strong></li>
+<li><strong>将数据绑定更新至模板。</strong></li>
+</ol>
+<p>浏览器会把 HTML 解析成一棵树，最后渲染出来。整个界面是对应着一棵 DOM 树。</p>
+<p>其实浏览器页面的 DOM 结构树，也是 AST 的一种，把 HTML DOM 语法解析并生成最终的页面。而模板引擎中常用的，则是将模板语法解析生成 HTML DOM。</p>
+<p>而最容易引发性能问题的，主要是第三点。而关于数据更新的解决方案，React 首先提出了虚拟 DOM 的设计，而现在也基本被大部分框架吸收，小程序也不例外。</p>
+<h3 id="虚拟-DOM-机制"><a href="#虚拟-DOM-机制" class="headerlink" title="虚拟 DOM 机制"></a>虚拟 DOM 机制</h3><p>说到数据更新的 Diff，更多的则是<code>Diff + 更新模板</code>这样一个过程。</p>
+<p><strong>虚拟 DOM 解决了常见的局部数据更新的问题</strong>，例如数组中值位置的调换、部分更新。</p>
+<p>一般来说计算过程如下：</p>
+<ol>
+<li><strong>用JS对象模拟DOM树。</strong></li>
+</ol>
+<p>一个真正的DOM元素非常庞大，拥有很多的属性值。而其中很多的属性对于计算过程来说是不需要的，所以我们的第一步就是简化 DOM 对象。我们用一个 JavaScript 对象结构表示 DOM 树的结构。</p>
+<ol start="2">
+<li><strong>比较两棵虚拟DOM树的差异。</strong></li>
+</ol>
+<p>当状态变更的时候，重新构造一棵新的对象树。然后用新的树和旧的树进行比较，记录两棵树差异。通常来说这样的差异需要记录，最后得到一组差异记录。</p>
+<ol start="3">
+<li><strong>把差异应用到真正的DOM树上。</strong></li>
+</ol>
+<p>对差异记录要应用到真正的 DOM 树上，例如节点的替换、移动、删除，文本内容的改变等。</p>
+<p>小程序里，由于无法直接操作 DOM，主要也是通过数据传递的方式来进行相关的模版更新。模版绑定的机制、数据更新的机制，都可以参照上面的说明，想更具体理解也可以参考<a href="https://github.com/godbasin/godbasin.github.io/issues/7" target="_blank" rel="noopener">《前端模板引擎》</a>。</p>
+<p>那么既然不在一个线程，数据的通信是怎么做的呢？</p>
+<h2 id="小程序的数据通信与渲染机制"><a href="#小程序的数据通信与渲染机制" class="headerlink" title="小程序的数据通信与渲染机制"></a>小程序的数据通信与渲染机制</h2><h3 id="双线程通信方式"><a href="#双线程通信方式" class="headerlink" title="双线程通信方式"></a>双线程通信方式</h3><p>小程序的视图层目前使用 WebView 作为渲染载体，而逻辑层是由独立的 JavascriptCore 作为运行环境。在架构上，WebView 和 JavascriptCore 都是独立的模块，并不具备数据直接共享的通道。</p>
+<p>一个小程序存在多个界面，所以渲染层存在多个 WebView 线程。 <strong>逻辑层和渲染层的通信会经由微信客户端（Native）做中转，逻辑层发送网络请求也经由 Native 转发</strong> ，小程序的通信模型如图：<br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/%E4%B8%8B%E8%BD%BD.png" alt="小程序的通信模型图（官方）"></p>
+<p>当前，视图层和逻辑层的数据传输，实际上通过两边提供的 evaluateJavascript 所实现。<strong>即用户传输的数据，需要将其转换为字符串形式传递，同时把转换后的数据内容拼接成一份 JS 脚本，再通过执行 JS 脚本的形式传递到两边独立环境。</strong></p>
+<p>而 evaluateJavascript 的执行会受很多方面的影响，数据到达视图层并不是实时的。所以我们的<code>setData</code>函数将数据从逻辑层发送到视图层，是异步的。</p>
+<p>有了线程之间的通信，我们来看看小程序的渲染机制。</p>
+<h3 id="双线程渲染机制"><a href="#双线程渲染机制" class="headerlink" title="双线程渲染机制"></a>双线程渲染机制</h3><p>双线程的渲染，其实是结合了前面的一系列机制（模版绑定、虚拟 DOM、线程通信），最后整合的一个执行步骤。</p>
+<p><strong>1. 通过模版数据绑定和虚拟 DOM 机制，小程序提供了带有数据绑定语法的 DSL 给到开发者，用来在渲染层描述界面的结构。</strong></p>
+<p>就是我们常见的这些：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">view</span>&gt;</span> &#123;&#123; message &#125;&#125; <span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">wx:if</span>=<span class="string">"&#123;&#123;condition&#125;&#125;"</span>&gt;</span> <span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">checkbox</span> <span class="attr">checked</span>=<span class="string">"&#123;&#123;false&#125;&#125;"</span>&gt;</span> <span class="tag">&lt;/<span class="name">checkbox</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>噢，这里顺便吐个槽，<code>wx:if</code>竟然不支持<code>[].indexOf(xx) &gt; -1</code>等等相关的函数运算（摔！）。</p>
+<p><strong>2. 小程序在逻辑层提供了设置页面数据的 api。</strong></p>
+<p>不用问就是<code>setData</code>了：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.setData(&#123;</span><br><span class="line">  key: value</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p><code>setData</code>函数用于将数据从逻辑层发送到视图层（异步），同时改变对应的<code>this.data</code>的值（同步）。</p>
+<p><strong>3. 逻辑层需要更改界面时，只要把修改后的 data 通过 setData 传到渲染层。</strong></p>
+<p>传输的数据，会转换为字符串形式传递，故应尽量避免传递大量数据。</p>
+<p><strong>4. 渲染层会根据前面提到的渲染机制重新生成 VD（虚拟 DOM）树，并更新到对应的 DOM 树上，引起界面变化。</strong></p>
+<h2 id="原生组件的出现"><a href="#原生组件的出现" class="headerlink" title="原生组件的出现"></a>原生组件的出现</h2><p>原生组件的出现，其实与 setData 的机制也有那么点关系，那么就当题外话一块补充下。</p>
+<h3 id="频繁交互的性能"><a href="#频繁交互的性能" class="headerlink" title="频繁交互的性能"></a>频繁交互的性能</h3><p>我们知道，用户的一次交互，如点击某个按钮，开发者的逻辑层要处理一些事情，然后再通过 setData 引起界面变化。这样的一个过程需要四次通信：</p>
+<ol>
+<li>渲染层 -&gt; Native（点击事件）。</li>
+<li>Native  -&gt; 逻辑层（点击事件）。</li>
+<li>逻辑层 -&gt; Native（setData）。</li>
+<li>Native  -&gt; 渲染层（setData）。</li>
+</ol>
+<p>在一些强交互的场景（表单、canvas等），这样的操作流程会导致用户体验卡顿。</p>
+<h3 id="引入原生组件"><a href="#引入原生组件" class="headerlink" title="引入原生组件"></a>引入原生组件</h3><p>前面也说过，小程序是 Hybrid 应用，除了 Web 组件的渲染体系（上面讲到），还有由客户端原生参与组件（原生组件）的渲染。</p>
+<p>引入原生组件主要有 3 个好处：</p>
+<ol>
+<li><strong>绕过 setData、数据通信和重渲染流程，使渲染性能更好。</strong></li>
+<li><strong>扩展 Web 的能力。</strong>比如像输入框组件（input, textarea）有更好地控制键盘的能力。</li>
+<li><strong>体验更好，同时也减轻 WebView 的渲染工作。</strong>比如像地图组件（map）这类较复杂的组件，其渲染工作不占用 WebView 线程，而交给更高效的客户端原生处理。</li>
+</ol>
+<p>而原生组件的渲染过程：</p>
+<ol>
+<li>组件被创建，包括组件属性会依次赋值。</li>
+<li>组件被插入到 DOM 树里，浏览器内核会立即计算布局，此时我们可以读取出组件相对页面的位置（x, y坐标）、宽高。</li>
+<li>组件通知客户端，客户端在相同的位置上，根据宽高插入一块原生区域，之后客户端就在这块区域渲染界面。</li>
+<li>当位置或宽高发生变化时，组件会通知客户端做相应的调整。</li>
+</ol>
+<p>简单来说，就是 <strong>原生组件在 WebView 这一层只需要渲染一个占位元素，之后客户端在这块占位元素之上叠了一层原生界面。</strong></p>
+<p>有利必有弊，原生组件也是有限制的：</p>
+<ul>
+<li>最主要的限制是一些 CSS 样式无法应用于原生组件</li>
+<li>由于客户端渲染，原生组件的层级会比所有在 WebView 层渲染的普通组件要高</li>
+</ul>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
+<li><a href="https://developers.weixin.qq.com/miniprogram/dev/framework/performance/tips.html" target="_blank" rel="noopener">setData</a></li>
+<li><a href="https://developers.weixin.qq.com/ebook?action=get_post_info&amp;token=935589521&amp;volumn=1&amp;lang=zh_CN&amp;book=miniprogram&amp;docid=000caab39b88b06b00863ab085b80a" target="_blank" rel="noopener">《小程序开发指南–6.3 原生组件》</a></li>
+</ul>
+<h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><hr>
+<p>总而言之，这一节内容主要是围绕 setData 展开，包括双线程的渲染机制、通信机制，setData 的出现（逻辑层通知渲染层）、工作原理（evaluateJavascript 字符串传递）、使用建议（setData 交互性能）、性能优化（原生组件出现）。<br>小程序乍一看是简单的双线程设计，但仔细研究就会发现设计过程中也遇到了不少问题，不断探索解决才有了现在的美好样子。我们在开发过程中会踩的一些坑，其实在理解原理之后便很容易懂了。<br>现在再来看，官方在性能优化中说到的优化建议，你都能深刻理解了吗？</p>
+  
+	</div>
+	<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/2code2.jpg" width="200" height="200" style="display:block;margin: 0 auto;" />
+	<p style="text-align: center;margin-top: 10px;margin-bottom: 10px;">码生艰难，写文不易，给我家猪囤点猫粮了喵~</p>
+	<p style="text-align: center;"><a target="_blank" rel="noopener" href="https://space.bilibili.com/42233366">B站: 被删</a></p>
+	<div class="article-content">
+		<p style="margin-top:50px;">
+			查看Github有更多内容噢：<a target="_blank" rel="noopener" href="https://github.com/godbasin">https://github.com/godbasin</a>
+			<br>
+			更欢迎来<a href="https://godbasin.github.io/front-end-playground">被删的前端游乐场</a>边撸猫边学前端噢
+			<br>
+			<br>
+			如果你想要关注日常生活中的我，欢迎关注“牧羊的猪”公众号噢
+		</p>
+	</div>
+	<div class="author-right">
+  		<p>作者：被删</p>
+  		<p>出处：<a href="https://godbasin.github.io">https://godbasin.github.io</a></p>
+  		<p>本文版权归作者所有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利。</p>
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/教程/">教程</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%8F%8C%E7%9A%AE%E5%A5%B6/">小程序双皮奶</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  
+<!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a href="http://www.jiathis.com/share?uid=2134021" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config = {data_track_clickback:'true'};
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js?uid=2134021" charset="utf-8"></script>
+<!-- JiaThis Button END -->   
+
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2018/11/04/wxapp-manage-and-security/" title="理解小程序的安全与管控">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  理解小程序的安全与管控</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2018/09/23/wxapp-basic-lib/"  title="关于小程序的基础库">
+ <strong>NEXT:</strong><br/> 
+ <span>关于小程序的基础库
+</span>
+</a>
+</div>
+
+</nav>
+
+	<!-- 如果不是首页且没使用 `comments: false` 关闭评论，则尝试加载评论 -->
+
+    <!-- 配置中启用多说时，导入相应代码 -->
+    
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%97%A0%E5%A4%84%E4%B8%8D%E5%9C%A8%E7%9A%84-setData"><span class="toc-number">1.</span> <span class="toc-text">无处不在的 setData</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9A%84%E8%99%9A%E6%8B%9F-DOM"><span class="toc-number">1.1.</span> <span class="toc-text">小程序的虚拟 DOM</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8C%E7%BA%BF%E7%A8%8B%E7%9A%84%E9%9A%BE%E9%A2%98"><span class="toc-number">1.1.1.</span> <span class="toc-text">双线程的难题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E6%9D%BF%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A"><span class="toc-number">1.1.2.</span> <span class="toc-text">模板数据绑定</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F-DOM-%E6%9C%BA%E5%88%B6"><span class="toc-number">1.1.3.</span> <span class="toc-text">虚拟 DOM 机制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1%E4%B8%8E%E6%B8%B2%E6%9F%93%E6%9C%BA%E5%88%B6"><span class="toc-number">1.2.</span> <span class="toc-text">小程序的数据通信与渲染机制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8C%E7%BA%BF%E7%A8%8B%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F"><span class="toc-number">1.2.1.</span> <span class="toc-text">双线程通信方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8C%E7%BA%BF%E7%A8%8B%E6%B8%B2%E6%9F%93%E6%9C%BA%E5%88%B6"><span class="toc-number">1.2.2.</span> <span class="toc-text">双线程渲染机制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E7%94%9F%E7%BB%84%E4%BB%B6%E7%9A%84%E5%87%BA%E7%8E%B0"><span class="toc-number">1.3.</span> <span class="toc-text">原生组件的出现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%91%E7%B9%81%E4%BA%A4%E4%BA%92%E7%9A%84%E6%80%A7%E8%83%BD"><span class="toc-number">1.3.1.</span> <span class="toc-text">频繁交互的性能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95%E5%85%A5%E5%8E%9F%E7%94%9F%E7%BB%84%E4%BB%B6"><span class="toc-number">1.3.2.</span> <span class="toc-text">引入原生组件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">1.3.3.</span> <span class="toc-text">参考</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E6%9D%9F%E8%AF%AD"><span class="toc-number">1.4.</span> <span class="toc-text">结束语</span></a></li></ol></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  	
+	<div class="archiveslist">
+		<p class="asidetitle">最近文章</p>
+			<ul class="archive-list">
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/12/25/learn-front-end-develop-from-interview/" title="从面试角度了解前端基础知识体系">从面试角度了解前端基础知识体系...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/11/25/render-engine-element-and-event/" title="复杂渲染引擎架构与设计--8.元素与事件">复杂渲染引擎架构与设计--8.元素与...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/10/13/render-engine-offscreen-render/" title="复杂渲染引擎架构与设计--7.离屏渲染">复杂渲染引擎架构与设计--7.离屏渲...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/10/11/render-engine-diff-render/" title="复杂渲染引擎架构与设计--6.增量渲染">复杂渲染引擎架构与设计--6.增量渲...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/09/16/render-engine-calculate-split/" title="复杂渲染引擎架构与设计--5.分片计算">复杂渲染引擎架构与设计--5.分片计...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/08/17/render-engine-calculate/" title="复杂渲染引擎架构与设计--4.渲染计算">复杂渲染引擎架构与设计--4.渲染计...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/07/19/render-engine-bottom-render-architecture/" title="复杂渲染引擎架构与设计--3.底层渲染适配">复杂渲染引擎架构与设计--3.底层渲...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/07/01/complex-front-end-project-solution/" title="大型前端项目的常见问题和解决方案">大型前端项目的常见问题和解决方案...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/06/15/render-engine-plugin-design/" title="复杂渲染引擎架构与设计--2.插件的实现">复杂渲染引擎架构与设计--2.插件的...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/05/13/render-engine-render-and-collect/" title="复杂渲染引擎架构与设计--1.收集与渲染">复杂渲染引擎架构与设计--1.收集与...</a>
+				</li>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+	</div>
+
+
+  
+  <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">归档</a></p>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">十二月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">十一月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">十月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">九月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">八月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">七月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">六月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">四月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/03/">三月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/01/">一月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">十二月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">十月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">六月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">五月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">二月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">五月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">十月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">41</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">9</span></li></ul>
+  </div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle"><a href="/categories">分类</a></p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/Angular源码/" title="Angular源码">Angular源码<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/CSS炒饭/" title="CSS炒饭">CSS炒饭<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/D3小馒头/" title="D3小馒头">D3小馒头<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular2火锅/" title="angular2火锅">angular2火锅<sup>25</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular混搭/" title="angular混搭">angular混搭<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/box2djs方糖/" title="box2djs方糖">box2djs方糖<sup>34</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/cyclejs哈根达斯/" title="cyclejs哈根达斯">cyclejs哈根达斯<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/jQuery杂烩/" title="jQuery杂烩">jQuery杂烩<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/js什锦/" title="js什锦">js什锦<sup>27</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/react沙拉/" title="react沙拉">react沙拉<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/three-js奶茶/" title="three.js奶茶">three.js奶茶<sup>5</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/vue八宝粥/" title="vue八宝粥">vue八宝粥<sup>30</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/webpack宾治/" title="webpack宾治">webpack宾治<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/web乱炖/" title="web乱炖">web乱炖<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端技能提升/" title="前端技能提升">前端技能提升<sup>6</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端满汉全席/" title="前端满汉全席">前端满汉全席<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端解决方案/" title="前端解决方案">前端解决方案<sup>30</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/喵/" title="喵">喵<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/小程序双皮奶/" title="小程序双皮奶">小程序双皮奶<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/工作这杯茶/" title="工作这杯茶">工作这杯茶<sup>27</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/应用巧克力盒/" title="应用巧克力盒">应用巧克力盒<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/思想棉花糖/" title="思想棉花糖">思想棉花糖<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/柴米油盐工具集/" title="柴米油盐工具集">柴米油盐工具集<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/自动化甜筒/" title="自动化甜筒">自动化甜筒<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/非前端钙片/" title="非前端钙片">非前端钙片<sup>7</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle">标签</p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/分享/" title="分享">分享<sup>50</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/前端技能/" title="前端技能">前端技能<sup>6</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/功能设计/" title="功能设计">功能设计<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/原创部件/" title="原创部件">原创部件<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/心态/" title="心态">心态<sup>22</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/性能优化/" title="性能优化">性能优化<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/教程/" title="教程">教程<sup>80</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/晒猫/" title="晒猫">晒猫<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/笔记/" title="笔记">笔记<sup>121</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/算法/" title="算法">算法<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/自制插件/" title="自制插件">自制插件<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/逻辑实现/" title="逻辑实现">逻辑实现<sup>19</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+    <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">about</a></p>
+      <ul class="archive-list">
+      	<li class="archive-list-item">
+      		<a>wangbeishan@163.com</a>
+      		<a target="_blank" rel="noopener" href="https://github.com/godbasin">github.com/godbasin</a>
+      	</li>
+      </ul>
+  </div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<section class="info">
+		<p> 即使梦想再小，却很伟大 ^_^ </p>
+	</section>
+	 
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2023 
+		
+		<a href="https://godbasin.github.io" target="_blank" title="被删">被删</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+
+
+
+
+
+  </body>
+</html>

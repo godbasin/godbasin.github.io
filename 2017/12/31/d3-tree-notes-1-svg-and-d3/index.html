@@ -1,0 +1,1296 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>D3.js-Tree实战笔记1--拜见D3.js | Here. There.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="被删">
+    
+    <meta name="description" content="因为业务需要折腾起了图表，《D3.js-Tree 实战笔记》系列用于记录使用该库制作 Tree 图表的一些笔记。本文介绍 svg 和 D3，认识 D3 的概念和作用。">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Here. There." type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?3d902de4a19cf2bf179534ffd2dd7b7f";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/sun.png" alt="Here. There." title="Here. There."/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Here. There.">Here. There.</a></h1>
+				<h2 class="blog-motto">Love ice cream. Love sunshine. Love life. Love the world. Love myself. Love you.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">首页</a></li>
+					
+						<li><a target="_blank" rel="noopener" href="https://github.com/godbasin/godbasin.github.io">所有文章</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">分类</a></li>
+					
+						<li><a href="https://godbasin.github.io/front-end-playground">前端游乐场</a></li>
+					
+						<li><a href="/about">关于我</a></li>
+					
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/12/31/d3-tree-notes-1-svg-and-d3/" title="D3.js-Tree实战笔记1--拜见D3.js" itemprop="url">D3.js-Tree实战笔记1--拜见D3.js</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://godbasin.github.io" title="被删">被删</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2017-12-31T13:27:57.000Z" itemprop="datePublished">2017-12-31</time>
+    更新日期:<time datetime="2018-08-18T15:22:20.313Z" itemprop="dateModified">2018-08-18</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#SVG-%E4%B8%8E-D3"><span class="toc-number">1.</span> <span class="toc-text">SVG 与 D3</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SVG"><span class="toc-number">1.1.</span> <span class="toc-text">SVG</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#D3"><span class="toc-number">1.2.</span> <span class="toc-text">D3</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#D3-%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">1.2.1.</span> <span class="toc-text">D3 是什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Selections-%E9%80%89%E6%8B%A9%E9%9B%86"><span class="toc-number">1.2.2.</span> <span class="toc-text">Selections(选择集)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%9E%E6%80%A7%E6%93%8D%E4%BD%9C"><span class="toc-number">1.2.3.</span> <span class="toc-text">属性操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A"><span class="toc-number">1.2.4.</span> <span class="toc-text">数据绑定</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#enter-%E5%92%8C-exit-%E6%93%8D%E4%BD%9C"><span class="toc-number">1.2.5.</span> <span class="toc-text">enter 和 exit 操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86"><span class="toc-number">1.2.6.</span> <span class="toc-text">事件处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%87%E6%B8%A1"><span class="toc-number">1.2.7.</span> <span class="toc-text">过渡</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">1.2.8.</span> <span class="toc-text">参考</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%93%E6%9D%9F%E8%AF%AD"><span class="toc-number">2.</span> <span class="toc-text">结束语</span></a></li></ol>
+		</div>
+		
+		<p>因为业务需要折腾起了图表，《D3.js-Tree 实战笔记》系列用于记录使用该库制作 Tree 图表的一些笔记。本文介绍 svg 和 D3，认识 D3 的概念和作用。</p>
+<a id="more"></a>
+<h1 id="SVG-与-D3"><a href="#SVG-与-D3" class="headerlink" title="SVG 与 D3"></a>SVG 与 D3</h1><p>不同于 Echarts 使用 Canvas 绘制，D3 主要使用 SVG 来绘制图表，当然现在似乎也支持了 Canvas。</p>
+<hr>
+<h2 id="SVG"><a href="#SVG" class="headerlink" title="SVG"></a>SVG</h2><p>SVG 是什么呢？</p>
+<p>可缩放矢量图形（Scalable Vector Graphics，SVG)，是一种用来描述二维矢量图形的 XML 标记语言。 简单地说，SVG 面向图形，HTML 面向文本。<br>SVG 与 Flash 类似，都是用于二维矢量图形，二者的区别在于，SVG 是一个 W3C 标准，基于 XML，是开放的，而 Flash 是封闭的基于二进制格式的。</p>
+<p>所以，SVG 与 HTML 相似，都是基于元素，同时通过给元素添加样式、属性、事件的方式，来达到交互的目的。</p>
+<p>SVG 里面的元素类型，也与 HTML 一样丰富，可以参考<a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG/Element" target="_blank" rel="noopener">SVG 元素参考 | MDN</a>，这里只先介绍使用比较多的几个，剩下的等遇到的时候再讲吧。</p>
+<p>我们找后面将使用到的一个 Tree Demo 来讲吧，在控制台能看到这些元素：<br><img src="https://about-position-1255459943.file.myqcloud.com/1513414198%281%29.png" alt="image"></p>
+<p><strong>svg</strong><br>我们常常看到两种：</p>
+<ol>
+<li><code>&lt;svg&gt;</code>为根元素，主要用作矢量图片等。</li>
+<li><code>&lt;svg&gt;</code>不是根元素，可以用于在当前文档（比如说，一个 HTML 文档）内嵌套一个独立的 svg 片段。这个独立片段拥有独立的视口和坐标系统。</li>
+</ol>
+<p><strong>g</strong><br>元素<code>&lt;g&gt;</code>是用来组合对象的容器。添加到 g 元素上的变换会应用到其所有的子元素上。添加到 g 元素的属性会被其所有的子元素继承。这里我们使用<code>&lt;g&gt;</code>来管理节点对象和 link 连接线对象。</p>
+<p><strong>path</strong><br><code>&lt;path&gt;</code>元素是 SVG 基本形状中最强大的一个，它不仅能创建其他基本形状，还能创建更多其他形状。另外，path 只需要设定很少的点，就可以创建平滑流畅的线条（比如曲线，比如上面的贝塞尔曲线）。这里我们使用<code>&lt;path&gt;</code>来创建 link 连接线。</p>
+<p><strong>cycle</strong><br><code>&lt;circle&gt;</code> SVG 元素是一个 SVG 的基本形状，用来创建圆,基于一个圆心和一个半径。这里我们使用<code>&lt;circle&gt;</code>来绘制节点。</p>
+<p><strong>text</strong><br><code>&lt;text&gt;</code>元素定义了一个由文字组成的图形。注意：我们可以将渐变、图案、剪切路径、遮罩或者滤镜应用到 text 上。这里我们使用<code>&lt;text&gt;</code>来绘制节点描述。</p>
+<h2 id="D3"><a href="#D3" class="headerlink" title="D3"></a>D3</h2><p>关于 D3，我希望你已经有一些研究，基本的安装和 API 查找和使用，可以参考<a href="https://github.com/d3/d3/wiki" target="_blank" rel="noopener">官方文档</a>，这里只大致讲述下 D3 库的大致内容。</p>
+<h3 id="D3-是什么"><a href="#D3-是什么" class="headerlink" title="D3 是什么"></a>D3 是什么</h3><p>D3 是一个可以基于数据来操作文档的 JavaScript 库。可以帮助你使用 HTML,CSS,SVG 以及 Canvas 来展示数据。D3 遵循现有的 Web 标准，可以不需要其他任何框架独立运行在现代浏览器中，它结合强大的可视化组件来驱动 DOM 操作。</p>
+<p>D3 可以将数据绑定到 DOM 上，然后根据数据来计算对应 DOM 的属性值。例如你可以根据一组数据生成一个表格。或者也可以生成一个可以过渡和交互的 SVG 图形。</p>
+<p>D3 的运行速度很快，支持大数据集和动态交互以及动画，当然在数量级上去了之后，据说 SVG 性能与 Canvas 还是差了一些的。</p>
+<p>下面我们讲几个 D3 中比较关键的概念。</p>
+<h3 id="Selections-选择集"><a href="#Selections-选择集" class="headerlink" title="Selections(选择集)"></a>Selections(选择集)</h3><p>D3 采用声明式方法，可以对任意节点以及节点集合进行操作:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">d3.selectAll(<span class="string">"p"</span>).style(<span class="string">"color"</span>, <span class="string">"white"</span>); <span class="comment">// selectAll则选中所有匹配的元素</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 同时，可以操作其他节点，而不相互影响</span></span><br><span class="line">d3.select(<span class="string">"body"</span>).style(<span class="string">"background-color"</span>, <span class="string">"black"</span>); <span class="comment">// select仅仅选择第一个匹配的元素</span></span><br></pre></td></tr></table></figure>
+<p>我们能看到：</p>
+<ol>
+<li>选择器方法接受<a href="https://www.w3.org/TR/selectors-api/" target="_blank" rel="noopener">W3C selector strings</a>支持的字符串，比如<code>.fancy</code>表示选择类名为<code>fancy</code>的元素, <code>div</code>选择<code>DIV</code>元素。</li>
+<li>选择集的方法一般返回当前选择集或一个新的选择集，这样可以支持简明的链式语法。</li>
+</ol>
+<h3 id="属性操作"><a href="#属性操作" class="headerlink" title="属性操作"></a>属性操作</h3><p>在选中元素之后，就可以通过一些方法对元素进行操作。比如设置 a 元素的 name 属性和颜色:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">d3</span><br><span class="line">  .select(<span class="string">"a"</span>)</span><br><span class="line">  .attr(<span class="string">"name"</span>, <span class="string">"fred"</span>)</span><br><span class="line">  .style(<span class="string">"color"</span>, <span class="string">"red"</span>);</span><br></pre></td></tr></table></figure>
+<p><strong>动态属性</strong><br>或许上面的操作，与 jQuery、Prototype 有相似之处。但是不同的是，样式、属性以及其他属性的值在 D3 中可以是函数形式，而不仅仅是常量。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">d3.selectAll(<span class="string">"p"</span>).style(<span class="string">"color"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">"hsl("</span> + <span class="built_in">Math</span>.random() * <span class="number">360</span> + <span class="string">",100%,50%)"</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="数据绑定"><a href="#数据绑定" class="headerlink" title="数据绑定"></a>数据绑定</h3><p>上面这种通过匿名函数动态设置属性、样式值的方法常用来绑定数据。</p>
+<p>数据被定义在一个数组中，并且每一个数据值可以作为这个函数的参数，此外还有索引等参数，如我们的 Demo 中则用 id 设为索引，此索引对于后面 enter 和 exit 操作等都有很大的用处。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> node = svg.selectAll(<span class="string">"g.node"</span>).data(nodes, <span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> d.id || (d.id = ++i);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>数据绑定操作可以方便的根据具体数据操作 DOM 元素。</p>
+<p>将数组类型的 data 与选择集中的元素绑定，返回一个 update 集：数据与元素绑定。因为数据个数未必与元素个数一致，所以又有 enter 和 exit 操作。故在数据绑定操作之后会产生三种选择集：update 集,enter 集以及 exit 集。</p>
+<h3 id="enter-和-exit-操作"><a href="#enter-和-exit-操作" class="headerlink" title="enter 和 exit 操作"></a>enter 和 exit 操作</h3><p>数据绑定的时候可能出现 DOM 元素与数据元素个数不匹配的问题，那么 enter 和 exit 就是用来处理这个问题的。</p>
+<p>enter 操作用来添加新的 DOM 元素，exit 操作用来移除多余的 DOM 元素。如果数据元素多于 DOM 个数时用 enter，如果数据元素少于 DOM 元素，则用 exit。</p>
+<p>通常来说，我们将元素绑定数据的时候，一般会同时定义 enter 和 exit 的操作，会有三种状态：</p>
+<ol>
+<li>数据元素与 DOM 元素个数一样时，操作元素。</li>
+<li>数据元素个数多于 DOM 元素个数时，动态添加元素，并操作元素。</li>
+<li>数据元素个数少于 DOM 元素个数，移除多余元素。</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> circle = svg</span><br><span class="line">  .selectAll(<span class="string">"circle"</span>) <span class="comment">// 1</span></span><br><span class="line">  .data(data) <span class="comment">// 2</span></span><br><span class="line">  .style(<span class="string">"fill"</span>, <span class="string">"blue"</span>); <span class="comment">// 3</span></span><br><span class="line"></span><br><span class="line">circle.exit().remove(); <span class="comment">// 4</span></span><br><span class="line"></span><br><span class="line">circle</span><br><span class="line">  .enter()</span><br><span class="line">  .append(<span class="string">"circle"</span>) <span class="comment">// 5</span></span><br><span class="line">  .style(<span class="string">"fill"</span>, <span class="string">"green"</span>) <span class="comment">// 6</span></span><br><span class="line">  .merge(circle) <span class="comment">// 7</span></span><br><span class="line">  .style(<span class="string">"stroke"</span>, <span class="string">"black"</span>); <span class="comment">// 8</span></span><br></pre></td></tr></table></figure>
+<p>这个过程可分解成以下步骤:</p>
+<ol>
+<li>当前存在的 circles 被选中。</li>
+<li>将新的数据绑定到这些圆上, 返回 update 集。</li>
+<li>将 update 集中的圆颜色设置为 blue。</li>
+<li>没有数据对应的圆，也就是多余的圆被删除。</li>
+<li>新的圆被 appended，也就是圆不够了，会添加新的圆进来。</li>
+<li>新加入的圆颜色设置为 green。</li>
+<li>将新添加的圆和已存在的圆 union(合并)为一个新的选择集，包括了当前所有的存在的圆。</li>
+<li>将当前所有的圆的边线设置为 black。</li>
+</ol>
+<h3 id="事件处理"><a href="#事件处理" class="headerlink" title="事件处理"></a>事件处理</h3><p>selections 允许监听和分发事件以支持交互。</p>
+<p>我们可以看到我们的 Demo 中：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> nodeEnter = node</span><br><span class="line">  .enter()</span><br><span class="line">  .append(<span class="string">"g"</span>)</span><br><span class="line">  .attr(<span class="string">"class"</span>, <span class="string">"node"</span>)</span><br><span class="line">  .attr(<span class="string">"transform"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"translate("</span> + source.y0 + <span class="string">","</span> + source.x0 + <span class="string">")"</span>;</span><br><span class="line">  &#125;)</span><br><span class="line">  .on(<span class="string">"click"</span>, click);</span><br></pre></td></tr></table></figure>
+<p>上面每个节点添加的时候，都会绑定<code>click</code>事件，当然这里是 toggle，也就是切换子节点的展开和收起状态。</p>
+<h3 id="过渡"><a href="#过渡" class="headerlink" title="过渡"></a>过渡</h3><p>D3 支持动画效果，这种动画效果可以通过对样式属性的过渡实现。其补间插值支持多种方式，比如线性、弹性等。此外 D3 内置了多种插值方式，比如对数值类型、字符类型路径数据以及颜色等。</p>
+<p>D3 中过渡的 API 是 transition，参考<a href="https://github.com/xswei/d3js_doc/tree/master/API/d3-transition-master" target="_blank" rel="noopener">d3-transition</a>。<br>transition 是一个类 selection 为 DOM 元素进行过渡的接口，可以使 DOM 从当前状态平滑的过渡到目标状态。</p>
+<p>除了 D3 提供的过渡之外，也可以通过 CSS 动画来实现对元素的过渡效果。</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://github.com/xswei/d3js_doc/tree/master/Introduction" target="_blank" rel="noopener">d3js 简介</a><br><a href="https://github.com/xswei/d3js_doc/tree/master/API/d3-selection-master" target="_blank" rel="noopener">d3-selection</a><br><a href="https://github.com/xswei/d3js_doc/tree/master/API/d3-transition-master" target="_blank" rel="noopener">d3-transition</a></p>
+<p>令还有个 D3 的教程网站，如果你需要的话：<a href="http://www.ourd3js.com/wordpress/396/" target="_blank" rel="noopener">【 D3.js 入门系列 】 入门总结</a>。</p>
+<h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><hr>
+<p>这节主要简单介绍了 SVG 和 D3，如果你是一个前端基础不大稳的入门者，建议可以系统看看。如果说你是个经验满满的实战者，那么边做边查边翻源码的方式也是很不错的呢。</p>
+  
+	</div>
+	<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/2code2.jpg" width="200" height="200" style="display:block;margin: 0 auto;" />
+	<p style="text-align: center;margin-top: 10px;margin-bottom: 10px;">码生艰难，写文不易，给我家猪囤点猫粮了喵~</p>
+	<p style="text-align: center;"><a target="_blank" rel="noopener" href="https://space.bilibili.com/42233366">B站: 被删</a></p>
+	<div class="article-content">
+		<p style="margin-top:50px;">
+			查看Github有更多内容噢：<a target="_blank" rel="noopener" href="https://github.com/godbasin">https://github.com/godbasin</a>
+			<br>
+			更欢迎来<a href="https://godbasin.github.io/front-end-playground">被删的前端游乐场</a>边撸猫边学前端噢
+			<br>
+			<br>
+			如果你想要关注日常生活中的我，欢迎关注“牧羊的猪”公众号噢
+		</p>
+	</div>
+	<div class="author-right">
+  		<p>作者：被删</p>
+  		<p>出处：<a href="https://godbasin.github.io">https://godbasin.github.io</a></p>
+  		<p>本文版权归作者所有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利。</p>
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/笔记/">笔记</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/D3%E5%B0%8F%E9%A6%92%E5%A4%B4/">D3小馒头</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  
+<!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a href="http://www.jiathis.com/share?uid=2134021" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config = {data_track_clickback:'true'};
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js?uid=2134021" charset="utf-8"></script>
+<!-- JiaThis Button END -->   
+
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2018/01/01/d3-tree-notes-2-init-a-d3-tree/" title="D3.js-Tree实战笔记2--简单的Tree demo">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  D3.js-Tree实战笔记2--简单的Tree demo</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2017/12/23/async-await/"  title="async/await的使用">
+ <strong>NEXT:</strong><br/> 
+ <span>async/await的使用
+</span>
+</a>
+</div>
+
+</nav>
+
+	<!-- 如果不是首页且没使用 `comments: false` 关闭评论，则尝试加载评论 -->
+
+    <!-- 配置中启用多说时，导入相应代码 -->
+    
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#SVG-%E4%B8%8E-D3"><span class="toc-number">1.</span> <span class="toc-text">SVG 与 D3</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SVG"><span class="toc-number">1.1.</span> <span class="toc-text">SVG</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#D3"><span class="toc-number">1.2.</span> <span class="toc-text">D3</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#D3-%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">1.2.1.</span> <span class="toc-text">D3 是什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Selections-%E9%80%89%E6%8B%A9%E9%9B%86"><span class="toc-number">1.2.2.</span> <span class="toc-text">Selections(选择集)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%9E%E6%80%A7%E6%93%8D%E4%BD%9C"><span class="toc-number">1.2.3.</span> <span class="toc-text">属性操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A"><span class="toc-number">1.2.4.</span> <span class="toc-text">数据绑定</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#enter-%E5%92%8C-exit-%E6%93%8D%E4%BD%9C"><span class="toc-number">1.2.5.</span> <span class="toc-text">enter 和 exit 操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86"><span class="toc-number">1.2.6.</span> <span class="toc-text">事件处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%87%E6%B8%A1"><span class="toc-number">1.2.7.</span> <span class="toc-text">过渡</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">1.2.8.</span> <span class="toc-text">参考</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%93%E6%9D%9F%E8%AF%AD"><span class="toc-number">2.</span> <span class="toc-text">结束语</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  	
+	<div class="archiveslist">
+		<p class="asidetitle">最近文章</p>
+			<ul class="archive-list">
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/12/25/learn-front-end-develop-from-interview/" title="从面试角度了解前端基础知识体系">从面试角度了解前端基础知识体系...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/11/25/render-engine-element-and-event/" title="复杂渲染引擎架构与设计--8.元素与事件">复杂渲染引擎架构与设计--8.元素与...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/10/13/render-engine-offscreen-render/" title="复杂渲染引擎架构与设计--7.离屏渲染">复杂渲染引擎架构与设计--7.离屏渲...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/10/11/render-engine-diff-render/" title="复杂渲染引擎架构与设计--6.增量渲染">复杂渲染引擎架构与设计--6.增量渲...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/09/16/render-engine-calculate-split/" title="复杂渲染引擎架构与设计--5.分片计算">复杂渲染引擎架构与设计--5.分片计...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/08/17/render-engine-calculate/" title="复杂渲染引擎架构与设计--4.渲染计算">复杂渲染引擎架构与设计--4.渲染计...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/07/19/render-engine-bottom-render-architecture/" title="复杂渲染引擎架构与设计--3.底层渲染适配">复杂渲染引擎架构与设计--3.底层渲...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/07/01/complex-front-end-project-solution/" title="大型前端项目的常见问题和解决方案">大型前端项目的常见问题和解决方案...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/06/15/render-engine-plugin-design/" title="复杂渲染引擎架构与设计--2.插件的实现">复杂渲染引擎架构与设计--2.插件的...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/05/13/render-engine-render-and-collect/" title="复杂渲染引擎架构与设计--1.收集与渲染">复杂渲染引擎架构与设计--1.收集与...</a>
+				</li>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+	</div>
+
+
+  
+  <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">归档</a></p>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">十二月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">十一月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">十月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">九月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">八月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">七月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">六月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">四月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/03/">三月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/01/">一月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">十二月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">十月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">六月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">五月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">二月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">五月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">十月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">41</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">9</span></li></ul>
+  </div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle"><a href="/categories">分类</a></p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/Angular源码/" title="Angular源码">Angular源码<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/CSS炒饭/" title="CSS炒饭">CSS炒饭<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/D3小馒头/" title="D3小馒头">D3小馒头<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular2火锅/" title="angular2火锅">angular2火锅<sup>25</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular混搭/" title="angular混搭">angular混搭<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/box2djs方糖/" title="box2djs方糖">box2djs方糖<sup>34</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/cyclejs哈根达斯/" title="cyclejs哈根达斯">cyclejs哈根达斯<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/jQuery杂烩/" title="jQuery杂烩">jQuery杂烩<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/js什锦/" title="js什锦">js什锦<sup>27</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/react沙拉/" title="react沙拉">react沙拉<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/three-js奶茶/" title="three.js奶茶">three.js奶茶<sup>5</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/vue八宝粥/" title="vue八宝粥">vue八宝粥<sup>30</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/webpack宾治/" title="webpack宾治">webpack宾治<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/web乱炖/" title="web乱炖">web乱炖<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端技能提升/" title="前端技能提升">前端技能提升<sup>6</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端满汉全席/" title="前端满汉全席">前端满汉全席<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端解决方案/" title="前端解决方案">前端解决方案<sup>30</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/喵/" title="喵">喵<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/小程序双皮奶/" title="小程序双皮奶">小程序双皮奶<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/工作这杯茶/" title="工作这杯茶">工作这杯茶<sup>27</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/应用巧克力盒/" title="应用巧克力盒">应用巧克力盒<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/思想棉花糖/" title="思想棉花糖">思想棉花糖<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/柴米油盐工具集/" title="柴米油盐工具集">柴米油盐工具集<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/自动化甜筒/" title="自动化甜筒">自动化甜筒<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/非前端钙片/" title="非前端钙片">非前端钙片<sup>7</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle">标签</p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/分享/" title="分享">分享<sup>50</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/前端技能/" title="前端技能">前端技能<sup>6</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/功能设计/" title="功能设计">功能设计<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/原创部件/" title="原创部件">原创部件<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/心态/" title="心态">心态<sup>22</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/性能优化/" title="性能优化">性能优化<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/教程/" title="教程">教程<sup>80</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/晒猫/" title="晒猫">晒猫<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/笔记/" title="笔记">笔记<sup>121</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/算法/" title="算法">算法<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/自制插件/" title="自制插件">自制插件<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/逻辑实现/" title="逻辑实现">逻辑实现<sup>19</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+    <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">about</a></p>
+      <ul class="archive-list">
+      	<li class="archive-list-item">
+      		<a>wangbeishan@163.com</a>
+      		<a target="_blank" rel="noopener" href="https://github.com/godbasin">github.com/godbasin</a>
+      	</li>
+      </ul>
+  </div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<section class="info">
+		<p> 即使梦想再小，却很伟大 ^_^ </p>
+	</section>
+	 
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2023 
+		
+		<a href="https://godbasin.github.io" target="_blank" title="被删">被删</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+
+
+
+
+
+  </body>
+</html>

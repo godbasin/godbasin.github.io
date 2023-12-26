@@ -1,0 +1,1335 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Vue2动画2--CSS过渡与动画 | Here. There.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="被删">
+    
+    <meta name="description" content="最近在捣鼓Vue动画的内容，《Vue2 动画》系列用于记录一些使用方法、demo以及原理分析。本文在 Vue 中使用 CSS 过渡、 CSS 动画的方式来实现动画效果。">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Here. There." type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?3d902de4a19cf2bf179534ffd2dd7b7f";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/sun.png" alt="Here. There." title="Here. There."/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Here. There.">Here. There.</a></h1>
+				<h2 class="blog-motto">Love ice cream. Love sunshine. Love life. Love the world. Love myself. Love you.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">首页</a></li>
+					
+						<li><a target="_blank" rel="noopener" href="https://github.com/godbasin/godbasin.github.io">所有文章</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">分类</a></li>
+					
+						<li><a href="https://godbasin.github.io/front-end-playground">前端游乐场</a></li>
+					
+						<li><a href="/about">关于我</a></li>
+					
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/03/17/vue2-transition-2-css-transition-animation/" title="Vue2动画2--CSS过渡与动画" itemprop="url">Vue2动画2--CSS过渡与动画</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://godbasin.github.io" title="被删">被删</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2018-03-17T03:15:38.000Z" itemprop="datePublished">2018-03-17</time>
+    更新日期:<time datetime="2018-08-18T12:58:13.168Z" itemprop="dateModified">2018-08-18</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#CSS-%E8%BF%87%E6%B8%A1%E4%B8%8E%E5%8A%A8%E7%94%BB"><span class="toc-number">1.</span> <span class="toc-text">CSS 过渡与动画</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS-transition"><span class="toc-number">1.1.</span> <span class="toc-text">CSS transition</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#transition%E4%BD%BF%E7%94%A8"><span class="toc-number">1.1.1.</span> <span class="toc-text">transition使用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Vue%E4%B8%8ECSS-transition"><span class="toc-number">1.2.</span> <span class="toc-text">Vue与CSS transition</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E7%9A%84demo"><span class="toc-number">1.2.1.</span> <span class="toc-text">简单的demo</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%87%E6%B8%A1%E7%9A%84%E7%B1%BB%E5%90%8D"><span class="toc-number">1.2.2.</span> <span class="toc-text">过渡的类名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E9%80%BB%E8%BE%91"><span class="toc-number">1.2.3.</span> <span class="toc-text">实现逻辑</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS-animation"><span class="toc-number">1.3.</span> <span class="toc-text">CSS animation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-animation"><span class="toc-number">1.3.1.</span> <span class="toc-text">使用 animation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E5%B8%A7%E5%8A%A8%E7%94%BB"><span class="toc-number">1.3.2.</span> <span class="toc-text">关键帧动画</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#animation-%E4%BA%8B%E4%BB%B6%E7%9B%91%E5%90%AC%E5%99%A8"><span class="toc-number">1.3.3.</span> <span class="toc-text">animation 事件监听器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vue-%E4%B8%8E-animation"><span class="toc-number">1.3.4.</span> <span class="toc-text">Vue 与 animation</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%93%E6%9D%9F%E8%AF%AD"><span class="toc-number">2.</span> <span class="toc-text">结束语</span></a></li></ol>
+		</div>
+		
+		<p>最近在捣鼓Vue动画的内容，《Vue2 动画》系列用于记录一些使用方法、demo以及原理分析。本文在 Vue 中使用 CSS 过渡、 CSS 动画的方式来实现动画效果。</p>
+<a id="more"></a>
+<h1 id="CSS-过渡与动画"><a href="#CSS-过渡与动画" class="headerlink" title="CSS 过渡与动画"></a>CSS 过渡与动画</h1><hr>
+<p>来，我们先认识下 CSS 过渡。</p>
+<h2 id="CSS-transition"><a href="#CSS-transition" class="headerlink" title="CSS transition"></a>CSS transition</h2><p>CSS transitions 提供了一种在更改CSS属性时控制动画速度的方法。 其可以让属性变化成为一个持续一段时间的过程，而不是立即生效的。比如，将一个元素的颜色从白色改为黑色，通常这个改变是立即生效的，使用 CSS transitions 后该元素的颜色将逐渐从白色变为黑色，按照一定的曲线速率变化。这个过程可以自定义。</p>
+<p>通常将两个状态之间的过渡称为隐式过渡（implicit transitions），因为开始与结束之间的状态由浏览器决定。</p>
+<h3 id="transition使用"><a href="#transition使用" class="headerlink" title="transition使用"></a>transition使用</h3><p>CSS transitions 可以决定哪些属性发生动画效果 (明确地列出这些属性)，何时开始 (设置 delay），持续多久 (设置 duration) 以及如何动画 (定义 timing funtion，比如匀速地或先快后慢)。</p>
+<p>CSS 过渡 由简写属性 transition 定义是最好的方式：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">div</span> &#123;</span><br><span class="line">    <span class="attribute">transition</span>: &lt;property&gt; &lt;duration&gt; &lt;timing-function&gt; &lt;delay&gt;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>property</strong><br>指定哪个或哪些 CSS 属性用于过渡。只有指定的属性才会在过渡中发生动画，其它属性仍如通常那样瞬间变化。all 则为全部属性。</p>
+<p><strong>duration</strong><br>指定过渡的时长。或者为所有属性指定一个值，或者指定多个值，为每个属性指定不同的时长。</p>
+<p><strong>timing-function</strong><br>指定一个函数，定义属性值怎么变化。常用如 linear、ease，更多可参考<a href="http://easings.net/zh-cn" target="_blank" rel="noopener">缓动函数</a>。</p>
+<p><strong>delay</strong><br>指定延迟，即属性开始变化时与过渡开始发生时之间的时长。</p>
+<p>下面的简写和不简写的例子：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.short-for-transition</span> &#123;</span><br><span class="line">    <span class="attribute">transition</span>: margin-left <span class="number">4s</span> ease <span class="number">2s</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.transition-detail</span> &#123;</span><br><span class="line">  <span class="attribute">transition-property</span>: margin-left;</span><br><span class="line">  <span class="attribute">transition-duration</span>: <span class="number">4s</span>;</span><br><span class="line">  <span class="attribute">transition-timing-function</span>: ease;</span><br><span class="line">  <span class="attribute">transition-delay</span>: <span class="number">2s</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>关于每一个属性的详情，可以参考<a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/CSS_Transitions/Using_CSS_transitions" target="_blank" rel="noopener">CSS transition | MDN</a>。</p>
+<h2 id="Vue与CSS-transition"><a href="#Vue与CSS-transition" class="headerlink" title="Vue与CSS transition"></a>Vue与CSS transition</h2><h3 id="简单的demo"><a href="#简单的demo" class="headerlink" title="简单的demo"></a>简单的demo</h3><p>上面我们已经大概讲了 CSS transition 的使用方式，这里与Vue的结合也变得很简单，我们还是看官方的例子：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- transition的使用 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"demo"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">v-on:click</span>=<span class="string">"show = !show"</span>&gt;</span></span><br><span class="line">    Toggle</span><br><span class="line">  <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">transition</span> <span class="attr">name</span>=<span class="string">"fade"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span> <span class="attr">v-if</span>=<span class="string">"show"</span>&gt;</span>hello<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">transition</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Vue(&#123;</span><br><span class="line">  el: <span class="string">'#demo'</span>,</span><br><span class="line">  data: &#123;</span><br><span class="line">    show: <span class="literal">true</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 简单的css transition实现动画 */</span></span><br><span class="line"><span class="selector-class">.fade-enter-active</span>, <span class="selector-class">.fade-leave-active</span> &#123;</span><br><span class="line">  <span class="attribute">transition</span>: opacity .<span class="number">5s</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.fade-enter</span>, <span class="selector-class">.fade-leave-to</span> <span class="comment">/* .fade-leave-active below version 2.1.8 */</span> &#123;</span><br><span class="line">  <span class="attribute">opacity</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="过渡的类名"><a href="#过渡的类名" class="headerlink" title="过渡的类名"></a>过渡的类名</h3><p>我们在 transition 上设置了 name 的值为 fade，然后效果是 Vue 匹配对应的 fade-status 的类名。我们先来看看 Vue 里面提供了哪些类名：</p>
+<ul>
+<li><strong>v-enter</strong>：定义进入过渡的开始状态。<ul>
+<li>在元素被插入时生效，在下一个帧移除。</li>
+</ul>
+</li>
+<li><strong>v-enter-active</strong>：定义过渡的状态。<ul>
+<li>在元素整个过渡过程中作用，在元素被插入时生效，在 transition/animation 完成之后移除。</li>
+<li>这个类可以被用来定义过渡的过程时间，延迟和曲线函数。</li>
+</ul>
+</li>
+<li><strong>v-enter-to</strong>: (2.1.8版及以上)定义进入过渡的结束状态。<ul>
+<li>在元素被插入一帧后生效 (与此同时 v-enter 被删除)，在 transition/animation 完成之后移除。</li>
+</ul>
+</li>
+<li><strong>v-leav</strong>e: 定义离开过渡的开始状态。<ul>
+<li>在离开过渡被触发时生效，在下一个帧移除。</li>
+</ul>
+</li>
+<li><strong>v-leave-active</strong>：定义过渡的状态。<ul>
+<li>在元素整个过渡过程中作用，在离开过渡被触发后立即生效，在 transition/animation 完成之后移除。</li>
+<li>这个类可以被用来定义过渡的过程时间，延迟和曲线函数。</li>
+</ul>
+</li>
+<li><strong>v-leave-to</strong>: (2.1.8版及以上)定义离开过渡的结束状态。<ul>
+<li>在离开过渡被触发一帧后生效 (与此同时 v-leave 被删除)，在 transition/animation 完成之后移除。</li>
+</ul>
+</li>
+</ul>
+<p>文字很多，读起来有点费力气，是时候贴上官网的这个图了：</p>
+<p>2.1.8版本前：<br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/transition.png" alt="image"></p>
+<p>2.1.8版及以上：<br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/transition2.1.8.png" alt="image"></p>
+<h3 id="实现逻辑"><a href="#实现逻辑" class="headerlink" title="实现逻辑"></a>实现逻辑</h3><p>上一节<a href>《Vue2动画1–transition组件》</a>我们简单介绍了一些实现原理相关的函数和事件，这里我们再详细分析下。</p>
+<p>根据上一节，我们获得以下的信息：</p>
+<ul>
+<li>可以使用 requestAnimationFrame 来请求浏览器在下一次重绘之前调用指定的函数来更新动画</li>
+<li>当 CSS transition 结束时，会触发 transitionend 事件</li>
+</ul>
+<p>所以结合之前的猜想和 Vue 的源码，能大概得到这里的实现方式：</p>
+<ol>
+<li>transition 组件关注子元素是否展示，包括使用 v-if/v-else/v-for 等指令绑定数据生成的元素。</li>
+<li>当元素状态变更（display -&gt; none 或 none -&gt; display）时，预埋的钩子检测是否应用了CSS 过渡。</li>
+<li>若使用了CSS 过渡，则分两种情况讨论。</li>
+</ol>
+<p><strong>进入动画</strong><br>当新元素插入时，我们按照以下方式实现进入动画：</p>
+<ul>
+<li>当元素插入完成后（mounted），给元素添加对应 v-enter 和 v-enter-active 类名，此时元素开始动画过渡</li>
+<li>同时通过 requestAnimationFrame 来指定下一帧绘制前，给元素添加 v-enter-to 类名，同时移除 v-enter 类名</li>
+<li>设置动画结束时间，或者通过 transitionend 事件监听，在过渡结束后，移除 v-enter-to 和 v-enter-active 类名</li>
+</ul>
+<p><strong>离开动画</strong><br>当新元素被删除时，我们按照以下方式实现离开动画：</p>
+<ul>
+<li>当元素删除前（beforeDestroy），给元素添加对应 v-leave 和 v-leave-active 类名，此时元素开始动画过渡</li>
+<li>同时通过 requestAnimationFrame 来指定下一帧绘制前，给元素添加 v-leave-to 类名，同时移除 v-leave 类名</li>
+<li>设置动画结束时间，或者通过 transitionend 事件监听，在过渡结束后，移除 v-leave-to 和 v-leave-active 类名，同时执行元素删除操作</li>
+</ul>
+<p>以上是整体实现方式，可见在我们使用CSS 过渡的时候，最关键的是 v-enter-active 和 v-leave-active 两个样式。</p>
+<p>我们来看看 Vue 里面的部分代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// start enter transition</span></span><br><span class="line"><span class="keyword">if</span> (expectsCSS) &#123;</span><br><span class="line">  <span class="comment">// 添加v-enter和v-enter-active类名</span></span><br><span class="line">  addTransitionClass(el, startClass)</span><br><span class="line">  addTransitionClass(el, activeClass)</span><br><span class="line">  <span class="comment">// nextFrame为下一帧前的执行函数</span></span><br><span class="line">  <span class="comment">// 使用setTimeout向下兼容requestAnimationFrame</span></span><br><span class="line">  nextFrame(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 添加v-enter-to类名，移除v-enter类名</span></span><br><span class="line">    addTransitionClass(el, toClass)</span><br><span class="line">    removeTransitionClass(el, startClass)</span><br><span class="line">    <span class="keyword">if</span> (!cb.cancelled &amp;&amp; !userWantsControl) &#123;</span><br><span class="line">      <span class="keyword">if</span> (isValidDuration(explicitEnterDuration)) &#123;</span><br><span class="line">        <span class="comment">// 若获取过渡的duration成功，则通过定时器来触发结束后逻辑</span></span><br><span class="line">        setTimeout(cb, explicitEnterDuration)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 若获取过渡的duration失败，则通过监听transitionend事件来触发结束后逻辑</span></span><br><span class="line">        whenTransitionEnds(el, type, cb)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当然，完整的 CSS 过渡、相关的钩子等会有更多的考虑和处理，这里只展示核心的实现逻辑部分。</p>
+<h2 id="CSS-animation"><a href="#CSS-animation" class="headerlink" title="CSS animation"></a>CSS animation</h2><p>CSS animations 使得可以将从一个 CSS 样式配置转换到另一个 CSS 样式配置。动画包括两个部分:描述动画的样式规则和用于指定动画开始、结束以及中间点样式的关键帧。</p>
+<p>创建动画序列，需要使用 animation 属性或其子属性，该属性允许配置动画时间、时长以及其他动画细节。<br>和 transition 不一样的是，该属性不能配置动画的实际表现，动画的实际表现是由 @keyframes 规则实现。</p>
+<h3 id="使用-animation"><a href="#使用-animation" class="headerlink" title="使用 animation"></a>使用 animation</h3><p>我们来看看 animation 的使用方式，其实跟 transition 很相像的，子属性如下：</p>
+<ul>
+<li>animation-delay：设置延时，即从元素加载完成之后到动画序列开始执行的这段时间</li>
+<li>animation-direction：设置动画在每次运行完后是反向运行还是重新回到开始位置重复运行</li>
+<li>animation-duration：设置动画一个周期的时长</li>
+<li>animation-iteration-count：设置动画重复次数， 可以指定 infinite 无限次重复动画</li>
+<li>animation-name：指定由 @keyframes 描述的关键帧名称</li>
+<li>animation-play-state：允许暂停和恢复动画</li>
+<li>animation-timing-function：设置动画速度， 即通过建立加速度曲线，设置动画在关键帧之间是如何变化</li>
+<li>animation-fill-mode：指定动画执行前后如何为目标元素应用样式</li>
+</ul>
+<p>同样的，CSS animation 属性也是一个简写属性形式:</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* @keyframes duration | timing-function | delay |</span></span><br><span class="line"><span class="comment">   iteration-count | direction | fill-mode | play-state | name */</span></span><br><span class="line">  <span class="selector-tag">animation</span>: 3<span class="selector-tag">s</span> <span class="selector-tag">ease-in</span> 1<span class="selector-tag">s</span> 2 <span class="selector-tag">reverse</span> <span class="selector-tag">both</span> <span class="selector-tag">paused</span> <span class="selector-tag">slidein</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* @keyframes duration | timing-function | delay | name */</span></span><br><span class="line">  <span class="selector-tag">animation</span>: 3<span class="selector-tag">s</span> <span class="selector-tag">linear</span> 1<span class="selector-tag">s</span> <span class="selector-tag">slidein</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* @keyframes duration | name */</span></span><br><span class="line">  <span class="selector-tag">animation</span>: 3<span class="selector-tag">s</span> <span class="selector-tag">slidein</span>;</span><br></pre></td></tr></table></figure>
+<p>我们也可以用详细的子属性方式来写，这里就不详细描述啦。</p>
+<h3 id="关键帧动画"><a href="#关键帧动画" class="headerlink" title="关键帧动画"></a>关键帧动画</h3><p>一旦完成动画的时间设置， 接下来就需要定义动画的表现。</p>
+<p>通过使用 @keyframes 建立两个或两个以上关键帧来实现。每一个关键帧都描述了动画元素在给定的时间点上应该如何渲染。</p>
+<p>因为动画的时间设置是通过 CSS 样式定义的，<strong>关键帧使用percentage来指定动画发生的时间点。0%表示动画的第一时刻，100%表示动画的最终时刻。</strong>因为这两个时间点十分重要，所以还有特殊的别名：<strong>from</strong>和<strong>to</strong>。</p>
+<p>当然，也可包含额外可选的关键帧，描述动画开始和结束之间的状态。</p>
+<p>来看个云在天上飘来飘去的demo：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.clouldmove</span> &#123;</span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">20%</span>;</span><br><span class="line">    <span class="attribute">margin</span>: <span class="number">5%</span>;</span><br><span class="line">    <span class="attribute">float</span>: left;</span><br><span class="line">    <span class="attribute">margin-left</span>: <span class="number">70%</span>;</span><br><span class="line">    <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">animation-name</span>: ClouldMove;</span><br><span class="line">    <span class="attribute">animation-duration</span>: <span class="number">8s</span>;</span><br><span class="line">    <span class="attribute">animation-timing-function</span>: linear;</span><br><span class="line">    <span class="attribute">animation-iteration-count</span>: infinite;</span><br><span class="line">    <span class="attribute">animation-direction</span>: alternate;</span><br><span class="line">    <span class="attribute">animation-play-state</span>: running;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">@keyframes</span> ClouldMove &#123;</span><br><span class="line">    0% &#123;</span><br><span class="line">        <span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    25% &#123;</span><br><span class="line">        <span class="attribute">left</span>: <span class="number">5%</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    50% &#123;</span><br><span class="line">        <span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    75% &#123;</span><br><span class="line">        <span class="attribute">left</span>: <span class="number">5%</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    100% &#123;</span><br><span class="line">        <span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>还有很多的动画效果，包括轮回播放、来回运动等，这里不详细说明，大家感兴趣可以参考<a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/CSS_Animations/Using_CSS_animations" target="_blank" rel="noopener">《使用 CSS 动画 | MDN》</a>。总之要记住，CSS animation 是个超级变态的动画效果实现。</p>
+<h3 id="animation-事件监听器"><a href="#animation-事件监听器" class="headerlink" title="animation 事件监听器"></a>animation 事件监听器</h3><p>上面我们讲到了 transitionend，animation 比它还多了些事件。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// animationstart事件在动画一开始时就被触发</span></span><br><span class="line">e.addEventListener(<span class="string">"animationstart"</span>, listener, <span class="literal">false</span>);</span><br><span class="line"><span class="comment">// 每个周期完成后（除了最后一个周期），会触发animationiteration事件</span></span><br><span class="line">e.addEventListener(<span class="string">"animationend"</span>, listener, <span class="literal">false</span>);</span><br><span class="line"><span class="comment">// 最后一个周期完成后，不会触发animationiteration事件，而触发animationend事件</span></span><br><span class="line">e.addEventListener(<span class="string">"animationiteration"</span>, listener, <span class="literal">false</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="Vue-与-animation"><a href="#Vue-与-animation" class="headerlink" title="Vue 与 animation"></a>Vue 与 animation</h3><p>对于 Vue 来说，不管是 transition 还是 animation，都是通过 CSS 和类名来实现动画的，所以基本逻辑原理相似，除去动画结束监听的事件不一样而已。</p>
+<p>这里就不多描述啦。</p>
+<h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><hr>
+<p>本节我们介绍了 Vue 中组件 CSS 过渡和 CSS 动画的使用方式，以及实现逻辑的分析。很多时候，我们的工作时间限制了自己手动造轮子的能动性，但是思路的整理和部分源码的分析也能帮助我们来提升自己。</p>
+  
+	</div>
+	<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/2code2.jpg" width="200" height="200" style="display:block;margin: 0 auto;" />
+	<p style="text-align: center;margin-top: 10px;margin-bottom: 10px;">码生艰难，写文不易，给我家猪囤点猫粮了喵~</p>
+	<p style="text-align: center;"><a target="_blank" rel="noopener" href="https://space.bilibili.com/42233366">B站: 被删</a></p>
+	<div class="article-content">
+		<p style="margin-top:50px;">
+			查看Github有更多内容噢：<a target="_blank" rel="noopener" href="https://github.com/godbasin">https://github.com/godbasin</a>
+			<br>
+			更欢迎来<a href="https://godbasin.github.io/front-end-playground">被删的前端游乐场</a>边撸猫边学前端噢
+			<br>
+			<br>
+			如果你想要关注日常生活中的我，欢迎关注“牧羊的猪”公众号噢
+		</p>
+	</div>
+	<div class="author-right">
+  		<p>作者：被删</p>
+  		<p>出处：<a href="https://godbasin.github.io">https://godbasin.github.io</a></p>
+  		<p>本文版权归作者所有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利。</p>
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/笔记/">笔记</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/vue%E5%85%AB%E5%AE%9D%E7%B2%A5/">vue八宝粥</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  
+<!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a href="http://www.jiathis.com/share?uid=2134021" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config = {data_track_clickback:'true'};
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js?uid=2134021" charset="utf-8"></script>
+<!-- JiaThis Button END -->   
+
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2018/03/18/vue2-transition-3-javascript-hook/" title="Vue2动画3--Javascript钩子">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  Vue2动画3--Javascript钩子</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2018/03/11/vue2-transition-1-transition-component/"  title="Vue2动画1--transition组件">
+ <strong>NEXT:</strong><br/> 
+ <span>Vue2动画1--transition组件
+</span>
+</a>
+</div>
+
+</nav>
+
+	<!-- 如果不是首页且没使用 `comments: false` 关闭评论，则尝试加载评论 -->
+
+    <!-- 配置中启用多说时，导入相应代码 -->
+    
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#CSS-%E8%BF%87%E6%B8%A1%E4%B8%8E%E5%8A%A8%E7%94%BB"><span class="toc-number">1.</span> <span class="toc-text">CSS 过渡与动画</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS-transition"><span class="toc-number">1.1.</span> <span class="toc-text">CSS transition</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#transition%E4%BD%BF%E7%94%A8"><span class="toc-number">1.1.1.</span> <span class="toc-text">transition使用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Vue%E4%B8%8ECSS-transition"><span class="toc-number">1.2.</span> <span class="toc-text">Vue与CSS transition</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E7%9A%84demo"><span class="toc-number">1.2.1.</span> <span class="toc-text">简单的demo</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%87%E6%B8%A1%E7%9A%84%E7%B1%BB%E5%90%8D"><span class="toc-number">1.2.2.</span> <span class="toc-text">过渡的类名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E9%80%BB%E8%BE%91"><span class="toc-number">1.2.3.</span> <span class="toc-text">实现逻辑</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS-animation"><span class="toc-number">1.3.</span> <span class="toc-text">CSS animation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-animation"><span class="toc-number">1.3.1.</span> <span class="toc-text">使用 animation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E5%B8%A7%E5%8A%A8%E7%94%BB"><span class="toc-number">1.3.2.</span> <span class="toc-text">关键帧动画</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#animation-%E4%BA%8B%E4%BB%B6%E7%9B%91%E5%90%AC%E5%99%A8"><span class="toc-number">1.3.3.</span> <span class="toc-text">animation 事件监听器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Vue-%E4%B8%8E-animation"><span class="toc-number">1.3.4.</span> <span class="toc-text">Vue 与 animation</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%93%E6%9D%9F%E8%AF%AD"><span class="toc-number">2.</span> <span class="toc-text">结束语</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  	
+	<div class="archiveslist">
+		<p class="asidetitle">最近文章</p>
+			<ul class="archive-list">
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/12/25/learn-front-end-develop-from-interview/" title="从面试角度了解前端基础知识体系">从面试角度了解前端基础知识体系...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/11/25/render-engine-element-and-event/" title="复杂渲染引擎架构与设计--8.元素与事件">复杂渲染引擎架构与设计--8.元素与...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/10/13/render-engine-offscreen-render/" title="复杂渲染引擎架构与设计--7.离屏渲染">复杂渲染引擎架构与设计--7.离屏渲...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/10/11/render-engine-diff-render/" title="复杂渲染引擎架构与设计--6.增量渲染">复杂渲染引擎架构与设计--6.增量渲...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/09/16/render-engine-calculate-split/" title="复杂渲染引擎架构与设计--5.分片计算">复杂渲染引擎架构与设计--5.分片计...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/08/17/render-engine-calculate/" title="复杂渲染引擎架构与设计--4.渲染计算">复杂渲染引擎架构与设计--4.渲染计...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/07/19/render-engine-bottom-render-architecture/" title="复杂渲染引擎架构与设计--3.底层渲染适配">复杂渲染引擎架构与设计--3.底层渲...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/07/01/complex-front-end-project-solution/" title="大型前端项目的常见问题和解决方案">大型前端项目的常见问题和解决方案...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/06/15/render-engine-plugin-design/" title="复杂渲染引擎架构与设计--2.插件的实现">复杂渲染引擎架构与设计--2.插件的...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/05/13/render-engine-render-and-collect/" title="复杂渲染引擎架构与设计--1.收集与渲染">复杂渲染引擎架构与设计--1.收集与...</a>
+				</li>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+	</div>
+
+
+  
+  <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">归档</a></p>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">十二月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">十一月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">十月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">九月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">八月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">七月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">六月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">四月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/03/">三月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/01/">一月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">十二月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">十月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">六月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">五月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">二月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">五月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">十月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">41</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">9</span></li></ul>
+  </div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle"><a href="/categories">分类</a></p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/Angular源码/" title="Angular源码">Angular源码<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/CSS炒饭/" title="CSS炒饭">CSS炒饭<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/D3小馒头/" title="D3小馒头">D3小馒头<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular2火锅/" title="angular2火锅">angular2火锅<sup>25</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular混搭/" title="angular混搭">angular混搭<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/box2djs方糖/" title="box2djs方糖">box2djs方糖<sup>34</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/cyclejs哈根达斯/" title="cyclejs哈根达斯">cyclejs哈根达斯<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/jQuery杂烩/" title="jQuery杂烩">jQuery杂烩<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/js什锦/" title="js什锦">js什锦<sup>27</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/react沙拉/" title="react沙拉">react沙拉<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/three-js奶茶/" title="three.js奶茶">three.js奶茶<sup>5</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/vue八宝粥/" title="vue八宝粥">vue八宝粥<sup>30</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/webpack宾治/" title="webpack宾治">webpack宾治<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/web乱炖/" title="web乱炖">web乱炖<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端技能提升/" title="前端技能提升">前端技能提升<sup>6</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端满汉全席/" title="前端满汉全席">前端满汉全席<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端解决方案/" title="前端解决方案">前端解决方案<sup>30</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/喵/" title="喵">喵<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/小程序双皮奶/" title="小程序双皮奶">小程序双皮奶<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/工作这杯茶/" title="工作这杯茶">工作这杯茶<sup>27</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/应用巧克力盒/" title="应用巧克力盒">应用巧克力盒<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/思想棉花糖/" title="思想棉花糖">思想棉花糖<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/柴米油盐工具集/" title="柴米油盐工具集">柴米油盐工具集<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/自动化甜筒/" title="自动化甜筒">自动化甜筒<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/非前端钙片/" title="非前端钙片">非前端钙片<sup>7</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle">标签</p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/分享/" title="分享">分享<sup>50</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/前端技能/" title="前端技能">前端技能<sup>6</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/功能设计/" title="功能设计">功能设计<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/原创部件/" title="原创部件">原创部件<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/心态/" title="心态">心态<sup>22</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/性能优化/" title="性能优化">性能优化<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/教程/" title="教程">教程<sup>80</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/晒猫/" title="晒猫">晒猫<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/笔记/" title="笔记">笔记<sup>121</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/算法/" title="算法">算法<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/自制插件/" title="自制插件">自制插件<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/逻辑实现/" title="逻辑实现">逻辑实现<sup>19</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+    <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">about</a></p>
+      <ul class="archive-list">
+      	<li class="archive-list-item">
+      		<a>wangbeishan@163.com</a>
+      		<a target="_blank" rel="noopener" href="https://github.com/godbasin">github.com/godbasin</a>
+      	</li>
+      </ul>
+  </div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<section class="info">
+		<p> 即使梦想再小，却很伟大 ^_^ </p>
+	</section>
+	 
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2023 
+		
+		<a href="https://godbasin.github.io" target="_blank" title="被删">被删</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+
+
+
+
+
+  </body>
+</html>

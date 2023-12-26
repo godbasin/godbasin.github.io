@@ -1,0 +1,1276 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>D3.js-Tree实战笔记2--简单的Tree demo | Here. There.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="被删">
+    
+    <meta name="description" content="因为业务需要折腾起了图表，《D3.js-Tree 实战笔记》系列用于记录使用该库制作 Tree 图表的一些笔记。本文介绍基本场景，以及选择 demo 的过程。">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Here. There." type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?3d902de4a19cf2bf179534ffd2dd7b7f";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/sun.png" alt="Here. There." title="Here. There."/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Here. There.">Here. There.</a></h1>
+				<h2 class="blog-motto">Love ice cream. Love sunshine. Love life. Love the world. Love myself. Love you.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">首页</a></li>
+					
+						<li><a target="_blank" rel="noopener" href="https://github.com/godbasin/godbasin.github.io">所有文章</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">分类</a></li>
+					
+						<li><a href="https://godbasin.github.io/front-end-playground">前端游乐场</a></li>
+					
+						<li><a href="/about">关于我</a></li>
+					
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/01/01/d3-tree-notes-2-init-a-d3-tree/" title="D3.js-Tree实战笔记2--简单的Tree demo" itemprop="url">D3.js-Tree实战笔记2--简单的Tree demo</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://godbasin.github.io" title="被删">被删</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2018-01-01T06:11:53.000Z" itemprop="datePublished">2018-01-01</time>
+    更新日期:<time datetime="2018-08-18T15:22:20.249Z" itemprop="dateModified">2018-08-18</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%9C%BA%E6%99%AF"><span class="toc-number">1.</span> <span class="toc-text">基本场景</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Tree-%E5%9B%BE%E4%B8%8E%E6%9C%8D%E5%8A%A1"><span class="toc-number">1.1.</span> <span class="toc-text">Tree 图与服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E6%8F%92%E4%BB%B6%E5%BA%93"><span class="toc-number">1.2.</span> <span class="toc-text">选择插件库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%BB%E6%89%BE-Demo"><span class="toc-number">1.3.</span> <span class="toc-text">寻找 Demo</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%A7%A3%E8%AF%BB-Demo"><span class="toc-number">2.</span> <span class="toc-text">解读 Demo</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B4%E4%BD%93%E9%80%BB%E8%BE%91"><span class="toc-number">2.1.</span> <span class="toc-text">整体逻辑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E8%AF%B4%E6%98%8E"><span class="toc-number">2.2.</span> <span class="toc-text">代码说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E6%9D%9F%E8%AF%AD"><span class="toc-number">2.3.</span> <span class="toc-text">结束语</span></a></li></ol></li></ol>
+		</div>
+		
+		<p>因为业务需要折腾起了图表，《D3.js-Tree 实战笔记》系列用于记录使用该库制作 Tree 图表的一些笔记。本文介绍基本场景，以及选择 demo 的过程。</p>
+<a id="more"></a>
+<h1 id="基本场景"><a href="#基本场景" class="headerlink" title="基本场景"></a>基本场景</h1><hr>
+<h2 id="Tree-图与服务"><a href="#Tree-图与服务" class="headerlink" title="Tree 图与服务"></a>Tree 图与服务</h2><p>首先我们来看个简单的图：<br><img src="https://about-position-1255459943.file.myqcloud.com/1513409805%281%29.png" alt="image"></p>
+<p>没错，这就是个简单的树状图。 本骚年此次要解决的问题包括：</p>
+<ol>
+<li>每一层的子节点为动态请求加载。</li>
+<li>子节点可以收起和展开。</li>
+<li>服务的层级最多为 15 层，每层数量最多或许在 20 左右，需要考虑文字是否重叠。</li>
+<li>支持鼠标滚动缩放 + 鼠标拖动。</li>
+<li>节点根据服务类型展示为不同的样式。</li>
+<li>鼠标放置在节点上，需要展示更多的内容。</li>
+<li>连接线需要展示该链路的一些状态和信息（容量大小等）。</li>
+<li>连接线根据链路当前状态，需要展示为不同颜色。</li>
+</ol>
+<p>以上等等。其实大致数据内容大家也大概能猜到了，主要展示服务的调用关系，以及状态信息、容灾能力等，方便整体的管理和维护。</p>
+<h2 id="选择插件库"><a href="#选择插件库" class="headerlink" title="选择插件库"></a>选择插件库</h2><p>本骚年首先翻了翻 Echarts（毕竟配置化的用起来简单），很可惜 Echarts 翻来翻去都木有树状图（别翻了，本骚年完成了这个开发工作的时候，它突然又提供支持了）。</p>
+<p>D3 之前也有稍微看过，对比 Echarts 的使用简单，它似乎更适合个性化或者说不是那么通用的场景（对，就是本骚年的这次需求了）。</p>
+<p>关于 D3 和 Echarts 的对比，网上有人说（感觉挺有道理的）：</p>
+<ul>
+<li>D3 属于是基础的绘图库(基于 canvas 的, 所以可以说完全不做兼容考虑)，封装的功能都是一些基础图形图像和动画这类的，但是功能异常强大。</li>
+<li>Echarts 属于应用型(或者业务型)的图表库， 期望的是： 几乎不需要写绘图过程代码就能生成漂亮的图表。</li>
+</ul>
+<p>决定好要使用 D3 之后，看了下，D3 最新版本为 v4，而网上很多的 demo 都是基于 v3 的，但是作为一个对自己有要求的程序员，怎么可以容忍使用旧版本呢！</p>
+<p>其实真相是这样的：<br><img src="https://about-position-1255459943.file.myqcloud.com/1513412297%281%29.png" alt="image"></p>
+<p>Sign~</p>
+<p>而 v4 版本相对 v3 版本的变更，其实很关键的是模块化，更多的可以参考<a href="https://github.com/xswei/d3js_doc/tree/master/ReleaseNotes" target="_blank" rel="noopener">D3 4.0 做了哪些改进</a>。</p>
+<h2 id="寻找-Demo"><a href="#寻找-Demo" class="headerlink" title="寻找 Demo"></a>寻找 Demo</h2><p>来，我们再从网上找个现有的 Demo 下手吧，就它了：<a href="https://bl.ocks.org/d3noob/43a860bc0024792f8803bba8ca0d5ecd" target="_blank" rel="noopener">Collapsible tree diagram in v4</a>。这里还有个 v3 版本的，大家可以对比着看一下：<a href="http://bl.ocks.org/d3noob/8375092" target="_blank" rel="noopener">Interactive d3.js tree diagram</a>。</p>
+<p>其实 v4 和 v3 版本，不一致的地方比较关键的是<code>link</code>连接线的绘制，<code>diagonal</code>函数：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// v3</span></span><br><span class="line"><span class="keyword">var</span> diagonal = d3.svg.diagonal().projection(<span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> [d.y, d.x];</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// v4</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">diagonal</span>(<span class="params">s, d</span>) </span>&#123;</span><br><span class="line">  path = <span class="string">`M <span class="subst">$&#123;s.y&#125;</span> <span class="subst">$&#123;s.x&#125;</span></span></span><br><span class="line"><span class="string">          C <span class="subst">$&#123;(s.y + d.y) <span class="regexp">/ 2&#125; $&#123;s.x&#125;,</span></span></span></span><br><span class="line"><span class="string"><span class="subst"><span class="regexp">            $&#123;(s.y + d.y) /</span> <span class="number">2</span>&#125;</span> <span class="subst">$&#123;d.x&#125;</span>,</span></span><br><span class="line"><span class="string">            <span class="subst">$&#123;d.y&#125;</span> <span class="subst">$&#123;d.x&#125;</span>`</span>;</span><br><span class="line">  <span class="keyword">return</span> path;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们看看<a href="https://github.com/d3/d3/wiki/SVG-%E5%BD%A2%E7%8A%B6#diagonal" target="_blank" rel="noopener">官方文档 v3</a>的描述。</p>
+<p><code>d3.svg.diagonal()</code>：使用默认的配置构造一个对角线生成器；返回值可以用来当做函数使用来生成三次贝塞尔曲线数据，该曲线的若干条切线可以保证节点连接处会有平滑的介入效果。</p>
+<p>其实这里我们主要给连接线绘制路径，D3 里面主要使用了<a href="https://www.zhihu.com/question/29565629" target="_blank" rel="noopener">贝塞尔曲线</a>。在 v3 版本中，D3 提供了生成该曲线的方法，而在 v4 版本中，我们需要自己构造这样的曲线。</p>
+<p>这里涉及到的并不是 D3 独有的，而是<code>SVG-&lt;path&gt;</code>的特性，<code>&lt;path&gt;</code>在上一节也简单说过，大家可以补充看看<a href="https://developer.mozilla.org/zh-CN/docs/Web/SVG/Tutorial/Paths" target="_blank" rel="noopener">SVG 路径 | MDN</a>，里面讲到了直线命令和曲线命令。</p>
+<h1 id="解读-Demo"><a href="#解读-Demo" class="headerlink" title="解读 Demo"></a>解读 Demo</h1><p>我们先结合上一节大致讲到的 D3 基础，来解读下我们的 Demo。</p>
+<hr>
+<h2 id="整体逻辑"><a href="#整体逻辑" class="headerlink" title="整体逻辑"></a>整体逻辑</h2><p>我们的 Demo 实现了这样的功能：</p>
+<ol>
+<li>定义 svg 根元素，设置基本的属性（宽高等）。</li>
+<li>定义基本的 treemap。</li>
+<li>将数据转换成需要的格式。</li>
+<li>将数据绑定 treemap。</li>
+<li>定义子节点的选择集，以及过渡动画。</li>
+<li>添加 toggle 处理，并绑定到节点。</li>
+</ol>
+<h2 id="代码说明"><a href="#代码说明" class="headerlink" title="代码说明"></a>代码说明</h2><p>我们结合代码来看看，其实 Demo 里面原有英文的说明，这里本骚年可能更多的是翻译的作用吧：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 嗯，这是最初的数据。</span></span><br><span class="line"><span class="keyword">var</span> treeData = &#123;</span><br><span class="line">  name: <span class="string">"Top Level"</span>,</span><br><span class="line">  children: [</span><br><span class="line">    &#123;</span><br><span class="line">      name: <span class="string">"Level 2: A"</span>,</span><br><span class="line">      children: [&#123; <span class="attr">name</span>: <span class="string">"Son of A"</span> &#125;, &#123; <span class="attr">name</span>: <span class="string">"Daughter of A"</span> &#125;]</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123; <span class="attr">name</span>: <span class="string">"Level 2: B"</span> &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设置图表的宽高和Margin</span></span><br><span class="line"><span class="keyword">var</span> margin = &#123; <span class="attr">top</span>: <span class="number">20</span>, <span class="attr">right</span>: <span class="number">90</span>, <span class="attr">bottom</span>: <span class="number">30</span>, <span class="attr">left</span>: <span class="number">90</span> &#125;,</span><br><span class="line">  width = <span class="number">960</span> - margin.left - margin.right,</span><br><span class="line">  height = <span class="number">500</span> - margin.top - margin.bottom;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> svg = d3</span><br><span class="line">  .select(<span class="string">"body"</span>)</span><br><span class="line">  <span class="comment">// 在页面的body里添加svg对象</span></span><br><span class="line">  .append(<span class="string">"svg"</span>)</span><br><span class="line">  <span class="comment">// 设置svg宽高</span></span><br><span class="line">  .attr(<span class="string">"width"</span>, width + margin.right + margin.left)</span><br><span class="line">  .attr(<span class="string">"height"</span>, height + margin.top + margin.bottom)</span><br><span class="line">  <span class="comment">// 在svg里添加group元素</span></span><br><span class="line">  .append(<span class="string">"g"</span>)</span><br><span class="line">  <span class="comment">// 将group放置在左上方</span></span><br><span class="line">  .attr(<span class="string">"transform"</span>, <span class="string">"translate("</span> + margin.left + <span class="string">","</span> + margin.top + <span class="string">")"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> i = <span class="number">0</span>,</span><br><span class="line">  duration = <span class="number">750</span>,</span><br><span class="line">  root;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义Tree层级，并设置宽高</span></span><br><span class="line"><span class="keyword">var</span> treemap = d3.tree().size([height, width]);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 计算父节点、字节点、高度和深度（parent, children, height, depth）</span></span><br><span class="line">root = d3.hierarchy(treeData, <span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> d.children;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 设置第一个元素的初始位置</span></span><br><span class="line">root.x0 = height / <span class="number">2</span>;</span><br><span class="line">root.y0 = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 第二层以上元素收起</span></span><br><span class="line">root.children.forEach(collapse);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 更新节点状态</span></span><br><span class="line">update(root);</span><br><span class="line"></span><br><span class="line"><span class="comment">// collapse方法，用于切换子节点的展开和收起状态</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">collapse</span>(<span class="params">d</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (d.children) &#123;</span><br><span class="line">    d._children = d.children;</span><br><span class="line">    d._children.forEach(collapse);</span><br><span class="line">    d.children = <span class="literal">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">update</span>(<span class="params">source</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 设置节点的x、y位置信息</span></span><br><span class="line">  <span class="keyword">var</span> treeData = treemap(root);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 计算新的Tree层级</span></span><br><span class="line">  <span class="keyword">var</span> nodes = treeData.descendants(),</span><br><span class="line">    links = treeData.descendants().slice(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 设置每个同级节点间的y间距为180</span></span><br><span class="line">  nodes.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123;</span><br><span class="line">    d.y = d.depth * <span class="number">180</span>;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ****************** 节点部分操作 ***************************</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 给节点添加id，用于选择集索引</span></span><br><span class="line">  <span class="keyword">var</span> node = svg.selectAll(<span class="string">"g.node"</span>).data(nodes, <span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> d.id || (d.id = ++i);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 添加enter操作，添加类名为node的group元素</span></span><br><span class="line">  <span class="keyword">var</span> nodeEnter = node</span><br><span class="line">    .enter()</span><br><span class="line">    .append(<span class="string">"g"</span>)</span><br><span class="line">    .attr(<span class="string">"class"</span>, <span class="string">"node"</span>)</span><br><span class="line">    <span class="comment">// 默认位置为当前父节点的位置</span></span><br><span class="line">    .attr(<span class="string">"transform"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="string">"translate("</span> + source.y0 + <span class="string">","</span> + source.x0 + <span class="string">")"</span>;</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="comment">// 给每个新加的节点绑定click事件</span></span><br><span class="line">    .on(<span class="string">"click"</span>, click);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 给每个新加的group元素添加cycle元素</span></span><br><span class="line">  nodeEnter</span><br><span class="line">    .append(<span class="string">"circle"</span>)</span><br><span class="line">    .attr(<span class="string">"class"</span>, <span class="string">"node"</span>)</span><br><span class="line">    .attr(<span class="string">"r"</span>, <span class="number">1e-6</span>)</span><br><span class="line">    <span class="comment">// 如果元素有子节点，且为收起状态，则填充浅蓝色</span></span><br><span class="line">    .style(<span class="string">"fill"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> d._children ? <span class="string">"lightsteelblue"</span> : <span class="string">"#fff"</span>;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 给每个新加的group元素添加文字说明</span></span><br><span class="line">  nodeEnter</span><br><span class="line">    .append(<span class="string">"text"</span>)</span><br><span class="line">    .attr(<span class="string">"dy"</span>, <span class="string">".35em"</span>)</span><br><span class="line">    .attr(<span class="string">"x"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> d.children || d._children ? <span class="number">-13</span> : <span class="number">13</span>;</span><br><span class="line">    &#125;)</span><br><span class="line">    .attr(<span class="string">"text-anchor"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> d.children || d._children ? <span class="string">"end"</span> : <span class="string">"start"</span>;</span><br><span class="line">    &#125;)</span><br><span class="line">    .text(<span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> d.data.name;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 获取update集</span></span><br><span class="line">  <span class="keyword">var</span> nodeUpdate = nodeEnter.merge(node);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 设置节点的位置变化，添加过渡动画效果</span></span><br><span class="line">  nodeUpdate</span><br><span class="line">    .transition()</span><br><span class="line">    .duration(duration)</span><br><span class="line">    .attr(<span class="string">"transform"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="string">"translate("</span> + d.y + <span class="string">","</span> + d.x + <span class="string">")"</span>;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 更新节点的属性和样式</span></span><br><span class="line">  nodeUpdate</span><br><span class="line">    .select(<span class="string">"circle.node"</span>)</span><br><span class="line">    .attr(<span class="string">"r"</span>, <span class="number">10</span>)</span><br><span class="line">    .style(<span class="string">"fill"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> d._children ? <span class="string">"lightsteelblue"</span> : <span class="string">"#fff"</span>;</span><br><span class="line">    &#125;)</span><br><span class="line">    .attr(<span class="string">"cursor"</span>, <span class="string">"pointer"</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 获取exit操作</span></span><br><span class="line">  <span class="keyword">var</span> nodeExit = node</span><br><span class="line">    .exit()</span><br><span class="line">    <span class="comment">// 添加过渡动画</span></span><br><span class="line">    .transition()</span><br><span class="line">    .duration(duration)</span><br><span class="line">    .attr(<span class="string">"transform"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="string">"translate("</span> + source.y + <span class="string">","</span> + source.x + <span class="string">")"</span>;</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="comment">// 移除元素</span></span><br><span class="line">    .remove();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// exit集中节点的cycle元素尺寸变为0</span></span><br><span class="line">  nodeExit.select(<span class="string">"circle"</span>).attr(<span class="string">"r"</span>, <span class="number">1e-6</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// exit集中节点的text元素可见度降为0</span></span><br><span class="line">  nodeExit.select(<span class="string">"text"</span>).style(<span class="string">"fill-opacity"</span>, <span class="number">1e-6</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ****************** 连接线部分操作 ***************************</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 更新数据</span></span><br><span class="line">  <span class="keyword">var</span> link = svg.selectAll(<span class="string">"path.link"</span>).data(links, <span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> d.id;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 添加enter操作，添加类名为link的path元素</span></span><br><span class="line">  <span class="keyword">var</span> linkEnter = link</span><br><span class="line">    .enter()</span><br><span class="line">    .insert(<span class="string">"path"</span>, <span class="string">"g"</span>)</span><br><span class="line">    .attr(<span class="string">"class"</span>, <span class="string">"link"</span>)</span><br><span class="line">    <span class="comment">// 默认位置为当前父节点的位置</span></span><br><span class="line">    .attr(<span class="string">"d"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">var</span> o = &#123; <span class="attr">x</span>: source.x0, <span class="attr">y</span>: source.y0 &#125;;</span><br><span class="line">      <span class="keyword">return</span> diagonal(o, o);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 获取update集</span></span><br><span class="line">  <span class="keyword">var</span> linkUpdate = linkEnter.merge(link);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 更新添加过渡动画</span></span><br><span class="line">  linkUpdate</span><br><span class="line">    .transition()</span><br><span class="line">    .duration(duration)</span><br><span class="line">    .attr(<span class="string">"d"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> diagonal(d, d.parent);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 获取exit集</span></span><br><span class="line">  <span class="keyword">var</span> linkExit = link</span><br><span class="line">    .exit()</span><br><span class="line">    <span class="comment">// 设置过渡动画</span></span><br><span class="line">    .transition()</span><br><span class="line">    .duration(duration)</span><br><span class="line">    .attr(<span class="string">"d"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">var</span> o = &#123; <span class="attr">x</span>: source.x, <span class="attr">y</span>: source.y &#125;;</span><br><span class="line">      <span class="keyword">return</span> diagonal(o, o);</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="comment">// 移除link</span></span><br><span class="line">    .remove();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 为动画过渡保存旧的位置</span></span><br><span class="line">  nodes.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">d</span>) </span>&#123;</span><br><span class="line">    d.x0 = d.x;</span><br><span class="line">    d.y0 = d.y;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 添加贝塞尔曲线的path，衔接与父节点和子节点间</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">diagonal</span>(<span class="params">s, d</span>) </span>&#123;</span><br><span class="line">    path = <span class="string">`M <span class="subst">$&#123;s.y&#125;</span> <span class="subst">$&#123;s.x&#125;</span></span></span><br><span class="line"><span class="string">            C <span class="subst">$&#123;(s.y + d.y) <span class="regexp">/ 2&#125; $&#123;s.x&#125;,</span></span></span></span><br><span class="line"><span class="string"><span class="subst"><span class="regexp">              $&#123;(s.y + d.y) /</span> <span class="number">2</span>&#125;</span> <span class="subst">$&#123;d.x&#125;</span>,</span></span><br><span class="line"><span class="string">              <span class="subst">$&#123;d.y&#125;</span> <span class="subst">$&#123;d.x&#125;</span>`</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> path;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 当点击时，切换children，同时用_children来保存原子节点信息</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">click</span>(<span class="params">d</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (d.children) &#123;</span><br><span class="line">      d._children = d.children;</span><br><span class="line">      d.children = <span class="literal">null</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      d.children = d._children;</span><br><span class="line">      d._children = <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    update(d);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以上的逻辑处理，无非是<code>初始化图表 -&gt; 获取数据 -&gt; 数据转换 -&gt; 元素操作/交互/动画 -&gt; 事件绑定 -&gt; 数据更新 -&gt; 元素更新</code>这样的流程吧。</p>
+<h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><hr>
+<p>这节主要分析了需求场景，接着找了个基本的 Tree Demo，然后结合上节讲过的 D3 知识，理解每个步骤的逻辑。<br>后面将结合实际需要的功能，一点点地说明实现的过程，以及将涉及到的 D3 更多的 API，甚至核心原理吧。</p>
+  
+	</div>
+	<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/2code2.jpg" width="200" height="200" style="display:block;margin: 0 auto;" />
+	<p style="text-align: center;margin-top: 10px;margin-bottom: 10px;">码生艰难，写文不易，给我家猪囤点猫粮了喵~</p>
+	<p style="text-align: center;"><a target="_blank" rel="noopener" href="https://space.bilibili.com/42233366">B站: 被删</a></p>
+	<div class="article-content">
+		<p style="margin-top:50px;">
+			查看Github有更多内容噢：<a target="_blank" rel="noopener" href="https://github.com/godbasin">https://github.com/godbasin</a>
+			<br>
+			更欢迎来<a href="https://godbasin.github.io/front-end-playground">被删的前端游乐场</a>边撸猫边学前端噢
+			<br>
+			<br>
+			如果你想要关注日常生活中的我，欢迎关注“牧羊的猪”公众号噢
+		</p>
+	</div>
+	<div class="author-right">
+  		<p>作者：被删</p>
+  		<p>出处：<a href="https://godbasin.github.io">https://godbasin.github.io</a></p>
+  		<p>本文版权归作者所有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利。</p>
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/笔记/">笔记</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/D3%E5%B0%8F%E9%A6%92%E5%A4%B4/">D3小馒头</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  
+<!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a href="http://www.jiathis.com/share?uid=2134021" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config = {data_track_clickback:'true'};
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js?uid=2134021" charset="utf-8"></script>
+<!-- JiaThis Button END -->   
+
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2018/01/06/vue2-notes-10-access-route/" title="Vue2使用笔记10--路由鉴权">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  Vue2使用笔记10--路由鉴权</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2017/12/31/d3-tree-notes-1-svg-and-d3/"  title="D3.js-Tree实战笔记1--拜见D3.js">
+ <strong>NEXT:</strong><br/> 
+ <span>D3.js-Tree实战笔记1--拜见D3.js
+</span>
+</a>
+</div>
+
+</nav>
+
+	<!-- 如果不是首页且没使用 `comments: false` 关闭评论，则尝试加载评论 -->
+
+    <!-- 配置中启用多说时，导入相应代码 -->
+    
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%9C%BA%E6%99%AF"><span class="toc-number">1.</span> <span class="toc-text">基本场景</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Tree-%E5%9B%BE%E4%B8%8E%E6%9C%8D%E5%8A%A1"><span class="toc-number">1.1.</span> <span class="toc-text">Tree 图与服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E6%8F%92%E4%BB%B6%E5%BA%93"><span class="toc-number">1.2.</span> <span class="toc-text">选择插件库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%BB%E6%89%BE-Demo"><span class="toc-number">1.3.</span> <span class="toc-text">寻找 Demo</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%A7%A3%E8%AF%BB-Demo"><span class="toc-number">2.</span> <span class="toc-text">解读 Demo</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B4%E4%BD%93%E9%80%BB%E8%BE%91"><span class="toc-number">2.1.</span> <span class="toc-text">整体逻辑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E8%AF%B4%E6%98%8E"><span class="toc-number">2.2.</span> <span class="toc-text">代码说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E6%9D%9F%E8%AF%AD"><span class="toc-number">2.3.</span> <span class="toc-text">结束语</span></a></li></ol></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  	
+	<div class="archiveslist">
+		<p class="asidetitle">最近文章</p>
+			<ul class="archive-list">
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/12/25/learn-front-end-develop-from-interview/" title="从面试角度了解前端基础知识体系">从面试角度了解前端基础知识体系...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/11/25/render-engine-element-and-event/" title="复杂渲染引擎架构与设计--8.元素与事件">复杂渲染引擎架构与设计--8.元素与...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/10/13/render-engine-offscreen-render/" title="复杂渲染引擎架构与设计--7.离屏渲染">复杂渲染引擎架构与设计--7.离屏渲...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/10/11/render-engine-diff-render/" title="复杂渲染引擎架构与设计--6.增量渲染">复杂渲染引擎架构与设计--6.增量渲...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/09/16/render-engine-calculate-split/" title="复杂渲染引擎架构与设计--5.分片计算">复杂渲染引擎架构与设计--5.分片计...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/08/17/render-engine-calculate/" title="复杂渲染引擎架构与设计--4.渲染计算">复杂渲染引擎架构与设计--4.渲染计...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/07/19/render-engine-bottom-render-architecture/" title="复杂渲染引擎架构与设计--3.底层渲染适配">复杂渲染引擎架构与设计--3.底层渲...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/07/01/complex-front-end-project-solution/" title="大型前端项目的常见问题和解决方案">大型前端项目的常见问题和解决方案...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/06/15/render-engine-plugin-design/" title="复杂渲染引擎架构与设计--2.插件的实现">复杂渲染引擎架构与设计--2.插件的...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/05/13/render-engine-render-and-collect/" title="复杂渲染引擎架构与设计--1.收集与渲染">复杂渲染引擎架构与设计--1.收集与...</a>
+				</li>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+	</div>
+
+
+  
+  <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">归档</a></p>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">十二月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">十一月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">十月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">九月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">八月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">七月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">六月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">四月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/03/">三月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/01/">一月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">十二月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">十月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">六月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">五月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">二月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">五月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">十月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">41</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">9</span></li></ul>
+  </div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle"><a href="/categories">分类</a></p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/Angular源码/" title="Angular源码">Angular源码<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/CSS炒饭/" title="CSS炒饭">CSS炒饭<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/D3小馒头/" title="D3小馒头">D3小馒头<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular2火锅/" title="angular2火锅">angular2火锅<sup>25</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular混搭/" title="angular混搭">angular混搭<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/box2djs方糖/" title="box2djs方糖">box2djs方糖<sup>34</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/cyclejs哈根达斯/" title="cyclejs哈根达斯">cyclejs哈根达斯<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/jQuery杂烩/" title="jQuery杂烩">jQuery杂烩<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/js什锦/" title="js什锦">js什锦<sup>27</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/react沙拉/" title="react沙拉">react沙拉<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/three-js奶茶/" title="three.js奶茶">three.js奶茶<sup>5</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/vue八宝粥/" title="vue八宝粥">vue八宝粥<sup>30</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/webpack宾治/" title="webpack宾治">webpack宾治<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/web乱炖/" title="web乱炖">web乱炖<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端技能提升/" title="前端技能提升">前端技能提升<sup>6</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端满汉全席/" title="前端满汉全席">前端满汉全席<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端解决方案/" title="前端解决方案">前端解决方案<sup>30</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/喵/" title="喵">喵<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/小程序双皮奶/" title="小程序双皮奶">小程序双皮奶<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/工作这杯茶/" title="工作这杯茶">工作这杯茶<sup>27</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/应用巧克力盒/" title="应用巧克力盒">应用巧克力盒<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/思想棉花糖/" title="思想棉花糖">思想棉花糖<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/柴米油盐工具集/" title="柴米油盐工具集">柴米油盐工具集<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/自动化甜筒/" title="自动化甜筒">自动化甜筒<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/非前端钙片/" title="非前端钙片">非前端钙片<sup>7</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle">标签</p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/分享/" title="分享">分享<sup>50</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/前端技能/" title="前端技能">前端技能<sup>6</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/功能设计/" title="功能设计">功能设计<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/原创部件/" title="原创部件">原创部件<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/心态/" title="心态">心态<sup>22</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/性能优化/" title="性能优化">性能优化<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/教程/" title="教程">教程<sup>80</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/晒猫/" title="晒猫">晒猫<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/笔记/" title="笔记">笔记<sup>121</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/算法/" title="算法">算法<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/自制插件/" title="自制插件">自制插件<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/逻辑实现/" title="逻辑实现">逻辑实现<sup>19</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+    <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">about</a></p>
+      <ul class="archive-list">
+      	<li class="archive-list-item">
+      		<a>wangbeishan@163.com</a>
+      		<a target="_blank" rel="noopener" href="https://github.com/godbasin">github.com/godbasin</a>
+      	</li>
+      </ul>
+  </div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<section class="info">
+		<p> 即使梦想再小，却很伟大 ^_^ </p>
+	</section>
+	 
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2023 
+		
+		<a href="https://godbasin.github.io" target="_blank" title="被删">被删</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,1354 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>在线Excel项目到底有多刺激 | Here. There.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="被删">
+    
+    <meta name="description" content="加入腾讯文档 Excel 开发团队已经有好几个月了，刚开始代码下载下来 100+W 行，代码量很大但模块设计和代码质量比我想象中好好多了，今天跟大家分享下一个 Excel 项目到底可以有多好玩。">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Here. There." type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?3d902de4a19cf2bf179534ffd2dd7b7f";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/sun.png" alt="Here. There." title="Here. There."/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Here. There.">Here. There.</a></h1>
+				<h2 class="blog-motto">Love ice cream. Love sunshine. Love life. Love the world. Love myself. Love you.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">首页</a></li>
+					
+						<li><a target="_blank" rel="noopener" href="https://github.com/godbasin/godbasin.github.io">所有文章</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">分类</a></li>
+					
+						<li><a href="https://godbasin.github.io/front-end-playground">前端游乐场</a></li>
+					
+						<li><a href="/about">关于我</a></li>
+					
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2020/10/10/why-spreadsheet-app-excited/" title="在线Excel项目到底有多刺激" itemprop="url">在线Excel项目到底有多刺激</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://godbasin.github.io" title="被删">被删</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2020-10-10T13:29:30.000Z" itemprop="datePublished">2020-10-10</time>
+    更新日期:<time datetime="2020-10-10T13:33:00.881Z" itemprop="dateModified">2020-10-10</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9E%E6%97%B6%E5%8D%8F%E5%90%8C%E7%BC%96%E8%BE%91%E7%9A%84%E6%8C%91%E6%88%98"><span class="toc-number">1.</span> <span class="toc-text">实时协同编辑的挑战</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%B2%E7%AA%81%E5%A4%84%E7%90%86"><span class="toc-number">1.1.</span> <span class="toc-text">冲突处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#OT-%E5%92%8C-CRDT"><span class="toc-number">1.1.1.</span> <span class="toc-text">OT 和 CRDT</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86"><span class="toc-number">1.2.</span> <span class="toc-text">版本管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%89%88%E6%9C%AC%E6%9B%B4%E6%96%B0"><span class="toc-number">1.2.1.</span> <span class="toc-text">数据版本更新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%B4%E6%8A%A4%E6%95%B0%E6%8D%AE%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97"><span class="toc-number">1.2.2.</span> <span class="toc-text">维护数据任务队列</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%BF%E9%97%B4%E7%AE%A1%E7%90%86"><span class="toc-number">1.3.</span> <span class="toc-text">房间管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E7%A7%8D%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F"><span class="toc-number">1.4.</span> <span class="toc-text">多种通信方式</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%AF%8F%E4%B8%AA%E6%A0%BC%E5%AD%90%E9%83%BD%E6%98%AF%E4%B8%80%E4%B8%AA%E5%AF%8C%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%99%A8"><span class="toc-number">2.</span> <span class="toc-text">每个格子都是一个富文本编辑器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%8C%E6%96%87%E6%9C%AC"><span class="toc-number">2.1.</span> <span class="toc-text">富文本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%8D%E5%88%B6%E7%B2%98%E8%B4%B4"><span class="toc-number">2.2.</span> <span class="toc-text">复制粘贴</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%A1%A8%E6%A0%BC%E6%B8%B2%E6%9F%93%E6%9C%89%E5%A4%9A%E5%A4%8D%E6%9D%82"><span class="toc-number">3.</span> <span class="toc-text">表格渲染有多复杂</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E6%8D%A2%E8%A1%8C"><span class="toc-number">3.1.</span> <span class="toc-text">自动换行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%BB%E7%BB%93%E5%8C%BA%E5%9F%9F"><span class="toc-number">3.2.</span> <span class="toc-text">冻结区域</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E9%BD%90%E4%B8%8E%E5%8D%95%E5%85%83%E6%A0%BC%E6%BA%A2%E5%87%BA"><span class="toc-number">3.3.</span> <span class="toc-text">对齐与单元格溢出</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E7%9A%84%E9%9A%BE%E9%A2%98"><span class="toc-number">4.</span> <span class="toc-text">数据管理的难题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C"><span class="toc-number">4.1.</span> <span class="toc-text">原子操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80-%E9%87%8D%E5%81%9A"><span class="toc-number">4.2.</span> <span class="toc-text">版本回退&#x2F;重做</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE"><span class="toc-number">4.3.</span> <span class="toc-text">数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#END"><span class="toc-number">4.4.</span> <span class="toc-text">END</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E6%9D%9F%E8%AF%AD"><span class="toc-number">4.5.</span> <span class="toc-text">结束语</span></a></li></ol></li></ol>
+		</div>
+		
+		<p>加入腾讯文档 Excel 开发团队已经有好几个月了，刚开始代码下载下来 100+W 行，代码量很大但模块设计和代码质量比我想象中好好多了，今天跟大家分享下一个 Excel 项目到底可以有多好玩。</p>
+<a id="more"></a>
+<h1 id="实时协同编辑的挑战"><a href="#实时协同编辑的挑战" class="headerlink" title="实时协同编辑的挑战"></a>实时协同编辑的挑战</h1><p>说到实时协同编辑的难点，大家的第一反应基本上是协同冲突处理。</p>
+<h2 id="冲突处理"><a href="#冲突处理" class="headerlink" title="冲突处理"></a>冲突处理</h2><p>冲突处理的解决方案其实已经相对成熟，包括：</p>
+<ol>
+<li><strong>编辑锁</strong>：当有人在编辑某个文档时，系统会将这个文档锁定，避免其他人同时编辑。</li>
+<li><strong>diff-patch</strong>：基于 Git 等版本管理类似的思想，对内容进行差异对比、合并等操作，包括 GNU diff-patch、Myer’s diff-patch 等方案。</li>
+<li><strong>最终一致性实现</strong>：包括 Operational Transformation（OT）、 Conflict-free replicated data type(CRDT，称为无冲突可复制数据类型)。</li>
+</ol>
+<p>编辑锁的实现方式简单粗暴，但会直接影响用户体验。diff-patch 可以对冲突进行自助合并，也可以在冲突出现时交给用户处理。OT 算法是 Google Docs 中所采用的方案，Atom 编辑器使用的则是 CRDT。</p>
+<h3 id="OT-和-CRDT"><a href="#OT-和-CRDT" class="headerlink" title="OT 和 CRDT"></a>OT 和 CRDT</h3><p>OT 和 CRDT 两种方法的相似之处在于它们提供最终的一致性。不同之处在于他们的操作方式：</p>
+<ul>
+<li>OT 通过更改操作来做到这一点<ul>
+<li>OT 会对编辑进行操作的拆分、转换，实现冲突处理的效果</li>
+<li>OT 并不包括具体的实现，因此需要项目自行实现，但可以根据项目需要进行高精度的冲突处理</li>
+</ul>
+</li>
+<li>CRDT 通过更改状态来做到这一点<ul>
+<li>基本上，CRDT 是数据结构，当使用相同的操作集进行更新时，即使这些操作以不同的顺序应用，它们始终会收敛在相同的表示形式上</li>
+<li>CRDT 有两种方法：基于操作和基于状态</li>
+</ul>
+</li>
+</ul>
+<p>OT 主要用于文本，通常常很复杂且不可扩展。CRDT 实现很简单，但 Google、Microsoft、CKSource 和许多其他公司依赖 OT 是有原因的，CRDT 研究的当前状态支持在两种主要类型的数据上进行协作：纯文本、任意 JSON 结构。</p>
+<p>对于富文本编辑等更高级的结构，OT 用复杂性换来了对用户预期的实现，而 CRDT 则更加关注数据结构，随着数据结构的复杂度上升，算法的时间和空间复杂度也会呈指数上升的，会带来性能上的挑战。因此，如今大多数实时协同编辑都基于 OT 算法来实现。</p>
+<h2 id="版本管理"><a href="#版本管理" class="headerlink" title="版本管理"></a>版本管理</h2><p>在多人协作的场景下，为了保证用户体验，一般会采用 diff-patch/OT 算法来进行冲突处理。而为了保证每次的用户操作都可以按照正确的时序来更新，需要会维护一个自增的版本号，每次有新的修改，都会更新版本号。</p>
+<h3 id="数据版本更新"><a href="#数据版本更新" class="headerlink" title="数据版本更新"></a>数据版本更新</h3><p>数据版本能按照预期有序更新，需要几个前提：</p>
+<ul>
+<li><strong>协同数据版本正常更新</strong></li>
+<li><strong>丢失数据版本成功补拉</strong></li>
+<li><strong>提交数据版本有序递增</strong></li>
+</ul>
+<p>要怎么理解这几个前提呢？我们来举个例子。</p>
+<p>小明打开了一个文档，该文档从服务器拉取到的数据版本是 100。这时候服务器下发了个消息，说是有人将该版本更新到了 101，于是小明需要将这个 101 版本的数据更新到界面中，这是<strong>协同数据版本正常更新</strong>。</p>
+<p>小明基于最新的 101 版本进行了编辑，产生了个新的操作数据。当小明将这个数据提交到服务器的时候，服务器看到小明的数据基于 101 版本，就跟小明说现在最新的版本已经是 110 了。小明只能先去服务器将 102-110 的版本补拉回来，这是<strong>丢失数据版本成功补拉</strong>。</p>
+<p>102-110 的数据版本补拉回来之后，小明之前的操作数据需要分别跟这些数据版本进行冲突处理，最后得到了一个基于 110 版本的操作数据。这时候小明重新将数据提交给服务器，服务器接受了并给小明分配了 111 版本，于是小明将自己本地的数据版本升级为 111 版本，这是<strong>提交数据版本有序递增</strong>。</p>
+<h3 id="维护数据任务队列"><a href="#维护数据任务队列" class="headerlink" title="维护数据任务队列"></a>维护数据任务队列</h3><p>要管理好这些版本，我们需要维护一个用户操作的数据队列，用来有序提交数据。这个队列的职责包括：</p>
+<ul>
+<li>用户操作数据正常进入队列</li>
+<li>队列任务正常提交到接入层</li>
+<li>队列任务提交异常后进行重试</li>
+<li>队列任务确认提交成功后移除</li>
+</ul>
+<p>这样一个队列可能还会面临用户突然关闭页面等可能，我们还需要维护一个缓存数据，当用户再次打开页面的时候，将用户编辑但未提交的数据再次提交到服务器。除了浏览器关闭的情况，还有用户在编辑过程中网络状况变化而导致的网络中断，这种时候我们也需要将用户的操作离线到本地，当网络恢复的时候继续上传。</p>
+<h2 id="房间管理"><a href="#房间管理" class="headerlink" title="房间管理"></a>房间管理</h2><p>由于多人协同的需要，相比普通的 Web 页面，还多了房间和用户的管理。在同一个文档中的用户，可视作在同一个房间。除了能看到哪些人在同一个房间以外，我们能收到相互之间的消息，在文档的场景中，用户的每一个操作，都可以作为是一个消息。</p>
+<p>但文档和一般的房间聊天不一样的地方在于，用户的操作不可丢失，同时还需要有严格的版本顺序的保证。用户的操作内容可能会很大，例如用户复制粘贴了一个10W、20W的表格内容，这样的消息显然无法一次性传输完。在这种情况下，除了考虑像 Websocket 这种需要自行进行数据压缩（HTTP 本身支持压缩）以外，我们还需要实现自己的分片逻辑。当涉及数据分片之后，紧接而来的还有如何分片、分片数据丢失的一些情况处理。</p>
+<h2 id="多种通信方式"><a href="#多种通信方式" class="headerlink" title="多种通信方式"></a>多种通信方式</h2><p>前后端通信方式有很多种，常见的包括 HTTP 短轮询（polling）、Websocket、HTTP 长轮询（long-polling）、SSE（Server-Sent Events）等。</p>
+<p>我们也能看到，不同的在线文档团队选用的通信方式并不一致。例如谷歌文档上行数据使用 Ajax、下行数据使用 HTTP 长轮询推送；石墨文档上行数据使用 Ajax、下行数据使用 SSE 推送；金山文档、飞书文档、腾讯文档则都使用了 Websocket 传输。</p>
+<p>而每种通信方式都有各自的优缺点，包括兼容性、资源消耗、实时性等，也有可能跟业务团队自身的后台架构有关系。因此我们在设计连接层的时候，考虑接口拓展性，应该预留对各种方式的支持。</p>
+<h1 id="每个格子都是一个富文本编辑器"><a href="#每个格子都是一个富文本编辑器" class="headerlink" title="每个格子都是一个富文本编辑器"></a>每个格子都是一个富文本编辑器</h1><p>其实除了实时协同编辑相关，Excel 项目还面临着很多其他的挑战。大家都知道富文本编辑器很坑，但在 Excel 中，每个格子都是富文本编辑器。</p>
+<h2 id="富文本"><a href="#富文本" class="headerlink" title="富文本"></a>富文本</h2><p>富文本的编辑，一般有几种处理方式：</p>
+<ul>
+<li>一个简单的 div 增加<code>contenteditable</code>属性，用浏览器原生的<code>execCommand</code>执行</li>
+<li>div + 事件监听来维护一套编辑器状态（包括光标状态）</li>
+<li>textarea + 事件监听维护一套编辑器状态</li>
+</ul>
+<p>对于<code>contenteditable</code>属性，要对选中的文本进行操作（如斜体、颜色），需要先判断光标的位置，用 Range 判断选中的文本在哪里，然后判断这段文本是不是已经被处理过，需要覆盖、去掉还是保留原效果，这里的坑比较多，也常常出现兼容性问题。<br>一般来说，像 Atom、VSCode 这些复杂的编辑器都是自己实现类似 contenteditable 功能的，使用 div+事件监听的方式。而 Ace editor、金山文档等则是使用隐藏的 textarea 接收输入，并渲染到 div 中来实现编辑效果。</p>
+<h2 id="复制粘贴"><a href="#复制粘贴" class="headerlink" title="复制粘贴"></a>复制粘贴</h2><p>一般来说单个单元格或是多个单元格选中复制的时候，我们能拿到的是格子的原始数据，因此需要进行两步操作：<strong>将数据转换成富文本</strong>（拼接 table/tr/td 等元素），然后<strong>写入剪切板</strong>。</p>
+<p>粘贴的过程，同样需要：<strong>从剪切板获取内容</strong>，再将这些内容<strong>转换成单元格数据</strong>，并<strong>提交操作数据</strong>。这里还可能涉及图片的上传、各种富文本的解析，每个单元格都可能由于设置的一些属性（包括合并单元格、行高列宽、筛选、函数等）而使得解析过程的复杂度直线上升。</p>
+<p>复制粘贴相关功能模块复制粘贴根据使用场景可以分成两种：</p>
+<ol>
+<li><strong>内部复制粘贴</strong>。</li>
+<li><strong>外部复制粘贴</strong>。</li>
+</ol>
+<p>内部复制粘贴指的是在自己产品内的复制粘贴，由于一个复制粘贴过程涉及的计算和解析都很多，内部复制粘贴可以考虑是否直接将单元格数据写入剪切板，粘贴的时候就可以直接获得数据，省去了将数据转换成富文本、将富文本解析成单元格数据等这些计算耗时较大、资源占用较多的步骤。</p>
+<p>外部复制粘贴更多则是涉及到各种同类 Excel 编辑产品的兼容、系统剪切板内容格式的兼容，代码实现特别复杂。</p>
+<h1 id="表格渲染有多复杂"><a href="#表格渲染有多复杂" class="headerlink" title="表格渲染有多复杂"></a>表格渲染有多复杂</h1><p>表格的绘制一般来说也有两种实现方案：</p>
+<ol>
+<li><strong>DOM 绘制</strong>。</li>
+<li><strong>canvas 绘制</strong>。</li>
+</ol>
+<p>业界比较出名的 handsontable 开源库就是基于 DOM 实现绘制，但显而易见十万、百万单元格的 DOM 渲染会产生较大的性能问题。因此，如今很多 Web 版的电子表格实现都是基于 canvas + 叠加 DOM 来实现的，使用 canvas 实现同样需要考虑可视区域、滚动操作、画布层级关系，也有 canvas 自身面临的一些性能问题，包括 canvas 如何进行直出等。</p>
+<p>表格渲染涉及合并单元格、选区、缩放、冻结、富文本与自动换行等各种各样的场景，我们来看看其中到底有多复杂。</p>
+<h2 id="自动换行"><a href="#自动换行" class="headerlink" title="自动换行"></a>自动换行</h2><p>一般来说，一个单元格自动换行体现在数据存储上，只包括：单元格内容+换行属性。但这样一个数据需要渲染出来的时候，则面临着自动换行的一些计算：</p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/why-spreadsheet-app-excited-1.jpg" alt></p>
+<p>我们需要找到该列的列宽，然后根据该单元格内容情况来进行渲染层的分行。如图，这样一串文本会根据分行逻辑的计算分成了三行。而自动换行之后，还可能涉及该单元格所在行的行高被撑起导致的调整，行高的调整可能还会影响该行其他单元格一些居中属性的渲染结果，需要重新计算。</p>
+<p>因此，当我们对一列格子设置了自动换行，可能会导致大规模的重新计算和渲染，同样会涉及较大的性能消耗。</p>
+<h2 id="冻结区域"><a href="#冻结区域" class="headerlink" title="冻结区域"></a>冻结区域</h2><p>冻结功能可以将我们的表格分成四个区域，左右和上下划分了冻结和非冻结区域。冻结区域的复杂度主要在于边界的一些特殊情况处理，包括区域的选择、图片的切割等。我们来看一个图：</p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/why-spreadsheet-app-excited-2.png" alt></p>
+<p>如图，对于一个图片来说，虽然它是直接放在整个表格上，但落到数据层中的时候，它其实只属于某一个格子。在冻结区域的编辑上，我们需要对它进行切分，但不管是哪个区域中选中它，我们依然需要展示它的原图：</p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/why-spreadsheet-app-excited-3.jpg" alt></p>
+<p>这意味着在 canvas 中，我们获取到鼠标点击的位置时，还需要计算出对应点击的格子是否属于图片覆盖范围内。</p>
+<h2 id="对齐与单元格溢出"><a href="#对齐与单元格溢出" class="headerlink" title="对齐与单元格溢出"></a>对齐与单元格溢出</h2><p>一个单元格的水平对齐方式一般分为三种：左对齐、居中对齐、右对齐。当单元格没有设置自动换行，其内容又超出了该格子的宽度时，会出现覆盖到其他格子的情况：</p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/why-spreadsheet-app-excited-4.jpg" alt></p>
+<p>也就是说，我们在绘制某个格子的时候，同样需要计算附近的格子有没有溢出到当前格子的情况，如果有溢出则需要在这个格子里进行绘制。除此之外，当某列格子被隐藏的时候，溢出的逻辑可能还需要进行调整和更新。</p>
+<p>以上列出的，都只是某一些比较细节的点，而表格的渲染还涉及单元格和行列的隐藏、拖拽、缩放、选区等各种逻辑，还有单元格边框的一些复杂计算。除此之外，由于 canvas 渲染是一屏的内容，涉及页面的滚动、协同数据的更新等会同样可能导致画布频繁更新绘制。</p>
+<h1 id="数据管理的难题"><a href="#数据管理的难题" class="headerlink" title="数据管理的难题"></a>数据管理的难题</h1><p>当每个格子都支持富文本内容，在十万、百万单元格的场景下，对落盘数据的存储、用户操作的数据变更也提出了不小的挑战。</p>
+<h2 id="原子操作"><a href="#原子操作" class="headerlink" title="原子操作"></a>原子操作</h2><p>和数据库的事务相类似，对于电子表格来说，我们可以将用户的操作拆分成不可分割的原子操作。为什么要这么做呢？其实主要是方便进行 OT 算法的冲突处理，可针对每个不可拆分的原子操作进行特定逻辑的冲突计算和转换，最终落盘到存储中。</p>
+<p>例如，我们插入一个子表这样一个操作，除了插入自身的操作，可能需要对其他子表进行移动操作。那么，对于一个子表来说，我们的操作可能会包括：</p>
+<ul>
+<li>插入</li>
+<li>重命名</li>
+<li>移动</li>
+<li>删除</li>
+<li>更新内容</li>
+<li>…</li>
+</ul>
+<p>只要拆分得足够仔细，对于子表的所有用户行为，都可以由这些操作来组合成最终的效果，这些不再可拆分的操作便是最终的原子操作。例如，复制粘贴一张子表，可以拆分为<code>插入-重命名-更新内容</code>；剪切一张子表，可以拆分为<code>插入-更新内容-删除-移动其他子表</code>。通过分析用户行为，我们可以提取出这些基本操作，来看个具体的例子：</p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/sheet_ot.png" alt></p>
+<p>如图，对于服务端来说，最终就是新增了两个子表，一个是张三的“工作表 2”，另一个是李四的“工作表 2（自动重命名）”。</p>
+<p>在实现上，一般使用 tranform 函数来处理并发操作，该函数接受已应用于同一文档状态（但在不同客户端上）的两个操作，并计算可以在第二个操作之后应用并保留第一个操作的新操作操作的预期更改。</p>
+<p>在不同的 OT 系统中使用的 OT 函数的名称可能有所不同，但是可以将其分为两类：</p>
+<ul>
+<li>inclusion transformation/forward transformation：表示为<code>IT(opA, opB)</code>，<code>opA</code>以一种有效地包含<code>opB</code>的影响的方式，将操作转换为另一个操作<code>opB&#39;</code>。</li>
+<li>exclusion transformation/backward transformation：表示为<code>ET(opA, opB)</code>，<code>opA</code>以一种有效排除<code>opB</code>影响的方式，将操作转换为另一操作<code>opB&#39;&#39;</code>。</li>
+</ul>
+<p>一些 OT 系统同时使用 IT 和 ET 功能，而某些仅使用 IT 功能。OT 功能设计的复杂性取决于多种因素：OT 系统是否支持一致性维护、是否支持 Undo/Redo、要满足哪些转换属性、是否使用 ET、OT 操作模型是否通用、每个操作中的数据是按字符（单个对象）还是按字符串（对象序列）、分层还是其他结构等。</p>
+<p>除了客户端收到服务器的协同消息之后需要进行本地的冲突处理，服务器也可能存在先后接收到两个基于同一版本的消息之后进行冲突处理。在本地和服务器都有一套一致的冲突处理逻辑，才能保证算法的最终一致性。</p>
+<h2 id="版本回退-重做"><a href="#版本回退-重做" class="headerlink" title="版本回退/重做"></a>版本回退/重做</h2><p>对于大多数编辑器来说，Undo/Redo 是最基础的能力，文档编辑也不例外。前面我们提到实时协同有版本的概念，同时用户的每一个操作可能会被拆分成多个原子操作。</p>
+<p>在这样的场景下，Undo/Redo 既涉及到落盘数据的恢复，还涉及到用户操作的还原时遇到冲突的一些处理。在多人协同的场景下，如果在编辑过程中接收到了其他人的一些操作数据，那么 Undo 的时候是否又会撤回别人的操作呢？</p>
+<p>基于 OT 算法的 Undo 其实思路相对简单，通常是针对每个原子操作实现对应的<code>invert()</code>方法，进行该原子操作的逆运算，生成一个新的原子操作并应用。</p>
+<p>前面我们介绍 transform 函数可以分为 IT 和 ET 两类，而 Undo 的实现有两种方式：</p>
+<ul>
+<li>Inv &amp; IT: invert + inclusion transformation</li>
+<li>ET &amp; IT: exclusion transformation + inclusion transformation</li>
+</ul>
+<p>不管是哪种算法，OT 用于撤消的基本思想是根据操作之后执行的那些操作的效果，将操作的逆操作（待撤消的操作）转换为新形式，从而使转换后的逆操作可以实现正确的 Undo 影响。但如果用户在编辑的时候接收到了新的协同操作，当该用户在进行 Undo 的时候，通过逆运算生成的原子操作同样需要和这些新来的协同消息进行冲突处理，才能保证最终一致性。</p>
+<h2 id="数据"><a href="#数据" class="headerlink" title="数据"></a>数据</h2><p>对于支持富文本的单元格来说，每个单元格除了自身的一些属性设置，包括数据格式验证、函数计算、宽高、边框、填充色等，还需要维护该单元格内富文本格式、关联图片的一些数据。这些数据在面临十万甚至百万单元格的时候，对数据传输和存储也带来了不小的挑战。</p>
+<p>修订记录的版本和还原、如何优化内存、如何优化数据大小、如何高效利用数据、如何降低计算时空复杂度等都成为了数据层面临的一些难题。</p>
+<h2 id="END"><a href="#END" class="headerlink" title="END"></a>END</h2><p>以上列举的，只占整个Excel项目的一小部分，而除此之外还有Worker、菜单栏、各种各样的feature功能，像数据格式、函数、图片、图表、筛选、排序、智能拖拽、导入导出、区域权限、搜索替换，每一个功能都会因为项目的复杂性而面临各式各样的挑战。</p>
+<p>除此以外，各个模块之间功能解耦、100W+的代码怎么进行组织和架构设计、代码加载流程如何优化、多人协作导致的问题、项目的维护性/可读性、性能优化等都是我们经常需要思考的问题。</p>
+<h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><p>参与这样的项目，最大的感受是不需要再抓破脑袋去想某个项目还可以做出哪些亮点，因为可以做的事情实在是太多了。对于很多业务来说，代码质量、维护性和可读性也常常不受重视。我们常常因为项目本身的局限性（相对简单）而无法找到自己可以深挖的点，因此最后都是只能通过自动化、配置化的方式去尽可能地提升效能，但可以做的其实也很局限，自身的成长也因此受限。</p>
+<p>大家经常调侃说前端的天花板太低，又说自己面临35岁被淘汰。抛去个人兴趣、热情和自身瓶颈这些原因，很多时候也是因为条件不允许、业务场景较简单，因此没有场景可以发挥自己的能力。以前我也觉得下班之后学习也是可以的，但如果上班就做着自己喜欢的工作，岂不是一举两得？</p>
+<p>最后，欢迎大家各式各样的讨论和交流~</p>
+<p>PS：我们腾讯文档团队还在招人噢~~</p>
+<blockquote>
+<p>感兴趣的可以联系我，QQ: 1780096742，也可以投递简历到 <a href="mailto:wangbeishan@163.com" target="_blank" rel="noopener">wangbeishan@163.com</a>（邮件可能回复不及时）</p>
+</blockquote>
+  
+	</div>
+	<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/2code2.jpg" width="200" height="200" style="display:block;margin: 0 auto;" />
+	<p style="text-align: center;margin-top: 10px;margin-bottom: 10px;">码生艰难，写文不易，给我家猪囤点猫粮了喵~</p>
+	<p style="text-align: center;"><a target="_blank" rel="noopener" href="https://space.bilibili.com/42233366">B站: 被删</a></p>
+	<div class="article-content">
+		<p style="margin-top:50px;">
+			查看Github有更多内容噢：<a target="_blank" rel="noopener" href="https://github.com/godbasin">https://github.com/godbasin</a>
+			<br>
+			更欢迎来<a href="https://godbasin.github.io/front-end-playground">被删的前端游乐场</a>边撸猫边学前端噢
+			<br>
+			<br>
+			如果你想要关注日常生活中的我，欢迎关注“牧羊的猪”公众号噢
+		</p>
+	</div>
+	<div class="author-right">
+  		<p>作者：被删</p>
+  		<p>出处：<a href="https://godbasin.github.io">https://godbasin.github.io</a></p>
+  		<p>本文版权归作者所有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利。</p>
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/逻辑实现/">逻辑实现</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/%E5%89%8D%E7%AB%AF%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/">前端解决方案</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  
+<!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a href="http://www.jiathis.com/share?uid=2134021" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config = {data_track_clickback:'true'};
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js?uid=2134021" charset="utf-8"></script>
+<!-- JiaThis Button END -->   
+
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2020/11/01/task-runner-design/" title="如何设计一个任务管理器">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  如何设计一个任务管理器</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2020/10/07/monitor-and-report/"  title="前端监控体系搭建">
+ <strong>NEXT:</strong><br/> 
+ <span>前端监控体系搭建
+</span>
+</a>
+</div>
+
+</nav>
+
+	<!-- 如果不是首页且没使用 `comments: false` 关闭评论，则尝试加载评论 -->
+
+    <!-- 配置中启用多说时，导入相应代码 -->
+    
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9E%E6%97%B6%E5%8D%8F%E5%90%8C%E7%BC%96%E8%BE%91%E7%9A%84%E6%8C%91%E6%88%98"><span class="toc-number">1.</span> <span class="toc-text">实时协同编辑的挑战</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%B2%E7%AA%81%E5%A4%84%E7%90%86"><span class="toc-number">1.1.</span> <span class="toc-text">冲突处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#OT-%E5%92%8C-CRDT"><span class="toc-number">1.1.1.</span> <span class="toc-text">OT 和 CRDT</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86"><span class="toc-number">1.2.</span> <span class="toc-text">版本管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%89%88%E6%9C%AC%E6%9B%B4%E6%96%B0"><span class="toc-number">1.2.1.</span> <span class="toc-text">数据版本更新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%B4%E6%8A%A4%E6%95%B0%E6%8D%AE%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97"><span class="toc-number">1.2.2.</span> <span class="toc-text">维护数据任务队列</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%BF%E9%97%B4%E7%AE%A1%E7%90%86"><span class="toc-number">1.3.</span> <span class="toc-text">房间管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E7%A7%8D%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F"><span class="toc-number">1.4.</span> <span class="toc-text">多种通信方式</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%AF%8F%E4%B8%AA%E6%A0%BC%E5%AD%90%E9%83%BD%E6%98%AF%E4%B8%80%E4%B8%AA%E5%AF%8C%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%99%A8"><span class="toc-number">2.</span> <span class="toc-text">每个格子都是一个富文本编辑器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%8C%E6%96%87%E6%9C%AC"><span class="toc-number">2.1.</span> <span class="toc-text">富文本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%8D%E5%88%B6%E7%B2%98%E8%B4%B4"><span class="toc-number">2.2.</span> <span class="toc-text">复制粘贴</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%A1%A8%E6%A0%BC%E6%B8%B2%E6%9F%93%E6%9C%89%E5%A4%9A%E5%A4%8D%E6%9D%82"><span class="toc-number">3.</span> <span class="toc-text">表格渲染有多复杂</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E6%8D%A2%E8%A1%8C"><span class="toc-number">3.1.</span> <span class="toc-text">自动换行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%BB%E7%BB%93%E5%8C%BA%E5%9F%9F"><span class="toc-number">3.2.</span> <span class="toc-text">冻结区域</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E9%BD%90%E4%B8%8E%E5%8D%95%E5%85%83%E6%A0%BC%E6%BA%A2%E5%87%BA"><span class="toc-number">3.3.</span> <span class="toc-text">对齐与单元格溢出</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E7%9A%84%E9%9A%BE%E9%A2%98"><span class="toc-number">4.</span> <span class="toc-text">数据管理的难题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C"><span class="toc-number">4.1.</span> <span class="toc-text">原子操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80-%E9%87%8D%E5%81%9A"><span class="toc-number">4.2.</span> <span class="toc-text">版本回退&#x2F;重做</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE"><span class="toc-number">4.3.</span> <span class="toc-text">数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#END"><span class="toc-number">4.4.</span> <span class="toc-text">END</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E6%9D%9F%E8%AF%AD"><span class="toc-number">4.5.</span> <span class="toc-text">结束语</span></a></li></ol></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  	
+	<div class="archiveslist">
+		<p class="asidetitle">最近文章</p>
+			<ul class="archive-list">
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/12/25/learn-front-end-develop-from-interview/" title="从面试角度了解前端基础知识体系">从面试角度了解前端基础知识体系...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/11/25/render-engine-element-and-event/" title="复杂渲染引擎架构与设计--8.元素与事件">复杂渲染引擎架构与设计--8.元素与...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/10/13/render-engine-offscreen-render/" title="复杂渲染引擎架构与设计--7.离屏渲染">复杂渲染引擎架构与设计--7.离屏渲...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/10/11/render-engine-diff-render/" title="复杂渲染引擎架构与设计--6.增量渲染">复杂渲染引擎架构与设计--6.增量渲...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/09/16/render-engine-calculate-split/" title="复杂渲染引擎架构与设计--5.分片计算">复杂渲染引擎架构与设计--5.分片计...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/08/17/render-engine-calculate/" title="复杂渲染引擎架构与设计--4.渲染计算">复杂渲染引擎架构与设计--4.渲染计...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/07/19/render-engine-bottom-render-architecture/" title="复杂渲染引擎架构与设计--3.底层渲染适配">复杂渲染引擎架构与设计--3.底层渲...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/07/01/complex-front-end-project-solution/" title="大型前端项目的常见问题和解决方案">大型前端项目的常见问题和解决方案...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/06/15/render-engine-plugin-design/" title="复杂渲染引擎架构与设计--2.插件的实现">复杂渲染引擎架构与设计--2.插件的...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/05/13/render-engine-render-and-collect/" title="复杂渲染引擎架构与设计--1.收集与渲染">复杂渲染引擎架构与设计--1.收集与...</a>
+				</li>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+	</div>
+
+
+  
+  <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">归档</a></p>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">十二月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">十一月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">十月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">九月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">八月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">七月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">六月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">四月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/03/">三月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/01/">一月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">十二月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">十月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">六月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">五月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">二月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">五月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">十月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">41</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">9</span></li></ul>
+  </div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle"><a href="/categories">分类</a></p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/Angular源码/" title="Angular源码">Angular源码<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/CSS炒饭/" title="CSS炒饭">CSS炒饭<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/D3小馒头/" title="D3小馒头">D3小馒头<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular2火锅/" title="angular2火锅">angular2火锅<sup>25</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular混搭/" title="angular混搭">angular混搭<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/box2djs方糖/" title="box2djs方糖">box2djs方糖<sup>34</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/cyclejs哈根达斯/" title="cyclejs哈根达斯">cyclejs哈根达斯<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/jQuery杂烩/" title="jQuery杂烩">jQuery杂烩<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/js什锦/" title="js什锦">js什锦<sup>27</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/react沙拉/" title="react沙拉">react沙拉<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/three-js奶茶/" title="three.js奶茶">three.js奶茶<sup>5</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/vue八宝粥/" title="vue八宝粥">vue八宝粥<sup>30</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/webpack宾治/" title="webpack宾治">webpack宾治<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/web乱炖/" title="web乱炖">web乱炖<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端技能提升/" title="前端技能提升">前端技能提升<sup>6</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端满汉全席/" title="前端满汉全席">前端满汉全席<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端解决方案/" title="前端解决方案">前端解决方案<sup>30</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/喵/" title="喵">喵<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/小程序双皮奶/" title="小程序双皮奶">小程序双皮奶<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/工作这杯茶/" title="工作这杯茶">工作这杯茶<sup>27</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/应用巧克力盒/" title="应用巧克力盒">应用巧克力盒<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/思想棉花糖/" title="思想棉花糖">思想棉花糖<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/柴米油盐工具集/" title="柴米油盐工具集">柴米油盐工具集<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/自动化甜筒/" title="自动化甜筒">自动化甜筒<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/非前端钙片/" title="非前端钙片">非前端钙片<sup>7</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle">标签</p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/分享/" title="分享">分享<sup>50</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/前端技能/" title="前端技能">前端技能<sup>6</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/功能设计/" title="功能设计">功能设计<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/原创部件/" title="原创部件">原创部件<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/心态/" title="心态">心态<sup>22</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/性能优化/" title="性能优化">性能优化<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/教程/" title="教程">教程<sup>80</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/晒猫/" title="晒猫">晒猫<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/笔记/" title="笔记">笔记<sup>121</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/算法/" title="算法">算法<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/自制插件/" title="自制插件">自制插件<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/逻辑实现/" title="逻辑实现">逻辑实现<sup>19</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+    <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">about</a></p>
+      <ul class="archive-list">
+      	<li class="archive-list-item">
+      		<a>wangbeishan@163.com</a>
+      		<a target="_blank" rel="noopener" href="https://github.com/godbasin">github.com/godbasin</a>
+      	</li>
+      </ul>
+  </div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<section class="info">
+		<p> 即使梦想再小，却很伟大 ^_^ </p>
+	</section>
+	 
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2023 
+		
+		<a href="https://godbasin.github.io" target="_blank" title="被删">被删</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+
+
+
+
+
+  </body>
+</html>

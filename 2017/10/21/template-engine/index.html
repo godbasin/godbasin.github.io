@@ -1,0 +1,1325 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>前端模板引擎 | Here. There.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="被删">
+    
+    <meta name="description" content="前端框架日新月异，而其中的数据绑定已经作为一个框架最基础的功能。我们常常使用的单向绑定、双向绑定、事件绑定、样式绑定等，里面具体怎么实现，而当我们数据变动的时候又会触发怎样的底部流程呢？">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Here. There." type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?3d902de4a19cf2bf179534ffd2dd7b7f";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/sun.png" alt="Here. There." title="Here. There."/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Here. There.">Here. There.</a></h1>
+				<h2 class="blog-motto">Love ice cream. Love sunshine. Love life. Love the world. Love myself. Love you.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">首页</a></li>
+					
+						<li><a target="_blank" rel="noopener" href="https://github.com/godbasin/godbasin.github.io">所有文章</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">分类</a></li>
+					
+						<li><a href="https://godbasin.github.io/front-end-playground">前端游乐场</a></li>
+					
+						<li><a href="/about">关于我</a></li>
+					
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/10/21/template-engine/" title="前端模板引擎" itemprop="url">前端模板引擎</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://godbasin.github.io" title="被删">被删</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2017-10-21T01:08:59.000Z" itemprop="datePublished">2017-10-21</time>
+    更新日期:<time datetime="2017-10-21T01:09:10.001Z" itemprop="dateModified">2017-10-21</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A8%A1%E6%9D%BF%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A"><span class="toc-number">1.</span> <span class="toc-text">模板数据绑定</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E6%9E%90%E8%AF%AD%E6%B3%95%E7%94%9F%E6%88%90AST"><span class="toc-number">1.1.</span> <span class="toc-text">解析语法生成AST</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8D%95%E8%8E%B7%E7%89%B9%E5%AE%9A%E8%AF%AD%E6%B3%95"><span class="toc-number">1.1.1.</span> <span class="toc-text">捕获特定语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DOM%E5%85%83%E7%B4%A0%E6%8D%95%E8%8E%B7"><span class="toc-number">1.1.2.</span> <span class="toc-text">DOM元素捕获</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A%E6%8D%95%E8%8E%B7"><span class="toc-number">1.1.3.</span> <span class="toc-text">数据绑定捕获</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AST%E7%94%9F%E6%88%90%E6%A8%A1%E7%89%88"><span class="toc-number">1.2.</span> <span class="toc-text">AST生成模版</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E6%A8%A1%E7%89%88%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">1.2.1.</span> <span class="toc-text">生成模版的方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E6%B8%B2%E6%9F%93%E6%9C%BA%E5%88%B6"><span class="toc-number">1.2.2.</span> <span class="toc-text">浏览器的渲染机制</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A8%A1%E7%89%88%E6%95%B0%E6%8D%AE%E6%9B%B4%E6%96%B0"><span class="toc-number">2.</span> <span class="toc-text">模版数据更新</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%9B%B4%E6%96%B0%E7%9B%91%E5%90%AC"><span class="toc-number">2.0.1.</span> <span class="toc-text">数据更新监听</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%9B%B4%E6%96%B0Diff"><span class="toc-number">2.0.2.</span> <span class="toc-text">数据更新Diff</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%93%E6%9D%9F%E8%AF%AD"><span class="toc-number">3.</span> <span class="toc-text">结束语</span></a></li></ol>
+		</div>
+		
+		<p>前端框架日新月异，而其中的数据绑定已经作为一个框架最基础的功能。我们常常使用的单向绑定、双向绑定、事件绑定、样式绑定等，里面具体怎么实现，而当我们数据变动的时候又会触发怎样的底部流程呢？<br><a id="more"></a></p>
+<h1 id="模板数据绑定"><a href="#模板数据绑定" class="headerlink" title="模板数据绑定"></a>模板数据绑定</h1><hr>
+<p>数据绑定的过程其实不复杂：</p>
+<ol>
+<li>解析语法生成AST。</li>
+<li>根据AST结果生成DOM。</li>
+<li>将数据绑定更新至模板。</li>
+</ol>
+<h2 id="解析语法生成AST"><a href="#解析语法生成AST" class="headerlink" title="解析语法生成AST"></a>解析语法生成AST</h2><p>抽象语法树（Abstract Syntax Tree）也称为AST语法树，指的是源代码语法所对应的树状结构。也就是说，对于一种具体编程语言下的源代码，通过构建语法树的形式将源代码中的语句映射到树中的每一个节点上。 </p>
+<p>其实我们的DOM结构树，也是AST的一种，把HTML DOM语法解析并生成最终的页面。而模板引擎中常用的，则是将模板语法解析生成HTML DOM。</p>
+<h3 id="捕获特定语法"><a href="#捕获特定语法" class="headerlink" title="捕获特定语法"></a>捕获特定语法</h3><p>生成AST的过程涉及到编译器的原理，一般经过以下过程：</p>
+<ol>
+<li>语法分析。</li>
+</ol>
+<p>语法分析的任务是在词法分析的基础上将单词序列组合成各类语法短语，如“程序”，“语句”，“表达式”等等。<br>语法分析程序判断源程序在结构上是否正确，源程序的结构由上下文无关文法描述。语法分析程序可以用YACC等工具自动生成。</p>
+<ol start="2">
+<li>语义分析</li>
+</ol>
+<p>语义分析是编译过程的一个逻辑阶段，语义分析的任务是对结构上正确的源程序进行上下文有关性质的审查，进行类型审查。语义分析是审查源程序有无语义错误，为代码生成阶段收集类型信息。<br>一般类型检查也会在这个过程中进行。</p>
+<ol start="3">
+<li>生成AST。</li>
+</ol>
+<p>AST的结构则根据使用者需要定义，下面的一些对象都是本人根据需要假设定义的。</p>
+<h3 id="DOM元素捕获"><a href="#DOM元素捕获" class="headerlink" title="DOM元素捕获"></a>DOM元素捕获</h3><p>最简单的，我们来捕获一个<code>&lt;div&gt;</code>元素，然后生成一个<code>&lt;div&gt;</code>元素。</p>
+<p>例如我们可以将以下这样的DOM进行捕获：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span>&gt;</span>123<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>456<span class="tag">&lt;<span class="name">span</span>&gt;</span>789<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>捕获后我们或许可以得到这样的一个对象：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">thisDiv = &#123;</span><br><span class="line">    dom: &#123;</span><br><span class="line">        type: <span class="string">'dom'</span>, <span class="attr">ele</span>: <span class="string">'div'</span>, <span class="attr">nodeIndex</span>: <span class="number">0</span>, <span class="attr">children</span>: [</span><br><span class="line">            &#123;<span class="attr">type</span>: <span class="string">'dom'</span>, <span class="attr">ele</span>: <span class="string">'a'</span>, <span class="attr">nodeIndex</span>: <span class="number">1</span>, <span class="attr">children</span>: [</span><br><span class="line">                &#123;<span class="attr">type</span>: <span class="string">'text'</span>, <span class="attr">value</span>: <span class="string">'123'</span>&#125;</span><br><span class="line">            ]&#125;,</span><br><span class="line">            &#123;<span class="attr">type</span>: <span class="string">'dom'</span>, <span class="attr">ele</span>: <span class="string">'p'</span>, <span class="attr">nodeIndex</span>: <span class="number">2</span>, <span class="attr">children</span>: [</span><br><span class="line">                &#123;<span class="attr">type</span>: <span class="string">'dom'</span>, <span class="attr">ele</span>: <span class="string">'span'</span>, <span class="attr">nodeIndex</span>: <span class="number">3</span>, <span class="attr">children</span>: [&#123;<span class="attr">type</span>: <span class="string">'text'</span>, <span class="attr">value</span>: <span class="string">'456'</span>&#125;]&#125;,</span><br><span class="line">                &#123;<span class="attr">type</span>: <span class="string">'text'</span>, <span class="attr">value</span>: <span class="string">'789'</span>&#125;</span><br><span class="line">            ]&#125;,</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>原本就是一个<code>&lt;div&gt;</code>，经过AST生成一个对象，最终还是生成一个<code>&lt;div&gt;</code>，这是多余的步骤吗？不是的，在这个过程中我们可以实现一些功能：</p>
+<ol>
+<li>排除无效DOM元素，并在构建过程可进行报错。</li>
+<li>使用自定义组件的时候，可匹配出来。</li>
+<li>可方便地实现数据绑定、事件绑定等功能。</li>
+<li>为虚拟<code>DOM Diff</code>过程打下铺垫。</li>
+</ol>
+<h3 id="数据绑定捕获"><a href="#数据绑定捕获" class="headerlink" title="数据绑定捕获"></a>数据绑定捕获</h3><p>这里我们拿来做例子的是，在Angular和Vue里面都有，是双大括号的数据绑定<code></code>的语法。</p>
+<p>在前面DOM元素捕获的基础上，我们来添加数据绑定：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;&#123; data &#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这么一个简单的数据，我们可以获得这样一个对象：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">thisDiv = &#123;</span><br><span class="line">    dom: &#123;</span><br><span class="line">        type: <span class="string">'dom'</span>, <span class="attr">ele</span>: <span class="string">'div'</span>, <span class="attr">nodeIndex</span>: <span class="number">0</span>, <span class="attr">children</span>: [</span><br><span class="line">            &#123;<span class="attr">type</span>: <span class="string">'text'</span>, <span class="attr">value</span>: <span class="string">'123'</span>&#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;,</span><br><span class="line">    binding: [</span><br><span class="line">        &#123;<span class="attr">type</span>: <span class="string">'dom'</span>, <span class="attr">nodeIndex</span>: <span class="number">0</span>, <span class="attr">valueName</span>: <span class="string">'data'</span>&#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样，我们在生成一个DOM的时候，同时添加对<code>data</code>的监听，数据更新时我们会找到对应的<code>nodeIndex</code>，更新值：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 假设这是一个生成DOM的过程，包括数据绑定和</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">generateDOM</span>(<span class="params">astObject</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> &#123;dom, binding = []&#125; = astObject;</span><br><span class="line">    <span class="comment">// 生成DOM，这里假装当前节点是baseDom</span></span><br><span class="line">    baseDom.innerHTML = getDOMString(dom);</span><br><span class="line">    <span class="comment">// 对于数据绑定的，来进行监听更新吧</span></span><br><span class="line">    baseDom.addEventListener(<span class="string">'data:change'</span>, (name, value) =&gt; &#123;</span><br><span class="line">        <span class="comment">// 寻找匹配的数据绑定</span></span><br><span class="line">        <span class="keyword">const</span> obj = binding.find(<span class="function"><span class="params">x</span> =&gt;</span> x.valueName == name);</span><br><span class="line">        <span class="comment">// 若找到值绑定的对应节点，则更新其值。</span></span><br><span class="line">        <span class="keyword">if</span>(obj)&#123;</span><br><span class="line">            baseDom.find(<span class="string">`[data-node-index="<span class="subst">$&#123;obj.nodeIndex&#125;</span>"]`</span>).innerHTML = value;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取DOM字符串，这里简单拼成字符串</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getDOMString</span>(<span class="params">domObj</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 无效对象返回''</span></span><br><span class="line">    <span class="keyword">if</span>(!domObj) <span class="keyword">return</span> <span class="string">''</span>;</span><br><span class="line">    <span class="keyword">const</span> &#123;type, children = [], nodeIndex, ele, value&#125; = domObj;</span><br><span class="line">    <span class="keyword">if</span>(type == <span class="string">'dom'</span>)&#123;</span><br><span class="line">        <span class="comment">// 若有子对象，递归返回生成的字符串拼接</span></span><br><span class="line">        <span class="keyword">const</span> childString = <span class="string">''</span>;</span><br><span class="line">        children.forEach(<span class="function"><span class="params">x</span> =&gt;</span> &#123;</span><br><span class="line">            childString += getDOMString(x);</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="comment">// dom对象，拼接生成对象字符串</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">`&lt;<span class="subst">$&#123;ele&#125;</span> data-node-index="<span class="subst">$&#123;nodeIndex&#125;</span>"&gt;<span class="subst">$&#123;childString&#125;</span>&lt;/<span class="subst">$&#123;ele&#125;</span>&gt;`</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(type == <span class="string">'text'</span>)&#123;</span><br><span class="line">        <span class="comment">// 若为textNode，返回text的值</span></span><br><span class="line">        <span class="keyword">return</span> value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们来对上面的代码进行说明。</p>
+<p><strong>1. 根据节点信息生成对应的<code>HTML string</code>，也即<code>getDOMString()</code>方法。</strong></p>
+<p>这里我们只是简单完成了一种实现方式，根据节点生成DOM也有其他方式，例如使用<code>.createElement()</code>、<code>.appendChild()</code>、<code>textContent</code>等等。</p>
+<p>我们称通过生成<code>HTML string</code>的方式为<strong>字符串模版</strong>，同时我们将通过<code>createElement()/appendChild()</code>的方式生成DOM称为<strong>节点模版</strong>。</p>
+<p><strong>2. 通过监听数据变更，同时根据绑定的数值获取对应节点，并进行局部更新。</strong></p>
+<p>在使用字符串模版的时候，我们将<code>nodeIndex</code>绑定在元素属性上，主要是用于数据更新时追寻节点进行内容更新。<br>在使用节点模版的时候，我们可在创建节点的时候，将该节点保存下来，直接用于数据更新。</p>
+<p>当然，即使在字符串模版，我们也可以遍历一遍<code>binding</code>来获取所有绑定数据的节点并保存，这样就不用每次数据更新事件触发的时候重新进行获取，毕竟DOM节点的匹配也是会有一定的消耗的。</p>
+<p><strong>3. 无论是数据还是事件、属性、样式等的绑定，都可以通过相似的方法进行。</strong></p>
+<p>虽然这里我们只介绍了数据的绑定，但其实事件的绑定、属性和样式的绑定都可以用相似的方式进行，当然事件监听和事件的触发都是我们自己定义的，对于传递的内容都可以用自己想要的方式来传。</p>
+<h2 id="AST生成模版"><a href="#AST生成模版" class="headerlink" title="AST生成模版"></a>AST生成模版</h2><h3 id="生成模版的方法"><a href="#生成模版的方法" class="headerlink" title="生成模版的方法"></a>生成模版的方法</h3><p>我们在捕获得到一个AST树结构后，会将其生成对应的DOM。一般来说我们有这些方式：</p>
+<ol>
+<li><strong>字符串模版：使用拼接的方式生成DOM字符串，直接通过<code>innderHTML()</code>插入页面。</strong></li>
+<li><strong>节点模版：使用<code>createElement()/appendChild()/textContent</code>等方法，动态地插入DOM节点，根节点使用<code>appendChild()</code>插入页面。</strong></li>
+<li><strong>混合模版：使用<code>createElement()/appendChild()/textContent</code>等方法动态地插入DOM节点，但是根节点使用<code>innderHTML()</code>插入页面。</strong></li>
+</ol>
+<p>这几个有什么区别呢？</p>
+<p>刚开始的时候，我们每次更新页面数据和状态，通常通过<code>innerHTML</code>方法来用新的<code>HTML String</code>替换旧的，这种方法写起来很简单，无非是将各种节点使用字符串的方式拼接起来而已。但是如果我们更新的节点范围比较大，这时候我们需要替换掉很大一片的<code>HTML String</code>。</p>
+<p>对于浏览器，这样的一次<code>HTML String</code>替换并不只是更新一些字符串那么简单。</p>
+<h3 id="浏览器的渲染机制"><a href="#浏览器的渲染机制" class="headerlink" title="浏览器的渲染机制"></a>浏览器的渲染机制</h3><p>浏览器的一次页面渲染其实开销并不小，首先浏览器会解析三种文件：</p>
+<ul>
+<li>解析<code>HTML/SVG/XHTML</code>，会生成一个<code>DOM结构树</code></li>
+<li>解析<code>CSS</code>，会生成一个<code>CSS规则树</code></li>
+<li>解析<code>JS</code>，可通过<code>DOM API</code>和<code>CSS API</code>来操作<code>DOM结构树</code>和<code>CSS规则树</code></li>
+</ul>
+<p><code>CSS规则树</code>与<code>DOM结构树</code>结合，最终生成一个<code>Render树</code>（即最终呈现的页面，例如其中会移除<code>DOM结构树</code>中匹配到<code>CSS</code>里面<code>display:none;</code>的DOM节点）。其中，<code>CSS</code>匹配DOM结构的过程是很复杂的，曾经在机器配置不高的日子也会出现过性能问题。</p>
+<p><strong>一般来说浏览器绘制页面的过程是：1.计算<code>CSS规则树</code> =&gt; 2.生成<code>Render树</code> =&gt; 3.计算各个节点的<code>大小</code>/<code>position</code>/<code>z-index</code> =&gt; 4.绘制。</strong>其中计算的环节也是消耗较大的地方。</p>
+<p>我们使用<code>DOM API</code>和<code>CSS API</code>的时候，通常会触发浏览器的两种操作：<code>Repaint</code>和<code>Reflow</code>。</p>
+<p><strong>Repaint：页面部分重画，通常不涉及尺寸的改变，常见于颜色的变化。</strong>这时候一般只触发绘制过程的第4个步骤。</p>
+<p><strong>Reflow：意味着节点需要重新计算和绘制，常见于尺寸的改变。</strong>这时候会触发3和4两个步骤。</p>
+<p>所以我们在写页面的时候会注意一些问题，例如不要一条一条地修改DOM的样式（会触发多次的计算或绘制），在写动画的时候多使用<code>fixed</code>/<code>absolute</code>等（<code>Reflow</code>的范围小），等等。</p>
+<p>回到话题，如果我们直接每次更新页面数据和状态，都使用<code>innerHTML</code>的方式，无疑会增加浏览器的负担，所以需要跟踪节点进行局部跟新。当然，<code>innerHTML</code>也有它的优势，那就是我们可以使用一个<code>innerHTML</code>替代很多很多的<code>createElement()/appendChild()/textContent</code>方法，这在我们较少使用数据绑定和更新的情况下高效得多。</p>
+<h1 id="模版数据更新"><a href="#模版数据更新" class="headerlink" title="模版数据更新"></a>模版数据更新</h1><hr>
+<p>我们讲了模版生成AST，以及通过AST生成DOM、并进行数据绑定的过程，接下来说明下模版数据更新的过程。</p>
+<h3 id="数据更新监听"><a href="#数据更新监听" class="headerlink" title="数据更新监听"></a>数据更新监听</h3><p>前面将数据绑定的时候，也讲了使用<strong>事件监听</strong>的方式监听数据更新。这里接着介绍一些其他的方式。</p>
+<p><strong>脏检测：在Angular中，并不直接监听数据的变动，而是监听常见的事件如用户交互（点击、输入等）、定时器、生命周期等。在每次事件触发完毕后，计算数据的新值和旧值是否有差异，若有差异则更新页面，并触发下一次的脏检测，直到没有差异或是次数达到设定阈值。</strong></p>
+<p>脏检测是Angular的一大特色。由于事件触发的时候，并不能知道哪些数据会有变化，所以会进行大面积数据的新旧值Diff，这也毫无疑问会导致一些性能问题。在Angular2版本之后，由于使用了<code>zone.js</code>对异步任务进行跟踪，把这个计算放进worker，完了更新回主线程，是个类似多线程的设计，也提升了性能。</p>
+<p>同时，在Angular2中应用的组织类似DOM，也是树结构的，脏检查会从根组件开始，自上而下对树上的所有子组件进行检查。相比Angular1中的带有环的结构，这样的单向数据流效率更高，而且容易预测。</p>
+<p><strong>Getter/Setter：在Vue中，主要是使用<code>Proxy</code>的方式，在相关的数据写入时进行模版更新。</strong></p>
+<p><strong>手动Function：在React中，通过手动调用<code>set()</code>的方式写入数据来更新模版。</strong></p>
+<p>使用<code>Proxy</code>或者是<code>set()</code>的时候，我们可以通过<code>event emit</code>或是<code>callback</code>回调的方法，来触发数据的计算以及模版的更新。</p>
+<h3 id="数据更新Diff"><a href="#数据更新Diff" class="headerlink" title="数据更新Diff"></a>数据更新Diff</h3><p>说到数据更新的Diff，更多的则是<code>Diff + 更新模板</code>这样一个过程。</p>
+<p>在这个过程中，最突出的也就是虚拟DOM，它解决了常见的局部数据更新的问题，例如数组中值位置的调换、部分更新。一般来说计算过程如下：</p>
+<p><strong>1. 用JS对象模拟DOM树。</strong></p>
+<p>不知道大家仔细研究过DOM节点对象没，一个真正的DOM元素非常庞大，拥有很多的属性值。而其中很多的属性对于计算过程来说是不需要的，所以我们的第一步就是简化DOM对象。<br>我们用一个<code>JavaScript</code>对象结构表示DOM树的结构，然后用这个树构建一个真正的DOM树。</p>
+<p><strong>2. 比较两棵虚拟DOM树的差异。</strong></p>
+<p>当状态变更的时候，重新构造一棵新的对象树。然后用新的树和旧的树进行比较，记录两棵树差异。通常来说这样的差异需要记录：</p>
+<ul>
+<li>需要替换掉原来的节点</li>
+<li>移动、删除、新增子节点</li>
+<li>修改了节点的属性</li>
+<li>对于文本节点的文本内容改变</li>
+</ul>
+<p>经过差异对比之后，我们能获得一组差异记录，接下里我们需要使用它。</p>
+<p><strong>3. 把差异应用到真正的DOM树上。</strong></p>
+<p>对差异记录要应用到真正的DOM树上，例如节点的替换、移动、删除，文本内容的改变等。</p>
+<h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><hr>
+<p>总的来说，一个前端模板引擎大致分为<code>模板生成AST =&gt; AST生成模板 =&gt; 数据/事件/属性绑定的监听 =&gt; 数据变更Diff =&gt; 局部更新模板</code>这些过程。当然上面的介绍以个人理解为主，部分源码验证为辅。<br>还是那句话，多思考多总结，不管结论是否正确，结果是否所期望，过程中的收获也会让人成长。</p>
+  
+	</div>
+	<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/2code2.jpg" width="200" height="200" style="display:block;margin: 0 auto;" />
+	<p style="text-align: center;margin-top: 10px;margin-bottom: 10px;">码生艰难，写文不易，给我家猪囤点猫粮了喵~</p>
+	<p style="text-align: center;"><a target="_blank" rel="noopener" href="https://space.bilibili.com/42233366">B站: 被删</a></p>
+	<div class="article-content">
+		<p style="margin-top:50px;">
+			查看Github有更多内容噢：<a target="_blank" rel="noopener" href="https://github.com/godbasin">https://github.com/godbasin</a>
+			<br>
+			更欢迎来<a href="https://godbasin.github.io/front-end-playground">被删的前端游乐场</a>边撸猫边学前端噢
+			<br>
+			<br>
+			如果你想要关注日常生活中的我，欢迎关注“牧羊的猪”公众号噢
+		</p>
+	</div>
+	<div class="author-right">
+  		<p>作者：被删</p>
+  		<p>出处：<a href="https://godbasin.github.io">https://godbasin.github.io</a></p>
+  		<p>本文版权归作者所有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利。</p>
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/分享/">分享</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/%E6%80%9D%E6%83%B3%E6%A3%89%E8%8A%B1%E7%B3%96/">思想棉花糖</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  
+<!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a href="http://www.jiathis.com/share?uid=2134021" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config = {data_track_clickback:'true'};
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js?uid=2134021" charset="utf-8"></script>
+<!-- JiaThis Button END -->   
+
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2017/10/28/advance-from-pure-front-ender-1-thread-and-progress/" title="纯前端的进军1--线程与进程">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  纯前端的进军1--线程与进程</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2017/10/14/dialogue-abstraction/"  title="对话抽象">
+ <strong>NEXT:</strong><br/> 
+ <span>对话抽象
+</span>
+</a>
+</div>
+
+</nav>
+
+	<!-- 如果不是首页且没使用 `comments: false` 关闭评论，则尝试加载评论 -->
+
+    <!-- 配置中启用多说时，导入相应代码 -->
+    
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A8%A1%E6%9D%BF%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A"><span class="toc-number">1.</span> <span class="toc-text">模板数据绑定</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E6%9E%90%E8%AF%AD%E6%B3%95%E7%94%9F%E6%88%90AST"><span class="toc-number">1.1.</span> <span class="toc-text">解析语法生成AST</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8D%95%E8%8E%B7%E7%89%B9%E5%AE%9A%E8%AF%AD%E6%B3%95"><span class="toc-number">1.1.1.</span> <span class="toc-text">捕获特定语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DOM%E5%85%83%E7%B4%A0%E6%8D%95%E8%8E%B7"><span class="toc-number">1.1.2.</span> <span class="toc-text">DOM元素捕获</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A%E6%8D%95%E8%8E%B7"><span class="toc-number">1.1.3.</span> <span class="toc-text">数据绑定捕获</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AST%E7%94%9F%E6%88%90%E6%A8%A1%E7%89%88"><span class="toc-number">1.2.</span> <span class="toc-text">AST生成模版</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E6%A8%A1%E7%89%88%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">1.2.1.</span> <span class="toc-text">生成模版的方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E6%B8%B2%E6%9F%93%E6%9C%BA%E5%88%B6"><span class="toc-number">1.2.2.</span> <span class="toc-text">浏览器的渲染机制</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A8%A1%E7%89%88%E6%95%B0%E6%8D%AE%E6%9B%B4%E6%96%B0"><span class="toc-number">2.</span> <span class="toc-text">模版数据更新</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%9B%B4%E6%96%B0%E7%9B%91%E5%90%AC"><span class="toc-number">2.0.1.</span> <span class="toc-text">数据更新监听</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%9B%B4%E6%96%B0Diff"><span class="toc-number">2.0.2.</span> <span class="toc-text">数据更新Diff</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%93%E6%9D%9F%E8%AF%AD"><span class="toc-number">3.</span> <span class="toc-text">结束语</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  	
+	<div class="archiveslist">
+		<p class="asidetitle">最近文章</p>
+			<ul class="archive-list">
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/12/25/learn-front-end-develop-from-interview/" title="从面试角度了解前端基础知识体系">从面试角度了解前端基础知识体系...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/11/25/render-engine-element-and-event/" title="复杂渲染引擎架构与设计--8.元素与事件">复杂渲染引擎架构与设计--8.元素与...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/10/13/render-engine-offscreen-render/" title="复杂渲染引擎架构与设计--7.离屏渲染">复杂渲染引擎架构与设计--7.离屏渲...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/10/11/render-engine-diff-render/" title="复杂渲染引擎架构与设计--6.增量渲染">复杂渲染引擎架构与设计--6.增量渲...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/09/16/render-engine-calculate-split/" title="复杂渲染引擎架构与设计--5.分片计算">复杂渲染引擎架构与设计--5.分片计...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/08/17/render-engine-calculate/" title="复杂渲染引擎架构与设计--4.渲染计算">复杂渲染引擎架构与设计--4.渲染计...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/07/19/render-engine-bottom-render-architecture/" title="复杂渲染引擎架构与设计--3.底层渲染适配">复杂渲染引擎架构与设计--3.底层渲...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/07/01/complex-front-end-project-solution/" title="大型前端项目的常见问题和解决方案">大型前端项目的常见问题和解决方案...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/06/15/render-engine-plugin-design/" title="复杂渲染引擎架构与设计--2.插件的实现">复杂渲染引擎架构与设计--2.插件的...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/05/13/render-engine-render-and-collect/" title="复杂渲染引擎架构与设计--1.收集与渲染">复杂渲染引擎架构与设计--1.收集与...</a>
+				</li>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+	</div>
+
+
+  
+  <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">归档</a></p>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">十二月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">十一月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">十月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">九月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">八月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">七月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">六月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">四月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/03/">三月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/01/">一月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">十二月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">十月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">六月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">五月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">二月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">五月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">十月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">41</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">9</span></li></ul>
+  </div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle"><a href="/categories">分类</a></p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/Angular源码/" title="Angular源码">Angular源码<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/CSS炒饭/" title="CSS炒饭">CSS炒饭<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/D3小馒头/" title="D3小馒头">D3小馒头<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular2火锅/" title="angular2火锅">angular2火锅<sup>25</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular混搭/" title="angular混搭">angular混搭<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/box2djs方糖/" title="box2djs方糖">box2djs方糖<sup>34</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/cyclejs哈根达斯/" title="cyclejs哈根达斯">cyclejs哈根达斯<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/jQuery杂烩/" title="jQuery杂烩">jQuery杂烩<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/js什锦/" title="js什锦">js什锦<sup>27</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/react沙拉/" title="react沙拉">react沙拉<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/three-js奶茶/" title="three.js奶茶">three.js奶茶<sup>5</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/vue八宝粥/" title="vue八宝粥">vue八宝粥<sup>30</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/webpack宾治/" title="webpack宾治">webpack宾治<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/web乱炖/" title="web乱炖">web乱炖<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端技能提升/" title="前端技能提升">前端技能提升<sup>6</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端满汉全席/" title="前端满汉全席">前端满汉全席<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端解决方案/" title="前端解决方案">前端解决方案<sup>30</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/喵/" title="喵">喵<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/小程序双皮奶/" title="小程序双皮奶">小程序双皮奶<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/工作这杯茶/" title="工作这杯茶">工作这杯茶<sup>27</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/应用巧克力盒/" title="应用巧克力盒">应用巧克力盒<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/思想棉花糖/" title="思想棉花糖">思想棉花糖<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/柴米油盐工具集/" title="柴米油盐工具集">柴米油盐工具集<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/自动化甜筒/" title="自动化甜筒">自动化甜筒<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/非前端钙片/" title="非前端钙片">非前端钙片<sup>7</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle">标签</p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/分享/" title="分享">分享<sup>50</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/前端技能/" title="前端技能">前端技能<sup>6</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/功能设计/" title="功能设计">功能设计<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/原创部件/" title="原创部件">原创部件<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/心态/" title="心态">心态<sup>22</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/性能优化/" title="性能优化">性能优化<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/教程/" title="教程">教程<sup>80</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/晒猫/" title="晒猫">晒猫<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/笔记/" title="笔记">笔记<sup>121</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/算法/" title="算法">算法<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/自制插件/" title="自制插件">自制插件<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/逻辑实现/" title="逻辑实现">逻辑实现<sup>19</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+    <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">about</a></p>
+      <ul class="archive-list">
+      	<li class="archive-list-item">
+      		<a>wangbeishan@163.com</a>
+      		<a target="_blank" rel="noopener" href="https://github.com/godbasin">github.com/godbasin</a>
+      	</li>
+      </ul>
+  </div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<section class="info">
+		<p> 即使梦想再小，却很伟大 ^_^ </p>
+	</section>
+	 
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2023 
+		
+		<a href="https://godbasin.github.io" target="_blank" title="被删">被删</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+
+
+
+
+
+  </body>
+</html>

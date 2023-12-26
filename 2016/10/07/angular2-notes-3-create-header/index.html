@@ -1,0 +1,1301 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Angular2使用笔记3--创建头部组件 | Here. There.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="被删">
+    
+    <meta name="description" content="最近在学习Angular2作为前端的框架，《Angular2使用笔记》系列用于记录过程中的一些使用和解决方法。本文记录创建头部组件的过程。">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Here. There." type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?3d902de4a19cf2bf179534ffd2dd7b7f";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/sun.png" alt="Here. There." title="Here. There."/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Here. There.">Here. There.</a></h1>
+				<h2 class="blog-motto">Love ice cream. Love sunshine. Love life. Love the world. Love myself. Love you.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">首页</a></li>
+					
+						<li><a target="_blank" rel="noopener" href="https://github.com/godbasin/godbasin.github.io">所有文章</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">分类</a></li>
+					
+						<li><a href="https://godbasin.github.io/front-end-playground">前端游乐场</a></li>
+					
+						<li><a href="/about">关于我</a></li>
+					
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/10/07/angular2-notes-3-create-header/" title="Angular2使用笔记3--创建头部组件" itemprop="url">Angular2使用笔记3--创建头部组件</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://godbasin.github.io" title="被删">被删</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2016-10-07T03:17:48.000Z" itemprop="datePublished">2016-10-07</time>
+    更新日期:<time datetime="2018-12-18T15:30:23.936Z" itemprop="dateModified">2018-12-18</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%A4%B4%E9%83%A8%E8%8F%9C%E5%8D%95"><span class="toc-number">1.</span> <span class="toc-text">创建头部菜单</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E5%A4%B4%E9%83%A8%E7%BB%84%E4%BB%B6%E7%9B%B8%E5%85%B3%E6%96%87%E4%BB%B6"><span class="toc-number">1.1.</span> <span class="toc-text">添加头部组件相关文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E7%BB%84%E4%BB%B6%E6%A8%A1%E6%9D%BF"><span class="toc-number">1.2.</span> <span class="toc-text">添加组件模板</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89Header%E7%BB%84%E4%BB%B6"><span class="toc-number">1.3.</span> <span class="toc-text">定义Header组件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">1.4.</span> <span class="toc-text">参考</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6%E7%9A%84%E4%BD%BF%E7%94%A8%E5%92%8C%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5"><span class="toc-number">2.</span> <span class="toc-text">组件的使用和依赖注入</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5"><span class="toc-number">2.1.</span> <span class="toc-text">依赖注入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ng2%E4%B8%AD%E7%9A%84%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5"><span class="toc-number">2.2.</span> <span class="toc-text">ng2中的依赖注入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E8%BF%87%E6%8C%87%E4%BB%A4%E6%B3%A8%E5%85%A5%E7%BB%84%E4%BB%B6"><span class="toc-number">2.3.</span> <span class="toc-text">通过指令注入组件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83-1"><span class="toc-number">2.4.</span> <span class="toc-text">参考</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E6%9D%9F%E8%AF%AD"><span class="toc-number">3.</span> <span class="toc-text">结束语</span></a></li></ol>
+		</div>
+		
+		<p>最近在学习Angular2作为前端的框架，《Angular2使用笔记》系列用于记录过程中的一些使用和解决方法。<br>本文记录创建头部组件的过程。<br><a id="more"></a></p>
+<h2 id="创建头部菜单"><a href="#创建头部菜单" class="headerlink" title="创建头部菜单"></a>创建头部菜单</h2><hr>
+<p>该头部菜单与前几个框架的使用笔记中完全一致。如图：<br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/C902.tmp.png" alt="image"></p>
+<h3 id="添加头部组件相关文件"><a href="#添加头部组件相关文件" class="headerlink" title="添加头部组件相关文件"></a>添加头部组件相关文件</h3><ul>
+<li>添加header文件夹，用于管理Header组件的相关文件<br>Header组件文件如下：</li>
+</ul>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">header/</span><br><span class="line"> ├──index.ts                   * 导出该目录下组件</span><br><span class="line"> ├──header.component.ts        * 定义并导出Header组件</span><br><span class="line"> ├──header.style.css           * Header组件的css样式</span><br><span class="line"> └──header.template.html       * Header组件的html模板</span><br></pre></td></tr></table></figure>
+<h3 id="添加组件模板"><a href="#添加组件模板" class="headerlink" title="添加组件模板"></a>添加组件模板</h3><p>header.template.html文件，如下<br><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;nav <span class="keyword">class</span>=<span class="string">"navbar navbar-default header"</span>&gt;</span><br><span class="line">    &lt;div <span class="keyword">class</span>=<span class="string">"container-fluid"</span>&gt;</span><br><span class="line">        &lt;div <span class="keyword">class</span>=<span class="string">"navbar-header"</span>&gt;</span><br><span class="line">            &lt;a <span class="keyword">class</span>=<span class="string">"navbar-brand"</span> href=<span class="string">"#"</span>&gt;Godbasin&lt;<span class="regexp">/a&gt;</span></span><br><span class="line"><span class="regexp">        &lt;/</span>div&gt;</span><br><span class="line">        &lt;div <span class="keyword">class</span>=<span class="string">"collapse navbar-collapse"</span> id=<span class="string">"bs-example-navbar-collapse-1"</span>&gt;</span><br><span class="line">            &lt;ul <span class="keyword">class</span>=<span class="string">"nav navbar-nav"</span>&gt;</span><br><span class="line">                &lt;!--menus为主菜单--&gt;</span><br><span class="line">                &lt;li *ngFor=<span class="string">"let menu of menus"</span> routerLinkActive=<span class="string">"active"</span>&gt;&lt;a routerLink=<span class="string">"&#123;&#123; menu.href &#125;&#125;"</span>&gt;&#123;&#123; menu.text &#125;&#125;&lt;span [hidden]=<span class="string">"!menu.current"</span> <span class="keyword">class</span>=<span class="string">"sr-only"</span>&gt;(current)&lt;<span class="regexp">/span&gt;&lt;/</span>a&gt;&lt;<span class="regexp">/li&gt;</span></span><br><span class="line"><span class="regexp">            &lt;/u</span>l&gt;</span><br><span class="line">            &lt;ul <span class="keyword">class</span>=<span class="string">"nav navbar-nav navbar-right"</span>&gt;</span><br><span class="line">                &lt;li&gt;&lt;a&gt;&#123;&#123; clock &#125;&#125;&lt;<span class="regexp">/a&gt;&lt;/</span>li&gt;</span><br><span class="line">                &lt;li <span class="keyword">class</span>=<span class="string">"dropdown"</span>&gt;</span><br><span class="line">                    &lt;a href=<span class="string">""</span> <span class="keyword">class</span>=<span class="string">"dropdown-toggle"</span> data-toggle=<span class="string">"dropdown"</span> role=<span class="string">"button"</span> aria-haspopup=<span class="string">"true"</span> aria-expanded=<span class="string">"false"</span>&gt;菜单 &lt;span <span class="keyword">class</span>=<span class="string">"caret"</span>&gt;&lt;<span class="regexp">/span&gt;&lt;/</span>a&gt;</span><br><span class="line">                    &lt;ul <span class="keyword">class</span>=<span class="string">"dropdown-menu"</span>&gt;</span><br><span class="line">                        &lt;!--usermenus为右侧下拉菜单--&gt;</span><br><span class="line">                        &lt;li *ngFor=<span class="string">"let usermenu of usermenus"</span>&gt;&lt;a href=<span class="string">"&#123;&#123; usermenu.href &#125;&#125;"</span>&gt;&#123;&#123; usermenu.text &#125;&#125;&lt;<span class="regexp">/a&gt;&lt;/</span>li&gt;</span><br><span class="line">                    &lt;<span class="regexp">/ul&gt;</span></span><br><span class="line"><span class="regexp">                &lt;/</span>li&gt;</span><br><span class="line">            &lt;<span class="regexp">/ul&gt;</span></span><br><span class="line"><span class="regexp">        &lt;/</span>div&gt;</span><br><span class="line">    &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>nav&gt;</span><br></pre></td></tr></table></figure></p>
+<p>这里我们用到了ng2的路由器携带的属性绑定</p>
+<ul>
+<li>RouterLink绑定<ul>
+<li>A标签中，有一个绑定RouterLink指令的属性绑定</li>
+<li>可以通过提供查询字符串参数为RouterLink提供更多情境信息</li>
+<li>可提供一个URL片段（Fragment或hash）来跳转到本页面中的其它区域</li>
+</ul>
+</li>
+<li>RouterLinkActive绑定<ul>
+<li>每个A标签还有一个到RouterLinkActive指令的属性绑定</li>
+<li>等号（=）右侧的模板表达式包含用空格分隔的一些CSS类，还可以把RouterLinkActive指令绑定到一个CSS类组成的数组</li>
+<li>用于在相关的RouterLink被激活时为所在元素添加或移除CSS类。 该指令可以直接添加到该元素上，也可以添加到其父元素上</li>
+</ul>
+</li>
+</ul>
+<h3 id="定义Header组件"><a href="#定义Header组件" class="headerlink" title="定义Header组件"></a>定义Header组件</h3><ul>
+<li>添加组件样式header.style.css，这里就不展示出来了</li>
+<li>在header.component.ts文件中，如下</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component &#125; <span class="keyword">from</span> <span class="string">'@angular/core'</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span>(&#123;</span><br><span class="line">  selector: <span class="string">'my-header'</span>,</span><br><span class="line">  styles: [<span class="string">`</span></span><br><span class="line"><span class="string">  `</span>],</span><br><span class="line">  templateUrl: <span class="string">'./header.template.html'</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> Header &#123;</span><br><span class="line">  <span class="comment">// clock用于保存时间</span></span><br><span class="line">  clock: <span class="built_in">string</span> = <span class="string">''</span>;</span><br><span class="line">  clockTime;</span><br><span class="line">  <span class="comment">// menus用于储存主菜单</span></span><br><span class="line">  menus = [&#123;</span><br><span class="line">    title: <span class="string">'index'</span>, <span class="comment">// title用于储存路由对应的路径</span></span><br><span class="line">    href: <span class="string">'/index'</span>, <span class="comment">// href用于设定该菜单跳转路由</span></span><br><span class="line">    text: <span class="string">'首页'</span>, <span class="comment">// text用于储存该菜单显示名称</span></span><br><span class="line">  &#125;, &#123;</span><br><span class="line">      title: <span class="string">'others'</span>,</span><br><span class="line">      href: <span class="string">'/other'</span>,</span><br><span class="line">      text: <span class="string">'其他'</span>,</span><br><span class="line">    &#125;];</span><br><span class="line">  <span class="comment">// usermenus用于储存侧边下拉菜单</span></span><br><span class="line">  usermenus = [&#123;</span><br><span class="line">    href: <span class="string">'/login'</span>, <span class="comment">// href用于设定该菜单跳转路由</span></span><br><span class="line">    text: <span class="string">'退出'</span>, <span class="comment">// text用于储存该菜单显示名称</span></span><br><span class="line">  &#125;];</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 用于格式化时间（少于10在前面增加0）</span></span><br><span class="line">  numberStandard(num) &#123;</span><br><span class="line">    <span class="keyword">let</span> _val = <span class="built_in">Number</span>(num), _num;</span><br><span class="line">    _num = (_val &lt; <span class="number">10</span>) ? (<span class="string">'0'</span> + _val) : (<span class="string">''</span> + _val);</span><br><span class="line">    <span class="keyword">return</span> _num;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 用于渲染时钟</span></span><br><span class="line">  renderClock() &#123;</span><br><span class="line">    <span class="keyword">let</span> _date = <span class="keyword">new</span> <span class="built_in">Date</span>(), clock = <span class="string">''</span>;</span><br><span class="line">    clock += _date.getFullYear() + <span class="string">'年'</span> + (_date.getMonth() + <span class="number">1</span>) + <span class="string">'月'</span> + _date.getDate() + <span class="string">'日'</span>;</span><br><span class="line">    clock += <span class="string">' '</span> + <span class="keyword">this</span>.numberStandard(_date.getHours()) +</span><br><span class="line">      <span class="string">':'</span> + <span class="keyword">this</span>.numberStandard(_date.getMinutes()) +</span><br><span class="line">      <span class="string">':'</span> + <span class="keyword">this</span>.numberStandard(_date.getSeconds());</span><br><span class="line">    <span class="keyword">this</span>.clock = clock;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  ngOnInit() &#123;</span><br><span class="line">    <span class="comment">// 使用bind解决setInterval的执行环境问题</span></span><br><span class="line">    <span class="keyword">this</span>.clockTime = setInterval(<span class="keyword">this</span>.renderClock.bind(<span class="keyword">this</span>), <span class="number">500</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  ngOnDestroy() &#123;</span><br><span class="line">    <span class="comment">// 控件摧毁时移除定时事件</span></span><br><span class="line">    clearInterval(<span class="keyword">this</span>.clockTime);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>这里使用到的生命周期的钩子<ul>
+<li>ngOnInit：当每个输入属性的值都被触发了一次ngOnChanges之后才会调用ngOnInit，此时所有输入属性都已经有了正确的初始绑定值</li>
+<li>ngOnDestroy：当Angular每次销毁指令/组件之前调用</li>
+<li>其他生命周期的钩子请参照<a href="https://angular.cn/docs/ts/latest/guide/lifecycle-hooks.html" target="_blank" rel="noopener">组件生命周期</a></li>
+</ul>
+</li>
+</ul>
+<p>此时，我们已经完成了一个组件的创建了，接下来我们要把这个组件注入到其他模板。</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
+<li><a href="https://angular.cn/docs/ts/latest/guide/router.html#!#navigate" target="_blank" rel="noopener">路由与导航</a></li>
+</ul>
+<h2 id="组件的使用和依赖注入"><a href="#组件的使用和依赖注入" class="headerlink" title="组件的使用和依赖注入"></a>组件的使用和依赖注入</h2><hr>
+<p>在angular1中，我们已经了解到依赖注入这个词，而ng2和ng1中的依赖注入也有区别。</p>
+<h3 id="依赖注入"><a href="#依赖注入" class="headerlink" title="依赖注入"></a>依赖注入</h3><ul>
+<li>什么是依赖注入<ul>
+<li>“依赖注入”是提供类的新实例的一种方式，还负责处理好类所需的全部依赖</li>
+<li>大多数依赖都是服务</li>
+<li>Angular也使用依赖注入提供我们需要的组件以及这些组件所需的服务</li>
+</ul>
+</li>
+<li>有关依赖注入<ul>
+<li>依赖注入渗透在整个Angular框架中，并且被到处使用</li>
+<li>注入器（Injector）是本机制的核心<ul>
+<li>注入器负责维护一个容器，用于存放它创建过的服务实例</li>
+<li>注入器能使用提供商创建一个新的服务实例</li>
+</ul>
+</li>
+<li>提供商是一个用于创建服务的“配方”</li>
+<li>把提供商注册到注入器</li>
+</ul>
+</li>
+</ul>
+<h3 id="ng2中的依赖注入"><a href="#ng2中的依赖注入" class="headerlink" title="ng2中的依赖注入"></a>ng2中的依赖注入</h3><ul>
+<li>当Angular创建组件时，会首先为组件所需的服务找一个注入器（Injector）</li>
+<li>注入器是一个维护服务实例的容器，存放着以前创建的实例</li>
+<li>如果容器中还没有所请求的服务实例，注入器就会创建一个服务实例，并且添加到容器中，然后把这个服务返回给Angular</li>
+<li>当所有的服务都被解析完并返回时，Angular会以这些服务为参数去调用组件的构造函数</li>
+</ul>
+<h3 id="通过指令注入组件"><a href="#通过指令注入组件" class="headerlink" title="通过指令注入组件"></a>通过指令注入组件</h3><p>上一节虽然我们也创建了一个登陆页面的组件，Login组件直接在路由中使用。这里我们将尝试在主页面app.component.ts中使用Header组件。<br><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这里只展示相关的代码</span></span><br><span class="line"><span class="comment">// 添加Header组件，默认从header文件夹的index.ts中获取</span></span><br><span class="line"><span class="keyword">import</span> &#123; Header &#125; <span class="keyword">from</span> <span class="string">'./header'</span>;</span><br><span class="line"><span class="comment">// 定义主页面组件</span></span><br><span class="line">@Component(&#123;</span><br><span class="line">  selector: <span class="string">'app'</span>,</span><br><span class="line">  encapsulation: ViewEncapsulation.None,</span><br><span class="line">  styleUrls: [</span><br><span class="line">    <span class="string">'./app.style.css'</span></span><br><span class="line">  ],</span><br><span class="line">  template: <span class="string">`</span></span><br><span class="line"><span class="string">    &lt;!--插入头部组件，注入指令后生效--&gt;</span></span><br><span class="line"><span class="string">    &lt;my-header&gt;&lt;/my-header&gt;</span></span><br><span class="line"><span class="string">     &lt;main&gt;</span></span><br><span class="line"><span class="string">      &lt;router-outlet&gt;&lt;/router-outlet&gt;</span></span><br><span class="line"><span class="string">    &lt;/main&gt;</span></span><br><span class="line"><span class="string">  `</span>,</span><br><span class="line">  <span class="comment">// 注入指令</span></span><br><span class="line">  directives: [Header]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>此时算是完成了一个组件的创建以及使用，如图：<br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/15D3.tmp.png" alt="image"></p>
+<h3 id="参考-1"><a href="#参考-1" class="headerlink" title="参考"></a>参考</h3><ul>
+<li><a href="https://angular.cn/docs/ts/latest/cookbook/dependency-injection.html" target="_blank" rel="noopener">依赖注入–烹饪宝典</a></li>
+<li><a href="https://angular.cn/docs/ts/latest/guide/dependency-injection.html" target="_blank" rel="noopener">依赖注入–基础知识</a></li>
+</ul>
+<h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><hr>
+<p>不得不说，使用angular2-webpack-starter快速搭建项目之后，对ng2的很多使用方法也比较了解了。<br>毕竟ng2虽然有很详细的官方教程，但是要看完也是很需要耐心和恒心的呢，哈哈哈哈:)<br><a href="https://github.com/godbasin/godbasin.github.io/tree/blog-codes/angular2-notes/3-create-header" target="_blank" rel="noopener">此处查看项目代码（仅包含src部分）</a><br><a href="http://angular2-notes.godbasin.com/3-create-header/index.html" target="_blank" rel="noopener">此处查看页面效果</a></p>
+  
+	</div>
+	<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/2code2.jpg" width="200" height="200" style="display:block;margin: 0 auto;" />
+	<p style="text-align: center;margin-top: 10px;margin-bottom: 10px;">码生艰难，写文不易，给我家猪囤点猫粮了喵~</p>
+	<p style="text-align: center;"><a target="_blank" rel="noopener" href="https://space.bilibili.com/42233366">B站: 被删</a></p>
+	<div class="article-content">
+		<p style="margin-top:50px;">
+			查看Github有更多内容噢：<a target="_blank" rel="noopener" href="https://github.com/godbasin">https://github.com/godbasin</a>
+			<br>
+			更欢迎来<a href="https://godbasin.github.io/front-end-playground">被删的前端游乐场</a>边撸猫边学前端噢
+			<br>
+			<br>
+			如果你想要关注日常生活中的我，欢迎关注“牧羊的猪”公众号噢
+		</p>
+	</div>
+	<div class="author-right">
+  		<p>作者：被删</p>
+  		<p>出处：<a href="https://godbasin.github.io">https://godbasin.github.io</a></p>
+  		<p>本文版权归作者所有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利。</p>
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/笔记/">笔记</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/angular2%E7%81%AB%E9%94%85/">angular2火锅</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  
+<!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a href="http://www.jiathis.com/share?uid=2134021" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config = {data_track_clickback:'true'};
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js?uid=2134021" charset="utf-8"></script>
+<!-- JiaThis Button END -->   
+
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2016/10/16/angular2-notes-4-route-component/" title="Angular2使用笔记4--路由和导航">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  Angular2使用笔记4--路由和导航</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2016/10/05/angular2-notes-2-create-login/"  title="Angular2使用笔记2--创建登录页面">
+ <strong>NEXT:</strong><br/> 
+ <span>Angular2使用笔记2--创建登录页面
+</span>
+</a>
+</div>
+
+</nav>
+
+	<!-- 如果不是首页且没使用 `comments: false` 关闭评论，则尝试加载评论 -->
+
+    <!-- 配置中启用多说时，导入相应代码 -->
+    
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%A4%B4%E9%83%A8%E8%8F%9C%E5%8D%95"><span class="toc-number">1.</span> <span class="toc-text">创建头部菜单</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E5%A4%B4%E9%83%A8%E7%BB%84%E4%BB%B6%E7%9B%B8%E5%85%B3%E6%96%87%E4%BB%B6"><span class="toc-number">1.1.</span> <span class="toc-text">添加头部组件相关文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E7%BB%84%E4%BB%B6%E6%A8%A1%E6%9D%BF"><span class="toc-number">1.2.</span> <span class="toc-text">添加组件模板</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89Header%E7%BB%84%E4%BB%B6"><span class="toc-number">1.3.</span> <span class="toc-text">定义Header组件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">1.4.</span> <span class="toc-text">参考</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6%E7%9A%84%E4%BD%BF%E7%94%A8%E5%92%8C%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5"><span class="toc-number">2.</span> <span class="toc-text">组件的使用和依赖注入</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5"><span class="toc-number">2.1.</span> <span class="toc-text">依赖注入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ng2%E4%B8%AD%E7%9A%84%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5"><span class="toc-number">2.2.</span> <span class="toc-text">ng2中的依赖注入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E8%BF%87%E6%8C%87%E4%BB%A4%E6%B3%A8%E5%85%A5%E7%BB%84%E4%BB%B6"><span class="toc-number">2.3.</span> <span class="toc-text">通过指令注入组件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83-1"><span class="toc-number">2.4.</span> <span class="toc-text">参考</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E6%9D%9F%E8%AF%AD"><span class="toc-number">3.</span> <span class="toc-text">结束语</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  	
+	<div class="archiveslist">
+		<p class="asidetitle">最近文章</p>
+			<ul class="archive-list">
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/12/25/learn-front-end-develop-from-interview/" title="从面试角度了解前端基础知识体系">从面试角度了解前端基础知识体系...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/11/25/render-engine-element-and-event/" title="复杂渲染引擎架构与设计--8.元素与事件">复杂渲染引擎架构与设计--8.元素与...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/10/13/render-engine-offscreen-render/" title="复杂渲染引擎架构与设计--7.离屏渲染">复杂渲染引擎架构与设计--7.离屏渲...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/10/11/render-engine-diff-render/" title="复杂渲染引擎架构与设计--6.增量渲染">复杂渲染引擎架构与设计--6.增量渲...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/09/16/render-engine-calculate-split/" title="复杂渲染引擎架构与设计--5.分片计算">复杂渲染引擎架构与设计--5.分片计...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/08/17/render-engine-calculate/" title="复杂渲染引擎架构与设计--4.渲染计算">复杂渲染引擎架构与设计--4.渲染计...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/07/19/render-engine-bottom-render-architecture/" title="复杂渲染引擎架构与设计--3.底层渲染适配">复杂渲染引擎架构与设计--3.底层渲...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/07/01/complex-front-end-project-solution/" title="大型前端项目的常见问题和解决方案">大型前端项目的常见问题和解决方案...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/06/15/render-engine-plugin-design/" title="复杂渲染引擎架构与设计--2.插件的实现">复杂渲染引擎架构与设计--2.插件的...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/05/13/render-engine-render-and-collect/" title="复杂渲染引擎架构与设计--1.收集与渲染">复杂渲染引擎架构与设计--1.收集与...</a>
+				</li>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+	</div>
+
+
+  
+  <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">归档</a></p>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">十二月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">十一月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">十月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">九月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">八月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">七月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">六月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">四月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/03/">三月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/01/">一月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">十二月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">十月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">六月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">五月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">二月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">五月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">十月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">41</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">9</span></li></ul>
+  </div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle"><a href="/categories">分类</a></p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/Angular源码/" title="Angular源码">Angular源码<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/CSS炒饭/" title="CSS炒饭">CSS炒饭<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/D3小馒头/" title="D3小馒头">D3小馒头<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular2火锅/" title="angular2火锅">angular2火锅<sup>25</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular混搭/" title="angular混搭">angular混搭<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/box2djs方糖/" title="box2djs方糖">box2djs方糖<sup>34</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/cyclejs哈根达斯/" title="cyclejs哈根达斯">cyclejs哈根达斯<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/jQuery杂烩/" title="jQuery杂烩">jQuery杂烩<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/js什锦/" title="js什锦">js什锦<sup>27</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/react沙拉/" title="react沙拉">react沙拉<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/three-js奶茶/" title="three.js奶茶">three.js奶茶<sup>5</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/vue八宝粥/" title="vue八宝粥">vue八宝粥<sup>30</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/webpack宾治/" title="webpack宾治">webpack宾治<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/web乱炖/" title="web乱炖">web乱炖<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端技能提升/" title="前端技能提升">前端技能提升<sup>6</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端满汉全席/" title="前端满汉全席">前端满汉全席<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端解决方案/" title="前端解决方案">前端解决方案<sup>30</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/喵/" title="喵">喵<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/小程序双皮奶/" title="小程序双皮奶">小程序双皮奶<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/工作这杯茶/" title="工作这杯茶">工作这杯茶<sup>27</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/应用巧克力盒/" title="应用巧克力盒">应用巧克力盒<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/思想棉花糖/" title="思想棉花糖">思想棉花糖<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/柴米油盐工具集/" title="柴米油盐工具集">柴米油盐工具集<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/自动化甜筒/" title="自动化甜筒">自动化甜筒<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/非前端钙片/" title="非前端钙片">非前端钙片<sup>7</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle">标签</p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/分享/" title="分享">分享<sup>50</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/前端技能/" title="前端技能">前端技能<sup>6</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/功能设计/" title="功能设计">功能设计<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/原创部件/" title="原创部件">原创部件<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/心态/" title="心态">心态<sup>22</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/性能优化/" title="性能优化">性能优化<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/教程/" title="教程">教程<sup>80</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/晒猫/" title="晒猫">晒猫<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/笔记/" title="笔记">笔记<sup>121</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/算法/" title="算法">算法<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/自制插件/" title="自制插件">自制插件<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/逻辑实现/" title="逻辑实现">逻辑实现<sup>19</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+    <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">about</a></p>
+      <ul class="archive-list">
+      	<li class="archive-list-item">
+      		<a>wangbeishan@163.com</a>
+      		<a target="_blank" rel="noopener" href="https://github.com/godbasin">github.com/godbasin</a>
+      	</li>
+      </ul>
+  </div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<section class="info">
+		<p> 即使梦想再小，却很伟大 ^_^ </p>
+	</section>
+	 
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2023 
+		
+		<a href="https://godbasin.github.io" target="_blank" title="被删">被删</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+
+
+
+
+
+  </body>
+</html>

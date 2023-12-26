@@ -1,0 +1,1273 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>认识小程序云开发 | Here. There.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="被删">
+    
+    <meta name="description" content="小程序云开发开始公测啦，欢呼欢呼。这里针对云开发小程序的能力整理出了一个简单的报告，欢迎大家一起来探讨~">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Here. There." type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?3d902de4a19cf2bf179534ffd2dd7b7f";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/sun.png" alt="Here. There." title="Here. There."/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Here. There.">Here. There.</a></h1>
+				<h2 class="blog-motto">Love ice cream. Love sunshine. Love life. Love the world. Love myself. Love you.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">首页</a></li>
+					
+						<li><a target="_blank" rel="noopener" href="https://github.com/godbasin/godbasin.github.io">所有文章</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">分类</a></li>
+					
+						<li><a href="https://godbasin.github.io/front-end-playground">前端游乐场</a></li>
+					
+						<li><a href="/about">关于我</a></li>
+					
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/08/18/wxapp-cloud/" title="认识小程序云开发" itemprop="url">认识小程序云开发</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://godbasin.github.io" title="被删">被删</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2018-08-18T12:04:11.000Z" itemprop="datePublished">2018-08-18</time>
+    更新日期:<time datetime="2018-08-18T12:22:22.910Z" itemprop="dateModified">2018-08-18</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E-serverless"><span class="toc-number">1.</span> <span class="toc-text">关于 serverless</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%91%E5%BC%80%E5%8F%91%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9A%84%E8%83%BD%E5%8A%9B"><span class="toc-number">2.</span> <span class="toc-text">云开发小程序的能力</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E4%BA%86%E4%BB%80%E4%B9%88"><span class="toc-number">3.</span> <span class="toc-text">解决了什么</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%A9%E7%84%B6%E9%89%B4%E6%9D%83"><span class="toc-number">3.1.</span> <span class="toc-text">天然鉴权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%B6%E9%83%A8%E7%BD%B2%EF%BC%8C%E9%9B%B6%E7%BB%B4%E6%8A%A4"><span class="toc-number">3.2.</span> <span class="toc-text">零部署，零维护</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E7%A8%B3%E5%AE%9A%E6%80%A7"><span class="toc-number">3.3.</span> <span class="toc-text">服务稳定性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%B9%E6%80%A7%E7%9A%84%E4%BA%91%E5%87%BD%E6%95%B0"><span class="toc-number">3.4.</span> <span class="toc-text">弹性的云函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%BF%E5%88%A9%E7%9A%84%E6%9D%83%E9%99%90%E6%8E%A7%E5%88%B6"><span class="toc-number">3.5.</span> <span class="toc-text">便利的权限控制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%87%E8%83%BD%E7%9A%84-Javascript"><span class="toc-number">3.6.</span> <span class="toc-text">万能的 Javascript</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%98%E8%A6%81%E8%A7%A3%E5%86%B3%E4%BB%80%E4%B9%88"><span class="toc-number">4.</span> <span class="toc-text">还要解决什么</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%9D%E8%B5%96%E6%80%A7"><span class="toc-number">4.1.</span> <span class="toc-text">依赖性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E5%B1%80%E9%99%90%E6%80%A7"><span class="toc-number">4.2.</span> <span class="toc-text">服务局限性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A8%B3%E5%AE%9A%E6%80%A7%E4%BF%9D%E9%9A%9C"><span class="toc-number">4.3.</span> <span class="toc-text">稳定性保障</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%81%A5%E5%85%A8%E7%9A%84%E6%96%87%E6%A1%A3"><span class="toc-number">4.4.</span> <span class="toc-text">健全的文档</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E5%9C%BA%E6%99%AF%E9%80%82%E7%94%A8"><span class="toc-number">5.</span> <span class="toc-text">什么场景适用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%AA%E4%BA%BA%E5%BC%80%E5%8F%91%E8%80%85"><span class="toc-number">5.1.</span> <span class="toc-text">个人开发者</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E5%85%B7%E7%B1%BB%E5%B0%8F%E7%A8%8B%E5%BA%8F"><span class="toc-number">5.2.</span> <span class="toc-text">工具类小程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%8D%E6%9D%82%E9%80%BB%E8%BE%91%E7%9A%84%E5%87%BD%E6%95%B0%E8%AE%A1%E7%AE%97"><span class="toc-number">5.3.</span> <span class="toc-text">复杂逻辑的函数计算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%95%BF%E2%80%9C%E7%BC%93%E5%AD%98%E2%80%9D%E6%9C%8D%E5%8A%A1"><span class="toc-number">5.4.</span> <span class="toc-text">长“缓存”服务</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%91%E5%89%8D%E7%9C%8B"><span class="toc-number">6.</span> <span class="toc-text">向前看</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%93%E6%9D%9F%E8%AF%AD"><span class="toc-number"></span> <span class="toc-text">结束语</span></a>
+		</div>
+		
+		<p>小程序云开发开始公测啦，欢呼欢呼。这里针对云开发小程序的能力整理出了一个简单的报告，欢迎大家一起来探讨~</p>
+<a id="more"></a>
+<h2 id="关于-serverless"><a href="#关于-serverless" class="headerlink" title="关于 serverless"></a>关于 serverless</h2><p>无服务器运算（Serverless computing），又被称为功能即服务（FaaS），是云计算的一种模型。以平台即服务（PaaS）为基础，无服务器运算提供一个微型的架构，终端客户不需要部署、配置或管理服务器服务，代码运行所需要的服务器服务皆由云端平台来提供。</p>
+<h2 id="云开发小程序的能力"><a href="#云开发小程序的能力" class="headerlink" title="云开发小程序的能力"></a>云开发小程序的能力</h2><p><strong>云开发是微信团队和腾讯云团队共同研发的一套小程序基础能力，简言之就是：云能力将会成为小程序的基础能力。</strong></p>
+<p>小程序云开发目前提供三大基础能力支持：</p>
+<ul>
+<li>云函数：在云端运行的代码，微信私有协议天然鉴权，开发者只需编写业务逻辑代码</li>
+<li>数据库：一个既可在小程序前端操作，也能在云函数中读写的 JSON 数据库</li>
+<li>文件存储：在小程序前端直接上传/下载云端文件，在云开发控制台可视化管理</li>
+</ul>
+<p>大家可以去看看小程序的文档，也可以参加下公测申请哈：<a href="https://developers.weixin.qq.com/miniprogram/dev/wxcloud/basis/getting-started.html" target="_blank" rel="noopener">《小程序·云开发》</a>。</p>
+<h2 id="解决了什么"><a href="#解决了什么" class="headerlink" title="解决了什么"></a>解决了什么</h2><h3 id="天然鉴权"><a href="#天然鉴权" class="headerlink" title="天然鉴权"></a>天然鉴权</h3><p>小程序中，要使用第三方服务器，需要走较多的流程，如图（参考<a href="https://developers.weixin.qq.com/miniprogram/dev/api/api-login.html" target="_blank" rel="noopener">官网</a>）：<br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/%E6%8E%88%E6%9D%83%E6%97%B6%E5%BA%8F%E5%9B%BE.jpg" alt="授权时序图"></p>
+<p>在云开发小程序中，使用云函数则无需考虑长长的授权链路，可专心写业务代码。</p>
+<h3 id="零部署，零维护"><a href="#零部署，零维护" class="headerlink" title="零部署，零维护"></a>零部署，零维护</h3><p>一个小程序的上线，除了大家看到的小程序，背后还有网关、计算服务、基础设施管理、数据库、文件服务、缓存服务等等。日常开发中，随便找个后台服务架构之类的交互图，都会长这么复杂（图文无关，来自随便谷歌的图片）：<br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84.jpg" alt="可怕的服务架构"></p>
+<p>除去这些服务的部署成本，当然少不了还有它们的维护成本。当然，也可以选择各种第三方服务来组合实现，这里面也会有服务的熟悉、比对等各种烦恼。</p>
+<p>小程序云开发提供了较完整的服务器架构，结合腾讯云团队的云函数、数据库和文件存储，都可以是相对可靠的服务。如果业务可以使用小程序云开发完成闭环，就能省去不少的开发部署和维护成本。</p>
+<h3 id="服务稳定性"><a href="#服务稳定性" class="headerlink" title="服务稳定性"></a>服务稳定性</h3><p>日常开发中，除去业务逻辑，我们还需要完善很多基础能力：日志、监控、告警、数据安全、系统性能。业务增长需要扩容，从前端到后台长链路的定位，数据信息的统计，都是需要手动操心的事情。</p>
+<p>小程序云开发提供了数据库和文件存储，可在小程序中直接使用，也可以通过云函数去调用，也可以通过小程序云开发的控制台去管理。同时，小程序云开发配备了一些日志、监控和统计分析的功能：<br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/%E7%BB%9F%E8%AE%A1%E5%88%86%E6%9E%90.png" alt="统计分析功能"><br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/%E7%9B%91%E6%8E%A7%E6%97%A5%E5%BF%97.jpg" alt="监控日志功能"></p>
+<p>数据存储的安全性、服务的稳定性，都有专业团队来保障，不用自己再操心和踩坑了。</p>
+<h3 id="弹性的云函数"><a href="#弹性的云函数" class="headerlink" title="弹性的云函数"></a>弹性的云函数</h3><p>或许很多人都不大理解云函数是什么，没关系我也是刚刚才接触。云函数大概是一个可运行的代码管理平台，可用把代码存储到平台上，并提供好环境供代码运行。</p>
+<p>自动伸缩大概是云函数最特殊和最好用的一个能力了：</p>
+<ul>
+<li>无服务器云函数支持毫秒级别的实时弹性伸缩，完全根据请求量扩容或缩容</li>
+<li>动态负载均衡将请求分发至后端近乎无限的函数实例上，完全无需任何手动配置和操作，满足并发量从 0 到成千上万的不同场景</li>
+</ul>
+<p>更多的能力可参考<a href="https://cloud.tencent.com/product/scf/details" target="_blank" rel="noopener">腾讯云 SCF</a>。</p>
+<p>云开发小程序的云函数，是通过 Node.js 来执行的。目前来说，涉及的依赖和安装包，都需要在本地安装后，再上传部署方可使用。不过开发小哥哥们说了，后续会提供线上安装的功能。</p>
+<h3 id="便利的权限控制"><a href="#便利的权限控制" class="headerlink" title="便利的权限控制"></a>便利的权限控制</h3><p>在大多数业务中，都会存在权限控制以及身份管理，如管理员、用户、数据创建者。<strong>而小程序云开发的数据库和文件存储，提供了以下的权限管理方式：</strong><br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86.jpg" alt="权限管理方式"></p>
+<h3 id="万能的-Javascript"><a href="#万能的-Javascript" class="headerlink" title="万能的 Javascript"></a>万能的 Javascript</h3><p>大家都说，全栈只是前端里才有的定义。Node.js 其实只是降低了语言的学习成本，但做服务搭建，该学习的还是学习，该掌握的还是得掌握。前端与后台的差距，并不在于语言，即使是一个很简单的系统架构，前端考虑的会欠缺了很多（个人体验，不能代表各种大神）。</p>
+<p>云开发小程序，通过提供客户端 API 的方式，封装了很多服务处理和管理维护的过程，使得服务架构对小程序开发者的门槛大大降低。<strong>开发者只需要使用 Javascript 一种语言，结合提供的 API，可以完成小程序的开发、服务的业务逻辑编写、数据管理、用户管理</strong>，也省去了很多系统安全、服务搭建、性能维护等工作。</p>
+<h2 id="还要解决什么"><a href="#还要解决什么" class="headerlink" title="还要解决什么"></a>还要解决什么</h2><h3 id="依赖性"><a href="#依赖性" class="headerlink" title="依赖性"></a>依赖性</h3><p>目前来说，<strong>小程序云开发的服务，只能局限在小程序里面使用。存储到数据库和文件存储里的数据，暂无法通过其他方式直接获取（当然，你也可以在小程序里通过 http/https POST 出去）。</strong>这意味着我们暂时还不能依赖小程序云开发的存储来做一些运营端、管理页面、自定义的数据分析等。</p>
+<p>因为小程序云开发的整个架构设计主要服务于小程序，那么不管是数据库的读写、文件存储的读写，还是云函数的执行触发，都会依赖于小程序。不过，后面应该会有规划将小程序云开发通过鉴权或者授权的机制，让开发者可以从自己的服务器去获取一些信息的吧。</p>
+<h3 id="服务局限性"><a href="#服务局限性" class="headerlink" title="服务局限性"></a>服务局限性</h3><p>小程序以及云开发与外界（其他服务）的连接，基本上都只能基于 http/https 的方式来进行。相对于我们常用的服务间 TCP 的连接方式，可能会慢一点（其实也可以忽略不计啦）。</p>
+<p>同时，目前的云函数会有超时机制（大概5秒），也就是说，<strong>一个函数的执行若是超时了，函数调用会被返回，同时该函数的执行也会被中断</strong>。普通的 CGI 超时了也会执行完毕，这里会有些不一样。</p>
+<h3 id="稳定性保障"><a href="#稳定性保障" class="headerlink" title="稳定性保障"></a>稳定性保障</h3><p>新上线的功能，虽然经过了内测，未经过大量的实践，其稳定性和使用性能都待考证。不踩坑是不可能的，这辈子都不会不踩坑的。但相信小程序的开发哥哥们，能保证当前功能的稳定和开发的便捷。毕竟，走得稳才能走得远。</p>
+<p>但是新技术或者新功能的上线，都需要大量开发者前仆后继地填坑，才能一起成为首批吃鸡腿的小伙伴呀。（嗯，目前为止踩了一些坑，有机会再跟你们分享吧）</p>
+<h3 id="健全的文档"><a href="#健全的文档" class="headerlink" title="健全的文档"></a>健全的文档</h3><p>“程序员最讨厌的两件事：1. 别人没有写文档。2. 自己要写文档。”</p>
+<p>在新功能上线的初期，文档建设未免都会有些不够完善，当然这也是需要大家多去参与和使用，然后给到反馈和建议，才能做得越来越好。</p>
+<h2 id="什么场景适用"><a href="#什么场景适用" class="headerlink" title="什么场景适用"></a>什么场景适用</h2><h3 id="个人开发者"><a href="#个人开发者" class="headerlink" title="个人开发者"></a>个人开发者</h3><p>无可厚非地，大概是个人开发者最适合使用小程序云开发的模式了。只需要专注于小程序的开发，完全不用考虑后台服务搭建、数据存储、系统安全、服务器运维等工作，只需要使用云开发提供的一条龙服务，就可以开心地完成小程序的开发了。</p>
+<h3 id="工具类小程序"><a href="#工具类小程序" class="headerlink" title="工具类小程序"></a>工具类小程序</h3><p>由于小程序云开发的功能，目前还只能在小程序里面使用，那对于一些小助手、修图工具、阅读工具等一些工具类小程序，这类需要一些小数据的存储，同时也可以配合 http/https 请求的方式来完成完整的功能。</p>
+<h3 id="复杂逻辑的函数计算"><a href="#复杂逻辑的函数计算" class="headerlink" title="复杂逻辑的函数计算"></a>复杂逻辑的函数计算</h3><p>“复杂的逻辑放后台。”</p>
+<p>不管是以前还是现在，虽然前端的能力范围越来越大，但在业务中依然免不了会遇到一些复杂的逻辑，这时候一般大家都会默认把逻辑放后台计算。因为前端的性能和兼容性，总会因环境和平台的变化而变化，同时单线程的模式也限制了一些大数据的计算分析能力。小程序里也暂时没有类似 Web Worker 的能力（小游戏已经有了，小程序听说在规划中）。</p>
+<p>现在，我们可以把这些复杂的逻辑计算放在云函数中来进行，内存分配、计算性能都是云开发来保障，我们甚至可以结合一些开源库，或是云开发提供的 AI 能力，来做一些以前不好做甚至是做不到的功能。</p>
+<h3 id="长“缓存”服务"><a href="#长“缓存”服务" class="headerlink" title="长“缓存”服务"></a>长“缓存”服务</h3><p>我们经常会使用小程序的缓存来做一些简单的数据缓存，像本地日志、错误信息、告警信息、访问次数等，这些数据可能会被用户手动清除掉（也没有关系），但如果有一个免费又能提供不限时间的存储服务，是否可以将缓存中的数据定期存到小程序云里，然后开发者可以在小程序云开发的控制台里查看这些信息呢？</p>
+<h2 id="向前看"><a href="#向前看" class="headerlink" title="向前看"></a>向前看</h2><p>科技在发展，技术一直在变化，作为一个小开发也还是想要拥抱变化和未来的。小程序云开发提供的能力，要改造原有架构来适应或许成本太高，但将其列入未来的可用方案也是不错的方式。</p>
+<h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p>小程序的开发们都爱低调，但好的东西是要让大家知道的呀~就由我来做这个文章的搬运工吧~<br>后面也打算做一系列的小程序相关文章，先立个 Flag。懂的东西不够多，能做的就是写下来和大家一起分享了。</p>
+<p>最后，小程序团队和腾讯云团队棒棒哒，此致敬礼！<br>PS：祝各位开发者写码愉快！成功吃鸡！</p>
+  
+	</div>
+	<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/2code2.jpg" width="200" height="200" style="display:block;margin: 0 auto;" />
+	<p style="text-align: center;margin-top: 10px;margin-bottom: 10px;">码生艰难，写文不易，给我家猪囤点猫粮了喵~</p>
+	<p style="text-align: center;"><a target="_blank" rel="noopener" href="https://space.bilibili.com/42233366">B站: 被删</a></p>
+	<div class="article-content">
+		<p style="margin-top:50px;">
+			查看Github有更多内容噢：<a target="_blank" rel="noopener" href="https://github.com/godbasin">https://github.com/godbasin</a>
+			<br>
+			更欢迎来<a href="https://godbasin.github.io/front-end-playground">被删的前端游乐场</a>边撸猫边学前端噢
+			<br>
+			<br>
+			如果你想要关注日常生活中的我，欢迎关注“牧羊的猪”公众号噢
+		</p>
+	</div>
+	<div class="author-right">
+  		<p>作者：被删</p>
+  		<p>出处：<a href="https://godbasin.github.io">https://godbasin.github.io</a></p>
+  		<p>本文版权归作者所有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利。</p>
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/分享/">分享</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%8F%8C%E7%9A%AE%E5%A5%B6/">小程序双皮奶</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  
+<!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a href="http://www.jiathis.com/share?uid=2134021" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config = {data_track_clickback:'true'};
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js?uid=2134021" charset="utf-8"></script>
+<!-- JiaThis Button END -->   
+
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2018/08/25/wxapp-generate/" title="小程序的诞生">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  小程序的诞生</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2018/08/11/my-kitty/"  title="养喵停更">
+ <strong>NEXT:</strong><br/> 
+ <span>养喵停更
+</span>
+</a>
+</div>
+
+</nav>
+
+	<!-- 如果不是首页且没使用 `comments: false` 关闭评论，则尝试加载评论 -->
+
+    <!-- 配置中启用多说时，导入相应代码 -->
+    
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E-serverless"><span class="toc-number">1.</span> <span class="toc-text">关于 serverless</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%91%E5%BC%80%E5%8F%91%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9A%84%E8%83%BD%E5%8A%9B"><span class="toc-number">2.</span> <span class="toc-text">云开发小程序的能力</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E4%BA%86%E4%BB%80%E4%B9%88"><span class="toc-number">3.</span> <span class="toc-text">解决了什么</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%A9%E7%84%B6%E9%89%B4%E6%9D%83"><span class="toc-number">3.1.</span> <span class="toc-text">天然鉴权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%B6%E9%83%A8%E7%BD%B2%EF%BC%8C%E9%9B%B6%E7%BB%B4%E6%8A%A4"><span class="toc-number">3.2.</span> <span class="toc-text">零部署，零维护</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E7%A8%B3%E5%AE%9A%E6%80%A7"><span class="toc-number">3.3.</span> <span class="toc-text">服务稳定性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%B9%E6%80%A7%E7%9A%84%E4%BA%91%E5%87%BD%E6%95%B0"><span class="toc-number">3.4.</span> <span class="toc-text">弹性的云函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%BF%E5%88%A9%E7%9A%84%E6%9D%83%E9%99%90%E6%8E%A7%E5%88%B6"><span class="toc-number">3.5.</span> <span class="toc-text">便利的权限控制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%87%E8%83%BD%E7%9A%84-Javascript"><span class="toc-number">3.6.</span> <span class="toc-text">万能的 Javascript</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%98%E8%A6%81%E8%A7%A3%E5%86%B3%E4%BB%80%E4%B9%88"><span class="toc-number">4.</span> <span class="toc-text">还要解决什么</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%9D%E8%B5%96%E6%80%A7"><span class="toc-number">4.1.</span> <span class="toc-text">依赖性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E5%B1%80%E9%99%90%E6%80%A7"><span class="toc-number">4.2.</span> <span class="toc-text">服务局限性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A8%B3%E5%AE%9A%E6%80%A7%E4%BF%9D%E9%9A%9C"><span class="toc-number">4.3.</span> <span class="toc-text">稳定性保障</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%81%A5%E5%85%A8%E7%9A%84%E6%96%87%E6%A1%A3"><span class="toc-number">4.4.</span> <span class="toc-text">健全的文档</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E5%9C%BA%E6%99%AF%E9%80%82%E7%94%A8"><span class="toc-number">5.</span> <span class="toc-text">什么场景适用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%AA%E4%BA%BA%E5%BC%80%E5%8F%91%E8%80%85"><span class="toc-number">5.1.</span> <span class="toc-text">个人开发者</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E5%85%B7%E7%B1%BB%E5%B0%8F%E7%A8%8B%E5%BA%8F"><span class="toc-number">5.2.</span> <span class="toc-text">工具类小程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%8D%E6%9D%82%E9%80%BB%E8%BE%91%E7%9A%84%E5%87%BD%E6%95%B0%E8%AE%A1%E7%AE%97"><span class="toc-number">5.3.</span> <span class="toc-text">复杂逻辑的函数计算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%95%BF%E2%80%9C%E7%BC%93%E5%AD%98%E2%80%9D%E6%9C%8D%E5%8A%A1"><span class="toc-number">5.4.</span> <span class="toc-text">长“缓存”服务</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%91%E5%89%8D%E7%9C%8B"><span class="toc-number">6.</span> <span class="toc-text">向前看</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%93%E6%9D%9F%E8%AF%AD"><span class="toc-number"></span> <span class="toc-text">结束语</span></a>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  	
+	<div class="archiveslist">
+		<p class="asidetitle">最近文章</p>
+			<ul class="archive-list">
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/12/25/learn-front-end-develop-from-interview/" title="从面试角度了解前端基础知识体系">从面试角度了解前端基础知识体系...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/11/25/render-engine-element-and-event/" title="复杂渲染引擎架构与设计--8.元素与事件">复杂渲染引擎架构与设计--8.元素与...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/10/13/render-engine-offscreen-render/" title="复杂渲染引擎架构与设计--7.离屏渲染">复杂渲染引擎架构与设计--7.离屏渲...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/10/11/render-engine-diff-render/" title="复杂渲染引擎架构与设计--6.增量渲染">复杂渲染引擎架构与设计--6.增量渲...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/09/16/render-engine-calculate-split/" title="复杂渲染引擎架构与设计--5.分片计算">复杂渲染引擎架构与设计--5.分片计...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/08/17/render-engine-calculate/" title="复杂渲染引擎架构与设计--4.渲染计算">复杂渲染引擎架构与设计--4.渲染计...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/07/19/render-engine-bottom-render-architecture/" title="复杂渲染引擎架构与设计--3.底层渲染适配">复杂渲染引擎架构与设计--3.底层渲...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/07/01/complex-front-end-project-solution/" title="大型前端项目的常见问题和解决方案">大型前端项目的常见问题和解决方案...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/06/15/render-engine-plugin-design/" title="复杂渲染引擎架构与设计--2.插件的实现">复杂渲染引擎架构与设计--2.插件的...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/05/13/render-engine-render-and-collect/" title="复杂渲染引擎架构与设计--1.收集与渲染">复杂渲染引擎架构与设计--1.收集与...</a>
+				</li>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+	</div>
+
+
+  
+  <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">归档</a></p>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">十二月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">十一月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">十月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">九月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">八月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">七月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">六月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">四月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/03/">三月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/01/">一月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">十二月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">十月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">六月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">五月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">二月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">五月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">十月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">41</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">9</span></li></ul>
+  </div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle"><a href="/categories">分类</a></p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/Angular源码/" title="Angular源码">Angular源码<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/CSS炒饭/" title="CSS炒饭">CSS炒饭<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/D3小馒头/" title="D3小馒头">D3小馒头<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular2火锅/" title="angular2火锅">angular2火锅<sup>25</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular混搭/" title="angular混搭">angular混搭<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/box2djs方糖/" title="box2djs方糖">box2djs方糖<sup>34</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/cyclejs哈根达斯/" title="cyclejs哈根达斯">cyclejs哈根达斯<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/jQuery杂烩/" title="jQuery杂烩">jQuery杂烩<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/js什锦/" title="js什锦">js什锦<sup>27</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/react沙拉/" title="react沙拉">react沙拉<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/three-js奶茶/" title="three.js奶茶">three.js奶茶<sup>5</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/vue八宝粥/" title="vue八宝粥">vue八宝粥<sup>30</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/webpack宾治/" title="webpack宾治">webpack宾治<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/web乱炖/" title="web乱炖">web乱炖<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端技能提升/" title="前端技能提升">前端技能提升<sup>6</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端满汉全席/" title="前端满汉全席">前端满汉全席<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端解决方案/" title="前端解决方案">前端解决方案<sup>30</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/喵/" title="喵">喵<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/小程序双皮奶/" title="小程序双皮奶">小程序双皮奶<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/工作这杯茶/" title="工作这杯茶">工作这杯茶<sup>27</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/应用巧克力盒/" title="应用巧克力盒">应用巧克力盒<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/思想棉花糖/" title="思想棉花糖">思想棉花糖<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/柴米油盐工具集/" title="柴米油盐工具集">柴米油盐工具集<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/自动化甜筒/" title="自动化甜筒">自动化甜筒<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/非前端钙片/" title="非前端钙片">非前端钙片<sup>7</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle">标签</p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/分享/" title="分享">分享<sup>50</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/前端技能/" title="前端技能">前端技能<sup>6</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/功能设计/" title="功能设计">功能设计<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/原创部件/" title="原创部件">原创部件<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/心态/" title="心态">心态<sup>22</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/性能优化/" title="性能优化">性能优化<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/教程/" title="教程">教程<sup>80</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/晒猫/" title="晒猫">晒猫<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/笔记/" title="笔记">笔记<sup>121</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/算法/" title="算法">算法<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/自制插件/" title="自制插件">自制插件<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/逻辑实现/" title="逻辑实现">逻辑实现<sup>19</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+    <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">about</a></p>
+      <ul class="archive-list">
+      	<li class="archive-list-item">
+      		<a>wangbeishan@163.com</a>
+      		<a target="_blank" rel="noopener" href="https://github.com/godbasin">github.com/godbasin</a>
+      	</li>
+      </ul>
+  </div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<section class="info">
+		<p> 即使梦想再小，却很伟大 ^_^ </p>
+	</section>
+	 
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2023 
+		
+		<a href="https://godbasin.github.io" target="_blank" title="被删">被删</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+
+
+
+
+
+  </body>
+</html>

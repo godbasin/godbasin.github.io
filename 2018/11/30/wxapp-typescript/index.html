@@ -1,0 +1,1305 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>小程序上Typescript啦 | Here. There.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="被删">
+    
+    <meta name="description" content="[2018.11.14 A 新增 typescript 支持] 小程序开发工具静悄悄地更新了版本，添加上了对 Typescript 的支持。Typescript ??? Typescript !!!">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Here. There." type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?3d902de4a19cf2bf179534ffd2dd7b7f";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/sun.png" alt="Here. There." title="Here. There."/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Here. There.">Here. There.</a></h1>
+				<h2 class="blog-motto">Love ice cream. Love sunshine. Love life. Love the world. Love myself. Love you.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">首页</a></li>
+					
+						<li><a target="_blank" rel="noopener" href="https://github.com/godbasin/godbasin.github.io">所有文章</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">分类</a></li>
+					
+						<li><a href="https://godbasin.github.io/front-end-playground">前端游乐场</a></li>
+					
+						<li><a href="/about">关于我</a></li>
+					
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/11/30/wxapp-typescript/" title="小程序上Typescript啦" itemprop="url">小程序上Typescript啦</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://godbasin.github.io" title="被删">被删</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2018-11-30T14:36:46.000Z" itemprop="datePublished">2018-11-30</time>
+    更新日期:<time datetime="2018-11-30T14:41:45.901Z" itemprop="dateModified">2018-11-30</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9C%9F%E5%BE%85%E5%B7%B2%E4%B9%85%E7%9A%84-Typescript"><span class="toc-number">1.</span> <span class="toc-text">期待已久的 Typescript</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8-Typescript"><span class="toc-number">1.1.</span> <span class="toc-text">为什么要用 Typescript</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B%E4%B8%8D%E6%98%8E%E7%A1%AE"><span class="toc-number">1.1.1.</span> <span class="toc-text">变量类型不明确</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E5%8D%8F%E8%AE%AE%E4%B8%8D%E7%AC%A6%E5%90%88"><span class="toc-number">1.1.2.</span> <span class="toc-text">接口协议不符合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E9%94%AE%E8%B0%83%E6%95%B4%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.1.3.</span> <span class="toc-text">一键调整协议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%A8%E8%BF%87-Babel-%E7%9B%B4%E6%8E%A5%E4%BD%BF%E7%94%A8-ES6-ES7%EF%BC%8C%E8%B7%A8%E8%BF%87-eslint-%E7%9B%B4%E6%8E%A5%E4%BD%BF%E7%94%A8-prettier"><span class="toc-number">1.1.4.</span> <span class="toc-text">跨过 Babel 直接使用 ES6&#x2F;ES7，跨过 eslint 直接使用 prettier</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%B8%8E-Typescript"><span class="toc-number">1.2.</span> <span class="toc-text">小程序与 Typescript</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Typescript-%E7%BC%96%E8%AF%91%E4%B8%8B%E5%B0%B1%E5%8F%AF%E4%BB%A5%E7%94%A8%EF%BC%9F"><span class="toc-number">1.2.1.</span> <span class="toc-text">Typescript 编译下就可以用？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E7%AE%B1%E5%8D%B3%E7%94%A8%E7%9A%84%E5%B0%9D%E9%B2%9C"><span class="toc-number">1.2.2.</span> <span class="toc-text">开箱即用的尝鲜</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B0%83%E6%95%B4%E4%B8%8B%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84"><span class="toc-number">1.2.3.</span> <span class="toc-text">调整下代码结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">1.2.4.</span> <span class="toc-text">参考</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E6%9D%9F%E8%AF%AD"><span class="toc-number">1.3.</span> <span class="toc-text">结束语</span></a></li></ol></li></ol>
+		</div>
+		
+		<p>[2018.11.14 A 新增 typescript 支持] 小程序开发工具静悄悄地更新了版本，添加上了对 Typescript 的支持。Typescript ??? Typescript !!!<br><a id="more"></a></p>
+<h1 id="期待已久的-Typescript"><a href="#期待已久的-Typescript" class="headerlink" title="期待已久的 Typescript"></a>期待已久的 Typescript</h1><hr>
+<h2 id="为什么要用-Typescript"><a href="#为什么要用-Typescript" class="headerlink" title="为什么要用 Typescript"></a>为什么要用 Typescript</h2><p>关于 Typescript，可以看看以前写过的这篇<a href="https://godbasin.github.io/2017/09/01/about-typescript/">《关于Typescript》</a>。文末的故事，便是大多数情况下 Typescript 能帮我们解决的痛点。</p>
+<p>过了很久之后，想法还是一样：<strong>Typescript 这事情，当你管理大点的应用的时候，就会感受到它的好处了</strong>。尤其涉及团队配合的时候！</p>
+<p>当然，如果你的项目比较小，或是写个小公（工）举（具）、小 demo 的时候， store 状态管理、typescript 编译这些，除非已经很熟悉、没有额外成本的时候，才勉强适合接入。离了具体场景谈架构，都是耍（xia）流（che）氓（dan）。</p>
+<p>为什么要用 Typescript？</p>
+<h3 id="变量类型不明确"><a href="#变量类型不明确" class="headerlink" title="变量类型不明确"></a>变量类型不明确</h3><p>之前带外包写小程序，除了代码风格不一致之外，还遇到一个会变的变量问题。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> formGroups = <span class="keyword">this</span>.currentStep.formGroups; <span class="comment">// 猜猜我的 formGroups 是数组数组 [[], [], []]，还是对象数组 [&#123;&#125;, &#123;&#125;, &#123;&#125;]？</span></span><br><span class="line"><span class="keyword">let</span> flattenFields = _.flatten(formGroups); <span class="comment">// 不用猜了，我用个 flatten 抹平，它就一定是对象 [&#123;&#125;, &#123;&#125;, &#123;&#125;] 了！</span></span><br><span class="line"></span><br><span class="line">flattenFields.forEach(<span class="function"><span class="params">item</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (item.fields) &#123; <span class="comment">// 猜猜我的 item.fields 是数组还是对象？</span></span><br><span class="line">    flattenFields.push(..._.values(item.fields)); <span class="comment">// 不用猜了，我用个 values 抹平，它就一定是对象了！</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>当我帮忙 debug 个问题的时候，打断点看到：<br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/wxapp-typescript-1.png" alt="这好像是个数组？"><br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/wxapp-typescript-2.png" alt="这怎么变成个对象？？？"></p>
+<p>喵喵喵？？？</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># 我和外包童鞋的对话：</span><br><span class="line">我：话说你这些到底是什么类型，从命名和上下文都看不出来。。</span><br><span class="line">我：得去翻更细的代码。。</span><br><span class="line"></span><br><span class="line">外包童鞋：values好像可以改一下试试</span><br><span class="line"></span><br><span class="line">我：是数组还是对象？</span><br><span class="line"></span><br><span class="line">外包童鞋：有的是数组，有的是对象</span><br><span class="line">外包童鞋：一般带复数的是数组</span><br><span class="line"></span><br><span class="line">我：（刀.jpg）</span><br><span class="line">我：卧槽</span><br><span class="line">我：你这item.fields，有时候是数组，有时候是对象，这样真的好吗</span><br><span class="line">我：大哥</span><br><span class="line">我：（刀.jpg）* <span class="number">2</span></span><br></pre></td></tr></table></figure>
+<p>或许有人想，即使上了 Typescript 也可能会被 any 打败啊。</p>
+<p>什么？在我眼皮底下用 any？！！</p>
+<h3 id="接口协议不符合"><a href="#接口协议不符合" class="headerlink" title="接口协议不符合"></a>接口协议不符合</h3><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">前端：帮忙看看这个接口为什么返回失败了？</span><br><span class="line">后台：你这个接口字段少了啊，这个xxx</span><br><span class="line">（哼哧哼哧修改）</span><br><span class="line">前端：帮忙看看这个接口为啥又报错了啊？</span><br><span class="line">后台：你这个字段类型不对...我协议里有写的</span><br><span class="line">前端：喔不好意思我改</span><br><span class="line">（哼哧哼哧修改）</span><br><span class="line">前端：（泪光）帮忙看看这个接口为啥还报错？</span><br><span class="line">后台：...你这字段名拼错了啊！！！！</span><br></pre></td></tr></table></figure>
+<p>当然，这个案例里稍微夸张了一点，一般我们都会自己一个个对着协议检查哪里不对，但是很多时候被 bug 光环环绕的时候，你就是发现不了问题。</p>
+<p>这个时候，我们就可以用 Typescript 来管理接口啦。</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> IDemoResponse &#123;</span><br><span class="line">  date: <span class="built_in">string</span>;</span><br><span class="line">  someNumber: <span class="built_in">number</span>;</span><br><span class="line">  otherThing: <span class="built_in">any</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>1. 使用约定的变量的时候，会有相关提示</strong>（请忽略我的强行any）。</p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/wxapp-typescript-10.jpg" alt="输入提示"></p>
+<p><strong>2. 使用约定以外的属性时候，会报错提示。</strong></p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/wxapp-typescript-11.jpg" alt="错误提示"></p>
+<p>除此以外，还有很多很棒的用法呢~</p>
+<h3 id="一键调整协议"><a href="#一键调整协议" class="headerlink" title="一键调整协议"></a>一键调整协议</h3><p>前端和后台协议约定后，就开始各自开发了。但是，我们总会遇到各种各样的问题，可能导致我们的协议变更。</p>
+<p>字段的变更什么的最讨厌了，例如后台要把某个接口下<code>date</code>改成<code>day</code>。一般来说前端是拒绝的，你不能说让我改我就得改，我得看看我写了多少代码，评估下工作量。</p>
+<p>什么，全局替换？你知道使用<code>date</code>多普遍吗？万一我替换错了咋办？？</p>
+<p>这时候，如果你使用了 Typescript 并定义了协议接口的话，就很好办了~</p>
+<p>依然是这段代码：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> IDemoResponse &#123;</span><br><span class="line">  date: <span class="built_in">string</span>;</span><br><span class="line">  someNumber: <span class="built_in">number</span>;</span><br><span class="line">  otherThing: <span class="built_in">any</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> demoResponse: IDemoResponse = &#123;&#125; <span class="keyword">as</span> <span class="built_in">any</span>;</span><br><span class="line"><span class="keyword">const</span> date = demoResponse.date;</span><br></pre></td></tr></table></figure>
+<p><strong>1. 选中需要重命名的属性。</strong></p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/wxapp-typescript-12.jpg" alt="选中需要重命名的属性"></p>
+<p><strong>2. 按下F2，重新输入属性名。</strong></p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/wxapp-typescript-13.jpg" alt="选中需要重命名的属性"></p>
+<p><strong>3. 按下回车，使用到的地方都会更新。</strong></p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/wxapp-typescript-14.jpg" alt="属性更新"></p>
+<p>是不是很酷~~~</p>
+<h3 id="跨过-Babel-直接使用-ES6-ES7，跨过-eslint-直接使用-prettier"><a href="#跨过-Babel-直接使用-ES6-ES7，跨过-eslint-直接使用-prettier" class="headerlink" title="跨过 Babel 直接使用 ES6/ES7，跨过 eslint 直接使用 prettier"></a>跨过 Babel 直接使用 ES6/ES7，跨过 eslint 直接使用 prettier</h3><p>其实小程序工具本身也支持了不少的 ES6 新语法，不过像<code>async/await</code>这种，则还是需要自己搞个 Babel 来编译。</p>
+<p>现在直接上 Typescript，连 Babel 都可以直接跳过啦。</p>
+<p><strong>Prettier</strong></p>
+<p>这里重点推荐 <a href="https://prettier.io/" target="_blank" rel="noopener">prettier</a> 神器，也是团队配合的好工具啊：</p>
+<ul>
+<li>项目代码没有配 eslint？导致每次拉下来的代码一大堆冲突？</li>
+<li>团队成员使用不同的编辑器？有的没有自动格式化？导致拉下来代码还是一堆冲突？</li>
+<li>用 standard？有些规范和实际项目不符合，但是偏偏没得改？？</li>
+</ul>
+<p>偷偷地往项目里装个 Prettier，然后所有的矛盾都不见啦。不管你的代码格式多独特，最终在 Git commit 的时候，就被同化啦，而且 Prettier 的格式化也不会影响到 Git 记录。</p>
+<h2 id="小程序与-Typescript"><a href="#小程序与-Typescript" class="headerlink" title="小程序与 Typescript"></a>小程序与 Typescript</h2><h3 id="Typescript-编译下就可以用？"><a href="#Typescript-编译下就可以用？" class="headerlink" title="Typescript 编译下就可以用？"></a>Typescript 编译下就可以用？</h3><p>其实小程序它最终运行的还是 Javascript，那不是我们直接自己编译下就好了吗？</p>
+<p>少年你太天真了。咱们写 Typescript 最重要的是什么呀？是 Typing 库呀！</p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/wxapp-typescript-3.jpg" alt="没错，就是这货"></p>
+<p>网上开源的关于小程序和 Typescript 的工具或者脚手架也一大堆，为啥不用呢？因为小程序的 API 在不断地变化呀~</p>
+<p>有了官方的支持，即使小程序的 API 变了，我们也可以及时地更新呀（奸笑）~</p>
+<h3 id="开箱即用的尝鲜"><a href="#开箱即用的尝鲜" class="headerlink" title="开箱即用的尝鲜"></a>开箱即用的尝鲜</h3><p>既然官方提供支持了，义不容辞地使用呀！</p>
+<ol>
+<li>首先，我们更新到最近的工具版本，然后创建项目就能看到了：</li>
+</ol>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/wxapp-typescript-4.jpg" alt="看到了没"></p>
+<ol start="2">
+<li>创建模版，我们来看看代码长什么样子。</li>
+</ol>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/wxapp-typescript-5.jpg" alt="嗯，typing 在就足够了"></p>
+<p>我们可以看到，在 package.json 里面多了俩脚本，其实也就是将 ts 文件原地编译，然后上传代码的时候忽略掉了。</p>
+<ol start="3">
+<li>仔细瞧瞧代码。</li>
+</ol>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/wxapp-typescript-6.jpg" alt="emmmmm"></p>
+<p>额，好像混入了一些奇怪的东西进去，感叹号是什么鬼？？？</p>
+<p>后面问了下开发GG，是因为这里比较特殊，目前定义的文件暂时没法兼顾，等后面的版本会兼容。</p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/wxapp-typescript-7.jpg" alt="但是还是很棒"></p>
+<p>终于用上 Typescript 啦，爽歪歪~</p>
+<h3 id="调整下代码结构"><a href="#调整下代码结构" class="headerlink" title="调整下代码结构"></a>调整下代码结构</h3><p>小项目的话，其实也不用带什么编译啦。不过如果你还想用 less，也想用 typescript，还不想看到项目下面乱糟糟的文件：<br><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">index.js</span><br><span class="line">index.ts</span><br><span class="line">index.json</span><br><span class="line">index.less</span><br><span class="line">index.wxss</span><br><span class="line">index.wxml</span><br></pre></td></tr></table></figure></p>
+<p>我们就简单弄个 gulp，把编译加上吧~</p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/wxapp-typescript-8.jpg" alt="会长这样"></p>
+<p>然后我们再把 prettier 愉快地加上。这里就不多讲解啦，大家也可以参考我的 demo 项目:<br><a href="https://github.com/godbasin/wxapp-typescript-demo" target="_blank" rel="noopener">wxapp-typescript-demo</a></p>
+<p>对了，目前官方的 typing 库也不是非常完善，如果需要写组件、插件、小游戏的你，可能会面临一大堆的 any 冲击波噢~</p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/wxapp-typescript-9.jpg" alt="emmmm"></p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
+<li><a href="https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html" target="_blank" rel="noopener">小程序工具更新</a></li>
+</ul>
+<h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><hr>
+<p>Typescript 的普及度其实不算高，小程序的确是又一次给到惊喜。反观下我们自己呢？有没有被业务代码冲得找不到方向呢？<br>很多时候，我们总爱说写业务没啥技术提升，但真的是这样吗？我看过很棒的业务代码，从框架设计到具体的实现，开发者都对自己做了很高的要求。而写技术需求代码的，就一定会写得很好吗？<br>“我们是业务部门，技术肯定比不上”<br>“项目很紧急，怎么快怎么来”<br>“随便找一些能用的就好了，不要浪费时间在这些上面”<br>…<br>以上这些话，我是不认同的。当然项目急的时候可以理解，事后一定要把欠下的债务给还了。（较真脸）</p>
+  
+	</div>
+	<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/2code2.jpg" width="200" height="200" style="display:block;margin: 0 auto;" />
+	<p style="text-align: center;margin-top: 10px;margin-bottom: 10px;">码生艰难，写文不易，给我家猪囤点猫粮了喵~</p>
+	<p style="text-align: center;"><a target="_blank" rel="noopener" href="https://space.bilibili.com/42233366">B站: 被删</a></p>
+	<div class="article-content">
+		<p style="margin-top:50px;">
+			查看Github有更多内容噢：<a target="_blank" rel="noopener" href="https://github.com/godbasin">https://github.com/godbasin</a>
+			<br>
+			更欢迎来<a href="https://godbasin.github.io/front-end-playground">被删的前端游乐场</a>边撸猫边学前端噢
+			<br>
+			<br>
+			如果你想要关注日常生活中的我，欢迎关注“牧羊的猪”公众号噢
+		</p>
+	</div>
+	<div class="author-right">
+  		<p>作者：被删</p>
+  		<p>出处：<a href="https://godbasin.github.io">https://godbasin.github.io</a></p>
+  		<p>本文版权归作者所有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利。</p>
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/教程/">教程</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%8F%8C%E7%9A%AE%E5%A5%B6/">小程序双皮奶</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  
+<!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a href="http://www.jiathis.com/share?uid=2134021" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config = {data_track_clickback:'true'};
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js?uid=2134021" charset="utf-8"></script>
+<!-- JiaThis Button END -->   
+
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2018/12/16/work-1-choice/" title="选择这件事">
+  <strong>PREVIOUS:</strong><br/>
+  <span>
+  选择这件事</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2018/11/24/wxapp-multi-request/"  title="小程序多页面接口数据缓存">
+ <strong>NEXT:</strong><br/> 
+ <span>小程序多页面接口数据缓存
+</span>
+</a>
+</div>
+
+</nav>
+
+	<!-- 如果不是首页且没使用 `comments: false` 关闭评论，则尝试加载评论 -->
+
+    <!-- 配置中启用多说时，导入相应代码 -->
+    
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9C%9F%E5%BE%85%E5%B7%B2%E4%B9%85%E7%9A%84-Typescript"><span class="toc-number">1.</span> <span class="toc-text">期待已久的 Typescript</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8-Typescript"><span class="toc-number">1.1.</span> <span class="toc-text">为什么要用 Typescript</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B%E4%B8%8D%E6%98%8E%E7%A1%AE"><span class="toc-number">1.1.1.</span> <span class="toc-text">变量类型不明确</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3%E5%8D%8F%E8%AE%AE%E4%B8%8D%E7%AC%A6%E5%90%88"><span class="toc-number">1.1.2.</span> <span class="toc-text">接口协议不符合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E9%94%AE%E8%B0%83%E6%95%B4%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.1.3.</span> <span class="toc-text">一键调整协议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%A8%E8%BF%87-Babel-%E7%9B%B4%E6%8E%A5%E4%BD%BF%E7%94%A8-ES6-ES7%EF%BC%8C%E8%B7%A8%E8%BF%87-eslint-%E7%9B%B4%E6%8E%A5%E4%BD%BF%E7%94%A8-prettier"><span class="toc-number">1.1.4.</span> <span class="toc-text">跨过 Babel 直接使用 ES6&#x2F;ES7，跨过 eslint 直接使用 prettier</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E4%B8%8E-Typescript"><span class="toc-number">1.2.</span> <span class="toc-text">小程序与 Typescript</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Typescript-%E7%BC%96%E8%AF%91%E4%B8%8B%E5%B0%B1%E5%8F%AF%E4%BB%A5%E7%94%A8%EF%BC%9F"><span class="toc-number">1.2.1.</span> <span class="toc-text">Typescript 编译下就可以用？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E7%AE%B1%E5%8D%B3%E7%94%A8%E7%9A%84%E5%B0%9D%E9%B2%9C"><span class="toc-number">1.2.2.</span> <span class="toc-text">开箱即用的尝鲜</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B0%83%E6%95%B4%E4%B8%8B%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84"><span class="toc-number">1.2.3.</span> <span class="toc-text">调整下代码结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">1.2.4.</span> <span class="toc-text">参考</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E6%9D%9F%E8%AF%AD"><span class="toc-number">1.3.</span> <span class="toc-text">结束语</span></a></li></ol></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  	
+	<div class="archiveslist">
+		<p class="asidetitle">最近文章</p>
+			<ul class="archive-list">
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/12/25/learn-front-end-develop-from-interview/" title="从面试角度了解前端基础知识体系">从面试角度了解前端基础知识体系...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/11/25/render-engine-element-and-event/" title="复杂渲染引擎架构与设计--8.元素与事件">复杂渲染引擎架构与设计--8.元素与...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/10/13/render-engine-offscreen-render/" title="复杂渲染引擎架构与设计--7.离屏渲染">复杂渲染引擎架构与设计--7.离屏渲...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/10/11/render-engine-diff-render/" title="复杂渲染引擎架构与设计--6.增量渲染">复杂渲染引擎架构与设计--6.增量渲...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/09/16/render-engine-calculate-split/" title="复杂渲染引擎架构与设计--5.分片计算">复杂渲染引擎架构与设计--5.分片计...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/08/17/render-engine-calculate/" title="复杂渲染引擎架构与设计--4.渲染计算">复杂渲染引擎架构与设计--4.渲染计...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/07/19/render-engine-bottom-render-architecture/" title="复杂渲染引擎架构与设计--3.底层渲染适配">复杂渲染引擎架构与设计--3.底层渲...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/07/01/complex-front-end-project-solution/" title="大型前端项目的常见问题和解决方案">大型前端项目的常见问题和解决方案...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/06/15/render-engine-plugin-design/" title="复杂渲染引擎架构与设计--2.插件的实现">复杂渲染引擎架构与设计--2.插件的...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/05/13/render-engine-render-and-collect/" title="复杂渲染引擎架构与设计--1.收集与渲染">复杂渲染引擎架构与设计--1.收集与...</a>
+				</li>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+	</div>
+
+
+  
+  <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">归档</a></p>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">十二月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">十一月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">十月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">九月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">八月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">七月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">六月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">四月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/03/">三月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/01/">一月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">十二月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">十月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">六月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">五月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">二月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">五月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">十月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">41</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">9</span></li></ul>
+  </div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle"><a href="/categories">分类</a></p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/Angular源码/" title="Angular源码">Angular源码<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/CSS炒饭/" title="CSS炒饭">CSS炒饭<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/D3小馒头/" title="D3小馒头">D3小馒头<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular2火锅/" title="angular2火锅">angular2火锅<sup>25</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular混搭/" title="angular混搭">angular混搭<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/box2djs方糖/" title="box2djs方糖">box2djs方糖<sup>34</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/cyclejs哈根达斯/" title="cyclejs哈根达斯">cyclejs哈根达斯<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/jQuery杂烩/" title="jQuery杂烩">jQuery杂烩<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/js什锦/" title="js什锦">js什锦<sup>27</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/react沙拉/" title="react沙拉">react沙拉<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/three-js奶茶/" title="three.js奶茶">three.js奶茶<sup>5</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/vue八宝粥/" title="vue八宝粥">vue八宝粥<sup>30</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/webpack宾治/" title="webpack宾治">webpack宾治<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/web乱炖/" title="web乱炖">web乱炖<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端技能提升/" title="前端技能提升">前端技能提升<sup>6</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端满汉全席/" title="前端满汉全席">前端满汉全席<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端解决方案/" title="前端解决方案">前端解决方案<sup>30</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/喵/" title="喵">喵<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/小程序双皮奶/" title="小程序双皮奶">小程序双皮奶<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/工作这杯茶/" title="工作这杯茶">工作这杯茶<sup>27</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/应用巧克力盒/" title="应用巧克力盒">应用巧克力盒<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/思想棉花糖/" title="思想棉花糖">思想棉花糖<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/柴米油盐工具集/" title="柴米油盐工具集">柴米油盐工具集<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/自动化甜筒/" title="自动化甜筒">自动化甜筒<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/非前端钙片/" title="非前端钙片">非前端钙片<sup>7</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle">标签</p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/分享/" title="分享">分享<sup>50</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/前端技能/" title="前端技能">前端技能<sup>6</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/功能设计/" title="功能设计">功能设计<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/原创部件/" title="原创部件">原创部件<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/心态/" title="心态">心态<sup>22</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/性能优化/" title="性能优化">性能优化<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/教程/" title="教程">教程<sup>80</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/晒猫/" title="晒猫">晒猫<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/笔记/" title="笔记">笔记<sup>121</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/算法/" title="算法">算法<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/自制插件/" title="自制插件">自制插件<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/逻辑实现/" title="逻辑实现">逻辑实现<sup>19</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+    <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">about</a></p>
+      <ul class="archive-list">
+      	<li class="archive-list-item">
+      		<a>wangbeishan@163.com</a>
+      		<a target="_blank" rel="noopener" href="https://github.com/godbasin">github.com/godbasin</a>
+      	</li>
+      </ul>
+  </div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<section class="info">
+		<p> 即使梦想再小，却很伟大 ^_^ </p>
+	</section>
+	 
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2023 
+		
+		<a href="https://godbasin.github.io" target="_blank" title="被删">被删</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+
+
+
+
+
+  </body>
+</html>
