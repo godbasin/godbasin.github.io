@@ -1,0 +1,1288 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>前端性能优化--卡顿的监控和定位 | Here. There.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="被删">
+    
+    <meta name="description" content="卡顿大概是前端遇到的问题的最棘手的一个，尤其是卡顿产生的时候常常无法进行其他操作，甚至控制台也打开不了。">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Here. There." type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?3d902de4a19cf2bf179534ffd2dd7b7f";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/sun.png" alt="Here. There." title="Here. There."/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Here. There.">Here. There.</a></h1>
+				<h2 class="blog-motto">Love ice cream. Love sunshine. Love life. Love the world. Love myself. Love you.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">首页</a></li>
+					
+						<li><a target="_blank" rel="noopener" href="https://github.com/godbasin/godbasin.github.io">所有文章</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">分类</a></li>
+					
+						<li><a href="https://godbasin.github.io/front-end-playground">前端游乐场</a></li>
+					
+						<li><a href="/about">关于我</a></li>
+					
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2024/01/21/front-end-performance-no-response-solution/" title="前端性能优化--卡顿的监控和定位" itemprop="url">前端性能优化--卡顿的监控和定位</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://godbasin.github.io" title="被删">被删</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2024-01-21T13:21:06.000Z" itemprop="datePublished">2024-01-21</time>
+    更新日期:<time datetime="2024-01-21T13:21:11.390Z" itemprop="dateModified">2024-01-21</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%A1%E9%A1%BF%E6%A3%80%E6%B5%8B"><span class="toc-number">1.</span> <span class="toc-text">卡顿检测</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Worker-%E5%BF%83%E8%B7%B3%E6%96%B9%E6%A1%88"><span class="toc-number">1.1.</span> <span class="toc-text">Worker 心跳方案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#window-requestAnimationFrame-%E6%96%B9%E6%A1%88"><span class="toc-number">1.2.</span> <span class="toc-text">window.requestAnimationFrame 方案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Long-Tasks-API-%E6%96%B9%E6%A1%88"><span class="toc-number">1.3.</span> <span class="toc-text">Long Tasks API 方案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PerformanceObserver-%E5%8D%A1%E9%A1%BF%E6%A3%80%E6%B5%8B"><span class="toc-number">1.4.</span> <span class="toc-text">PerformanceObserver 卡顿检测</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%A1%E9%A1%BF%E5%9F%8B%E7%82%B9%E4%B8%8A%E6%8A%A5"><span class="toc-number">2.</span> <span class="toc-text">卡顿埋点上报</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%A1%E9%A1%BF%E6%89%93%E7%82%B9"><span class="toc-number">2.1.</span> <span class="toc-text">卡顿打点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BF%83%E8%B7%B3%E6%89%93%E7%82%B9"><span class="toc-number">2.2.</span> <span class="toc-text">心跳打点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JavaScript-%E5%8A%A0%E8%BD%BD%E6%89%93%E7%82%B9"><span class="toc-number">2.3.</span> <span class="toc-text">JavaScript 加载打点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E6%9D%9F%E8%AF%AD"><span class="toc-number">3.</span> <span class="toc-text">结束语</span></a></li></ol>
+		</div>
+		
+		<p>卡顿大概是前端遇到的问题的最棘手的一个，尤其是卡顿产生的时候常常无法进行其他操作，甚至控制台也打开不了。</p>
+<span id="more"></span>
+<p>但是这活落到了咱们头上，老板说啥就得做啥。能本地复现的我们还能打开控制台，打个断点或者录制 Performance 来看看到底哪些地方占用较大的耗时。如果没法本地复现呢？</p>
+<h2 id="卡顿检测"><a href="#卡顿检测" class="headerlink" title="卡顿检测"></a>卡顿检测</h2><p>首先，我们来看看可以怎么主动检测卡顿的出现。</p>
+<p>卡顿，顾名思义则是代码执行产生长耗时，导致浏览器无法及时响应用户的操作。那么，我们可以基于不同的方案，来监测当前页面响应的延迟。</p>
+<h3 id="Worker-心跳方案"><a href="#Worker-心跳方案" class="headerlink" title="Worker 心跳方案"></a>Worker 心跳方案</h3><p>对应浏览器来说，由于 JavaScript 是单线程的设计，当卡顿发生的时候，往往是由于 JavaScript 在执行过长的逻辑，常见于大量数据的遍历操作，甚至是进入死循环。</p>
+<p>利用这个特效，我们可以在页面打开的时候，就启动一个 Worker 线程，使用心跳的方式与主线程进行同步。假设我们希望能监测 1s 以上的卡顿，我们可以设置主线程每间隔 1s 向 Worker 发送心跳消息。（当然，线程通讯本身需要一些耗时，且 JavaScript 的计时器也未必是准时的，因此心跳需要给予一定的冗余范围）</p>
+<p>由于页面发生卡顿的时候，主线程往往是忙碌状态，我们可以通过 Worker 里丢失心跳的时候进行上报，就能及时发现卡顿的产生。</p>
+<p>但是其实 Worker 更多时候用于检测网页崩溃，用来检测卡顿的效果其实还不如使用<code>window.requestAnimationFrame</code>，因为线程通信的耗时和延迟导致该方案不大准确。</p>
+<h3 id="window-requestAnimationFrame-方案"><a href="#window-requestAnimationFrame-方案" class="headerlink" title="window.requestAnimationFrame 方案"></a>window.requestAnimationFrame 方案</h3><p>前面<a href="https://godbasin.github.io/2022/06/04/front-end-performance-no-responding/">前端性能优化–卡顿篇</a>有简单提到一些卡顿的检测方案，市面上大多数的方案也是基于<code>window.requestAnimationFrame</code>方法来检测是否有卡顿出现。</p>
+<p><code>window.requestAnimationFrame()</code>会在浏览器下次重绘之前调用，常常用来更新动画。这是因为<code>setTimeout</code>/<code>setInterval</code>计时器只能保证将回调添加至浏览器的回调队列(宏任务)的时间，不能保证回调队列的运行时间，因此使用<code>window.requestAnimationFrame</code>会更合适。</p>
+<p>通常来说，大多数电脑显示器的刷新频率是 60Hz，也就是说每秒钟<code>window.requestAnimationFrame</code>会被执行 60 次。因此可以使用<code>window.requestAnimationFrame</code>来监控卡顿，具体的方案会依赖于我们项目的要求。</p>
+<p>比如，有些人会认为<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/39292837">连续出现 3 个低于 20 的 FPS 即可认为网页存在卡顿</a>，这种情况下我们则针对这个数值进行上报。</p>
+<p>除此之外，假设我们认为页面中存在超过特定时间（比如 1s）的长耗时任务即存在明显卡顿，则我们可以判断两次<code>window.requestAnimationFrame</code>执行间超过一定时间，则发生了卡顿。</p>
+<p>使用<code>window.requestAnimationFrame</code>监测卡顿需要注意的是，他是一个被十分频繁执行的代码，不应该处理过多的逻辑。</p>
+<h3 id="Long-Tasks-API-方案"><a href="#Long-Tasks-API-方案" class="headerlink" title="Long Tasks API 方案"></a>Long Tasks API 方案</h3><p>熟悉前端性能优化的开发都知道，阻塞主线程达 50 毫秒或以上的任务会导致以下问题：</p>
+<ul>
+<li>可交互时间（TTI）延迟</li>
+<li>严重不稳定的交互行为 (轻击、单击、滚动、滚轮等) 延迟</li>
+<li>严重不稳定的事件回调延迟</li>
+<li>紊乱的动画和滚动</li>
+</ul>
+<p>因此，W3C 推出 <a target="_blank" rel="noopener" href="https://w3c.github.io/longtasks/">Long Tasks API</a>。长任务（Long task）定义了任何连续不间断的且主 UI 线程繁忙 50 毫秒及以上的时间区间。比如以下常规场景：</p>
+<ul>
+<li>长耗时的事件回调</li>
+<li>代价高昂的回流和其他重绘</li>
+<li>浏览器在超过 50 毫秒的事件循环的相邻循环之间所做的工作</li>
+</ul>
+<blockquote>
+<p>参考 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/PerformanceLongTaskTiming">Long Tasks API – MDN</a></p>
+</blockquote>
+<p>我们可以使用<code>PerformanceObserver</code>这样简单地获取到长任务：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> observer = <span class="keyword">new</span> <span class="title class_">PerformanceObserver</span>(<span class="keyword">function</span> (<span class="params">list</span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> perfEntries = list.<span class="title function_">getEntries</span>();</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; perfEntries.<span class="property">length</span>; i++) &#123;</span><br><span class="line">    <span class="comment">// 分析和上报关键卡顿信息</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 注册长任务的观察</span></span><br><span class="line">observer.<span class="title function_">observe</span>(&#123; <span class="attr">entryTypes</span>: [<span class="string">&quot;longtask&quot;</span>] &#125;);</span><br></pre></td></tr></table></figure>
+<p>相比<code>requestAnimationFrame</code>，使用 Long Tasks API 可避免调用过于频繁的问题，并且<code>performance timeline</code>的任务优先级较低，会尽可能在空闲时进行，可避免影响页面其他任务的执行。但需要注意的是，该 API 还处于实验性阶段，兼容性还有待完善，而我们卡顿常常发生在版本较落后、性能较差的机器上，因此兜底方案也是十分需要的。</p>
+<h3 id="PerformanceObserver-卡顿检测"><a href="#PerformanceObserver-卡顿检测" class="headerlink" title="PerformanceObserver 卡顿检测"></a>PerformanceObserver 卡顿检测</h3><p>前面也提到，卡顿产生于用户操作后网页无法及时响应。根据这个原理，我们可以使用<code>PerformanceObserver</code>监听用户操作，检测是否产生卡顿：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="title class_">PerformanceObserver</span>(<span class="function">(<span class="params">list</span>) =&gt;</span> &#123;</span><br><span class="line">  list.<span class="title function_">getEntries</span>().<span class="title function_">forEach</span>(<span class="function">(<span class="params">entry</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> duration = entry.<span class="property">duration</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> delay = entry.<span class="property">processingStart</span> - entry.<span class="property">startTime</span>;</span><br><span class="line">    <span class="keyword">const</span> eventHandlerTime = entry.<span class="property">processingEnd</span> - entry.<span class="property">processingStart</span>;</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`Total duration: <span class="subst">$&#123;duration&#125;</span>`</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`Event delay: <span class="subst">$&#123;delay&#125;</span>`</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`Event handler duration: <span class="subst">$&#123;eventHandlerTime&#125;</span>`</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;).<span class="title function_">observe</span>(&#123; <span class="attr">type</span>: <span class="string">&quot;event&quot;</span> &#125;);</span><br></pre></td></tr></table></figure>
+<p>这种方式的好处是避免频繁在<code>requestAnimationFrame</code>中执行任务，这也是官方鼓励开发者使用的方式，它避免了轮询，且被设计为低优先级任务，甚至可以从缓存中取出过往数据。</p>
+<p>但该方式仅能发现卡顿，至于具体的定位还是得配合埋点和心跳进行会更有效。</p>
+<h2 id="卡顿埋点上报"><a href="#卡顿埋点上报" class="headerlink" title="卡顿埋点上报"></a>卡顿埋点上报</h2><p>不管是哪种卡顿监控方式，我们使用检测卡顿的方案发现了卡顿之后，需要将卡顿进行上报才能及时发现问题。但如果我们仅仅上报了卡顿的发生，是不足以定位和解决问题的。</p>
+<h3 id="卡顿打点"><a href="#卡顿打点" class="headerlink" title="卡顿打点"></a>卡顿打点</h3><p>那么，我们可以通过打点的方式来大概获取卡顿发生的位置。</p>
+<p>举个例子，假设我们一个网页中，关键的点和容易产生长耗时的操作包括：</p>
+<ol>
+<li>加载数据。</li>
+<li>计算。</li>
+<li>渲染。</li>
+<li>批量操作。</li>
+<li>数据提交。</li>
+</ol>
+<p>那么，我们可以在这些操作的地方进行打点。假设我们卡顿工具的能力主要有两个：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">interface <span class="title class_">IJank</span> &#123;</span><br><span class="line">  <span class="attr">_jankLogs</span>: <span class="title class_">Array</span>&lt;<span class="title class_">IJankLogInfo</span> &amp; &#123; <span class="attr">logTime</span>: number &#125;&gt;;</span><br><span class="line">  <span class="comment">// 打点</span></span><br><span class="line">  <span class="title function_">log</span>(<span class="attr">jankLogInfo</span>: <span class="title class_">IJankLogInfo</span>): <span class="keyword">void</span>;</span><br><span class="line">  <span class="comment">// 心跳</span></span><br><span class="line">  <span class="title function_">_heartbeat</span>(): <span class="keyword">void</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>那么，当我们在页面加载的时候分别进行打点，我们的堆栈可能是这样的：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">_jankLogs = [</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">module</span>: <span class="string">&quot;数据层&quot;</span>,</span><br><span class="line">    <span class="attr">action</span>: <span class="string">&quot;加载数据&quot;</span>,</span><br><span class="line">    <span class="attr">logTime</span>: xxxxx,</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">module</span>: <span class="string">&quot;渲染层&quot;</span>,</span><br><span class="line">    <span class="attr">action</span>: <span class="string">&quot;计算&quot;</span>,</span><br><span class="line">    <span class="attr">logTime</span>: xxxxx,</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">module</span>: <span class="string">&quot;渲染层&quot;</span>,</span><br><span class="line">    <span class="attr">action</span>: <span class="string">&quot;渲染&quot;</span>,</span><br><span class="line">    <span class="attr">logTime</span>: xxxxx,</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">module</span>: <span class="string">&quot;数据层&quot;</span>,</span><br><span class="line">    <span class="attr">action</span>: <span class="string">&quot;批量操作计算&quot;</span>,</span><br><span class="line">    <span class="attr">logTime</span>: xxxxx,</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">module</span>: <span class="string">&quot;数据层&quot;</span>,</span><br><span class="line">    <span class="attr">action</span>: <span class="string">&quot;数据提交&quot;</span>,</span><br><span class="line">    <span class="attr">logTime</span>: xxxxx,</span><br><span class="line">  &#125;,</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+<p>当卡顿心跳发现卡顿产生时，我们可以拿到堆栈的数据，比如当用户在批量操作之后发生卡顿，假设此时我们拿到堆栈：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">_jankLogs = [</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">module</span>: <span class="string">&quot;数据层&quot;</span>,</span><br><span class="line">    <span class="attr">action</span>: <span class="string">&quot;加载数据&quot;</span>,</span><br><span class="line">    <span class="attr">logTime</span>: xxxxx,</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">module</span>: <span class="string">&quot;渲染层&quot;</span>,</span><br><span class="line">    <span class="attr">action</span>: <span class="string">&quot;计算&quot;</span>,</span><br><span class="line">    <span class="attr">logTime</span>: xxxxx,</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">module</span>: <span class="string">&quot;渲染层&quot;</span>,</span><br><span class="line">    <span class="attr">action</span>: <span class="string">&quot;渲染&quot;</span>,</span><br><span class="line">    <span class="attr">logTime</span>: xxxxx,</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">module</span>: <span class="string">&quot;数据层&quot;</span>,</span><br><span class="line">    <span class="attr">action</span>: <span class="string">&quot;批量操作计算&quot;</span>,</span><br><span class="line">    <span class="attr">logTime</span>: xxxxx,</span><br><span class="line">  &#125;,</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+<p>这意味着卡顿发生时，最后一次操作是<code>数据层--批量操作计算</code>，则我们可以认为是该操作产生了卡顿。</p>
+<p>我们可以将<code>module</code>/<code>action</code>以及具体的卡顿耗时一起上报，这样就方便我们监控用户的大盘卡顿数据了，也较容易地定位到具体卡顿产生的位置。</p>
+<h3 id="心跳打点"><a href="#心跳打点" class="headerlink" title="心跳打点"></a>心跳打点</h3><p>当然，上述方案如果能达到最优效果，则我们需要在代码中关键的位置进行打点，常见的比如数据加载、计算、事件触发、JavaScript 加载等。</p>
+<p>我们可以将打点方法做成装饰器，自动给<code>class</code>中的方法进行打点。如果埋点数据过少，可能会产生误报，那么我们可以增加心跳的打点：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">IJank</span>.<span class="property">_heartbeat</span> = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="title class_">IJank</span>.<span class="title function_">log</span>(&#123;</span><br><span class="line">    <span class="attr">module</span>: <span class="string">&quot;Jank&quot;</span>,</span><br><span class="line">    <span class="attr">action</span>: <span class="string">&quot;heartbeat&quot;</span>,</span><br><span class="line">    <span class="attr">logTime</span>: xxxxx,</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>当我们心跳产生的时候，会更新堆栈数据。假设发生卡顿的时候，我们拿到这样的堆栈信息：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">_jankLogs = [</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">module</span>: <span class="string">&quot;数据层&quot;</span>,</span><br><span class="line">    <span class="attr">action</span>: <span class="string">&quot;加载数据&quot;</span>,</span><br><span class="line">    <span class="attr">logTime</span>: xxxxx,</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">module</span>: <span class="string">&quot;Jank&quot;</span>,</span><br><span class="line">    <span class="attr">action</span>: <span class="string">&quot;heartbeat&quot;</span>,</span><br><span class="line">    <span class="attr">logTime</span>: xxxxx,</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">module</span>: <span class="string">&quot;Jank&quot;</span>,</span><br><span class="line">    <span class="attr">action</span>: <span class="string">&quot;heartbeat&quot;</span>,</span><br><span class="line">    <span class="attr">logTime</span>: xxxxx,</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">module</span>: <span class="string">&quot;渲染层&quot;</span>,</span><br><span class="line">    <span class="attr">action</span>: <span class="string">&quot;计算&quot;</span>,</span><br><span class="line">    <span class="attr">logTime</span>: xxxxx,</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">module</span>: <span class="string">&quot;Jank&quot;</span>,</span><br><span class="line">    <span class="attr">action</span>: <span class="string">&quot;heartbeat&quot;</span>,</span><br><span class="line">    <span class="attr">logTime</span>: xxxxx,</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">module</span>: <span class="string">&quot;渲染层&quot;</span>,</span><br><span class="line">    <span class="attr">action</span>: <span class="string">&quot;渲染&quot;</span>,</span><br><span class="line">    <span class="attr">logTime</span>: xxxxx,</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">module</span>: <span class="string">&quot;Jank&quot;</span>,</span><br><span class="line">    <span class="attr">action</span>: <span class="string">&quot;heartbeat&quot;</span>,</span><br><span class="line">    <span class="attr">logTime</span>: xxxxx,</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">module</span>: <span class="string">&quot;数据层&quot;</span>,</span><br><span class="line">    <span class="attr">action</span>: <span class="string">&quot;批量操作计算&quot;</span>,</span><br><span class="line">    <span class="attr">logTime</span>: xxxxx,</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">module</span>: <span class="string">&quot;Jank&quot;</span>,</span><br><span class="line">    <span class="attr">action</span>: <span class="string">&quot;heartbeat&quot;</span>,</span><br><span class="line">    <span class="attr">logTime</span>: xxxxx,</span><br><span class="line">  &#125;,</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+<p>显然，卡顿发生时最后一次打点为<code>Jank--heartbeat</code>，这意味着卡顿并不是产生于<code>数据层---批量操作计算</code>，而是产生于该逻辑后的一个不知名逻辑。在这种情况下，我们可能还需要再在可疑的地方增加打点，再继续观察。</p>
+<h3 id="JavaScript-加载打点"><a href="#JavaScript-加载打点" class="headerlink" title="JavaScript 加载打点"></a>JavaScript 加载打点</h3><p>有一个用于监控一些懒加载的 JavaScript 代码的小技巧，我们可以使用<code>PerformanceObserver</code>获取到 JavaScript 代码资源拉取回来后的时机，然后进行打点：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">performanceObserver = <span class="keyword">new</span> <span class="title class_">PerformanceObserver</span>(<span class="function">(<span class="params">resource</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> entries = resource.<span class="title function_">getEntries</span>();</span><br><span class="line"></span><br><span class="line">  entries.<span class="title function_">forEach</span>(<span class="function">(<span class="params">entry: PerformanceResourceTiming</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 获取 JavaScript 资源</span></span><br><span class="line">    <span class="keyword">if</span> (entry.<span class="property">initiatorType</span> !== <span class="string">&quot;script&quot;</span>) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 打点</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">log</span>(&#123;</span><br><span class="line">      <span class="attr">moduleValue</span>: <span class="string">&quot;compileScript&quot;</span>,</span><br><span class="line">      <span class="attr">actionValue</span>: entry.<span class="property">name</span>,</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 监测 resource 资源</span></span><br><span class="line">performanceObserver.<span class="title function_">observe</span>(&#123; <span class="attr">entryTypes</span>: [<span class="string">&quot;resource&quot;</span>] &#125;);</span><br></pre></td></tr></table></figure>
+<p>当卡顿产生时，堆栈的最后一个日志如果为<code>compileScript--bundle_xxxx</code>之类的，则可以认为该 JavaScript 资源在加载的时候耗时较久，导致卡顿的产生。</p>
+<p>通过这样的方式，我们可以有效监控用户卡顿的发生，以及卡顿产生较多的逻辑，然后进行相应的问题定位和优化。</p>
+<h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><p>对于计算逻辑较多、页面逻辑复杂的项目来说，卡顿常常是一个较大痛点。</p>
+<p>关于日常性能的数据监控和优化方案之前也有介绍不少，相比一般的性能优化，卡顿往往产生于不合理的逻辑中，比如死循环、过大数据的反复遍历等等，其监控和定位方式也与普通的性能优化不大一致。</p>
+  
+	</div>
+	<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/2code2.jpg" width="200" height="200" style="display:block;margin: 0 auto;" />
+	<p style="text-align: center;margin-top: 10px;margin-bottom: 10px;">码生艰难，写文不易，给我家猪囤点猫粮了喵~</p>
+	<p style="text-align: center;"><a target="_blank" rel="noopener" href="https://space.bilibili.com/42233366">B站: 被删</a></p>
+	<div class="article-content">
+		<p style="margin-top:50px;">
+			查看Github有更多内容噢：<a target="_blank" rel="noopener" href="https://github.com/godbasin">https://github.com/godbasin</a>
+			<br>
+			更欢迎来<a href="https://godbasin.github.io/front-end-playground">被删的前端游乐场</a>边撸猫边学前端噢
+			<br>
+			<br>
+			如果你想要关注日常生活中的我，欢迎关注“牧羊的猪”公众号噢
+		</p>
+	</div>
+	<div class="author-right">
+  		<p>作者：被删</p>
+  		<p>出处：<a href="https://godbasin.github.io">https://godbasin.github.io</a></p>
+  		<p>本文版权归作者所有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利。</p>
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/性能优化/">性能优化</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/%E5%89%8D%E7%AB%AF%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/">前端解决方案</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  
+<!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a href="http://www.jiathis.com/share?uid=2134021" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config = {data_track_clickback:'true'};
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js?uid=2134021" charset="utf-8"></script>
+<!-- JiaThis Button END -->   
+
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2023/12/25/learn-front-end-develop-from-interview/"  title="从面试角度了解前端基础知识体系">
+ <strong>NEXT:</strong><br/> 
+ <span>从面试角度了解前端基础知识体系
+</span>
+</a>
+</div>
+
+</nav>
+
+	<!-- 如果不是首页且没使用 `comments: false` 关闭评论，则尝试加载评论 -->
+
+    <!-- 配置中启用多说时，导入相应代码 -->
+    
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%A1%E9%A1%BF%E6%A3%80%E6%B5%8B"><span class="toc-number">1.</span> <span class="toc-text">卡顿检测</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Worker-%E5%BF%83%E8%B7%B3%E6%96%B9%E6%A1%88"><span class="toc-number">1.1.</span> <span class="toc-text">Worker 心跳方案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#window-requestAnimationFrame-%E6%96%B9%E6%A1%88"><span class="toc-number">1.2.</span> <span class="toc-text">window.requestAnimationFrame 方案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Long-Tasks-API-%E6%96%B9%E6%A1%88"><span class="toc-number">1.3.</span> <span class="toc-text">Long Tasks API 方案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PerformanceObserver-%E5%8D%A1%E9%A1%BF%E6%A3%80%E6%B5%8B"><span class="toc-number">1.4.</span> <span class="toc-text">PerformanceObserver 卡顿检测</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%A1%E9%A1%BF%E5%9F%8B%E7%82%B9%E4%B8%8A%E6%8A%A5"><span class="toc-number">2.</span> <span class="toc-text">卡顿埋点上报</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%A1%E9%A1%BF%E6%89%93%E7%82%B9"><span class="toc-number">2.1.</span> <span class="toc-text">卡顿打点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BF%83%E8%B7%B3%E6%89%93%E7%82%B9"><span class="toc-number">2.2.</span> <span class="toc-text">心跳打点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JavaScript-%E5%8A%A0%E8%BD%BD%E6%89%93%E7%82%B9"><span class="toc-number">2.3.</span> <span class="toc-text">JavaScript 加载打点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E6%9D%9F%E8%AF%AD"><span class="toc-number">3.</span> <span class="toc-text">结束语</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  	
+	<div class="archiveslist">
+		<p class="asidetitle">最近文章</p>
+			<ul class="archive-list">
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2024/01/21/front-end-performance-no-response-solution/" title="前端性能优化--卡顿的监控和定位">前端性能优化--卡顿的监控和定位...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/12/25/learn-front-end-develop-from-interview/" title="从面试角度了解前端基础知识体系">从面试角度了解前端基础知识体系...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/11/25/render-engine-element-and-event/" title="复杂渲染引擎架构与设计--8.元素与事件">复杂渲染引擎架构与设计--8.元素与...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/10/13/render-engine-offscreen-render/" title="复杂渲染引擎架构与设计--7.离屏渲染">复杂渲染引擎架构与设计--7.离屏渲...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/10/11/render-engine-diff-render/" title="复杂渲染引擎架构与设计--6.增量渲染">复杂渲染引擎架构与设计--6.增量渲...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/09/16/render-engine-calculate-split/" title="复杂渲染引擎架构与设计--5.分片计算">复杂渲染引擎架构与设计--5.分片计...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/08/17/render-engine-calculate/" title="复杂渲染引擎架构与设计--4.渲染计算">复杂渲染引擎架构与设计--4.渲染计...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/07/19/render-engine-bottom-render-architecture/" title="复杂渲染引擎架构与设计--3.底层渲染适配">复杂渲染引擎架构与设计--3.底层渲...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/07/01/complex-front-end-project-solution/" title="大型前端项目的常见问题和解决方案">大型前端项目的常见问题和解决方案...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/06/15/render-engine-plugin-design/" title="复杂渲染引擎架构与设计--2.插件的实现">复杂渲染引擎架构与设计--2.插件的...</a>
+				</li>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+	</div>
+
+
+  
+  <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">归档</a></p>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">一月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">十二月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">十一月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">十月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">九月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">八月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">七月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">六月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">四月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/03/">三月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/01/">一月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">十二月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">十月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">六月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">五月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">二月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">五月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">十月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">41</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">9</span></li></ul>
+  </div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle"><a href="/categories">分类</a></p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/Angular源码/" title="Angular源码">Angular源码<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/CSS炒饭/" title="CSS炒饭">CSS炒饭<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/D3小馒头/" title="D3小馒头">D3小馒头<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular2火锅/" title="angular2火锅">angular2火锅<sup>25</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular混搭/" title="angular混搭">angular混搭<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/box2djs方糖/" title="box2djs方糖">box2djs方糖<sup>34</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/cyclejs哈根达斯/" title="cyclejs哈根达斯">cyclejs哈根达斯<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/jQuery杂烩/" title="jQuery杂烩">jQuery杂烩<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/js什锦/" title="js什锦">js什锦<sup>27</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/react沙拉/" title="react沙拉">react沙拉<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/three-js奶茶/" title="three.js奶茶">three.js奶茶<sup>5</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/vue八宝粥/" title="vue八宝粥">vue八宝粥<sup>30</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/webpack宾治/" title="webpack宾治">webpack宾治<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/web乱炖/" title="web乱炖">web乱炖<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端技能提升/" title="前端技能提升">前端技能提升<sup>6</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端满汉全席/" title="前端满汉全席">前端满汉全席<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端解决方案/" title="前端解决方案">前端解决方案<sup>31</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/喵/" title="喵">喵<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/小程序双皮奶/" title="小程序双皮奶">小程序双皮奶<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/工作这杯茶/" title="工作这杯茶">工作这杯茶<sup>27</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/应用巧克力盒/" title="应用巧克力盒">应用巧克力盒<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/思想棉花糖/" title="思想棉花糖">思想棉花糖<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/柴米油盐工具集/" title="柴米油盐工具集">柴米油盐工具集<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/自动化甜筒/" title="自动化甜筒">自动化甜筒<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/非前端钙片/" title="非前端钙片">非前端钙片<sup>7</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle">标签</p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/分享/" title="分享">分享<sup>50</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/前端技能/" title="前端技能">前端技能<sup>6</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/功能设计/" title="功能设计">功能设计<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/原创部件/" title="原创部件">原创部件<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/心态/" title="心态">心态<sup>22</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/性能优化/" title="性能优化">性能优化<sup>17</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/教程/" title="教程">教程<sup>80</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/晒猫/" title="晒猫">晒猫<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/笔记/" title="笔记">笔记<sup>121</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/算法/" title="算法">算法<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/自制插件/" title="自制插件">自制插件<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/逻辑实现/" title="逻辑实现">逻辑实现<sup>19</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+    <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">about</a></p>
+      <ul class="archive-list">
+      	<li class="archive-list-item">
+      		<a>wangbeishan@163.com</a>
+      		<a target="_blank" rel="noopener" href="https://github.com/godbasin">github.com/godbasin</a>
+      	</li>
+      </ul>
+  </div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<section class="info">
+		<p> 即使梦想再小，却很伟大 ^_^ </p>
+	</section>
+	 
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2024 
+		
+		<a href="https://godbasin.github.io" target="_blank" title="被删">被删</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+
+
+
+
+
+  </body>
+</html>

@@ -13,6 +13,7 @@
 
 ### 最新     
 
+> [《前端性能优化--卡顿的监控和定位》](https://godbasin.github.io/2024/01/21/front-end-performance-no-response-solution/)   
 > [《从面试角度了解前端基础知识体系》](https://godbasin.github.io/2023/12/25/learn-front-end-develop-from-interview/)   
 > [《复杂渲染引擎架构与设计--8.元素与事件》](https://godbasin.github.io/2023/11/25/render-engine-element-and-event/)   
 > [《复杂渲染引擎架构与设计--7.离屏渲染》](https://godbasin.github.io/2023/10/13/render-engine-offscreen-render/)   
@@ -49,9 +50,11 @@
 > [《如何设计与管理一个前端项目》](https://godbasin.github.io/2023/01/12/design-and-manage-front-end-project/)   
 > [《技术方案的调研和设计过程》](https://godbasin.github.io/2022/12/03/research-and-design-process/)   
 > [《大型前端项目的常见问题和解决方案》](https://godbasin.github.io/2023/07/01/complex-front-end-project-solution/)   
+> [《从面试角度了解前端基础知识体系》](https://godbasin.github.io/2023/12/25/learn-front-end-develop-from-interview/)   
 
 
 ### 前端性能优化
+> [《前端性能优化--卡顿的监控和定位》](https://godbasin.github.io/2024/01/21/front-end-performance-no-response-solution/)   
 > [《前端性能优化--项目管理篇》](https://godbasin.github.io/2022/11/20/front-end-performance-optimization-project/)   
 > [《前端性能优化--SSR篇》](https://godbasin.github.io/2022/10/15/front-end-performance-ssr/)   
 > [《前端性能优化--容器篇》](https://godbasin.github.io/2022/08/14/front-end-performance-container/)   
