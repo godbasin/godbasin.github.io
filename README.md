@@ -13,6 +13,7 @@
 
 ### 最新     
 
+> [《有趣的 PerformanceObserver》](https://godbasin.github.io/2024/02/21/front-end-performance-about-performanceobserver/)  
 > [《前端性能优化--卡顿的监控和定位》](https://godbasin.github.io/2024/01/21/front-end-performance-no-response-solution/)   
 > [《从面试角度了解前端基础知识体系》](https://godbasin.github.io/2023/12/25/learn-front-end-develop-from-interview/)   
 > [《复杂渲染引擎架构与设计--8.元素与事件》](https://godbasin.github.io/2023/11/25/render-engine-element-and-event/)   
