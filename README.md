@@ -13,6 +13,7 @@
 
 ### 最新     
 
+> [《前端性能优化--数据指标体系》](https://godbasin.github.io/2024/03/17/front-end-performance-metric/)  
 > [《有趣的 PerformanceObserver》](https://godbasin.github.io/2024/02/21/front-end-performance-about-performanceobserver/)  
 > [《前端性能优化--卡顿的监控和定位》](https://godbasin.github.io/2024/01/21/front-end-performance-no-response-solution/)   
 > [《从面试角度了解前端基础知识体系》](https://godbasin.github.io/2023/12/25/learn-front-end-develop-from-interview/)   
