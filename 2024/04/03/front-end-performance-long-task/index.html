@@ -9,9 +9,8 @@
     
     <meta name="author" content="被删">
     
-    <meta name="description" content="#
-虽然之前有跟大家分享过不少卡顿相关的内容，实际上网页里卡顿的产生基本上都是由于长任务导致的。当然，能阻塞用户操作的，我们说的便是主线程上的长任务。
-浏览器中的长任务可能是 JavaScript 的编译、解析 HTML 和 CSS、渲染页面，或者是我们编写的 JavaScript 中产生了长任务导">
+    <meta name="description" content="虽然之前有跟大家分享过不少卡顿相关的内容，实际上网页里卡顿的产生基本上都是由于长任务导致的。当然，能阻塞用户操作的，我们说的便是主线程上的长任务。
+浏览器中的长任务可能是 JavaScript 的编译、解析 HTML 和 CSS、渲染页面，或者是我们编写的 JavaScript 中产生了长任务导致。">
     
     
     
@@ -89,7 +88,7 @@ var _hmt = _hmt || [];
     </p>
   <p class="article-time">
     <time datetime="2024-04-03T12:28:02.000Z" itemprop="datePublished">2024-04-03</time>
-    更新日期:<time datetime="2024-04-03T12:30:27.760Z" itemprop="dateModified">2024-04-03</time>
+    更新日期:<time datetime="2024-04-03T12:42:50.038Z" itemprop="dateModified">2024-04-03</time>
     
   </p>
 </header>
@@ -101,8 +100,7 @@ var _hmt = _hmt || [];
 		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%A9%E4%BD%A0%E7%9A%84%E9%95%BF%E4%BB%BB%E5%8A%A1%E4%BF%9D%E6%8C%81%E5%9C%A8-50-ms-%E5%86%85"><span class="toc-number">1.</span> <span class="toc-text">让你的长任务保持在 50 ms 内</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#RAIL-%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.1.</span> <span class="toc-text">RAIL 模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8-50-%E6%AF%AB%E7%A7%92%E5%86%85%E5%A4%84%E7%90%86%E4%BA%8B%E4%BB%B6"><span class="toc-number">1.2.</span> <span class="toc-text">在 50 毫秒内处理事件</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%95%BF%E4%BB%BB%E5%8A%A1%E4%BC%98%E5%8C%96"><span class="toc-number">2.</span> <span class="toc-text">长任务优化</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%86%E5%88%AB%E9%95%BF%E4%BB%BB%E5%8A%A1"><span class="toc-number">2.1.</span> <span class="toc-text">识别长任务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-Chrome-Devtools"><span class="toc-number">2.1.1.</span> <span class="toc-text">使用 Chrome Devtools</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-Long-Tasks-API"><span class="toc-number">2.1.2.</span> <span class="toc-text">使用 Long Tasks API</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%86%E5%88%AB%E5%A4%A7%E5%9E%8B%E8%84%9A%E6%9C%AC"><span class="toc-number">2.1.3.</span> <span class="toc-text">识别大型脚本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87"><span class="toc-number">2.1.4.</span> <span class="toc-text">自定义性能指标</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%98%E5%8C%96%E9%95%BF%E4%BB%BB%E5%8A%A1"><span class="toc-number">2.2.</span> <span class="toc-text">优化长任务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%87%E5%A4%A7%E7%9A%84-JavaScript-%E8%84%9A%E6%9C%AC"><span class="toc-number">2.2.1.</span> <span class="toc-text">过大的 JavaScript 脚本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%87%E9%95%BF%E7%9A%84-JavaScript-%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1"><span class="toc-number">2.2.2.</span> <span class="toc-text">过长的 JavaScript 执行任务</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%B2%E8%A1%8C%E4%BB%BB%E5%8A%A1%E7%9A%84%E6%8B%86%E5%88%86"><span class="toc-number">2.2.2.1.</span> <span class="toc-text">串行任务的拆分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%95%E4%B8%AA%E8%B6%85%E5%A4%A7%E4%BB%BB%E5%8A%A1%E7%9A%84%E6%8B%86%E5%88%86"><span class="toc-number">2.2.2.2.</span> <span class="toc-text">单个超大任务的拆分</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">2.2.3.</span> <span class="toc-text">参考</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%93%E6%9D%9F%E8%AF%AD"><span class="toc-number">3.</span> <span class="toc-text">结束语</span></a></li></ol>
 		</div>
 		
-		<p>#</p>
-<p>虽然之前有跟大家分享过不少卡顿相关的内容，实际上网页里卡顿的产生基本上都是由于长任务导致的。当然，能阻塞用户操作的，我们说的便是主线程上的长任务。</p>
+		<p>虽然之前有跟大家分享过不少卡顿相关的内容，实际上网页里卡顿的产生基本上都是由于长任务导致的。当然，能阻塞用户操作的，我们说的便是主线程上的长任务。</p>
 <p>浏览器中的长任务可能是 JavaScript 的编译、解析 HTML 和 CSS、渲染页面，或者是我们编写的 JavaScript 中产生了长任务导致。</p>
 <h1 id="让你的长任务保持在-50-ms-内"><a href="#让你的长任务保持在-50-ms-内" class="headerlink" title="让你的长任务保持在 50 ms 内"></a>让你的长任务保持在 50 ms 内</h1><p>之前在介绍<a href="https://godbasin.github.io/2022/06/04/front-end-performance-no-responding/">前端性能优化–卡顿篇</a>时，提到可以将大任务进行拆解：</p>
 <blockquote>
