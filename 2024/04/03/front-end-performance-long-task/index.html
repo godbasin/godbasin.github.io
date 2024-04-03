@@ -1,0 +1,1338 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>让你的长任务在 50 毫秒内结束 | Here. There.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="被删">
+    
+    <meta name="description" content="#
+虽然之前有跟大家分享过不少卡顿相关的内容，实际上网页里卡顿的产生基本上都是由于长任务导致的。当然，能阻塞用户操作的，我们说的便是主线程上的长任务。
+浏览器中的长任务可能是 JavaScript 的编译、解析 HTML 和 CSS、渲染页面，或者是我们编写的 JavaScript 中产生了长任务导">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Here. There." type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?3d902de4a19cf2bf179534ffd2dd7b7f";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/sun.png" alt="Here. There." title="Here. There."/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Here. There.">Here. There.</a></h1>
+				<h2 class="blog-motto">Love ice cream. Love sunshine. Love life. Love the world. Love myself. Love you.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">首页</a></li>
+					
+						<li><a target="_blank" rel="noopener" href="https://github.com/godbasin/godbasin.github.io">所有文章</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">分类</a></li>
+					
+						<li><a href="https://godbasin.github.io/front-end-playground">前端游乐场</a></li>
+					
+						<li><a href="/about">关于我</a></li>
+					
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2024/04/03/front-end-performance-long-task/" title="让你的长任务在 50 毫秒内结束" itemprop="url">让你的长任务在 50 毫秒内结束</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://godbasin.github.io" title="被删">被删</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2024-04-03T12:28:02.000Z" itemprop="datePublished">2024-04-03</time>
+    更新日期:<time datetime="2024-04-03T12:30:27.760Z" itemprop="dateModified">2024-04-03</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%A9%E4%BD%A0%E7%9A%84%E9%95%BF%E4%BB%BB%E5%8A%A1%E4%BF%9D%E6%8C%81%E5%9C%A8-50-ms-%E5%86%85"><span class="toc-number">1.</span> <span class="toc-text">让你的长任务保持在 50 ms 内</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#RAIL-%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.1.</span> <span class="toc-text">RAIL 模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8-50-%E6%AF%AB%E7%A7%92%E5%86%85%E5%A4%84%E7%90%86%E4%BA%8B%E4%BB%B6"><span class="toc-number">1.2.</span> <span class="toc-text">在 50 毫秒内处理事件</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%95%BF%E4%BB%BB%E5%8A%A1%E4%BC%98%E5%8C%96"><span class="toc-number">2.</span> <span class="toc-text">长任务优化</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%86%E5%88%AB%E9%95%BF%E4%BB%BB%E5%8A%A1"><span class="toc-number">2.1.</span> <span class="toc-text">识别长任务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-Chrome-Devtools"><span class="toc-number">2.1.1.</span> <span class="toc-text">使用 Chrome Devtools</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-Long-Tasks-API"><span class="toc-number">2.1.2.</span> <span class="toc-text">使用 Long Tasks API</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%86%E5%88%AB%E5%A4%A7%E5%9E%8B%E8%84%9A%E6%9C%AC"><span class="toc-number">2.1.3.</span> <span class="toc-text">识别大型脚本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87"><span class="toc-number">2.1.4.</span> <span class="toc-text">自定义性能指标</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%98%E5%8C%96%E9%95%BF%E4%BB%BB%E5%8A%A1"><span class="toc-number">2.2.</span> <span class="toc-text">优化长任务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%87%E5%A4%A7%E7%9A%84-JavaScript-%E8%84%9A%E6%9C%AC"><span class="toc-number">2.2.1.</span> <span class="toc-text">过大的 JavaScript 脚本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%87%E9%95%BF%E7%9A%84-JavaScript-%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1"><span class="toc-number">2.2.2.</span> <span class="toc-text">过长的 JavaScript 执行任务</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%B2%E8%A1%8C%E4%BB%BB%E5%8A%A1%E7%9A%84%E6%8B%86%E5%88%86"><span class="toc-number">2.2.2.1.</span> <span class="toc-text">串行任务的拆分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%95%E4%B8%AA%E8%B6%85%E5%A4%A7%E4%BB%BB%E5%8A%A1%E7%9A%84%E6%8B%86%E5%88%86"><span class="toc-number">2.2.2.2.</span> <span class="toc-text">单个超大任务的拆分</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">2.2.3.</span> <span class="toc-text">参考</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%93%E6%9D%9F%E8%AF%AD"><span class="toc-number">3.</span> <span class="toc-text">结束语</span></a></li></ol>
+		</div>
+		
+		<p>#</p>
+<p>虽然之前有跟大家分享过不少卡顿相关的内容，实际上网页里卡顿的产生基本上都是由于长任务导致的。当然，能阻塞用户操作的，我们说的便是主线程上的长任务。</p>
+<p>浏览器中的长任务可能是 JavaScript 的编译、解析 HTML 和 CSS、渲染页面，或者是我们编写的 JavaScript 中产生了长任务导致。</p>
+<h1 id="让你的长任务保持在-50-ms-内"><a href="#让你的长任务保持在-50-ms-内" class="headerlink" title="让你的长任务保持在 50 ms 内"></a>让你的长任务保持在 50 ms 内</h1><p>之前在介绍<a href="https://godbasin.github.io/2022/06/04/front-end-performance-no-responding/">前端性能优化–卡顿篇</a>时，提到可以将大任务进行拆解：</p>
+<blockquote>
+<p>考虑将任务执行耗时控制在 50 ms 左右。每执行完一个任务，如果耗时超过 50 ms，将剩余任务设为异步，放到下一次执行，给到页面响应用户操作和更新渲染的时间。</p>
+</blockquote>
+<p>为什么是 50 毫秒呢？</p>
+<p>这个数值并不是随便写的，主要来自于 Google 员工开发的 <a target="_blank" rel="noopener" href="https://web.dev/articles/rail">RAIL 模型</a>。</p>
+<h2 id="RAIL-模型"><a href="#RAIL-模型" class="headerlink" title="RAIL 模型"></a>RAIL 模型</h2><p>RAIL 表示 Web 应用生命周期的四个不同方面：<strong>响应（Response）</strong>、<strong>动画（Animation）</strong>、<strong>空闲（Idel）</strong>和<strong>加载（Load）</strong>。由于用户对每种情境有不同的性能预期，因此，系统会根据情境以及关于用户如何看待延迟的用户体验调研来确定效果目标。</p>
+<p>人机交互学术研究由来已久，在 <a target="_blank" rel="noopener" href="https://www.nngroup.com/articles/response-times-3-important-limits/">Jakob Nielsen’s work on response time limits</a> 中提出三个阈值：</p>
+<ul>
+<li>100 毫秒：大概是让用户感觉系统立即做出反应的极限，这意味着除了显示结果之外不需要特殊的反馈</li>
+<li>1 秒：大概是用户思想流保持不间断的极限，即使用户会注意到延迟。一般情况下，大于 0.1 秒小于 1.0 秒的延迟不需要特殊反馈，但用户确实失去了直接操作数据的感觉</li>
+<li>10 秒：大概是让用户的注意力集中在对话上的极限。对于较长的延迟，用户会希望在等待计算机完成的同时执行其他任务，因此应该向他们提供反馈，指示计算机预计何时完成。如果响应时间可能变化很大，则延迟期间的反馈尤其重要，因为用户将不知道会发生什么。</li>
+</ul>
+<p>在此基础上，如今机器性能都有大幅度的提升，因此基于用户的体验，RAIL 增加了一项：</p>
+<ul>
+<li>0-16 ms：大概是用户感受到流畅的动画体验的数值。只要每秒渲染 60 帧，这类动画就会感觉很流畅，也就是每帧 16 毫秒（包括浏览器将新帧绘制到屏幕上所需的时间），让应用生成一帧大约 10 毫秒</li>
+</ul>
+<p>由于这篇文章我们讨论的是长任务相关，因此主要考虑生命周期中的响应（Response），目标便是要求 100 毫秒内获得可见响应。</p>
+<h2 id="在-50-毫秒内处理事件"><a href="#在-50-毫秒内处理事件" class="headerlink" title="在 50 毫秒内处理事件"></a>在 50 毫秒内处理事件</h2><p>RAIL 的目标是在 100 毫秒内完成由用户输入发起的转换，让用户感觉互动是瞬时完成的。</p>
+<p>目标是 100 毫秒，但是页面运行时除了输入处理之外，通常还会执行其他工作，并且这些工作会占用可用于获得可接受输入响应的部分时间。</p>
+<p>因此，为确保在 100 毫秒内获得可见响应，RAIL 的准则是在 50 毫秒内处理用户输入事件：</p>
+<blockquote>
+<p>为确保在 100 毫秒内获得可见响应，请在 50 毫秒内处理用户输入事件。这适用于大多数输入，例如点击按钮、切换表单控件或启动动画。这不适用于轻触拖动或滚动。</p>
+</blockquote>
+<p>除了响应之外，RAIL 对其他的生命周期也提出了对应的准则，总体为：</p>
+<ul>
+<li>响应（Response）：在 50 毫秒内处理事件</li>
+<li>动画（Animation）：在 10 毫秒内生成一帧</li>
+<li>空闲（Idel）：最大限度地延长空闲时间</li>
+<li>加载（Load）：提交内容并在 5 秒内实现互动</li>
+</ul>
+<p>具体每个行为的目标和准则是如何考虑和确定的，大家可以自行学习，这里不再赘述。</p>
+<h1 id="长任务优化"><a href="#长任务优化" class="headerlink" title="长任务优化"></a>长任务优化</h1><p>网页加载时，长时间任务可能会占用主线程，使页面无法响应用户输入（即使页面看起来已就绪）。点击和点按通常不起作用，因为尚未附加事件监听器、点击处理程序等。</p>
+<p>基于前面介绍的 RAIL 模型，我们可以将超过 50 毫秒的任务称之为长任务，即：任何连续不间断的且主 UI 线程繁忙 50 毫秒及以上的时间区间。</p>
+<p>实际上，Chrome 浏览器中的 Performance 面板也是如此定义的，我们录制一段 Performance，当主线程同步执行的任务超过 50 毫秒时，该任务块会被标记为红色。</p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/a-devtools-performance-pa-938d4fa393ba4_1440.png" alt=""></p>
+<h2 id="识别长任务"><a href="#识别长任务" class="headerlink" title="识别长任务"></a>识别长任务</h2><p>一般来说，在前端网页中容易出现的长任务包括：</p>
+<ul>
+<li>大型的 JavaScript 代码加载</li>
+<li>解析 HTML 和 CSS</li>
+<li>DOM 查询/DOM 操作</li>
+<li>运算量较大的 JavaScript 脚本的执行</li>
+</ul>
+<h3 id="使用-Chrome-Devtools"><a href="#使用-Chrome-Devtools" class="headerlink" title="使用 Chrome Devtools"></a>使用 Chrome Devtools</h3><p>我们可以在 Chrome 开发者工具中，通过录制 Performance 的方式，手动查找时长超过 50 毫秒的脚本的“长红/黄色块”，然后分析这些任务块的执行内容，来识别出长任务。</p>
+<p>我们可以选择 Bottom-Up 和 Group by Activity 面板来分析这些长任务（关于如何使用 Performance 面板，可以参考<a target="_blank" rel="noopener" href="https://developer.chrome.com/docs/devtools/performance?hl=zh-cn">分析运行时性能</a>一文）：</p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/selecting-long-task-lab-acf1b77536fe5_1440.png" alt=""></p>
+<p>比如在上图中，导致任务耗时较长的原因是一组成本高昂的 DOM 查询。</p>
+<h3 id="使用-Long-Tasks-API"><a href="#使用-Long-Tasks-API" class="headerlink" title="使用 Long Tasks API"></a>使用 Long Tasks API</h3><p>我们还可以使用 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/PerformanceLongTaskTiming">Long Tasks API</a> 来确定哪些任务导致互动延迟：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="title class_">PerformanceObserver</span>(<span class="keyword">function</span> (<span class="params">list</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> perfEntries = list.<span class="title function_">getEntries</span>();</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; perfEntries.<span class="property">length</span>; i++) &#123;</span><br><span class="line">    <span class="comment">// 分析长任务</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;).<span class="title function_">observe</span>(&#123; <span class="attr">entryTypes</span>: [<span class="string">&quot;longtask&quot;</span>] &#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="识别大型脚本"><a href="#识别大型脚本" class="headerlink" title="识别大型脚本"></a>识别大型脚本</h3><p>大型脚本通常是导致耗时较长的任务的主要原因，我们可以想办法来识别。</p>
+<p>除了使用上述的方法，我们还可以使用<code>PerformanceObserver</code>识别：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="title class_">PerformanceObserver</span>(<span class="function">(<span class="params">resource</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> entries = resource.<span class="title function_">getEntries</span>();</span><br><span class="line"></span><br><span class="line">  entries.<span class="title function_">forEach</span>(<span class="function">(<span class="params">entry: PerformanceResourceTiming</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 获取 JavaScript 资源</span></span><br><span class="line">    <span class="keyword">if</span> (entry.<span class="property">initiatorType</span> !== <span class="string">&quot;script&quot;</span>) <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">const</span> startTime = <span class="keyword">new</span> <span class="title class_">Date</span>().<span class="title function_">getTime</span>();</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">window</span>.<span class="title function_">requestAnimationFrame</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="comment">// JavaScript 资源加载完成</span></span><br><span class="line">      <span class="keyword">const</span> endTime = <span class="keyword">new</span> <span class="title class_">Date</span>().<span class="title function_">getTime</span>();</span><br><span class="line">      <span class="comment">// 如果此时耗时大于 50 ms，则可任务出现了长任务</span></span><br><span class="line">      <span class="keyword">const</span> isLongTask = endTime - startTime &gt; <span class="number">50</span>;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;).<span class="title function_">observe</span>(&#123; <span class="attr">entryTypes</span>: [<span class="string">&quot;resource&quot;</span>] &#125;);</span><br></pre></td></tr></table></figure>
+<p>这种方式我们还可以通过<code>entry.name</code>拿到对应的加载资源，针对性地进行处理。</p>
+<h3 id="自定义性能指标"><a href="#自定义性能指标" class="headerlink" title="自定义性能指标"></a>自定义性能指标</h3><p>除此之外，我们还可以通过在代码中埋点，自行计算执行耗时，从而针对可预见的场景识别出长任务：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 可预见的大任务执行前打点</span></span><br><span class="line">performance.<span class="title function_">mark</span>(<span class="string">&quot;bigTask:start&quot;</span>);</span><br><span class="line"><span class="keyword">await</span> <span class="title function_">doBigTask</span>();</span><br><span class="line"><span class="comment">// 执行后打点</span></span><br><span class="line">performance.<span class="title function_">mark</span>(<span class="string">&quot;bigTask:end&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 测量该任务</span></span><br><span class="line">performance.<span class="title function_">measure</span>(<span class="string">&quot;bigTask&quot;</span>, <span class="string">&quot;bigTask:start&quot;</span>, <span class="string">&quot;bigTask:end&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p>再配合<code>PerformanceObserver</code>获取对应的性能数据，大于 50 毫秒则可以判断为长任务、</p>
+<h2 id="优化长任务"><a href="#优化长任务" class="headerlink" title="优化长任务"></a>优化长任务</h2><p>发现长任务之后，我们就可以进行对应的长任务优化。</p>
+<h3 id="过大的-JavaScript-脚本"><a href="#过大的-JavaScript-脚本" class="headerlink" title="过大的 JavaScript 脚本"></a>过大的 JavaScript 脚本</h3><p>大型脚本通常是导致耗时较长的任务的主要原因，尤其是首屏加载时尽量避免加载不必要的代码。</p>
+<p>我们可以考虑拆分这些脚本：</p>
+<ol>
+<li>首屏加载，仅加载必要的最小 JavaScript 代码。</li>
+<li>其他 JavaScript 代码进行模块化，进行分包加载。</li>
+<li>通过预加载、闲时加载等方式，完成剩余所需模块的代码加载。</li>
+</ol>
+<p>拆分 JavaScript 脚本，使得用户打开页面时，只发送初始路由所需的代码。这样可以最大限度地减少需要解析和编译的脚本量，从而缩短网页加载时，也有助于提高 First Input Delay (FID) 和 Interaction to Next Paint (INP) 时间。</p>
+<p>有很多工具可以帮助我们完成这项工作：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://webpack.js.org/guides/code-splitting/">webpack</a></li>
+<li><a target="_blank" rel="noopener" href="https://parceljs.org/code_splitting.html">Parcel</a></li>
+<li><a target="_blank" rel="noopener" href="https://rollupjs.org/guide/en#dynamic-import">Rollup</a></li>
+</ul>
+<p>这些热门的模块打包器，都支持动态加载的方式来拆分 JavaScript 脚本。我们甚至可以限制每个构建模块的大小，来防止某个模块的 JavaScript 脚本过大，具体的使用方式大家可以自行搜索。</p>
+<h3 id="过长的-JavaScript-执行任务"><a href="#过长的-JavaScript-执行任务" class="headerlink" title="过长的 JavaScript 执行任务"></a>过长的 JavaScript 执行任务</h3><p>主线程一次只能处理一个任务。如果任务的延时时间超过某一点（确切来说是 50 毫秒），则会被归类为耗时较长的任务。</p>
+<p>对于这种过长的执行任务，优化方案也十分直接：<strong>任务拆分</strong>，直观来看就是这样：</p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/a-single-long-task-versus-724bb5ecd4b3f_1440.png" alt=""></p>
+<p>一般来说，任务拆分可以分为两种：</p>
+<ol>
+<li>串行执行的不同执行任务。</li>
+<li>单个超大的执行任务。</li>
+</ol>
+<h4 id="串行任务的拆分"><a href="#串行任务的拆分" class="headerlink" title="串行任务的拆分"></a>串行任务的拆分</h4><p>对于串行执行的不同任务，可以将不同任务的调用从同步改成异步即可，比如 <a target="_blank" rel="noopener" href="https://web.dev/articles/optimize-long-tasks">Optimize long tasks</a> 这篇文章中详细介绍的：</p>
+<p><code>saveSettings()</code>的函数，该函数会调用五个函数来完成某些工作：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">saveSettings</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="title function_">validateForm</span>();</span><br><span class="line">  <span class="title function_">showSpinner</span>();</span><br><span class="line">  <span class="title function_">saveToDatabase</span>();</span><br><span class="line">  <span class="title function_">updateUI</span>();</span><br><span class="line">  <span class="title function_">sendAnalytics</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/the-savesettings-function-b71e8e42d8bf7_1440.png" alt=""></p>
+<p>对这些串行任务进行拆分有很多种方式，比如：</p>
+<ul>
+<li>使用<code>setTimeOut()</code>/<code>postTask()</code>实现异步</li>
+<li>自行实现任务管理器，管理串行任务执行，每执行一个任务后释放主线程，再执行下一个任务（还需考虑优先级执行任务）</li>
+</ul>
+<p>具体的代码可以参考 <a target="_blank" rel="noopener" href="https://web.dev/articles/optimize-long-tasks">Optimize long tasks</a> 该文章，理想的优化效果为：</p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/the-same-savesettings-fun-689035655ea7a_1440.png" alt=""></p>
+<h4 id="单个超大任务的拆分"><a href="#单个超大任务的拆分" class="headerlink" title="单个超大任务的拆分"></a>单个超大任务的拆分</h4><p>有时候我们的应用中需要做大量的运算，比如对上百万个数据做一系列的计算，此时我们可以考虑进行分批拆分。</p>
+<p>拆分的时候需要注意几个事情：</p>
+<ol>
+<li>尽量将每个小任务拆成 50 毫秒左右的执行时间。</li>
+<li>大任务分批执行，会由同步执行变为异步执行，需要考虑中间态（是否有新的任务插入，是否会重复执行）。</li>
+</ol>
+<p>之前在介绍复杂渲染引擎的时候，有详细讲解使用分批计算的方法进行性能优化，具体可以参考<a href="https://godbasin.github.io/2023/09/16/render-engine-calculate-split/">《复杂渲染引擎架构与设计–5.分片计算》</a>一文。</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://web.dev/articles/rail">Measure performance with the RAIL model</a></li>
+<li><a target="_blank" rel="noopener" href="https://web.dev/articles/reduce-javascript-payloads-with-code-splitting">Reduce JavaScript payloads with code splitting</a></li>
+<li><a target="_blank" rel="noopener" href="https://web.dev/articles/preload-critical-assets">Preload critical assets to improve loading speed</a></li>
+<li><a target="_blank" rel="noopener" href="https://web.dev/articles/long-tasks-devtools">Are long JavaScript tasks delaying your Time to Interactive?</a></li>
+<li><a target="_blank" rel="noopener" href="https://web.dev/articles/optimize-long-tasks">Optimize long tasks</a></li>
+</ul>
+<h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p>对于大型复杂的前端应用来说，卡顿和长任务都是家常便饭。</p>
+<p>性能优化没有捷径，有的都是一步步定位，一点点分析，一处处解决。每一个问题都是独立的问题，但我们还可以识别它们的共性，提供更高效的解决路径。</p>
+  
+	</div>
+	<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/2code2.jpg" width="200" height="200" style="display:block;margin: 0 auto;" />
+	<p style="text-align: center;margin-top: 10px;margin-bottom: 10px;">码生艰难，写文不易，给我家猪囤点猫粮了喵~</p>
+	<p style="text-align: center;"><a target="_blank" rel="noopener" href="https://space.bilibili.com/42233366">B站: 被删</a></p>
+	<div class="article-content">
+		<p style="margin-top:50px;">
+			查看Github有更多内容噢：<a target="_blank" rel="noopener" href="https://github.com/godbasin">https://github.com/godbasin</a>
+			<br>
+			更欢迎来<a href="https://godbasin.github.io/front-end-playground">被删的前端游乐场</a>边撸猫边学前端噢
+			<br>
+			<br>
+			如果你想要关注日常生活中的我，欢迎关注“牧羊的猪”公众号噢
+		</p>
+	</div>
+	<div class="author-right">
+  		<p>作者：被删</p>
+  		<p>出处：<a href="https://godbasin.github.io">https://godbasin.github.io</a></p>
+  		<p>本文版权归作者所有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利。</p>
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/性能优化/">性能优化</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/%E5%89%8D%E7%AB%AF%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/">前端解决方案</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  
+<!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a href="http://www.jiathis.com/share?uid=2134021" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config = {data_track_clickback:'true'};
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js?uid=2134021" charset="utf-8"></script>
+<!-- JiaThis Button END -->   
+
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2024/03/17/front-end-performance-metric/"  title="前端性能优化--数据指标体系">
+ <strong>NEXT:</strong><br/> 
+ <span>前端性能优化--数据指标体系
+</span>
+</a>
+</div>
+
+</nav>
+
+	<!-- 如果不是首页且没使用 `comments: false` 关闭评论，则尝试加载评论 -->
+
+    <!-- 配置中启用多说时，导入相应代码 -->
+    
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%A9%E4%BD%A0%E7%9A%84%E9%95%BF%E4%BB%BB%E5%8A%A1%E4%BF%9D%E6%8C%81%E5%9C%A8-50-ms-%E5%86%85"><span class="toc-number">1.</span> <span class="toc-text">让你的长任务保持在 50 ms 内</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#RAIL-%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.1.</span> <span class="toc-text">RAIL 模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8-50-%E6%AF%AB%E7%A7%92%E5%86%85%E5%A4%84%E7%90%86%E4%BA%8B%E4%BB%B6"><span class="toc-number">1.2.</span> <span class="toc-text">在 50 毫秒内处理事件</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%95%BF%E4%BB%BB%E5%8A%A1%E4%BC%98%E5%8C%96"><span class="toc-number">2.</span> <span class="toc-text">长任务优化</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%86%E5%88%AB%E9%95%BF%E4%BB%BB%E5%8A%A1"><span class="toc-number">2.1.</span> <span class="toc-text">识别长任务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-Chrome-Devtools"><span class="toc-number">2.1.1.</span> <span class="toc-text">使用 Chrome Devtools</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-Long-Tasks-API"><span class="toc-number">2.1.2.</span> <span class="toc-text">使用 Long Tasks API</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%86%E5%88%AB%E5%A4%A7%E5%9E%8B%E8%84%9A%E6%9C%AC"><span class="toc-number">2.1.3.</span> <span class="toc-text">识别大型脚本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87"><span class="toc-number">2.1.4.</span> <span class="toc-text">自定义性能指标</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%98%E5%8C%96%E9%95%BF%E4%BB%BB%E5%8A%A1"><span class="toc-number">2.2.</span> <span class="toc-text">优化长任务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%87%E5%A4%A7%E7%9A%84-JavaScript-%E8%84%9A%E6%9C%AC"><span class="toc-number">2.2.1.</span> <span class="toc-text">过大的 JavaScript 脚本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%87%E9%95%BF%E7%9A%84-JavaScript-%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1"><span class="toc-number">2.2.2.</span> <span class="toc-text">过长的 JavaScript 执行任务</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%B2%E8%A1%8C%E4%BB%BB%E5%8A%A1%E7%9A%84%E6%8B%86%E5%88%86"><span class="toc-number">2.2.2.1.</span> <span class="toc-text">串行任务的拆分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%95%E4%B8%AA%E8%B6%85%E5%A4%A7%E4%BB%BB%E5%8A%A1%E7%9A%84%E6%8B%86%E5%88%86"><span class="toc-number">2.2.2.2.</span> <span class="toc-text">单个超大任务的拆分</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">2.2.3.</span> <span class="toc-text">参考</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%93%E6%9D%9F%E8%AF%AD"><span class="toc-number">3.</span> <span class="toc-text">结束语</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  	
+	<div class="archiveslist">
+		<p class="asidetitle">最近文章</p>
+			<ul class="archive-list">
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2024/04/03/front-end-performance-long-task/" title="让你的长任务在 50 毫秒内结束">让你的长任务在 50 毫秒内结束...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2024/03/17/front-end-performance-metric/" title="前端性能优化--数据指标体系">前端性能优化--数据指标体系...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2024/02/21/front-end-performance-about-performanceobserver/" title="有趣的 PerformanceObserver">有趣的 PerformanceObs...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2024/01/21/front-end-performance-no-response-solution/" title="前端性能优化--卡顿的监控和定位">前端性能优化--卡顿的监控和定位...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/12/25/learn-front-end-develop-from-interview/" title="从面试角度了解前端基础知识体系">从面试角度了解前端基础知识体系...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/11/25/render-engine-element-and-event/" title="复杂渲染引擎架构与设计--8.元素与事件">复杂渲染引擎架构与设计--8.元素与...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/10/13/render-engine-offscreen-render/" title="复杂渲染引擎架构与设计--7.离屏渲染">复杂渲染引擎架构与设计--7.离屏渲...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/10/11/render-engine-diff-render/" title="复杂渲染引擎架构与设计--6.增量渲染">复杂渲染引擎架构与设计--6.增量渲...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/09/16/render-engine-calculate-split/" title="复杂渲染引擎架构与设计--5.分片计算">复杂渲染引擎架构与设计--5.分片计...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2023/08/17/render-engine-calculate/" title="复杂渲染引擎架构与设计--4.渲染计算">复杂渲染引擎架构与设计--4.渲染计...</a>
+				</li>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+	</div>
+
+
+  
+  <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">归档</a></p>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">四月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">三月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/02/">二月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">一月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">十二月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">十一月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">十月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">九月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">八月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">七月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">六月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">四月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/03/">三月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/01/">一月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">十二月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">十月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">六月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">五月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">二月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">五月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">十月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">41</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">9</span></li></ul>
+  </div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle"><a href="/categories">分类</a></p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/Angular源码/" title="Angular源码">Angular源码<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/CSS炒饭/" title="CSS炒饭">CSS炒饭<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/D3小馒头/" title="D3小馒头">D3小馒头<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular2火锅/" title="angular2火锅">angular2火锅<sup>25</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular混搭/" title="angular混搭">angular混搭<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/box2djs方糖/" title="box2djs方糖">box2djs方糖<sup>34</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/cyclejs哈根达斯/" title="cyclejs哈根达斯">cyclejs哈根达斯<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/jQuery杂烩/" title="jQuery杂烩">jQuery杂烩<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/js什锦/" title="js什锦">js什锦<sup>27</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/react沙拉/" title="react沙拉">react沙拉<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/three-js奶茶/" title="three.js奶茶">three.js奶茶<sup>5</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/vue八宝粥/" title="vue八宝粥">vue八宝粥<sup>30</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/webpack宾治/" title="webpack宾治">webpack宾治<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/web乱炖/" title="web乱炖">web乱炖<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端技能提升/" title="前端技能提升">前端技能提升<sup>6</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端满汉全席/" title="前端满汉全席">前端满汉全席<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端解决方案/" title="前端解决方案">前端解决方案<sup>34</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/喵/" title="喵">喵<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/小程序双皮奶/" title="小程序双皮奶">小程序双皮奶<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/工作这杯茶/" title="工作这杯茶">工作这杯茶<sup>27</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/应用巧克力盒/" title="应用巧克力盒">应用巧克力盒<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/思想棉花糖/" title="思想棉花糖">思想棉花糖<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/柴米油盐工具集/" title="柴米油盐工具集">柴米油盐工具集<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/自动化甜筒/" title="自动化甜筒">自动化甜筒<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/非前端钙片/" title="非前端钙片">非前端钙片<sup>7</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle">标签</p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/分享/" title="分享">分享<sup>50</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/前端技能/" title="前端技能">前端技能<sup>6</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/功能设计/" title="功能设计">功能设计<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/原创部件/" title="原创部件">原创部件<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/心态/" title="心态">心态<sup>22</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/性能优化/" title="性能优化">性能优化<sup>20</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/教程/" title="教程">教程<sup>80</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/晒猫/" title="晒猫">晒猫<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/笔记/" title="笔记">笔记<sup>121</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/算法/" title="算法">算法<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/自制插件/" title="自制插件">自制插件<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/逻辑实现/" title="逻辑实现">逻辑实现<sup>19</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+    <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">about</a></p>
+      <ul class="archive-list">
+      	<li class="archive-list-item">
+      		<a>wangbeishan@163.com</a>
+      		<a target="_blank" rel="noopener" href="https://github.com/godbasin">github.com/godbasin</a>
+      	</li>
+      </ul>
+  </div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<section class="info">
+		<p> 即使梦想再小，却很伟大 ^_^ </p>
+	</section>
+	 
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2024 
+		
+		<a href="https://godbasin.github.io" target="_blank" title="被删">被删</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+
+
+
+
+
+  </body>
+</html>

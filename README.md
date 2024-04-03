@@ -13,6 +13,7 @@
 
 ### 最新     
 
+> [《让你的长任务在 50 毫秒内结束》](https://godbasin.github.io/2024/04/03/front-end-performance-long-task/)  
 > [《前端性能优化--数据指标体系》](https://godbasin.github.io/2024/03/17/front-end-performance-metric/)  
 > [《有趣的 PerformanceObserver》](https://godbasin.github.io/2024/02/21/front-end-performance-about-performanceobserver/)  
 > [《前端性能优化--卡顿的监控和定位》](https://godbasin.github.io/2024/01/21/front-end-performance-no-response-solution/)   
@@ -56,6 +57,10 @@
 
 
 ### 前端性能优化
+
+> [《让你的长任务在 50 毫秒内结束》](https://godbasin.github.io/2024/04/03/front-end-performance-long-task/)  
+> [《前端性能优化--数据指标体系》](https://godbasin.github.io/2024/03/17/front-end-performance-metric/)  
+> [《有趣的 PerformanceObserver》](https://godbasin.github.io/2024/02/21/front-end-performance-about-performanceobserver/)  
 > [《前端性能优化--卡顿的监控和定位》](https://godbasin.github.io/2024/01/21/front-end-performance-no-response-solution/)   
 > [《前端性能优化--项目管理篇》](https://godbasin.github.io/2022/11/20/front-end-performance-optimization-project/)   
 > [《前端性能优化--SSR篇》](https://godbasin.github.io/2022/10/15/front-end-performance-ssr/)   
