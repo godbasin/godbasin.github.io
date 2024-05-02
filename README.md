@@ -13,6 +13,7 @@
 
 ### 最新     
 
+> [《前端性能优化--用户卡顿检测》](https://godbasin.github.io/2024/05/02/front-end-performance-jank-detect/)  
 > [《让你的长任务在 50 毫秒内结束》](https://godbasin.github.io/2024/04/03/front-end-performance-long-task/)  
 > [《前端性能优化--数据指标体系》](https://godbasin.github.io/2024/03/17/front-end-performance-metric/)  
 > [《有趣的 PerformanceObserver》](https://godbasin.github.io/2024/02/21/front-end-performance-about-performanceobserver/)  
@@ -58,6 +59,7 @@
 
 ### 前端性能优化
 
+> [《前端性能优化--用户卡顿检测》](https://godbasin.github.io/2024/05/02/front-end-performance-jank-detect/)  
 > [《让你的长任务在 50 毫秒内结束》](https://godbasin.github.io/2024/04/03/front-end-performance-long-task/)  
 > [《前端性能优化--数据指标体系》](https://godbasin.github.io/2024/03/17/front-end-performance-metric/)  
 > [《有趣的 PerformanceObserver》](https://godbasin.github.io/2024/02/21/front-end-performance-about-performanceobserver/)  
