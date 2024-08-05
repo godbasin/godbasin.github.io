@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://godbasin.github.io/"/>
-  <updated>2024-07-17T15:01:46.721Z</updated>
+  <updated>2024-08-05T15:39:40.121Z</updated>
   <id>https://godbasin.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>前端性能优化--任务管理和调度</title>
+    <link href="https://godbasin.github.io/2024/08/05/front-end-performance-task-schedule/"/>
+    <id>https://godbasin.github.io/2024/08/05/front-end-performance-task-schedule/</id>
+    <published>2024-08-05T15:39:12.000Z</published>
+    <updated>2024-08-05T15:39:40.121Z</updated>
+    
+    <content type="html"><![CDATA[<p>对于一个前端应用，最理想的性能便是任何用户的交互都不会被阻塞、且能及时得到响应。</p><p>显然，当我们应用程序里需要处理一些大任务计算的时候，这个理想状态是难以达到的。不过，努力去接近也是我们可以尽量去做好的。</p><h1 id="任务调度与性能"><a href="#任务调度与性能" class="headerlink" title="任务调度与性能"></a>任务调度与性能</h1><p>任务调度的出现，基本上是为了更合理地使用和分配资源。在前端应用中，用户的交互则是最高优先级需要响应的，用户操作是否能及时响应，往往是我们衡量一个前端应用是否性能好的重要标准。</p><h2 id="浏览器的“一帧”"><a href="#浏览器的“一帧”" class="headerlink" title="浏览器的“一帧”"></a>浏览器的“一帧”</h2><p>前面在<a href="https://godbasin.github.io/2024/06/04/front-end-performance-jank-heartbeat-monitor/">《前端性能优化–卡顿心跳检测》</a>一文中，我们提到说使用<code>requestAnimationFrame</code>来检测是否产生了卡顿。除此之外，如果你也处理过简单的异步任务管理（闲时执行等），或许你还用过<code>requestIdleCallback</code>。</p><p>其实，<code>requestAnimationFrame</code>和<code>requestIdleCallback</code>都会在浏览器的每一帧中被执行到。我们来看<a href="https://aerotwist.com/blog/the-anatomy-of-a-frame/">下图</a>：</p><p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/anatomy-of-a-frame.svg" alt=""></p><p>每次浏览器渲染的过程顺序为：</p><ol><li>用户事件。</li><li>一个宏任务。</li><li>队列中全部微任务。</li><li><code>requestAnimationFrame</code>。</li><li>浏览器重排/重绘。</li><li><code>requestIdleCallback</code>。</li></ol><p>我们常用的事件监听的顺序则是<a href="https://medium.com/@paul_irish/requestanimationframe-scheduling-for-nerds-9c57f7438ef4">如图</a>：</p><p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/life-of-a-frame.jpg" alt=""></p><h2 id="任务切片"><a href="#任务切片" class="headerlink" title="任务切片"></a>任务切片</h2><p>之前在<a href="https://godbasin.github.io/2024/04/03/front-end-performance-long-task/">《让你的长任务在 50 毫秒内结束》</a>一文中说过：RAIL 的目标是在 100 毫秒内完成由用户输入发起的转换，让用户感觉互动是瞬时完成的。</p><p>为确保在 100 毫秒内获得可见响应，RAIL 的准则是在 50 毫秒内处理用户输入事件，这也是为什么我们使用<code>requestIdleCallback</code>处理空闲回调任务时，<code>timeRemaining()</code>有一个 50ms 的上限时间。</p><p>好的任务调度可以让页面不会产生卡顿，这个前提是每个被调度的任务的颗粒度足够细，也可理解为单个任务需要满足下述两个条件之一：</p><ol><li>在 50ms 内执行完成。</li><li>支持暂停以及继续执行。</li></ol><p>对于希望尽可能达到理想状态的系统来说，要让所以可拆卸的任务满足上述条件，都才是最难实现的部分。</p><h2 id="切片后任务执行"><a href="#切片后任务执行" class="headerlink" title="切片后任务执行"></a>切片后任务执行</h2><p>只要任务可控制在 50ms 内结束或者中断再恢复，那么我们就可以很简单地利用浏览器的每一帧渲染过程，来实现“不会产生卡顿”的任务管理。</p><p>最简单的，我们可以设置每一次执行的耗时上限，当每个任务执行完之后，检测一下本次执行耗时，超过 50ms 则通过定时器或是<code>requestAnimationFrame</code>、<code>requestIdleCallback</code>等方法，将剩余任务放到下一次渲染前后处理。</p><p>比如之前<a href="https://godbasin.github.io/2023/09/16/render-engine-calculate-split/">《复杂渲染引擎架构与设计–分片计算》</a>一文中提到的，简单的<code>setTimeout</code>便能使任务执行不阻塞用户操作：</p><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">AsyncCalculateManager</span> &#123;</span><br><span class="line">  <span class="comment">// 每次执行任务的耗时</span></span><br><span class="line">  <span class="keyword">static</span> timeForEveryTask = <span class="number">50</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 跑下一次任务</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="keyword">private</span> <span class="title function_">runNext</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">timer</span>) <span class="built_in">clearTimeout</span>(<span class="variable language_">this</span>.<span class="property">timer</span>);</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">timer</span> = <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="comment">// 一个任务跑 50 ms</span></span><br><span class="line">      <span class="keyword">const</span> calculateRange = <span class="variable language_">this</span>.<span class="property">calculateRunner</span>.<span class="title function_">calculateNextTask</span>(</span><br><span class="line">        <span class="title class_">AsyncCalculateManager</span>.<span class="property">timeForEveryTask</span></span><br><span class="line">      );</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 处理完之后，剩余任务做异步</span></span><br><span class="line">      <span class="variable language_">this</span>.<span class="title function_">runNext</span>();</span><br><span class="line">    &#125;, <span class="number">10</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>除此之外，<code>requestAnimationFrame</code>适合处理影响页面渲染（比如操作 DOM）的任务，而<code>requestIdleCallback</code>可以处理与页面渲染无关的一些计算任务。</p><p>当然，常见的任务调度还需要支持这些能力：</p><ul><li>定义任务优先级</li><li>并行/串行/顺序执行任务</li></ul><p>在前端应用中，大家都比较认可和熟知的任务调度便是 React 虚拟 DOM 的计算，我们可以来看看。</p><h2 id="React-虚拟-DOM-与任务调度"><a href="#React-虚拟-DOM-与任务调度" class="headerlink" title="React 虚拟 DOM 与任务调度"></a>React 虚拟 DOM 与任务调度</h2><p>React 中使用协调器（Reconciler）与渲染器（Renderer）来优化页面的渲染性能。</p><p>我们都知道在 React 里，可以使用<code>ReactDOM.render</code>/<code>this.setState</code>/<code>this.forceUpdate</code>/<code>useState</code>等方法来触发状态更新，这些方法共用一套状态更新机制，该更新机制主要由两个步骤组成：</p><ol><li>找出变化的组件，每当有更新发生时，协调器会做如下工作：</li></ol><ul><li>调用组件 render 方法将 JSX 转化为虚拟 DOM</li><li>进行虚拟 DOM Diff 并找出变化的虚拟 DOM</li><li>通知渲染器</li></ul><ol start="2"><li>渲染器接到协调器通知，将变化的组件渲染到页面上。</li></ol><p>在 React15 及以前，协调器创建虚拟 DOM 使用的是递归的方式，该过程是无法中断的。这会导致 UI 渲染被阻塞，造成卡顿。为此，React16 中新增了调度器（Scheduler），调度器能够把可中断的任务切片处理，能够调整优先级，重置并复用任务。</p><p>调度器会根据任务的优先级去分配各自的过期时间，在过期时间之前按照优先级执行任务，可以在不影响用户体验的情况下去进行计算和更新。</p><p>简单来说，最重要的依然是两个步骤：</p><ul><li>时间切片：将更新中的 render 阶段划分一个个的小任务，通常来说这些小任务连续执行的最长时间为 5ms</li><li>限制时间执行任务：每次执行小任务，都会记录耗时，如果超过 5ms 就跳出当前任务，并设置一个宏任务开始下一轮事件循环</li></ul><p>通过这样的方式，React 可在浏览器空闲的时候进行调度并执行任务。</p><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul><li><a href="https://www.qinguanghui.com/react/%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6.html">任务调度 Scheduler</a></li></ul><h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p>任务调度其实很简单，无非就是将所有执行代码尽可能拆分为一个个的切片任务，并在浏览器每帧渲染前后处理一部分任务，从而达到不阻塞用户操作的目的。</p><p>但实际上这件事要做好来又是很困难的，需要将几乎整个应用程序都搭建于这套任务调度之上，并拆成足够小可执行的任务，往往这才是在项目中做好性能的最大难点。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;对于一个前端应用，最理想的性能便是任何用户的交互都不会被阻塞、且能及时得到响应。&lt;/p&gt;
+&lt;p&gt;显然，当我们应用程序里需要处理一些大任务计算的时候，这个理想状态是难以达到的。不过，努力去接近也是我们可以尽量去做好的。&lt;/p&gt;
+&lt;h1 id=&quot;任务调度与性能&quot;&gt;&lt;a href
+      
+    
+    </summary>
+    
+      <category term="前端解决方案" scheme="https://godbasin.github.io/categories/%E5%89%8D%E7%AB%AF%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"/>
+    
+    
+      <category term="性能优化" scheme="https://godbasin.github.io/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
+    
+  </entry>
   
   <entry>
     <title>前端性能优化--R 树的使用</title>
@@ -468,28 +495,6 @@
 &lt;li&gt;事前做预期。&lt;/li&gt;
 &lt;li&gt;事后做复盘。&lt;/li&gt;
 &lt;/ol&gt;
-    
-    </summary>
-    
-      <category term="前端技能提升" scheme="https://godbasin.github.io/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E8%83%BD%E6%8F%90%E5%8D%87/"/>
-    
-    
-      <category term="前端技能" scheme="https://godbasin.github.io/tags/%E5%89%8D%E7%AB%AF%E6%8A%80%E8%83%BD/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>如何设计与管理一个前端项目</title>
-    <link href="https://godbasin.github.io/2023/01/12/design-and-manage-front-end-project/"/>
-    <id>https://godbasin.github.io/2023/01/12/design-and-manage-front-end-project/</id>
-    <published>2023-01-12T02:38:02.000Z</published>
-    <updated>2023-01-12T02:38:18.117Z</updated>
-    
-    <content type="html"><![CDATA[<p>如果说基础知识的掌握是起跑线，那么使大家之间拉开差距的更多是前端项目开发经验和技能。对于一个项目来说，从框架选型和搭建，到项目维护、工程化和自动化、多人协作等各个方面，都需要我们在参与项目中不断地思考和改进，积累经验。</p><span id="more"></span><p>本文将要介绍：</p><ul><li>前端项目设计</li><li>前端项目管理</li></ul><h2 id="前端项目设计"><a href="#前端项目设计" class="headerlink" title="前端项目设计"></a>前端项目设计</h2><p>除了具体的前端领域知识以外，当我们开始负责起整个前端项目的管理时，需要具备一些方案选型、架构设计、项目瓶颈识别并解决等能力。</p><h3 id="前端项目搭建"><a href="#前端项目搭建" class="headerlink" title="前端项目搭建"></a>前端项目搭建</h3><p>很多时候，我们的项目在刚搭建的时候规模会比较小，因此在项目启动阶段需要做简化，来保证项目能快速地上线。但从长期来看，一个项目还需要考虑到拓展性。换句话说，当项目开始变得较难维护的时候，我们就要进行一些架构或者流程上的调整。</p><p>在项目开始之前，我们需要做一系列的规划，像项目的定位（to B/C）、大小，像框架和工具的选型、项目和团队规范等，包括：</p><ul><li>前端框架选择：基于团队成员偏好和能力，选择适合的前端框架</li><li>工具库选择：基于项目规模，选择是否需要路由管理、状态管理等工具库</li><li>自动化工具：基于成员规模和项目状态（快速上线、稳定维护等），选择是否需要代码构建、自动化测试等自动化工具，以及搭建持续集成、持续部署等自动化流程</li><li>项目流程规范：使用一致的项目规范，包括项目代码结构、代码规范、开发流程规范、多人协作规范等内容</li></ul><p>项目的维护永远是程序员的大头，多是“前人种树，后人乘凉”。但是很多时候，大家会为了一时的方便，对代码规范比较随意，就导致了我们经常看到有人讨论“继承来的代码”。</p><p>代码规范其实是团队合作中最重要的地方，使用一致的代码规范，会大大减少协作的时候被戳到的痛点。好的写码习惯很重要，包括友好的变量命名、适当的注释等，都会对代码的可读性有很大的提升。但是习惯是每个人都不一样，所以在此之上，我们需要有这样统一的代码规范。</p><p>一些工具可以很好地协助我们，像 Eslint 这样的工具，加上代码的打包工具、CI/CD 等流程的协助，可以把一些规范强行标准化，达到代码的统一性。还有像 prettier 这样的工具，可以自动在打包的时候帮我们进行代码规范的优化。</p><p>除了这些简单的命名规范、全等、单引双引等代码相关的规范，还有流程规范也一样重要。比如对代码进行 code review，尤其在改动公共库或是公共组件的时候。</p><p>最重要的还是多沟通。沟通是一个团队里必不可少、又很容易出问题的地方，我们要学会沟通和表达自己。</p><h3 id="洞察项目瓶颈"><a href="#洞察项目瓶颈" class="headerlink" title="洞察项目瓶颈"></a>洞察项目瓶颈</h3><p>我们常常会觉得自己做的项目没有什么意思，每天都是重复的工作、繁琐的业务逻辑、糟糕的历史遗留代码，反观其他人都在做有技术、有难度、有挑战性的工作，越会难以喜欢上自己负责的工作。</p><p>实际上，那些会让我们觉得枯燥、反复、杂乱的工作内容，更是可以去改善做好、并能从中获得成长的地方。涉及前端工作的业务，只有极少一部分的业务例如涉及多人协同的在线文档、或是用户量很大的业务如电商、直播、游戏等，这些业务重心可能会稍微倾向前端，更多时候前端真的会处于编写页面、最多就用 Node.js 写写接入层等状况。好的业务可遇不可求，我们在遇到这些业务之前，就什么都不做了吗？</p><p>大多数工作中，对开发的要求都不仅限于实现功能。如果只是编写代码，刚毕业的应届生花几周时间也一样能做到，那么我们的优势在哪里呢？洞察工作中的瓶颈，并有足够的能力去设计方案、排期开发、解决并复盘，这些技能更能突显我们在岗位上的价值和能力。对团队来说，更需要这样能主动发现并解决问题的成员，而不是安排什么就只做什么的螺丝钉。</p><p>一般来说，用户量较大的项目的瓶颈通常会在兼容性、性能优化这些方面；对于一次性的活动页面，挑战点存在于如何高效地完成一次活动页面的开发或者配置，通常会使用配置系统、结合拖拽以及所见即所得等方式来生成页面；对于经常开发各式各样的管理端系统，优化方向则在于怎么通过脚手架快速地生成需要的项目代码、如何快速地发布上线等。我们要做的，就是找到工作中让自己觉得烦躁和不爽的地方，然后去改进优化它们。</p><h3 id="方案调研与选型对比"><a href="#方案调研与选型对比" class="headerlink" title="方案调研与选型对比"></a>方案调研与选型对比</h3><p>找到项目的痛点或是瓶颈后，就需要设计相应的方案去解决它们。而当我们需要投入人力和时间成本去做一件事，就需要面临一个问题：如何让团队认同这件事情、并愿意给到资源让我们去完成它？</p><p>可以通过前期的调研，找一些业界相对成熟的方案作为参考。如果有多套方案，则需要对这些方案进行分析比较。例如，小明最近需要针对项目进行自动化性能测试能力的支持，因为项目规模大、模块多、参与开发的成员也有几十人，经常因为一些不同模块的变更导致项目的性能下降却没法及时发现问题，往往是等到用户反馈或是某次开发、产品或者测试发现的时候才得知。</p><h2 id="前端项目管理"><a href="#前端项目管理" class="headerlink" title="前端项目管理"></a>前端项目管理</h2><p>不同于做工具和框架、参与开源协同，很多时候我们写的都是业务代码。我们总认为只有做工具才会比较有意思、也有技术挑战，但是业务代码就没有可以提升技术、挑战自己的地方了吗？其实并不是，很多时候我们先入为主、认为业务代码写得再好也没用、自己放弃了去做这样的事情。多多思考，你会发现每个项目都可以大有可为，你的未来也可以大不一样。</p><h3 id="合理的分工排期"><a href="#合理的分工排期" class="headerlink" title="合理的分工排期"></a>合理的分工排期</h3><p>很多开发在进行编码实现功能的时候，都直接想到哪写到哪，也常常会出现代码写到一半发现写不下去，结果导致重新调整实现，最终项目从预期的一周变成了一个月、迟迟上线不了的问题。</p><p>当我们确认好技术方案之后，可以针对实现细节拆分具体的功能模块，分别进行工作量的预估和分工排期。这一步骤在多人协作的时候是必不可少的，否则可能面临分工不明确、接口未对齐就匆忙开工、最终因为各种问题而返工这些问题。而对单人项目来说，也可以通过拆解功能模块这个过程来思考具体的实现方式，也能提前发现一些可能存在的问题，并相应地进行规避。</p><p>提供完整的工作量评估和时间表，我们可以比较有计划地进行开发，同时团队的其他人也可以了解我们的工作情况，有时候大家能给到一些建议，也能避免对方不了解我们到底在做什么而导致的一些误会。而排期预估的另外一个重要作用，则是通过时间线去严格约束我们的工作效率、及时发现问题，以及项目结束后可针对时间维度进行项目复盘。</p><h3 id="风险把控"><a href="#风险把控" class="headerlink" title="风险把控"></a>风险把控</h3><p>前面有说到，我们需要在参与项目的过程中具备 Owner 意识，即使这个项目并不是我们主导。风险把控则是作为 Owner 必须掌握的一个能力，我们需要确保项目能按照预期进行，则需要主动发现其中可能存在的风险并提前解决。</p><p>除了因为方案设计考虑不周而导致的一些返工风险，我们在项目进行过程中常常也会遇到依赖资源无法及时给到、依赖方因为种种原因无法按时支援、团队协作出现矛盾等各种问题，任何一块出现问题都可能导致整体的工期出现延误，这是我们不想出现的结果。因此，我们需要主动把控各个环节的情况，及时推动和解决出现的一些多方协作的问题。</p><p>通过前期准备的这些方案和工具，提前控制好一些可预见的风险，开发过程会更加顺利。但是如果我们的效果只有这些的话，很多时候是无法证明自己做了这么多事情的价值。那么，我们可以尝试用数据说话。</p><h3 id="及时反馈与复盘"><a href="#及时反馈与复盘" class="headerlink" title="及时反馈与复盘"></a>及时反馈与复盘</h3><p>很多开发习惯了当代码开发完成、发布上线之后就结束了这个项目，其实他们遗漏了一个很重要的环节：复盘。通过复盘这种方式，我们可以发现自身的一些问题并改进，还可以让团队其他人以及管理者知道我们做了些什么，这是很重要的。</p><p>复盘的总结内容，可以通过邮件的方式发送给团队以及合作方，同时还可以作为自身的经验沉淀，后续更多项目中可以进行参考。如果使用得当，我们还可以通过这种方式来影响我们的团队和管理者，也是向上管理的一种方法。</p><p>但其实不只是工作中，我们生活里也可以常常进行反思和总结，这样我们的步伐才可以越跑越快。成长的过程中总会遇到各式各样的问题，有些问题被我们忽视而过，有些问题我们选择了逃避，但其实我们还可以通过迎面应战、解决并反思的方式，在这样一次次战斗中快速地成长。</p><h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><p>每一个程序员都希望自己成为一个优秀的开发，实际上每个人对优秀的定义都不大一样。作为前端开发，除了专业能力以外，工作中还需要良好的表达与沟通能力。</p><p>如果我们还想继续往上走，通用计算机能力、架构能力、项目管理等能力也都需要提升。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;如果说基础知识的掌握是起跑线，那么使大家之间拉开差距的更多是前端项目开发经验和技能。对于一个项目来说，从框架选型和搭建，到项目维护、工程化和自动化、多人协作等各个方面，都需要我们在参与项目中不断地思考和改进，积累经验。&lt;/p&gt;
     
     </summary>
     
