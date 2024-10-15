@@ -13,6 +13,7 @@
 
 ### 最新     
 
+> [《前端性能优化--卡顿链路追踪》](https://godbasin.github.io/2024/10/15/front-end-performance-jank-monitor/)  
 > [《前端性能优化--JavaScript 数组解构》](https://godbasin.github.io/2024/09/03/front-end-performance-array-performance/)  
 > [《前端性能优化--任务管理和调度》](https://godbasin.github.io/2024/08/05/front-end-performance-task-schedule/)  
 > [《前端性能优化--R 树的使用》](https://godbasin.github.io/2024/07/17/front-end-performance-r-tree/)  
