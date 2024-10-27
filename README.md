@@ -13,6 +13,7 @@
 
 ### 最新     
 
+> [《项目中的技术债务》](https://godbasin.github.io/2024/10/27/tech-debt/)  
 > [《前端性能优化--卡顿链路追踪》](https://godbasin.github.io/2024/10/15/front-end-performance-jank-monitor/)  
 > [《前端性能优化--JavaScript 数组解构》](https://godbasin.github.io/2024/09/03/front-end-performance-array-performance/)  
 > [《前端性能优化--任务管理和调度》](https://godbasin.github.io/2024/08/05/front-end-performance-task-schedule/)  

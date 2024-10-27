@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://godbasin.github.io/"/>
-  <updated>2024-10-15T14:20:06.065Z</updated>
+  <updated>2024-10-27T13:13:53.883Z</updated>
   <id>https://godbasin.github.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>项目中的技术债务</title>
+    <link href="https://godbasin.github.io/2024/10/27/tech-debt/"/>
+    <id>https://godbasin.github.io/2024/10/27/tech-debt/</id>
+    <published>2024-10-27T13:12:22.000Z</published>
+    <updated>2024-10-27T13:13:53.883Z</updated>
+    
+    <content type="html"><![CDATA[<p>身为一名程序员，我们经常会调侃自己每天的工作就是在屎山上拉屎。这里的屎山还有一个更好的名称，叫做技术债务。</p><h2 id="技术债务是怎么产生的"><a href="#技术债务是怎么产生的" class="headerlink" title="技术债务是怎么产生的"></a>技术债务是怎么产生的</h2><p>我参加过许多不同的项目，而基本上每个项目都会存在或多或少的历史债务。实际上，愿意给到资源去解决历史债务的团队，更是少之又少。</p><p>业务功能的快速迭代，往往意味着缺少长期的规划和设计，架构演化和迭代更是无从谈起。我们总会吐槽自己在屎山上拉屎，但许多项目的实际情况是生命周期很短，业务或许还未稳定就已经被淘汰。</p><p>这样的情况下，技术债务的产生是必然的，我们写的每一行代码都可能成为历史债务。因为我们的业务在不停地快速试错和迭代，项目也在不断地变更和发展。技术方案没有唯一解，最合适的技术方案想必也会跟随着项目产生变化。</p><p>即使我们很幸运地遇到了生命周期较长的项目，也不可避免地在业务快速发展的时候忙于堆叠功能。直到现有架构的维护成本过高，影响到后续功能迭代时，才会想起来需要进行技术变更。</p><p>当架构设计需要进行变更、新技术引入时，过往的方案设计很容易就成为了历史债务，这是一个必然过程。</p><p>虽然技术债务躲不了，那当技术发生变更的时候，我们可以通过一些方法使其产生更少的债务。</p><h2 id="技术方案预研"><a href="#技术方案预研" class="headerlink" title="技术方案预研"></a>技术方案预研</h2><p>这些年的前端技术变更十分迅猛，很多人会在项目中引入新技术，来获得更高的开发效率或是更好的性能。除此之外，我还见过许多技术的引入，单纯是为了跟上新的技术栈，或是拿业务代码来做试验。</p><p>最糟糕的还是为了汇报引入的技术，我在工作中已经见过无数为了晋级答辩强行造的轮子或是引入新技术。在答辩通过之后，他们往往会继续去攻陷下一个“技术亮点”，留下来大堆大堆的技术债务。当然，这也不能怪留下债务的人，很多时候他们也只是想办法在规则范围内获得更多的利益。</p><p>那么，当我们遇到需要引入新的架构设计或是技术的时候，可以进行较深入的技术方案预研，来尽量避免引入更多的技术债务。确保了技术方案的最优化，可以避免开发过程遇到问题需要推翻重做，也可以提前评估预期的效果和引入的技术债务如何解决等问题。</p><p>技术预研的话，可以从几个方面考虑起：</p><ol><li>项目现状/痛点分析。</li><li>业界方案调研/方案选型。</li><li>架构可拓展性。</li></ol><h3 id="项目现状-痛点分析"><a href="#项目现状-痛点分析" class="headerlink" title="项目现状/痛点分析"></a>项目现状/痛点分析</h3><p>在进行技术方案调研的时候，我们需要首先结合自身项目的背景、存在的痛点、现状问题进行分析，只有找到项目的问题在哪里，才可以更准确、彻底地去解决这些问题。</p><p>很多人在拿到一个不熟悉的项目时，第一反应经常是重构它。说实话，要把重构这项工作做好，往往是吃力不讨好。对此，个人的建议是可以先开发和维护一段时间，确切知道项目的实际情况后，结合业务未来的规划，再来考虑是否需要进行重构工作，亦或是局部优化。如果说业务已经稳定，且不会再用什么新的功能了，除非是 bug 多到无法解决，否则就不需要投入过多的精力在这里。</p><p>项目痛点是什么？直白来说，就是我们每天在吐槽的事情，还有我们认为没有意思的事情，比如：糟糕的历史代码、枯燥又重复的开发工作、历史债务导致的开发效率低下等问题。相比于每天都在吐槽，我们可以动动手花点时间把问题解决，这样每天就可以有更多摸鱼的时间了（不是。</p><p>更多情况下，是项目现有的设计，无法支撑后续功能的快速迭代了。比如说，项目代码已经很庞大了，模块之间调用关系过于凌乱、模块状态的数量过多导致修改和监听复杂等等。那么，这种情况下，我们则需要引入新的技术或是架构设计到项目中，比如使用依赖注入来管理模块间的依赖关系，使用状态管理工具来维护应用各模块以及全局的的状态。</p><h3 id="业界方案调研-方案选型"><a href="#业界方案调研-方案选型" class="headerlink" title="业界方案调研/方案选型"></a>业界方案调研/方案选型</h3><p>具体到前端页面开发来说，前端状态管理工具也有很多，常见的比如各框架自带的 vuex、redux，以及比较热门的 mobx 等，具体的引入可以结合项目自身的情况比如使用的框架、项目技术栈等来进行选型。</p><p>除此之外，有时候我们会遇到一些现有开源工具无法直接在项目中的问题，这种时候我们往往需要“造轮子”，即参考业界成熟的技术方案，结合项目实际情况来调整落地。比如说依赖注入的方案，著名的开源项目中有 Angular 和 VsCode 都实现了依赖注入的框架，但并没有抽离出来直接可用的工具，我们可以通过研究它们的相关代码，分析其中的思路以及实现方式，然后在自己项目中使用。</p><h3 id="架构可拓展性"><a href="#架构可拓展性" class="headerlink" title="架构可拓展性"></a>架构可拓展性</h3><p>个人认为引入新架构或是新技术时，需要考虑两个很重要的点：</p><ol><li>新架构/技术是否能支持业务的未来规划。</li><li>此次引入是否彻底，是否会留下新的技术债务。</li></ol><p>不同的项目或是同一个项目的不同时期，关注的技术点都会不一样。在项目初期，关注重点往往是快速试错与功能迭代；在项目稳定期，项目的维护成本则会逐渐受到重视。</p><p>我们在引入新的技术或架构的时候，还需要考虑项目后续的发展规划。比如说我们在给项目引入依赖注入时，假设我们知道项目后续需要支持以应用中内嵌应用的功能，则可以考虑以 SDK 为维度来进行依赖注入，避免后续在同一个应用中存在两个 SDK 时，依赖注入管理混乱。</p><p>而技术变更会引入的技术债务问题，则还需要在方案设计的时候进行详细评估。举个例子，架构设计的改造，往往产生极大的工作量，面对这样的工作量是否有有效的解决方案，比如引入自动化流程进行、新增人力支援等。如果该问题无法有很好的解决方案，那么引入新技术必定会带来更多的技术债务，这种情况下就需要仔细衡量这个事情值不值得了。</p><p>至于技术方案调研相关，之前有写过一篇更详细的文章：<a href="https://godbasin.github.io/2022/12/03/research-and-design-process/">《技术方案的调研和设计过程》</a>，感兴趣的小伙伴也可以看看。</p><p>实际上，项目复盘也可以很好地解决剩余技术债务的问题，同时还能避免相同的错误再犯，之前<a href="https://godbasin.github.io/2023/03/21/why-project-reviews-are-important/">《为什么项目复盘很重要》</a>一文中也有介绍。</p><h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><p>日子怎么过都是过，过得好过得坏也是一天天过，但稍微对自己有点要求和期待，日子可能会一天天变好呢~</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;身为一名程序员，我们经常会调侃自己每天的工作就是在屎山上拉屎。这里的屎山还有一个更好的名称，叫做技术债务。&lt;/p&gt;
+&lt;h2 id=&quot;技术债务是怎么产生的&quot;&gt;&lt;a href=&quot;#技术债务是怎么产生的&quot; class=&quot;headerlink&quot; title=&quot;技术债务是怎么产生的&quot;
+      
+    
+    </summary>
+    
+      <category term="前端技能提升" scheme="https://godbasin.github.io/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E8%83%BD%E6%8F%90%E5%8D%87/"/>
+    
+    
+      <category term="前端技能" scheme="https://godbasin.github.io/tags/%E5%89%8D%E7%AB%AF%E6%8A%80%E8%83%BD/"/>
+    
+  </entry>
   
   <entry>
     <title>前端性能优化--卡顿链路追踪</title>
@@ -470,29 +496,6 @@
     
       &lt;p&gt;上一篇&lt;a href=&quot;https://godbasin.github.io/2023/05/13/render-engine-render-and-collect/&quot;&gt;《收集与渲染》&lt;/a&gt;文章中，我们提到收集与渲染的拆分设计，对后续的业务拓展会更方便。&lt;/p&gt;
 &lt;p&gt;本文将介绍渲染插件的设计，渲染插件可用于各种新特性的拓展绘制。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="前端解决方案" scheme="https://godbasin.github.io/categories/%E5%89%8D%E7%AB%AF%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"/>
-    
-    
-      <category term="性能优化" scheme="https://godbasin.github.io/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>复杂渲染引擎架构与设计--1.收集与渲染</title>
-    <link href="https://godbasin.github.io/2023/05/13/render-engine-render-and-collect/"/>
-    <id>https://godbasin.github.io/2023/05/13/render-engine-render-and-collect/</id>
-    <published>2023-05-13T01:52:22.000Z</published>
-    <updated>2023-05-13T01:52:52.299Z</updated>
-    
-    <content type="html"><![CDATA[<p>对于一般的渲染引擎来说，我们可以简单地拿到待渲染的数据，然后直接通过 Canvas/DOM/SVG 来将需要渲染的图形和内容渲染出来。</p><p>而在复杂场景下，比如需要自行排版的文本、表格和图形类，光是将要渲染的数据计算出来，便容易面临性能瓶颈，而对于样式多样、结构复杂的内容来说，绘制过程也同样会出现性能瓶颈。</p><span id="more"></span><p>本文我们主要针对 Canvas 绘制的场景，来考虑将绘制的流程分为收集和渲染两部分。</p><h2 id="渲染数据的收集"><a href="#渲染数据的收集" class="headerlink" title="渲染数据的收集"></a>渲染数据的收集</h2><p>很多时候，我们在后台数据库存储的只有图形的基本信息，对于需要排版计算的数据来说，则需要在拿到数据之后，再根据页面进行排版计算，完成后才能渲染到页面。</p><p>或许这样说会有些抽象，我们以表格的渲染为例来说明。</p><p>对于表格这样的产品来说，存储的往往是以单元格为基本单位的数据，如每个单元格的内容（可能是复杂的富文本、图片、图标结合）、样式（边框、背景色）、行列的宽高等。而在实际上页面渲染的时候，我们可能会根据行列宽高、每个单元格的边框线设置来绘制格子的布局。</p><p>除此之外，我们还可能需要考虑单元格内容是否会超出单元格，来判断是否需要截断渲染、是否需要换行显示等。这便要求我们需要对内容宽高进行测量，比如使用<code>CanvasRenderingContext2D.measureText()</code>测量文本宽度，这依赖了浏览器环境下的 API 能力。这意味着我们无法在后台提前计算好这些数据，因此无法通过提前计算来加速渲染过程。</p><p>于是，我们需要在前端拿到后台数据后，再进行相应的排版计算。</p><p>如果说一边计算一边绘制，则整个过程的耗时会比较长，用户也可能会看到绘制过程，该体验不是很友好。因此，我们可以在计算过程中，先把要最终绘制的数据结果先收集到一起，Canvas 绘制的时候则可以直接用。</p><h2 id="收集与绘制的功能划分"><a href="#收集与绘制的功能划分" class="headerlink" title="收集与绘制的功能划分"></a>收集与绘制的功能划分</h2><p>我们可以根据绘制内容，划分为以下的收集器和渲染器：</p><ul><li>线段数据收集和绘制（如表头、边框线等）</li><li>矩形数据收集和绘制（如背景色）</li><li>图像数据收集和绘制（如图片）</li><li>文本数据收集和绘制（如文字内容）</li><li>其他数据收集和绘制</li></ul><p>可见，收集器和渲染器的类型是一一对应的，渲染器在渲染的时候，可以直接从对应的收集器类型中获取数据，然后绘制。</p><p>还需要考虑一种情况，即相同的收集器和不同的收集器类型里，绘制内容有重叠时，需要考虑绘制堆叠的顺序。举个例子，单元格的文字需要在背景色上面，也就是说单元格的绘制需要比背景色要晚。</p><p>这意味着我们在收集的时候，还需要给收集的数据添加堆叠顺序，在绘制的时候，则按照堆叠顺序先后绘制。我们可以将收集器分为多个，每个收集器定义堆叠顺序，相同堆叠顺序的数据收集到一起。</p><p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/render-engine-render-and-collect-1.jpg" alt=""></p><p>其实，我们使用一个收集器，通过给数据添加渲染类型，来将不同类型的数据放在一起，方便统一管理。在渲染的时候，则先根据绘制类型和堆叠顺序进行排序，再进行绘制。</p><p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/render-engine-render-and-collect-2.jpg" alt=""></p><h2 id="渲染数据享元"><a href="#渲染数据享元" class="headerlink" title="渲染数据享元"></a>渲染数据享元</h2><p>前面我们在<a href="">《前端性能优化–Canvas 篇》</a>一文中描述过，Canvas 上下文切换的成本消耗比较大，如果在复杂内容绘制的情况下，可能会导致性能问题。</p><p>使用收集器的一个好处是，我们可以将同类型同样式的渲染数据进行享元。对于样式完全一样的数据，收集器可通过对样式进行 hash 享元存储在一起。</p><p>这样绘制的时候，就可以将样式一样的内容一起绘制，减少 Canvas 上下文的切换。</p><p>举个简单的例子，假设线段的绘制支持颜色、粗细两种不同的样式，那么我们收集的时候可以将同颜色、同粗细的线段位置信息存储在一起：</p><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">LineCollector</span> &#123;</span><br><span class="line">  <span class="comment">// 以线段样式为 key，存储线段的开始和结束位置，如 [[startX, startY], [endX, endY]]</span></span><br><span class="line">  <span class="keyword">private</span> <span class="attr">renderInfos</span>: &#123; [<span class="attr">key</span>: <span class="built_in">string</span>]: <span class="built_in">number</span>[][] &#125; = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">addRenderInfo</span>(<span class="params">renderInfo</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> hash = <span class="variable language_">this</span>.<span class="title function_">generateKey</span>(renderInfo);</span><br><span class="line">    <span class="keyword">if</span> (!<span class="variable language_">this</span>.<span class="property">renderInfos</span>[hash]) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">renderInfos</span>[hash] = [];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">renderInfos</span>[hash].<span class="title function_">push</span>([...renderInfo.<span class="property">position</span>]);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="title function_">generateKey</span>(<span class="attr">lineProp</span>: &#123; <span class="attr">color</span>: <span class="built_in">string</span>; <span class="attr">thickness</span>: numer &#125;): <span class="built_in">string</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">`<span class="subst">$&#123;lineProp.thickness&#125;</span>-<span class="subst">$&#123;lineProp.color&#125;</span>`</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>通过这样的方式，我们将要绘制的数据收集起来，方便 Canvas 进行更高效的渲染。</p><h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><p>通过将 Canvas 渲染过程拆分为收集和渲染两部分，架构上更清晰的同时，在一定程度上提升了渲染的性能和效率。而这样的架构设计，也更方便后续做更多的拓展，我会在后续篇章继续介绍。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;对于一般的渲染引擎来说，我们可以简单地拿到待渲染的数据，然后直接通过 Canvas/DOM/SVG 来将需要渲染的图形和内容渲染出来。&lt;/p&gt;
-&lt;p&gt;而在复杂场景下，比如需要自行排版的文本、表格和图形类，光是将要渲染的数据计算出来，便容易面临性能瓶颈，而对于样式多样、结构复杂的内容来说，绘制过程也同样会出现性能瓶颈。&lt;/p&gt;
     
     </summary>
     
