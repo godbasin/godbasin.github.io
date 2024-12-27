@@ -13,6 +13,7 @@
 
 ### 最新     
 
+> [《前端性能优化--代码习惯》](https://godbasin.github.io/2024/12/27/front-end-performance-code-detail/)  
 > [《前端性能优化--享元模式》](https://godbasin.github.io/2024/11/06/front-end-performance-flyweight-pattern/)  
 > [《项目中的技术债务》](https://godbasin.github.io/2024/10/27/tech-debt/)  
 > [《前端性能优化--卡顿链路追踪》](https://godbasin.github.io/2024/10/15/front-end-performance-jank-monitor/)  
