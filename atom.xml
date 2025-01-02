@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://godbasin.github.io/"/>
-  <updated>2024-12-27T15:25:46.536Z</updated>
+  <updated>2025-01-02T13:34:16.651Z</updated>
   <id>https://godbasin.github.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>前端性能优化--二进制压缩数据内容</title>
+    <link href="https://godbasin.github.io/2025/01/02/front-end-performance-binary-attribute/"/>
+    <id>https://godbasin.github.io/2025/01/02/front-end-performance-binary-attribute/</id>
+    <published>2025-01-02T13:34:23.000Z</published>
+    <updated>2025-01-02T13:34:16.651Z</updated>
+    
+    <content type="html"><![CDATA[<p>今天也是来介绍一种性能优化的具体方式，使用二进制存储特定数据，来降低内存占用、后台存储和传输成本。</p><h2 id="二进制数据设计"><a href="#二进制数据设计" class="headerlink" title="二进制数据设计"></a>二进制数据设计</h2><p>当我们需要描述某种数据的许多状态时，可以考虑使用二进制的方式优化。</p><p>简单来说，就是使用二进制数字<code>1</code>和<code>0</code>来表示单个状态，然后使用二进制数字来表示多种状态的组合，比如<code>10001001</code>可以表示 8 种状态。同时还可以将二进制转换为十进制来减少存储成本，比如<code>10001001</code>可转换成<code>137</code>。</p><h3 id="上报数据转换"><a href="#上报数据转换" class="headerlink" title="上报数据转换"></a>上报数据转换</h3><p>常用的场景可以考虑数据上报，比如当用户在编辑文档/打开文档的时候，需要收集一些数据来观测性能情况比如：</p><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">IDocumentInfo</span> &#123;</span><br><span class="line">  <span class="attr">isHugeDocument</span>: <span class="built_in">boolean</span>;</span><br><span class="line">  <span class="attr">isReadonly</span>: <span class="built_in">boolean</span>;</span><br><span class="line">  <span class="attr">hasCharts</span>: <span class="built_in">boolean</span>;</span><br><span class="line">  <span class="attr">hasFormatting</span>: <span class="built_in">boolean</span>;</span><br><span class="line">  <span class="attr">hasImages</span>: <span class="built_in">boolean</span>;</span><br><span class="line">  <span class="attr">hasVideos</span>: <span class="built_in">boolean</span>;</span><br><span class="line">  <span class="attr">hasRadios</span>: <span class="built_in">boolean</span>;</span><br><span class="line">  <span class="attr">hasPivotTable</span>: <span class="built_in">boolean</span>;</span><br><span class="line">  <span class="attr">hasTableStyle</span>: <span class="built_in">boolean</span>;</span><br><span class="line">  <span class="attr">hasFreezePanels</span>: <span class="built_in">boolean</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>我们需要根据文档的具体情况，结合大盘的文档性能数据来判断加载速度是否与某些文档特性相关，假设一次上报数据为：</p><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> reportData &#123;</span><br><span class="line">  <span class="attr">timecost</span>: <span class="built_in">number</span>;</span><br><span class="line">  <span class="attr">docInfo</span>: <span class="title class_">IDocumentInfo</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>当希望收集的数据多了之后，我们每次都会携带十分大的数据内容。这时候可以考虑使用二进制的方式来进行上报，比如：</p><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> docInfo = &#123;</span><br><span class="line">  <span class="attr">isHugeDocument</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">isReadonly</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">hasCharts</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">hasFormatting</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">hasImages</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">hasVideos</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">hasRadios</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">hasPivotTable</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">hasTableStyle</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">hasFreezePanels</span>: <span class="literal">true</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><p>可以表示为 10 个二进制位，即：<code>1110100011</code>，那么转为十进制则是<code>931</code>，我们上报为<code>931</code>即可。</p><p>通过这样的方式，原本一个 JSON 字符串：</p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&#123;\&quot;isHugeDocument\&quot;:true,\&quot;isReadonly\&quot;:true,\&quot;hasCharts\&quot;:true,\&quot;hasFormatting\&quot;:false,\&quot;hasImages\&quot;:true,\&quot;hasVideos\&quot;:false,\&quot;hasRadios\&quot;:false,\&quot;hasPivotTable\&quot;:false,\&quot;hasTableStyle\&quot;:true,\&quot;hasFreezePanels\&quot;:true&#125;&quot;</span></span><br></pre></td></tr></table></figure><p>只需要使用<code>931</code>来表示，可以极大地节省传输和存储成本。</p><h3 id="单元格数据状态"><a href="#单元格数据状态" class="headerlink" title="单元格数据状态"></a>单元格数据状态</h3><p>除了上报数据以外，多状态数据同样适应。使用表格为例，一个单元格的样式可能包括：加粗、下划线、删除线、斜体、字号、字体颜色、字体样式、背景色等。那么，我们需要这样来描述一个单元格数据：</p><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">ICell</span> &#123;</span><br><span class="line">  <span class="attr">isBold</span>: <span class="built_in">boolean</span>;</span><br><span class="line">  <span class="attr">isItalic</span>: <span class="built_in">boolean</span>;</span><br><span class="line">  <span class="attr">isUnderline</span>: <span class="built_in">boolean</span>;</span><br><span class="line">  <span class="attr">isStrikeThrough</span>: <span class="built_in">boolean</span>;</span><br><span class="line">  <span class="attr">font</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">fontSize</span>: <span class="built_in">number</span>;</span><br><span class="line">  <span class="attr">textColor</span>: <span class="built_in">string</span>;</span><br><span class="line">  <span class="attr">backgroundColor</span>: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>如果我们对一个单元格进行样式编辑，假设只设置了加粗、下划线，按理说最简单的数据变更应该只有<code>isBold</code>和<code>isUnderline</code>两个新数据，那么这次变更我们可以认为是<code>10100000</code>，转换成十进制则是<code>160</code>。</p><p>如果说我们还需要再细致些，直接将单元格的最终状态进行存储，同样可以使用进制的方式进行，比如<code>boolean</code>类型的可以直接使用二进制表示最终状态，假设前面四个布尔值的加粗、下划线、删除线、斜体可以压缩为<code>1010</code>来表示一个加粗、无下划线、有删除线、无斜体样式的单元格。</p><p>那么，我们在存储单元格数据的时候，一些小的成本节约遇上百万千万单元格数据时，则可能会产生想象不到的优化效果。</p><h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><p>今天介绍的只是一个内存优化的思路，但依然还是一句话，性能优化往往是时间换空间、或是空间换时间，本文的例子中显然是时间换空间，毕竟我们需要对数据进行转换，这个过程需要消耗时间是不可避免的。</p><p>除了二进制转换成十进制以外，这样的思路可以拓展到许多地方，比如 16 进制/ 32 进制，甚至简单的字符串拼接等。本质上都是使用约定的方式来存储数据内容，比如 pb、json 便都是一种约定的数据结构。</p><p>还是那句，没有适用于所有方案的最优解，但总有更适合某个场景的解决方案。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;今天也是来介绍一种性能优化的具体方式，使用二进制存储特定数据，来降低内存占用、后台存储和传输成本。&lt;/p&gt;
+&lt;h2 id=&quot;二进制数据设计&quot;&gt;&lt;a href=&quot;#二进制数据设计&quot; class=&quot;headerlink&quot; title=&quot;二进制数据设计&quot;&gt;&lt;/a&gt;二进制数据设计&lt;
+      
+    
+    </summary>
+    
+      <category term="前端解决方案" scheme="https://godbasin.github.io/categories/%E5%89%8D%E7%AB%AF%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"/>
+    
+    
+      <category term="性能优化" scheme="https://godbasin.github.io/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
+    
+  </entry>
   
   <entry>
     <title>前端性能优化--代码习惯</title>
@@ -477,28 +503,6 @@
     
       &lt;p&gt;前面&lt;a href=&quot;https://godbasin.github.io/2023/05/13/render-engine-render-and-collect/&quot;&gt;《收集与渲染》&lt;/a&gt;一文中，我们简单提到说在一些复杂场景下，从服务端获取的数据还需要进行计算，比如依赖 Web 浏览器的计算，亦或是游戏引擎中的碰撞检测。&lt;/p&gt;
 &lt;p&gt;本文我们详细针对复杂计算的场景来考虑渲染引擎的优化。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="前端解决方案" scheme="https://godbasin.github.io/categories/%E5%89%8D%E7%AB%AF%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"/>
-    
-    
-      <category term="性能优化" scheme="https://godbasin.github.io/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>复杂渲染引擎架构与设计--3.底层渲染适配</title>
-    <link href="https://godbasin.github.io/2023/07/19/render-engine-bottom-render-architecture/"/>
-    <id>https://godbasin.github.io/2023/07/19/render-engine-bottom-render-architecture/</id>
-    <published>2023-07-19T03:07:52.000Z</published>
-    <updated>2023-07-19T03:08:27.277Z</updated>
-    
-    <content type="html"><![CDATA[<p>前面我们介绍了复杂渲染引擎中，使用的收集和渲染、以及插件等架构设计。至于底层具体的绘制实现，前面提到的多是 Canvas，实际上我们还可以适配不同的绘制引擎。</p><span id="more"></span><h2 id="多渲染方式适配"><a href="#多渲染方式适配" class="headerlink" title="多渲染方式适配"></a>多渲染方式适配</h2><p>关于渲染引擎整体架构和插件架构的设计，已在<a href="https://godbasin.github.io/front-end-playground/front-end-basic/render-engine/render-engine-render-and-collect.html">《收集与渲染》</a>、<a href="https://godbasin.github.io/front-end-playground/front-end-basic/render-engine/render-engine-plugin-design.html">《插件的实现》</a>两篇文章中介绍过，渲染引擎架构如图：</p><p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/render-engine-plugin-design-1.jpg" alt=""></p><p>底层渲染引擎由收集器和渲染器组成，其中收集器收集需要渲染的渲染数据，渲染器则负责将收集到的数据进行直接渲染。</p><p>本文我们将会介绍渲染器的多种渲染方式的适配，其中常见的就包括：</p><ul><li>Canvas 渲染</li><li>SVG 渲染</li><li>DOM 渲染</li><li>其他渲染方式（如 WEBGL 渲染等）</li></ul><h3 id="适配架构设计"><a href="#适配架构设计" class="headerlink" title="适配架构设计"></a>适配架构设计</h3><p>对于多种渲染方式的适配，架构设计上还比较简单：</p><p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/render-engine-bottom-render-architecture-1.jpg" alt=""></p><p>从收集器收集到的数据，通过适配的方式，转换成不同的绘制结果。举个例子，同样是一个单元格内容：</p><ul><li>Canvas 将需要分别绘制单元格背景（矩形）、单元格边框（线段）、单元格内容（文本）</li><li>SVG 与 Canvas 相似，但 SVG 需要注意元素的层级关系，组合成单元格</li><li>DOM 则可以通过一个<code>&lt;div&gt;</code>元素或是<code>&lt;table&gt;/&lt;tr&gt;/&lt;td&gt;</code>等表格元素来绘制</li></ul><p>一般来说，我们如果使用多种渲染方式，还需要考虑渲染一致性。渲染一致性是指，使用 Canvas 绘制的结果，需要与 SVG、DOM 绘制渲染的结果保持一致，不能出现太大的跳动或是位置、样式不一致的结果。</p><p>因此，我们在进行渲染的时候，根据选择的渲染方式，还需要做不同的兼容适配。</p><p>以上几种渲染方式中，DOM 渲染会受浏览器自身的排版引擎影响，这种影响可能是正面的，也可能是负面的。比如，我们 Canvas 排版方式是尽量接近浏览器原生的方式，那么当我们适配 DOM 渲染的时候则比较省力气。但如果说像在线表格这种场景，使用 DOM 进行表格的排版，则可能会遇到比较多的问题。</p><p>举个例子，我们都知道 DOM 里的表格元素（<code>&lt;table&gt;</code>/<code>&lt;tr&gt;</code>/<code>&lt;td&gt;</code>等）是最难驾驭的，因为浏览器对它们的处理总是在意料之外，宽高难以控制意味着我们将很难将其与 Canvas/SVG 的渲染效果对齐。因此，我们很可能需要在表格元素里嵌套绝对定位的<code>&lt;div&gt;</code>元素，来使得表格最终渲染不会被轻易撑开导致偏差。</p><p>除此之外，我们还需要注意文字的排版、换行等情况在 Canvas/SVG 和 DOM 渲染中需要尽量保持一致。</p><h3 id="各种渲染方式的选择"><a href="#各种渲染方式的选择" class="headerlink" title="各种渲染方式的选择"></a>各种渲染方式的选择</h3><p>每种渲染方式都有各自的优缺点。</p><p>在图表渲染引擎中，最常见的是 Canvas 渲染和 SVG 渲染，我们也可以从 ECharts 官网中找到两者的对比描述：</p><blockquote><ol><li>一般来说，Canvas 更适合绘制图形元素数量较多（这一般是由数据量大导致）的图表（如热力图、地理坐标系或平行坐标系上的大规模线图或散点图等），也利于实现某些视觉特效。</li><li>但在不少场景中，SVG 具有重要的优势：它的内存占用更低（这对移动端尤其重要）、并且用户使用浏览器内置的缩放功能时不会模糊。</li></ol><p>选择哪种渲染器，可以根据软硬件环境、数据量、功能需求综合考虑：</p><ul><li>在软硬件环境较好，数据量不大的场景下，两种渲染器都可以适用，并不需要太多纠结</li><li>在环境较差，出现性能问题需要优化的场景下，可以通过试验来确定使用哪种渲染器。比如：<ul><li>在需要创建很多 ECharts 实例且浏览器易崩溃的情况下（可能是因为 Canvas 数量多导致内存占用超出手机承受能力），可以使用 SVG 渲染器来进行改善</li><li>如果图表运行在低端安卓机，或者我们在使用一些特定图表如水球图等，SVG 渲染器可能效果更好</li><li>数据量较大（经验判断 &gt; 1k）、较多交互时，建议选择 Canvas 渲染器</li></ul></li></ul></blockquote><p>而在在线表格的场景，我们会发现不同的团队会选择不同的渲染方式：</p><ul><li>谷歌表格使用了 Canvas/DOM 两种渲染方式，其中 DOM 渲染主要用于首屏直出</li><li>金山表格使用了 Canvas/SVG 两种渲染方式，其中 SVG 渲染主要用于首屏直出</li><li>飞书表格使用了 Canvas 渲染</li></ul><p>其实我们可以发现，这些团队很多在使用几种渲染方式，原因几乎都是因为使用了 Canvas 绘制作为主要渲染方式。但考虑到首屏渲染的情况，Canvas 则需要一系列的数据计算和渲染过程，不适合首屏直出的方式，因此会适配上 DOM 或者 SVG 进行首屏直出。</p><p>实际上，Canvas 渲染有一个比较致命的弱点：交互性很差。比如用户选择某个格子，进行拖拽、调整宽高、右键菜单等操作，在 Canvas 上是很难命中具体的元素的。因为 Canvas 绘制过程中并不像 DOM 和 SVG 一样有层次结构，最终的渲染结果也只是一个图像。因此，在线表格场景下大多数 Canvas 绘制都需要结合 DOM 引擎一起，获取到用户选择的元素、处理用户交互事件，然后进行二次计算和响应。</p><p>关于首屏直出，后面有空也可以简单唠唠。</p><h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><p>本文介绍了渲染引擎架构中，使用多种渲染方式以及底层渲染器适配的设计。</p><p>我们常常说给项目选择最优的解决方案，实际上我们也会发现，正因为往往没有所谓最优解，这些产品才会针对不同的场景下提供了不同的解决办法。比如，考虑到性能问题 ECharts 提供了 Canvas/SVG 两种绘制方式；又比如考虑到首屏直出的效率，各个在线表格的团队分别适配了更合适的渲染方式。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;前面我们介绍了复杂渲染引擎中，使用的收集和渲染、以及插件等架构设计。至于底层具体的绘制实现，前面提到的多是 Canvas，实际上我们还可以适配不同的绘制引擎。&lt;/p&gt;
     
     </summary>
     

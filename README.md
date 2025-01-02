@@ -13,6 +13,7 @@
 
 ### 最新     
 
+> [《前端性能优化--二进制压缩数据内容》](https://godbasin.github.io/2025/01/02/front-end-performance-binary-attribute/)  
 > [《前端性能优化--代码习惯》](https://godbasin.github.io/2024/12/27/front-end-performance-code-detail/)  
 > [《前端性能优化--享元模式》](https://godbasin.github.io/2024/11/06/front-end-performance-flyweight-pattern/)  
 > [《项目中的技术债务》](https://godbasin.github.io/2024/10/27/tech-debt/)  
