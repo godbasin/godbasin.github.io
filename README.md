@@ -13,6 +13,7 @@
 
 ### 最新     
 
+> [《前端性能优化--FPS页面流畅度》](https://godbasin.github.io/2025/03/09/front-end-performance-fps-monitor/)  
 > [《前端性能优化--JavaScript 引擎性能》](https://godbasin.github.io/2025/02/09/front-end-performance-fast-properties/)  
 > [《前端性能优化--二进制压缩数据内容》](https://godbasin.github.io/2025/01/02/front-end-performance-binary-attribute/)  
 > [《前端性能优化--代码习惯》](https://godbasin.github.io/2024/12/27/front-end-performance-code-detail/)  
