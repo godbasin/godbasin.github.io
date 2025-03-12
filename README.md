@@ -13,6 +13,7 @@
 
 ### 最新     
 
+> [《前端性能优化--预加载顺序设计》](https://godbasin.github.io/2025/04/10/front-end-performance-preload-order/)  
 > [《前端性能优化--FPS页面流畅度》](https://godbasin.github.io/2025/03/09/front-end-performance-fps-monitor/)  
 > [《前端性能优化--JavaScript 引擎性能》](https://godbasin.github.io/2025/02/09/front-end-performance-fast-properties/)  
 > [《前端性能优化--二进制压缩数据内容》](https://godbasin.github.io/2025/01/02/front-end-performance-binary-attribute/)  
