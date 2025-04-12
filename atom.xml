@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://godbasin.github.io/"/>
-  <updated>2025-03-12T14:29:43.844Z</updated>
+  <updated>2025-04-12T07:36:29.762Z</updated>
   <id>https://godbasin.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>复杂渲染引擎架构与设计--9.预热计算</title>
+    <link href="https://godbasin.github.io/2025/05/09/render-engine-pre-calculate/"/>
+    <id>https://godbasin.github.io/2025/05/09/render-engine-pre-calculate/</id>
+    <published>2025-05-09T12:22:21.000Z</published>
+    <updated>2025-04-12T07:36:29.762Z</updated>
+    
+    <content type="html"><![CDATA[<p>前面我们在<a href="https://godbasin.github.io/2023/09/16/render-engine-calculate-split/">《复杂渲染引擎架构与设计–5.分片计算》</a>一文中介绍了分片计算，即将需要计算的内容进行拆分，拆分成约每 50 ms 一个的任务。</p><p>在这个方案中，我们维护了一个待计算区域，将页面中所有未完成的计算任务放在里面，等待异步每个计算任务进行计算。</p><h2 id="全量计算的性能瓶颈"><a href="#全量计算的性能瓶颈" class="headerlink" title="全量计算的性能瓶颈"></a>全量计算的性能瓶颈</h2><p><a href="https://godbasin.github.io/2023/09/16/render-engine-calculate-split/">《复杂渲染引擎架构与设计–5.分片计算》</a>中的方案，已经基本解决大多数场景下的性能问题。但面对超大页面的渲染计算来说，可能依然存在以下瓶颈：</p><ul><li>区域合并和碰撞检测，在待计算任务过多时容易产生性能问题。尤其在列数多的场景下，按行计算的每次任务计算范围都十分仅限</li><li>计算任务过多，当一个页面中的内容十分多的时候（比如一万多列、几十万行的表格），我们还需要考虑是否所有内容都需要异步计算完毕，是否存在资源的浪费</li></ul><p>因此，我们可以考虑更合适的异步方案，该方案需要考虑：</p><ol><li>尽量减少计算内容范围，减少资源浪费。</li><li>尽量提前计算好可能需要的资源，减少用户等待时间。</li></ol><p>这两点要求，看起来有点相互矛盾，毕竟一个要减少计算，一个却要增加计算。但实际上从用户的角度出发，我们的确可以做的更好。</p><h2 id="基于可视范围的预热计算"><a href="#基于可视范围的预热计算" class="headerlink" title="基于可视范围的预热计算"></a>基于可视范围的预热计算</h2><p>我们可以这样调整渲染引擎的计算设计：</p><ol><li>不再计算整个页面所有的数据，而是基于当前停留的界面可视范围来进行计算。</li></ol><ul><li>优先计算当前可视范围的渲染数据</li><li>以可视范围为基础倍数，异步计算横向 3 倍、纵向 15 倍的渲染层数据，放置到异步计算</li></ul><ol start="2"><li>每个倍数范围的计算，作为单独的一个计算任务，一个计算任务计算后，会通过任务调度进行下一个。任务优先顺序为：当前视图范围 -&gt; 视图范围下方 -&gt; 视图范围上方 -&gt; 视图范围右侧 -&gt; 视图范围左侧。</li><li>用户进行滚动操作时，会在滚动停止后，再基于停止后的界面，重复 1 步骤，已计算完成的数据会进行缓存，跳过已计算的内容不重复计算。</li></ol><p>举个例子，当界面停留不滚动时，当前可视范围有 10 列 50 行，则会计算 10 _ 3 = 30 列、 50 _ 15 = 750 行的数据。</p><p>当然，横向 3 倍、纵向 15 倍这个数字也是可以进行调整的，可以埋点记录用户行为，然后观察用户习惯后进行调整。</p><p>该方案的优点在于：</p><ul><li>每个计算任务单元格数量不会十分大，可有效避免按行计算在极端条件下可能计算量很大的场景</li><li>不需要计算整表完整的数据，可有效减少计算量</li><li>可提前预热可视区域附近的区域（横向 3 倍，纵向 15 倍），在用户滚动时可快速渲染</li><li>无需维护待计算区域任务，无需进行碰撞检测和区域合并，简化了计算性能</li></ul><p>至于为什么任务优先顺序会是：下、上、右、左，可参考另外一篇文章<a href="https://godbasin.github.io/2025/04/10/front-end-performance-preload-order/">《前端性能优化–预加载顺序设计》</a>。</p><h2 id="结合-50ms-计算任务拆分"><a href="#结合-50ms-计算任务拆分" class="headerlink" title="结合 50ms 计算任务拆分"></a>结合 50ms 计算任务拆分</h2><p>基于可视区域的计算方案，在大多数场景下都不会有性能问题，但还有一种场景：单个可视区域的计算量十分大，比如用户缩放到 10% 的时候，可能单个计算任务就会存在卡顿。</p><p>因此，我们可以结合之前提到的 50ms 任务拆分（参考<a href="https://godbasin.github.io/2024/04/03/front-end-performance-long-task/">《让你的长任务在 50 毫秒内结束》</a>一文），在异步计算的时候，当当前任务计算已超出 50ms 范围，则结束任务，释放出主线程给用户交互。</p><p>为此，我们可能需要：</p><ul><li>支持脏区标记，标记哪些已计算的数据不再为最新</li><li>支持是否计算完成标记，供异步任务计算时判断是否跳过</li></ul><p>基于此方案，我们需要调整异步任务管理：</p><ol><li>使用新的异步任务（滚动停止时，构建当前可视区域的横向 3 倍、纵向 15 倍异步任务）。</li><li>同步计算可视范围内数据，异步计算可视范围附近区域（考虑使用 requestAnimationFrame 的方式进行异步）。</li><li>当可视范围内单元格数量很多时（缩放倍率较小场景下），按照 50ms 进行二次拆分计算。</li></ol><h2 id="新的数据变更计算"><a href="#新的数据变更计算" class="headerlink" title="新的数据变更计算"></a>新的数据变更计算</h2><p>除了加载现有的数据，当后续数据发生变更的时候，还需要将一些已经计算完毕的数据进行重算，在这样的情况下，我们还需要将一些已经完成计算的数据进行标记，并进行重算。</p><p>在脏区标记完后，我们依然进行可视区域的预热计算，建立可视区域外的各个计算区域任务。当任务执行时，发现区域内存在脏数据，则将这些数据进行重算。计算完成后，则更新数据缓存，并重置脏数据标记位。</p><h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><p>当我们在使用各种技术方案尝试优化的时候，不妨也从用户的角度考虑下，用户最可能的行为是怎样的。大多数用户并不需要完整的网页内容，他们很多时候只会翻阅自己关心的内容，看完之后便会关掉。</p><p>我们还可以通过埋点去分析用户行为，通过确切的数据去调整我们的具体优化方案。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;前面我们在&lt;a href=&quot;https://godbasin.github.io/2023/09/16/render-engine-calculate-split/&quot;&gt;《复杂渲染引擎架构与设计–5.分片计算》&lt;/a&gt;一文中介绍了分片计算，即将需要计算的内容进行拆分，拆分成约
+      
+    
+    </summary>
+    
+      <category term="前端解决方案" scheme="https://godbasin.github.io/categories/%E5%89%8D%E7%AB%AF%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"/>
+    
+    
+      <category term="性能优化" scheme="https://godbasin.github.io/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
+    
+  </entry>
   
   <entry>
     <title>前端性能优化--预加载顺序设计</title>
@@ -492,29 +517,6 @@
     <summary type="html">
     
       &lt;p&gt;前面提到了渲染引擎的几种渲染方式，如果我们要在与用户交互的过程中识别到具体的元素，又该如何处理呢？&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="前端解决方案" scheme="https://godbasin.github.io/categories/%E5%89%8D%E7%AB%AF%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"/>
-    
-    
-      <category term="性能优化" scheme="https://godbasin.github.io/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>复杂渲染引擎架构与设计--7.离屏渲染</title>
-    <link href="https://godbasin.github.io/2023/10/13/render-engine-offscreen-render/"/>
-    <id>https://godbasin.github.io/2023/10/13/render-engine-offscreen-render/</id>
-    <published>2023-10-13T02:06:11.000Z</published>
-    <updated>2023-10-13T02:13:01.028Z</updated>
-    
-    <content type="html"><![CDATA[<p>前面我们介绍了增量渲染的解决方案，其中有提到复用 Canvas 进行性能优化的解决方案。</p><p>本文我们将结合 Canvas 的能力提出进一步的优化方案：离屏渲染。</p><span id="more"></span><p>上一篇<a href="https://godbasin.github.io/2023/10/11/render-engine-diff-render/">《6.增量渲染》</a>提到页面滚动时 Canvas 复用的场景，这种场景下我们还可以考虑两种方式：</p><ol><li>使用 Canvas 上一帧画像，直接转换成图片复用到下一帧的绘制中。</li><li>维护两个 Canvas，滚动时使用两个 Canvas 交替绘制。</li></ol><p>第二种方式中，当前渲染的 Canvas 与隐藏的缓存 Canvas 交替渲染，由于会使用一个屏幕外（非可视）的 Canvas 进行提前绘制，我们也可以称之为离屏渲染。</p><h2 id="离屏渲染"><a href="#离屏渲染" class="headerlink" title="离屏渲染"></a>离屏渲染</h2><p>离屏渲染可以提前将更大范围的内容绘制好，在滚动时可直接取对应的区域进行截取和绘制。</p><p>当然，两个 Canvas 的维护和绘制成本会比一个 Canvas 要更高，同时如果需要提前绘制更大区域的单元格范围，那么必然会面临一个问题：需要更多的计算和渲染消耗。</p><p>我们可以考虑另外一个优化方案：使用 <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/OffscreenCanvas">OffscreenCanvas</a> 实现真正的离屏。</p><h3 id="OffscreenCanvas-API-能力"><a href="#OffscreenCanvas-API-能力" class="headerlink" title="OffscreenCanvas API 能力"></a>OffscreenCanvas API 能力</h3><p>OffscreenCanvas 是一个实验中的新特性，主要用于提升 Canvas 2D/3D 绘图应用和 H5 游戏的渲染性能和使用体验。OffscreenCanvas 目前主要用于两种不同的使用场景：</p><ol><li>同步显示 OffscreenCanvas 中的帧。在 Worker 线程创建一个 OffscreenCanvas 做后台渲染，然后再把渲染好的缓冲区 Transfer 回主线程显示。</li><li>异步显示 OffscreenCanvas 中的帧。主线程从当前 DOM 树中的 Canvas 元素产生一个 OffscreenCanvas，再把这个 OffscreenCanvas 发送给 Worker 线程进行渲染，渲染的结果直接 Commit 到浏览器的 Display Compositor 输出到当前窗口，相当于在 Worker 线程直接更新 Canvas 元素的内容。</li></ol><p>整体的离屏方案依赖 <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/OffscreenCanvas">OffscreenCanvas</a> 提供的能力，关于此能力现有的技术方案和文档较少，可参考：</p><ul><li><a href="https://zhuanlan.zhihu.com/p/34698375">OffscreenCanvas - 概念说明及使用解析</a></li><li><a href="https://developers.google.com/web/updates/2018/08/offscreen-canvas"></a></li></ul><p>在我们的架构设计下，更适合使用第一种方案，即同步显示 OffscreenCanvas 中的帧。这样设计的优势在于：当主线程繁忙时，依然可以通过 OffscreenCanvas 在 worker 中更新画布内容，避免给用户造成页面卡顿的体验。</p><p>除此之外，还可以进一步考虑在兼容性支持的情况下，通过将局部计算运行在 worker 中，减少渲染引擎的计算耗时，提升渲染引擎的渲染性能。</p><p>当然，如果要实现在 Worker 中进行提前渲染，则需要考虑如何将渲染引擎提供给 Worker，以及将数据及时同步到 Worker 的问题。</p><h3 id="渲染引擎与-Worker"><a href="#渲染引擎与-Worker" class="headerlink" title="渲染引擎与 Worker"></a>渲染引擎与 Worker</h3><p>如果想完全发挥到 OffscreenCanvas 的作用，要支持真正意义上的离屏渲染，而不是在主线程使用一个隐藏的 Canvas 交替绘制，需要考虑：</p><ol><li>渲染引擎放置在 worker 中是否合适？</li></ol><p>由于渲染引擎本身是需要实时响应用户的操作的，因此大部分的内容更新是需要同步计算、并更新到 Canvas 中的。如果提取到 worker 中进行，需要考虑是否由于线程通信的原因导致响应速度的降低，反而影响用户体验。</p><ol start="2"><li>哪些计算可以放到 worker 中异步运行？</li></ol><p>方向一：每次有数据更新，渲染引擎都会全量更新和计算，可以考虑将非可视区域范围的部分（即可视范围往后的部分）放置到 worker 和离屏 Canvas 中进行计算</p><p>方向二：前面提到，渲染引擎的渲染分为两部分：</p><ul><li>表格主体内容渲染（单元格内容、边框线、背景色等）</li><li>业务通过插件添加额外的内容渲染（图标、背景高亮等）</li></ul><p>对于插件部分内容，可以考虑将其放到 worker 中计算并更新。但局部内容异步渲染，可能需要考虑对当前 Canvas 进行改造，进行分层渲染，即可按照堆叠顺序进行 Canvas 拆分，结合每块内容的更新频率，仅更新某种类型的绘制内容。</p><h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><p>对于项目中是否适合使用该离屏方案，需要结合项目自身的架构设计、改造成本和兼容性问题等情况，考虑好上述问题，才能决定。即使是在 Worker 中不阻塞主线程，依然需要考虑计算量过大可能会导致渲染延迟等问题。</p><p>它会带来不小的改造成本，但收益是否可观还需要观察，你也可以先编写一个 demo 来确认效果，再尝试在项目中接入使用。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;前面我们介绍了增量渲染的解决方案，其中有提到复用 Canvas 进行性能优化的解决方案。&lt;/p&gt;
-&lt;p&gt;本文我们将结合 Canvas 的能力提出进一步的优化方案：离屏渲染。&lt;/p&gt;
     
     </summary>
     
