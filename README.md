@@ -13,6 +13,7 @@
 
 ### 最新     
 
+> [《复杂渲染引擎架构与设计--10.降级渲染》](https://godbasin.github.io/2025/06/15/render-engine-downgrate-render/)  
 > [《复杂渲染引擎架构与设计--9.预热计算》](https://godbasin.github.io/2025/05/09/render-engine-pre-calculate/)  
 > [《前端性能优化--预加载顺序设计》](https://godbasin.github.io/2025/04/10/front-end-performance-preload-order/)  
 > [《前端性能优化--FPS页面流畅度》](https://godbasin.github.io/2025/03/09/front-end-performance-fps-monitor/)  
@@ -43,6 +44,7 @@
 > [《复杂渲染引擎架构与设计--6.增量渲染》](https://godbasin.github.io/2023/10/11/render-engine-diff-render/)   
 > [《复杂渲染引擎架构与设计--7.离屏渲染》](https://godbasin.github.io/2023/10/13/render-engine-offscreen-render/)   
 > [《复杂渲染引擎架构与设计--8.元素与事件》](https://godbasin.github.io/2023/11/25/render-engine-element-and-event/)   
+> [《复杂渲染引擎架构与设计--9.预热计算》](https://godbasin.github.io/2025/05/09/render-engine-pre-calculate/)  
 
 ### 前端技能提升
 
@@ -83,6 +85,8 @@
 > [《前端性能优化--代码习惯》](https://godbasin.github.io/2024/12/27/front-end-performance-code-detail/)  
 > [《前端性能优化--二进制压缩数据内容》](https://godbasin.github.io/2025/01/02/front-end-performance-binary-attribute/)  
 > [《前端性能优化--JavaScript 引擎性能》](https://godbasin.github.io/2025/02/09/front-end-performance-fast-properties/)  
+> [《前端性能优化--FPS页面流畅度》](https://godbasin.github.io/2025/03/09/front-end-performance-fps-monitor/)  
+> [《前端性能优化--预加载顺序设计》](https://godbasin.github.io/2025/04/10/front-end-performance-preload-order/)  
 
 > [《有趣的 PerformanceObserver》](https://godbasin.github.io/2024/02/21/front-end-performance-about-performanceobserver/)  
 > [《让你的长任务在 50 毫秒内结束》](https://godbasin.github.io/2024/04/03/front-end-performance-long-task/)  
