@@ -1,0 +1,1346 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>前端基础补齐--有关 JavaScript 继承 | Here. There.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="被删">
+    
+    <meta name="description" content="我们都知道，前端页面中HTML用于描述页面结构，CSS用于装饰页面样式，这两者结合得到一个暂时还没办法和用户交互的静态页面。为了使得页面能接收用户的输入，然后进行相应的反馈，我们需要用到JavaScript。
+如今前端项目规模越来越大，架构也越来越复杂，甚至在一些项目中我们都接触不到页面布局、样式调">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Here. There." type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?3d902de4a19cf2bf179534ffd2dd7b7f";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/sun.png" alt="Here. There." title="Here. There."/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Here. There.">Here. There.</a></h1>
+				<h2 class="blog-motto">Love ice cream. Love sunshine. Love life. Love the world. Love myself. Love you.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">首页</a></li>
+					
+						<li><a target="_blank" rel="noopener" href="https://github.com/godbasin/godbasin.github.io">所有文章</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">分类</a></li>
+					
+						<li><a href="https://godbasin.github.io/front-end-playground">前端游乐场</a></li>
+					
+						<li><a href="/about">关于我</a></li>
+					
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2025/07/06/front-end-basic-js-extend/" title="前端基础补齐--有关 JavaScript 继承" itemprop="url">前端基础补齐--有关 JavaScript 继承</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://godbasin.github.io" title="被删">被删</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2025-07-06T13:14:11.000Z" itemprop="datePublished">2025-07-06</time>
+    更新日期:<time datetime="2025-07-06T13:15:22.154Z" itemprop="dateModified">2025-07-06</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E5%9E%8B%E5%AF%B9%E8%B1%A1"><span class="toc-number">1.</span> <span class="toc-text">原型对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E5%9E%8B%E9%93%BE"><span class="toc-number">2.</span> <span class="toc-text">原型链</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0JavaScript%E7%BB%A7%E6%89%BF"><span class="toc-number">3.</span> <span class="toc-text">实现JavaScript继承</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
+		</div>
+		
+		<p>我们都知道，前端页面中HTML用于描述页面结构，CSS用于装饰页面样式，这两者结合得到一个暂时还没办法和用户交互的静态页面。为了使得页面能接收用户的输入，然后进行相应的反馈，我们需要用到JavaScript。</p>
+<p>如今前端项目规模越来越大，架构也越来越复杂，甚至在一些项目中我们都接触不到页面布局、样式调整等工作。但不管如何，基本上都不会离开 JavaScript 开发，因此我们需要掌握 JavaScript 的一些特点，所谓知己知彼，百战不殆。</p>
+<p>对于Java、C++、C#这些编程语言来说，它们都是基于类来实现继承的。JavaScript最初设计是为了让网页可交互，因此使用了更简单的继承方式：基于原型继承。在JavaScript中，每个对象拥有一个原型对象，并可以从中继承方法和属性。</p>
+<p>因此，在JavaScript中并没有<code>public</code>、<code>private</code>、<code>protect</code>等关键字，我们如今经常使用的<code>class</code>也只是ES6的语法糖，JavaScript本质上依然是基于原型来实现继承的。</p>
+<blockquote>
+<p>翻出来旧文新发</p>
+</blockquote>
+<h2 id="原型对象"><a href="#原型对象" class="headerlink" title="原型对象"></a>原型对象</h2><p>当谈到继承时，JavaScript只有一种结构：对象。</p>
+<p>几乎所有JavaScript中的对象都是<code>Object</code>的实例，包括函数、数组、对象等。在JavaScript中，对象由一组或多组的属性和值组成：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">key1</span>: value1,</span><br><span class="line">  <span class="attr">key2</span>: value2,</span><br><span class="line">  <span class="attr">key3</span>: value3,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>JavaScript中的对象之所以用途广泛，是因为它的值既可以是原始类型（<code>numver</code>、<code>string</code>、<code>boolean</code>、<code>null</code>、<code>undefined</code>、<code>bigint</code>和<code>symbol</code>），还可以是对象和函数。其中，函数也是一种特殊的对象，它同样拥有属性和值，所有的函数会有一个特别的属性<code>prototype</code>。除此之外，在V8引擎中函数还有<code>name</code>（函数名）和<code>code</code>（函数代码）两个隐藏属性，因此可被调用。</p>
+<p>在一个对象中，属性的值同样可以为另外一个对象，因此我们可以通过这样的方式来实现继承：使用一个代表原型的属性，属性的值为被继承的对象，此时可以通过层层查找来得到原型链上的对象和属性。在JavaScript中，该属性便是<code>__proto__</code>，被继承的对象即原型对象<code>prototype</code>。通过<code>prototype</code>属性，一个对象可以访问其他对象的属性和方法。</p>
+<p>作为一种特殊的对象，我们来看一下函数的原型对象有什么：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Person</span>(<span class="params">name</span>) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span>)</span><br></pre></td></tr></table></figure>
+<p>打印结果为：</p>
+<p><img src="data:image/7WBcWcz8lvQPOiKueityQXCep2N9szXeWRZch94EGQg;base64,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" alt="图片"></p>
+<p>我们可以看到，<code>Person</code>函数的原型对象（<code>prototype</code>）有两个属性：<code>constructor</code>和<code>__proto__</code>。我们已经知道，<code>__proto__</code>属性值指向原型对象，在这里是<code>Objcet</code>。此时，我们可以获得这样的关系：</p>
+<p><img src="data:image/XF3-DoPyDRF0J2GHjh800CpUuQFMjUgMTHCbPVx-TkY;base64,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/WkOAqCR3mS1GskYEZHhU5Sx6fOkb8T8iEbtfXjahSjJ57I9Bzy/y5ydpdKUyZv5CQqtxVqDpn04W8t2lnTmCRcaWwBbUVTLssYktzzTAVA29XCdMhBMj7qoROSYUpSxaSaAbmmLzto88HmYeB5Ymd2G1tqpLrjP7jLnxCu16O9bQOe7FJoXL7QGRJo/BbqPrm9tXXgwn/954M/X4dKfA8+lo1/cNvO/CDRKl6CzXmokn0VEbBj77ASjdqD9ahb6/DT9t1WKhZ90xmiSIRshJmtyCBCEZTebM32bM4yLqZfjOOs/GEyCgXocZ51PA+C14zjr5dGsqVrcjCQ9dX0oR/C4ngejp5I1VA622CpZ3ctYNX01S7Bf/h4Ay6t54Akau1dUna8AtfmNbjbnC+5u076afuNfzsZNXM4etfj/MgHwdCHuMFvPM/979cNITy0itydFGbum31oNAK9SX0/euzz73mrgAsFC/fJer0Au1yt+z5zmBRov2JmFefq90AeC6rWJh7ORE5erZRfccvXadDIi9MANPgfAzPVq2QP8SvW6/Q40ReS2ZbtH5qPvuO6XLSovW1SyhsrBFlslq2yZYoEz6g2QY05n2BGiGjMREbFHUUZEROxRlBEREXsUZURExB49/ZfhUuMfsUtn2FGjexkREbFHUUZEROxRlBEREXsUZURExB5FGRERsWfIbcyU90FERAp0LyMiIvYoyoiIiD2KMiIiYo+ijIiI2DO8XsxERET66V5GRETsUZQRERF7FGVERMQeRRkREbFHUUZEROxRlBEREXsUZURExB5FGRERsUdRRkRE7FGUERERexRlRETEHkUZERGxR1FGRETsUZQRERF7FGVERMQeRRkREbFHUUZEROxRlBEREXsUZURExB5FGRERsUdRRkRE7FGUERERexRlRETEHkUZERGxR1FGRETsUZQRERF7FGVERMQeRRkREbFHUUZEROxRlBEREXsUZURExB5FGRERsUdRRkRE7FGUERERexRlRETEHkUZERGxR1FGRETsUZQRERF7FGVERMQeRRkREbFHUUZEROxRlBEREXsUZURExB5FGRERsUdRRkRE7FGUERERexRlRETEHkUZERGxR1FGRETsUZQRERF7FGVERMQeRRkREbFHUUZEROxRlBEREXsUZURExB5FGRERsUdRRkRE7FGUERERexRlRETEHkUZERGxR1FGRETsUZQRERF7FGVERMQeRRkREbFHUUZEROxRlBEREXsUZURExB5FGRERsUdRRkRE7FGUERERexRlRETEHkUZERGxR1FGRETsUZQRERF7FGVERMQeRRkREbFHUUZEROxRlBEREXsUZURExJ7/A9BlHnKnw5DTAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDI1LTAxLTAzVDA4OjExOjQwKzAwOjAwSTrM8QAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyNS0wMS0wM1QwODoxMTo0MCswMDowMDhndE0AAAAodEVYdGRhdGU6dGltZXN0YW1wADIwMjUtMDEtMDNUMDg6MTE6NDArMDA6MDBvclWSAAAAAElFTkSuQmCC" alt="图片"></p>
+<p>默认情况下，所有原型对象（<code>prototype</code>）自动获得一个<code>constructor</code>属性，指向与之关联的构造函数。我们也能看到，<code>Person</code>函数的原型对象的<code>constructor</code>属性值便是指向<code>Person</code>函数自身。当我们创建对象时，JavaScript就会创建该构造函数的实例。</p>
+<p>我们可以使用工厂模式、构造函数模式、原型模式等各种模式创建一个对象，具体来说可以使用以下方法：</p>
+<ul>
+<li>使用语法结构创建对象：即定义一个数组、函数、对象等，如<code>var o = &#123;a: 1&#125;;</code>、<code>function f()&#123;&#125;</code></li>
+<li>使用构造器<code>new XXX()</code>创建对象：构造器其实就是一个普通的函数，当我们使用<code>new</code>操作符的方式使用这个函数时，它就被我们称为构造函数</li>
+<li>使用<code>Object.create()</code>创建对象：使用<code>Object.create(null)</code>可以创建出来的没有原型的对象</li>
+<li>使用ES6<code>class</code>关键字创建对象：<code>class</code>是ES6语法糖，JavaScript依然是基于原型的</li>
+</ul>
+<p>不管是哪种方式，都可以理解为通过将<code>__proto__</code>属性赋值为原型对象（<code>prototype</code>）来实现继承。其中，最常见的便是使用构造函数来创建对象，在这个过程中创建的实例通过将<code>__proto__</code>指向构造函数的原型对象（<code>prototype</code>），来继承该原型对象的所有属性和方法。</p>
+<p>也就是说，当我们运行以下代码时：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> lily = <span class="keyword">new</span> <span class="title class_">Person</span>(<span class="string">&#x27;Lily&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>实际上JavaScript引擎执行了以下代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> lily = &#123;&#125;  </span><br><span class="line">lily.<span class="property">__proto__</span> = <span class="title class_">Person</span>.<span class="property"><span class="keyword">prototype</span></span></span><br><span class="line"><span class="title class_">Person</span>.<span class="title function_">call</span>(lily, <span class="string">&#x27;Lily&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>我们来打印一下<code>lily</code>实例：</p>
+<p><img src="data:image/XF3-DoPyDRF0J2GHjh800CpUuQFMjUgMTHCbPVx-TkY;base64,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" alt="图片"></p>
+<p>可以看到，<code>lily</code>作为<code>Person</code>的实例对象，它的<code>__proto__</code>指向了<code>Person</code>的原型对象，即<code>Person.prototype</code>：</p>
+<p><img src="data:image/XF3-DoPyDRF0J2GHjh800CpUuQFMjUgMTHCbPVx-TkY;base64,iVBORw0KGgoAAAANSUhEUgAABDAAAAG0CAAAAADh5oijAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAACYktHRAD/h4/MvwAAAAlwSFlzAAAOwwAADsMBx2+oZAAAAAd0SU1FB+kBAwgLKX0fdqsAAAABb3JOVAHPoneaAAAs9klEQVR42u3d/28j52Hn8fcc+qvrnaV/MnzGHkc/nOE7yJdwF4Gr9XkDeEdZF4GDuiE3DXIubHhD5XBF6pyUygmMovbaI9yl16JeaQ0XZxSXkIod2CgsZbkLZA2TDeI17UpoDf9Qj2IYTX8iQzv5A577YWb4RV92H4kUhxQ/rx92qdFw+MyQ/OiZZ57nGccgImLn36VdABEZHwoMEbGmwBARawoMEbGmwBARawoMEbGmwBARawoMEbGmwBARawoMEbGmwBARawoMEbGmwBARawoMEbGmwBARawoMEbGmwBARawoMEbGmwBARawoMEbGmwBARawoMEbGmwBARawoMEbGmwBARawoMEbGmwBARawoMEbGmwBARawoMEbGmwBARawoMEbGmwBARawoMEbGmwBARawoMEbGmwBARawoMEbGmwBARawoMEbGmwBARawoMEbGmwBARawoMEbGmwBARawoMEbGmwBARawoMEbGmwBARawoMEbGmwBARa7/T5/OdtHdgO5N2AUSOMNUwRMSaAkNErPV7SsJInQSM3AmSyNGiGsatbTqzuy0uOLW0SyYyZAqMW/vF7ouvpl0ukaEbwCnJkff6rktrrcN6vck4sRqhM9mbm4i3w/rdmOwaxpLjsH7ScaaWmkDNcWqbJ50loFxwHOfk01vArFOh4jizQPPyScdxZi83oeachtOOs+Y4JwFoOs5JZp1ZlqYc52Q52n551nGOz22lvZsiA2P60/8WBmm/pQmgGB2GXMOYKqy5EJiGHx8cd8OY+LFvzIZHe+Vq/LBahNAYY9Zgxfh48epFY4wpdrayz72YAGl/VvR2HOjdmPjAIGiYjRwExlQh7y4GVbMI+dA0VsBtGGPAN8YYk4OgYcJi9HMAVWNMFVaMMaYIDeODWzJmzYVqFEehqbp443xMD8U47eI4lfXw93DiAyNvjDEheMZUiTIg+in69YppB0YprjcYHzbagWE8csYY45I3xo/TI1rVizazAmtjfEwPxTjt4jiV9fD3cLLbMIBvAGR9wiZAfga4AU8C8Chc76z5NnwNgMd6Lpw8SX0T1lvRlngUoADvshVyFuBe+Oe091JkMCY+MH43efAhwOcAPoH7AcjCp501t2AGgLvgs87iR+HH8CbuOQAy8eI6/wbLjuM4p+H9tPdSZDB0WbVf2fzq6nOUk9bTHt5U/H/ahRQZjIkPjN8kD2bai+6Gn88AbMKxzppZqM0AfAC3d23hG6vh5q9afDX6qRlXMXzuhLOX0t69CVRYrc70vxXZ3cSfkrwJsFUh11l0Cl4CoAKPdBY/AD8C4HV4qGsL5zwqb5Kbjn66BlCGz5P1KDeB5mw57Z2cKOqBe5gmPjCWl5ps5uGpzqLsImFhi+bSAl4BcLmxCRRyLC812SpUKGbh9iQ/yPNqmSfiJ8+VYX0OHocnaX1ri83ZynkNOhmew+uBK6COW10draoQRMvz8cHxNoyJ+1/5xoRJLcRvGGNCoH0ZFhrGGOO3t1dqPzH5YVyP6aE42C76+CbwIFdKflp0McY0VnKAvxJ1vmu/L9WiC16xmkpZx8l+9nDiA6NayiWfwE5gmFIeyAUNY4wxjSK4i6b9wYy//2se5DaMMcaPu3MYHxqBB/n4Q1rywc3v9xM7Wsf0UBw0MLo70vr4AbBHD1xjFjlYXg+mrONEgWEr6XzVp8Wka5Y/kKMxWsf0UBw0MLo70vr4rh8Ee/TANWuQq7ZXHnpZx8l+9nDi2zAGYGsZ71zahZgQzxfg3KW4+ahy6sr8POU6xfkM2Us+lc3Omv8DVmfg3N/D36Rd6iNEgdGnZm093+LZtIsxKTodaQEC2KsH7laInwWY8XTdZIAmvh9Gvz48DRQLaRdjUnQ60gJMw149cP8Nvhg9mgp13WRwFBh9ug28J+fTLoXIcEz2Kcm8Mf12Cpw25qN2XlyZkNkT0tOM//c7i7IQ9XPp6YF7J/wsenQDN+1SHyFDCYwlx3Ecx5ma2+x/W0fFV97Y7zNq0VE8XlhPu+wp6nSkbdu9B27Wo7IFUGuhE8bBGWYNI1y+T52kE2995cwbB3pia/XhubQLn56ujrSJPXrg/jXka1D+Mnwn7VIfJcO4hBtAYExjpe9L4oO8oJyyY8CDr+9nL6pRP4M1r9O/7PCt7P5abp/H+WBvVG9H2nanlz164K7ES1113BrgHg6xhpG58Dz8NO2AHCUHqmWc+wm8OrQiXt916WZq1x1+GHWk7TnJyF6Je+BeyQDZNQ9yt8GFuGt4XWckAzTUqyT3wnvD3b1RnyL+rbce/JNH9vmc6eSi4jCs7rq0MrTX3y4z32lh7iy8cKFrlXNJJ7qZGc0uMHBpXCXZmmvPxN+e2X9r7rjjzEbNebW5444zNVeDzo0ATh7Vlr4Dt2U0l9r3R8BxlpoFZ5bm0pTjnFwCYOvpKcc5Xugc5oLjTC11nt97S4Qlx6E85dR67qWA48CC4yzR86YsOQvgOM664zwNwLrjPI3jLDXnjjtOobajeHKEDOP0J4jPugNYNGYjvsoVDxBdcyFouODHTRw9g4aCuDuf3US6O0qT9tG1saMlg5u2YZgq5IxpxCfuuWhe88AH3/iQi5s4Ssm1xPgwL0Y/L7Y31zuSK4BoDuTukVzJ4Qt635Qg+ejEsxybRdgwkHc771tP8fb/sQl2HqZo9w72Kd1tc9ab2seqY2o/ezjURk9wQ9NwcddMowilzsz+JdgwxveC7YOGAiBfreaJ5ubeb2nSDoMDxMUtGz1dWIsmKG+YlejrDnmKQSmEFWMCN29M6OKWTNcNFMitVQPiYfjGmJ23RMh7QRBuG8mVDODdNpIr/uYGsGFMPHE6kKu2783QU7z+PqIdgxnbt18KjJ51h/Fa7YB3S8aU4vHGLrnOzP5B55PsxXcGqkI+mrEiXjrgPU/Zsb3i4maBEVs0Joy/inmIagJBtEZSDyvGR7nh4hpTje+wUuy6TNV7S4QgXmPbvRSSwOh9U5JvbhjVWDZgxRji9ChCaVvxBvVGKTDS38NhtmFEDdZvwymAU3HTXX4GuBtmy03YbdDQYwBnO538jo4HX7/+yL6f5Oarz8ENeADgc/F05+48cCd8/XJ0Y8arRN2VMgVamwCFDPBA1xymbB/J9XyGfY7kyvosAz+OtxTNUvg1+KcdxRsMdaRN37ACIzDGfHQpC2yB5ziOU4FNiGf2L+Son7/jZLln0BDRxbu7AE4M9JM3Eg4QF74x5tflGeATOO84jrMAH0CcwdlFWt/0ppaaECY9Fk7Ab+P/4a7eW6T0juS6FyxGctF9RfUxWuuwSj7TvTne21E8OSpSGXzm71z0bvmNVern/+m5tA/IsDz43x7pcwu5+AvaNYP5c1/6UbkVLrz67pB2ojDXevPcZhjfw+mWxZPxN/zAyMKl7M7FhUJ5/euti8/dCT+LLrUf7UFDr/f39LvhqV06JM3MXNp8ol6vzXhh3Ffifbhtr410bonQtvu9FPZ8U4oXy5d+nNzDqX3O+MW9iidjb/j9MB6A1wAuz21t+82576JBQ5ZOwSsAm7PbZySf/kuAs1AGaF7Fm95rI/2P5HqcVm01uYdTfQvgR/CfblI8GW/DD4yHXF4o07z8zeWuMVSFqQLwPq4GDdnJ+lSWmqyfqXy50xi8dHKqCR/AbXzHZa4MtdldZgObdeIOsLceyXUbvNpkx5tyLI4jsjmeDZN7OJGv0by8jHdu9+IdPc3Ls47jTCXjh9sHFoAlxzmKaTmMKzJBz3CppONWrtG5bBeA67vRDz2DhpIpXe2m6+1/f0YBN++4FUl6Rrkbpn1/+Srge3EPiuTUYdF0DnP0f3R1snckV/v49o7kMh5AsH0kV6n90SmR9JCBnNspUU/xrHdxJO1d1rX26Zmf3GWi67cDmmE61T3cKYWu4dP1oge54Eqms2y+5LcqLX9tHg0aspO5EuTAK9a7Tjhmqnm3EuaCK8BMfdFLrsHu5dYjufiJD97d29+UQuDGcfOQS/seTpl60cWNSrRb8UbUx3/88cGeuP5wi+JatbriUZndWZG6PwjuvMmzLztL7NOmM7vb4sJQazJDDKfRisrRNZy9GFAvqFzSNaun/jMau2jnl/DYLw9Q1oab3PKkkU/ulLKPvcrvf5KCld0PsdtvTWY/78ZkT9En/VqvU8z0v5mUvfIfDlDLeK2VTP6cedFleWufT1/d5/rsdWVtuPeGVGDIgW3Vyl8/Ik3TB4iMlzu7ninGl5zoHQBcA6gVusbwzk05zmy5ZxxwvC7r7eG97THcPYOEZ50KFceZpWdEcc05DacdZ81xTkYv4Tgnt22vtwz90azhcmCvLQClbN/bGYkON6+88tgzJ/bzhDpue9e/dDHqtszcMlA//3ZnJo7yeYDV1VIBtnItoFL5ZJdp5ueWgXDh1ajt6DdfbgE8fREgXF4udTc0bf5BCFCpvNxpB7y9uFzfygLvxI1K3dvrLkO/+jv7GamT0VErzWjvxQDaMFYg1551oJ82jIF/+w9o17aMvd6O7h2OrmD5wEqjawBwNZqMYMOEOQiN8XFLJvQg7L6Rr4mGZwaNrsHFeXcxqG4fJJy84q73hqzGgwmL0Ni5vU4Z9rGHu67b52dmtL6iNy/N9QfTLt8g9uJIGNHAePAf9/F27BoYyWQAxeSLXIy+pRuwmIzuLZGr7gyMvDHGhOB1xnBvHyQcv+K2EcVBe+WcMca48SDvru11l8Hi3bipyWnDeOvMmbfSLoOMsgf/8fp9/W7jcYBzyQBg4CpeFpiG97gBXwIK5t1d7obzDYCsT9iEeAz3HoOEdx9RzJPUN2G9FY/s6dpedxn6NSltGG/9+VtpF0H2lOq9DD/+LwA8+Jf37feZN7p/iPrX9w4ABkJCJ1n7k5tt7HeTBx/OEI/h3uN2j7uPKObRBX48zZvJyJ6u7XWXoV+HFBiXX89+bQZYf+aJh/ppFKs9e+zMhWYGng7P9LGhSYqL2mmKg578tvC5x3uvnW55+FcOuLFdHDv0o3KrFz9AXPiV1mbSLe2n8J/3Ws89NZz9yOZXV5+jnIzsOaQyHFJgfFbx/gLgzXr473d8z5sZOH7q2Iu3un6/9bd/OlPhDN/ixcx7lfoXDlqYTlyM4iTi9/3jYLf3bHK172Rrqvc3H4W7NRYsvZrZOXp4K3fqi52W/Murqy/8S8+7lS0uV2r93mVydBwgLuArFZ6Pb8zVXMaNhuolA4CTDvZ44fF2st7eO39Rr/ZvOod1j0HCu48ohm+shpu/aiUje7q2112Gvg229arTiBM1CLk93dmCaErYFXex4Xf/okrO78gl4w88igYaJQiMGzUBH6A01x8c2LE6FPf11Qa1Q9hui9tl1hFjTJX2ccasVY0J4pl8t5ehc/ufKkRvkLfWvaxoDq7/D97g/HLXps5bl7XT09MUoxbMHbMeVjuzIhaDhtmIDloJf5dGz6IxxoTEE1dGv+tq9Iymbt3R6Bl2j1nxCIpRy2fv9rrL0O+7MeDAyOM1ogLHu+Z2FbGRiyaR9iluD4xu7fFKVViDDZeS2WhfEVrZazzTXnv++om0I2GogbHY/hQnh7iEG4dtuO1YGw+vne3by9DubrzR/uOW71rB22O2zgN9bEbanmWtAn40liT6mu6YVzm+rFo1YTEZ9rdiwhw0zEY8o3rQnus6vgxa6gqM+LJqyY0+/m782Y8vq8Yd0jszLS+Si/+w7thepwx9vhuDDYy15HMWJFP3uu2/ZiZJjBByvovn+3783Eb7o7eRI9fJg2JgoJFfNGalM2m4f5P5w3ff89GOjAEHRntsRzswcj11gUZofALjE5gN4xPEb1UQ1yGStOkExoYbjcVc6b2Kv2h344d9vVGjCYvRqvlktGrcgBCY9l/+UrxK0XSyd8W0xwG3A6Prng+d2kfvIOEigL/nvSGjR/Ef7O7t9ZShz3djoIHRcCkaU3V938P13Wqp87VwoxU8fJPv/hvXY6OYHHpjjHF93/fB93Ne1cMPgiAIAmNC9j472WvPk8joc2eHpJ+CNjr3Y/AJDJ7vJ+cT7Y0mgWGMT7UdGLFqUob4wQpEJzEufrVaLSXHfm2vi/qHvovDdpOyNlZ8wCvGx8onZwIP/DVjOqcK1bwLfhTEYdFNfr3hg1fqBEa1lINcyZjuwDDxIOEoqhtFcBeNMY14RHG0zppH/GfWT2qBvdvrLUN/78ZAAyOAsKvSu+Ymn6lqUu3d8DfiW5AQmKiOHO90dJzcNRP6G+1NJ4rdCVPsOc+x3PMoMvrc2SHpp6DVzvc4yoWO9pmHz8qOwAgbybOjeICcT2CqOxpCkq009tWzc5C7OGwHLet+5sMY0NwZ7Wrf/ra3nz0cZMet5gsUs3BPI2p5azzTcr968vIW8PNklekrd73tFttzJLRb59cfPrkJ8C/n1nOVJ6IBMxvx373FxsYyfhD4eEEAfIfW3+67bI/8crRPTAblA7i7Z0HypyquQtSOz87e4OXZG7w0e7JrdoXsv57cgt/g3k6lUqlUoF4B7mySiz5NbnL/mFjGHcBFfRmorWW8c/1v5qYGeVn1WosLQAauQaV8V4tLv6rXt3UK+PCq9+4s3OClnwHNP5yHGuDV7wvuh8++tYr/+dfuvScD01xecFvkLl4F94cZqOTmAbL51Zfm91+6Rx5549uHfDBHwGfx7QLaXvpZ9P9H8c+tClG3ojDsmb19oZ5/l3/m1KPRoXWozjQ/I/vyL+49DbDV4p7eVzpVSbW71chrvsT2Q3a4r/fhb57ZZT7GgeuzEtS9hXz7Ap0HUDJrphjVW4Oop33Odyn1vnzcOrTWKIIPRdwVU4oqVo08VGEjR6641ug04m1vfjtg3Wp09bMXXXXRXU9JGqFpQCM6mBudUxKz4SYtG6VonFOymSr4vp+LWjK87hObPo71OL1RByurz37O2QZwSlKFTqvm4Z2SDLKGUU+6q5RDcFvnKXCVx9p9WaI/bA81enoAbQH3453j0u+/+fsV/sJ9PMtdcA5qX25Rugd+e+VbL/7rH4SNTDOpbH8BbgxgTPVkCOLK2NICAJkM19q3DJmGD5JuQtOXzi/cX+F+Cqu57bc1qXT9e5Tn9B2w/IvDfLXbwHvyADXvfRpkG0YY9YCH7+Fyqsgb1ELvs6nvx7+OxtlmMkzNxk6W41aMKeA/bv0DvNbpujZTdKuFbwXhTKacmf4116gnNbxpbt4rX26mOcdTyeMbXWMRCnlOwwz/nXq5e/07oyv+i8aYhl80L6dd/jFxxZiy/VRk88b022922piP2nkxgO3tYYA1jM3kwdOhW7zIJf6CH/Hk7eHyd6JUaDd1TlWSR3d1nl2eawF/1lr+f0mzzXOPZ7dWV5kHOLv6xl24nQllPz6co3Gk3OBudrZhbD7RyrWnUfn15m9r7yc/vHi1RRFmistzD3V91G+/9sYqcPWr05tP1GHQw1RkzPR55tS1heTqcQlW4mt1uA3jUWz3JqzGE9wH8XOr8VK/6kO+BFUP8mtRH2bP973ozHnRrEG+09Fwz7PD/vdnFPSzF6V2R88GVI27/a3eiHvSFn2vmHQfWuk8d8UYE0LQfm/yHkDRBzcAt9Q5M/Z27VI+hF0ctnEq6+Hv4SEERp5cnBB5ArOxCOGtAgNw10wVTKMIXjzooa0UfbBLnRdVYOyh0+enCsZstB/Fj03oryWvsmiMCfDb3eB8oh4uRbxG8t5sQG5lI4frQm/PYvXDODL2s4cDbMNIbuFZrsbnuYVVXnDuuxjfGvFm/KJfj85EMpdK7l8DcE8jip0ArwDPgts1IaHaPPcwA/E5yE/JwXTTie5IuXkyHoqdvRKf8nl8CZg3Vy7ETy1XcFvfBy4svtM+JZneCK98dqaeu9SCRV7oTI1da8/VIJNkgG0Y7RaGpLnlOLS8qS++v/rCd7d9w5MT67ZLNI+3XFygEE9unGHrBb5I8wWeBe6B453LLZxI+7iNrFw9biFa5SzwA8on7gcW6meSxiEnutb6a76dAajEXWo351j8vYeXvzbDdNfNh5q/erPcIv/IHPCn71Xm2sOkfwr3p72vkoIB1ma8TitDgG/MWn6tYYwJ3SAXV2ajynF7roC4H2vUcXwRetaKlrjRlf+GR6cKvNE99vrAdavR1dderMRHtQobJurSUgXT8OmMK9vtE9DwyDU6I/viU5JGDvCrK1CE6oZLMemV78XDg1LYxSEbp7Ie/h4OtuNW+zO0bcy0F40cKQLFrj5XjehxFBgbpWr0YQxXkm2GKznAW2k0cpBP7mBpVmCPEe5H473tay/CePyRj580Y1bjITi9MesnN1M1xhiz4eFG97otxWWIftvwi9WqD0UDVVMCr922cVTmwzhKZT38PRxkYJQ6X+ROYKwEK2t5WDOm5OLlXSgmTe0b1WoQNIyp4vq+7+5S71nLAbhrLpSMn4zJy+/ZPn803tv+9iKaVWUFSqYExY1SNYi2V+yZz6IdGMYYY0rJVAv5FWMaQbU9T4FplKJZHsKkxhKNgCzuGdpD2MXhGqeyHv4eDjIwotHtxpjuwNgAoiHXRXIN0wi8nvpw0bRHNLmdqaAwxjSCvAteNSwClOLq8WJ82a//Pd+XFesbYdqvaXVM9y+anWnR840xGyum4ZKMeC8ZY4L23GZue5qzXGAai93TEuWIr5eYDR/AX6xWi1FKr7nkwu55vdLYxeEap7Ie/h4ewvD26JHbWcMvRtXcxegzubbYrk3k/A1jTLjtb1Up2mYJ3KBhzJobzx/S8MmFBxze3if7O+ce4B67h7MXyanfousXOwc4YBeBMab7kAZ4+biCUcQthlF3jvjGw4t9TLQ14F0cjnEq6+Hv4SFMoDMwi6Xos7nRnoQraNy0gnF47y3WMWC/5k02cXif0HCXr3sj3Hv9RinqmeHm+5hfa7i7OGjjVNbD38NDmqLvEO1/ir6dGkWvPQFRKQ/kFsNo274JPMhHHZ7y4OY32tcVAlOF6kaOoN1rKf5/I+/i5qtdaxoTLnrg5pMplKLnHeCYHknjtIvjVNbD38NDmgT48Ox7EuBdhG77e91IBoC7G8YYHy+a3MuNZg5zo86P3YGx5rIjMNbiFapdgVFKTrviSRqj5x3kmB5F47SL41TWw9/DSbq3alvXPXEXIR+axkrUyucDQXUtB4tRD2nTcHNrnQ7X7bvk9gRGw41vlul11gyjhpftd9cdw2N6KMZpF8eprIe/h5MYGF33xI1uVmuMCWClfTfdML61bvvcpyswonOunsCIJ/wp4jfaaya9HhoubtfzxvCYHopx2sVxKuvh7+Hk3Iy5o+ueuDfgSQAehevJA7IeTchSL6zveHJ+5zwDb8M54JK50um7fhUKAJkCrc09nicydiYxMD7peRiNiMjCp8kDmKIO33FZfdiJR7a0fW7n9rZ2eY32hJkn4Ld7PE9k7ExiYFjK/stKDlZPr/e/KZEjYhIDo+ueuHcnt0DY3OUW4pkL7zZW4K932UQumsEqqlsc22WmSy+eApP3O+P+RcbeJAbGF+BNoOzM1k7BSwBU4JFdVs1c8HfdRIZwi2SijzNwDZg7PtvJjbNQBmhexZtG5IiYxMCY9lm+zNb/pnJPdpGwsEVzaQGv0LvW1uzxy9D8iGNwG7zaU4n4POTXa/FM3I+6zNWolVvNTHvN77jMlaE2O4xbRYgMzRCvyIzM9aHue+Imd3r1oo5b0fN9MMYHzye6HhrfObc9AV7c9avo45vOvW43OmuaatJxa9H03Cxz7I7poRinXRynsh7+Hk5iDYPpenRP3AtAOeoaHryz48Thh0EurLj5jRngJz54XfcgzF7PgxfEU2gX4k7k011rztSjruHV59LeW5HBcUyfz4c+tzDQvRmp0kz2XhyZXRynsh7+Hg7yzmcyME7aBZBuejvaJvKUREQORoEhItZ0SjJ6jvgZ87jR29FNNQwRsabAEBFrCgwRsTaANgxdcxKZFKphiIg1BYaIWOu3a7iITBDVMETEmgJDRKwpMETEmgJDRKwpMETEmgJDRKwpMETE2mgMb3fQKGKRMaAahohYU2BMrv+TdgFk/CgwJtbHf/5K2kWQsaPAmFivfPrttIsgY0eBMak+/is+fSXtQsi4UWBMqlc+BVUxZJ8UGBPq478CVTFkvxQYE+qVT0FVDNkvBcZk+vivAFUxZL8UGJMpqmCoiiH7pMCYSHEFQ1UM2ScFxkRKKhiqYsj+KDAmUbuCoSqG7I8CYxKdaBnzOvCIMeaxtAsj40SBISLWFBgiYk2BISLWFBgiYk2BISLWFBgiYk2BISLWFBgiYk2BISLWFBgiYk2BISLWFBgiYk2BISLWFBgiYk2BISLWFBgiYk2BISLWFBgiYk2BISLWFBgiYk2BISLWFBgiYk2BISLWFBgiYk2BISLWFBgiYk2BISLWFBgiYu130i4AACbtAoiIDdUwRMSaAkNErCkwRMSaAkNErCkwRMSaAkNErCkwRMSaAkNErCkwRMSaAkNErA03MJYcx3EcZ2pus+9NNaecAqw7ZWDWcWqdV6hBzXGWelevOc4Sm45THur+ihwxqdQwwuX7+v7i/iB0X4S/yxX28ZzpgLmtNHZY5IgYemAExjRWXM7X+ttM7SKXMrD6h9uW3x8Ed+79rHmvtTjsHRY5QtKoYWQuPA8/7W8bz+IVABZme5fPzM9nd1t/psHdwLOs9plUIpMsnUbPe+G9vjZQq/AssI8v/zVOAQWPZ1PZY5EjoY/AWHIc1k86zsl1AJpLJx1naqkJTztOE6g5zkmAy46zR8PB1tyU45wsJxsrTzk1tuaOO85stMlywXGck09v7Xy1H+EW9ipUkiJPO856+0Fzzs8C/E8qasUQOaj+ahhLD9eh/vA60JxdqEO4MNvk9+Ad4KdQ3wKuk9t+lvBz+Dxs5pZDqJ+fixbWzofQzC23fLfycA2as+dXgfrF3OaOVytTAJgx5sqehXsc3gTgKu65zK+jFb8AN9I+5iJjq7/AWMhXq3l4BvijOisNs0L9+5yDfwCu4nIDuMrZ3mc1Ly/gPk7zTMtdM40iy9Elk7/xguDOay02rvza934OP6iQD01jhdaZ5rZX22oxfcvCZX3KAFt1iu2F0y5vp33MRcaXObAAfGOM8cCYEIrGGJOHhsmTMyaEgKIxG1DtekrELRlTgpIxxrjkjAnAbURrNKJ1Q/CSJ61se7Vq1zaNMX7nxwCqxlQhMKYEa8aYFdjoXtc/+C4fJa8Dj6RdCBk3/dUwHgM4C01uwAMAn4MPOUO9yQ1y91OGX+DObHuaV6wX4G04BXCKOgDPZ4C7YbbcBLgBTwLwKFzf9mofWJXuIZe/A14m11Md+Wi4iSxyhPQXGHcBnIAP+QTOO47jLMAHfAHe4W3+cMZtbXK994wkMMZ8dCkLbIHnOI5TgU2AewEKOern7zhZhk/gfgCy8Om2V/vMqnSZAqtNtuo80bM4TPWAi4yzAc4anstE/9/OtBf+w7ky93N2tTJ9lUf2fIq/c9G75TdWqZ//p+cGUKILy1wrXINHB3rIRCbXoALjbniqc6Hz7PLVr7bcGc6s/sxvRSceO2Xh0i6drAqF8vrXWxefuxt+PgOwCce2rXO7XaGmc/U3Ci+Tz/Qs9Q7hMIpMhkF13DoFrwBsztaAB6j/grPwEJVf7LyoGnsAXgO4vGN8x7nvRlt8CYAKO+oo91qW6ilWt+p8o3fh1CEcRpHJMKjAyPpUlpqsn6l8uQkPwZ/xCGQ9/mz7RdW2h1xeKNO8/M3luc7CwlQBeB+X7CJhYYvm0kLcC7zLnWxv9/ygVqvVatuT5yGYwz3XvegGe+SXiNzSwLqG/zDHwh3Owy33egYyOaIzkbO0+L09npG57rbOO3d8k9wPOws/F64enz2+ynfhuTyrnnPHAt5Ptj8168YXTtq+efr06dOnX9v+EkUqXZ0wgE2bHhwisruBBUbmSpADr1ifBjhLdCby+8C5vZ4yXS96kAuudLUxzJf8VqXlr80D5VIeyAXv7PyKF7hqVaqvAV/tXvALeOgQD6fI0eaM521Na6cp2cyE0byD3LvdC6ZC/4rF8ybAG1+BR15PuxQyZsZ0ir4Zn+/ZrPcDeKr753Jo9zwR2c2YBgbfI7zlpF2btaWL2xpMv4c/c6unichexjUwZhaZa95inYXTC7g9DaZLoXsp7ZKLjLFxDQz+1Gt96xarHIP89e4G082FXbuKiYilAXYNH67MrceQlbeftEyPZwuvyMgY2xqGiAyfAkNErCkwRMSaAkNErI1Go6cDqEFSZOSphiEi1hQYImJNgSEi1hQYImJNgSEi1hQYImJNgSEi1hQYImJNgSEi1hQYImJNgSEi1hQYImJNgSEi1hQYImJNgSEi1hQYImJNgSEi1hQYImJNgSEi1hQYImJNgSEi1hQYImJNgSEi1hQYImJNgSEi1hQYImJNgSEi1hQYImJNgSEi1hQYImJNgSEi1hQYImJNgSEi1hQYImJNgSEi1hQYImJNgSEi1hQYImJNgSEi1n4n7QLwxx9H/5+BE/837cKIyM2kHxj/9ZXo/7fgL9Mui4jcVPqnJI+dSB6deCztsojITaUfGDyTPPiTY2kXRURuagQCI6liqIIhMupGIDCSKoYqGCKjbhQCI6piqIIhMvJGITCiKoYqGCIjbyQC47ETqmCIjIORCAyeUQVDZByMRmA8dkIVDJExkH5PTwCe+fRY2kUQkVsakcB47NO0SyAitzYapyRwLO0CiMitjUpgiMgYUGCIiDUFhohYU2CIiDUFhohYU2CIiDUFhohY66fjlpN24W/FpF0AkSNGNQwRsabAEBFrfY4lGeFK/8ifMImMH9UwRMSaAkNErCkwRMSaAkNErCkwRtplZyntIoh0UWCMtOtpF0CkhwJjpK2mXQCRHgqMlMw6syxNOc7JMsCS41CecmpAueA4zsmntwDHgQXHWQK2np5ynOOFctrFlgk3IpMAT6KPZitA/fzblwConQdo/lEFoF5fvj7dtW55rgW0VlfjlUXSoRpGasIbJWPWXJZrAPyNFwR38oMK+dA0VmidaWKqEBgzz9Zcyy0Zs5FjWY2gkiYFRnqeL8C5S/AjAK6+Mz+f3bqIV86SuRDQeq2z5v9qcakA01dcXki71DLRFBjpeRSgAO8C8HwGuAFPJr/rukJyFQoAmQKtzbSLLZNMgZGeTPx/HYB7AT6B+wHIwqedNUP86MEJ+G3axZZJlnZgLDlODWrRpQDHmU37eIjITaQdGJOsGf/vdxbdDT8HYLPnZnAelejB+3Bb2sWWSTYagXFnENyfdhmG7xpAGT7fWXQKXgKgAo90Fp+FMkDzKt60/QuIDNpoBEZ2fn4m7TIM31wZ1ufg8a4DsUhY2KK5tIBXgNvg1SbwHZe5MtRmWzybdqlloo1GYEymU+cd5+EWpWzXsufyrHrOHQt4PwGmPep3OEtk/95tnXec03UWC2mXWibaaARG3OgJ8LTjrPc+OLJ+GHiQr/ZGQLmUB3LBO9MAP/HBuxtm6oseuPnqc2kXWibbyHUNf/wib54DuIp7Lu3CHK7M/HzysPOIQveAkekr8YPsc4oKGQGjUcPokvWj9r2tOsW0yyIivUYuMHiM1jpwDb6adlEGo+bsYsCbq6W9kzIhRu6UhIfc1t+dg5fJHZELiDODvRfDgDcnsh+jV8PIFFhtslXnibRLIiLbjF5gcAGucS0em3VkXTGqKcj4GcHAmM7xBi+Tz/S/KREZqBEMDJ5idavON9IuhohsN4qB8RDMHflOGCLjaBQDI1Okok4YIiNoFAODr3FkOmGIHClp98OI+kTHfQuS6wb3cGQ6YYgcKSNZw/gBPJV2GURkp7RrGDtt/vbnF/E0iltkBI1eYCxUwP1J2qUQkV2M3inJMchfVwuGyCgavRpGWfcPFRlVo1fDEJGRpcAQEWujd0py+PqYvUZksqmGISLWFBgiYk2BISLWJrENQ1NdiRyQahgiYk2BISLW+jwl0RVKkUmiGoaIWFNgiIi1Pk9JBnzBwRngFnW2JDJwqmGIiDUFhohYU2CIiDUFhohYU2CIiDUFhohYU2CIiDUFhohYU2CIiDUFhohYU2CIiLXRDYxN52mYnWpCzXFmk6XRw64F7eUOS45TS7vUIkfa6E7Rd9l7js1KKZN2OUSkbXQD4+pZqLD9Lu4Bd++xvp92gUWOvtENjHB56wo41ZmepfN7rG1mYf7+02kXWuRoG902jP1pVj4PP3Jn+t+SiOxpYIFRc5zaZsFxppYA2Jw77jhTc83e3zSXphynsBU9oXDccQr7baXsNHeuO87TnQffdx9nc/m7aR9OkSPOHFzPs6uw6AKwaIwJXcjlINeIfhO91mLUzuAZY0wpfv3Snlvs3rTfWcNP/vWiDZlF2LhV6URkEAZ5SnLRW6sGcLEJ105RfffdFerXot/k1qpFuFgJqmsuYRlq58ltmDDH+a2DvtyThJsAq+SmhxmxIpNrkIHhXjk3M1+ED+HCFTMDj8Lb7d9c8qA4P3PuEnwCP4LVabIvw98e9OUehR8DmyFPpHwQRSbFIAOjkAEegN8kCzKw1fnNFFwATsFncBUvC0zDewd9uazPMvBjeDSVQycyeQYZGCcA7oJ/Bmpzs47j9PwGmAay8B6EhI7jOA7cOPDrPUZrHVbJq3OXyHAcUj+Mpy/i+sc+t3CTVdxT/b5IYa715rnNkG8c0rERkW0OJzA2L+L/MAN7B4YXHr/S98sUL5Yv/Rj33KEdHRHpcTgdt34LX8zA5t5rnCWsAcwtNQ/+Mo/Tqq1SPNQDJCIdh9bT89UmtZtcvfgafLvG1tzygtVVkmatVqvVtvfyyuZ4NuSrQzlQInJYpyQzXli/A/L1vdcona+fBijO22wwWnfHfRSfOl9RJwyR4TmkGsbVoou7+OJN1ihU8y74pUv9vMxDLuqEITI8Th83Px7krZMPuMWTdRqZAW1LRG5lvEerrtcpqhOGyNCMcQ1j69/+da5FmB1a6UQm3uhOoHNLry0ApWzf2xERW2N8SnI75NYK/W9HRGyN8SnJ0EsnMvHGuIYhIsOmwBARawoMEbGmwBARawoMEbHWZz8Mp7+nD2WLIjIoqmGIiDUFhohY66fjlohMGNUwRMSaAkNErCkwRMSaAkNErCkwRMSaAkNErCkwRMSaAkNErCkwRMSaAkNErCkwRMSaAkNErCkwRMSaAkNErCkwRMSaAkNErCkwRMSaAkNErCkwRMSaAkNErCkwRMSaAkNErCkwRMSaAkNErCkwRMSaAkNErCkwRMSaAkNErCkwRMSaAkNErCkwRMSaAkNErCkwRMSaAkNErCkwRMSaAkNErCkwRMSaAkNErCkwRMSaAkNErCkwRMSaAkNErP1/XUXhxZvWsysAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjUtMDEtMDNUMDg6MTE6NDErMDA6MDDvTcdFAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDI1LTAxLTAzVDA4OjExOjQxKzAwOjAwnhB/+QAAACh0RVh0ZGF0ZTp0aW1lc3RhbXAAMjAyNS0wMS0wM1QwODoxMTo0MSswMDowMMkFXiYAAAAASUVORK5CYII=" alt="图片"></p>
+<p>很多初学者容易搞混构造函数和<code>constructor</code>属性、原型对象（<code>prototype</code>）和<code>__proto__</code>、实例对象之间的关系，现在我们可以直观地看到：</p>
+<ol>
+<li><p>每个原型对象（<code>Person.prototype</code>）都拥有<code>constructor</code>属性，指向该原型对象的构造函数（<code>Person</code>）。</p>
+</li>
+<li><p>使用构造函数（<code>new Person()</code>）可以创建对象，创建的对象称为实例对象（<code>lily</code>）。</p>
+</li>
+<li><p>实例对象通过将<code>__proto__</code>属性指向原型对象（<code>Person.prototype</code>），实现了该原型对象的继承。</p>
+</li>
+</ol>
+<p>我们能看到，实例（<code>lily</code>）与构造函数原型（<code>Person.prototype</code>）之间有直接的关系，但与构造函数（<code>Person</code>）之间没有。</p>
+<p>关于<code>__proto__</code>和<code>prototype</code>，很多时候我们容易搞混：</p>
+<ul>
+<li><p>每个对象都有<code>__proto__</code>属性来标识自己所继承的原型对象，但只有函数才有<code>prototype</code>属性</p>
+</li>
+<li><p>通过<code>prototype</code>和<code>__proto__</code>，JavaScript可以在两个对象之间创建一个关联，使得一个对象可以访问另一个对象的属性和函数，从而实现了继承</p>
+</li>
+</ul>
+<h2 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h2><p>原型链是JavaScript中主要的继承方式。我们已经知道，一个对象可通过<code>__proto__</code>访问原型对象上的属性和方法，而该原型同样也可通过<code>__proto__</code>访问它的原型对象，这样我们就在实例和原型之间构造了一条原型链。图中红色的线则为原型链：</p>
+<p><img src="data:image/XF3-DoPyDRF0J2GHjh800CpUuQFMjUgMTHCbPVx-TkY;base64,iVBORw0KGgoAAAANSUhEUgAABLMAAAGQCAMAAABiXNJvAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAB1UExURf///wAAANDQ0EdHR1dXV8PDw5iYmBEREYmJibW1tTQ0NCMjI+zs7GlpabS0tHp6eqenp93d3VBQUK+vrxAQEEBAQP+fn/9wcP8AAP8QEL+/v//f3//v7/+PjzAwMCAgIP+vr/9/f/9QUGBgYJ+fn4+Pj+/v7wKBe7AAAAABYktHRACIBR1IAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAAB3RJTUUH6QEDCAspfR92qwAAAAFvck5UAc+id5oAACiqSURBVHja7Z2Jlqs4lmgZDWZow6vKrJtdrzuru7Pf/3/i09HA4MARNmYQZu+17g2HjRVHwmxLQkMQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPxA6Bt7FwgAeM3eisJZAPAKeysKZwHAK/hlCb+iAQD/8MsS60QThfHU00mY7p1fAHiVMzjrMu2sDGd9DHv3aNBHsiF+lc460cSTzkrDtZy198f9hBfV3oXx4cXrF36VzqvR5Or4axGGZV4FxkJREebysM7Us7VIKTafAdFWdSnk0aXSx2r+LQwLnVQlD8bpqaMSlUzyqtr2/rif8KLauzA+vHj9wq/SeTUa5ZjanOLCeOiqHKOcdXNnvhk6KyrD7mDnrFS9v5WkrmF4uUsvaPpUXszFCdj7s/LWB8dzPiw7C+NX6bwajXJMqKpEqnIlplIeSrJbnop/ClU5EoGlOlXTNiz0wW1tfs/Ni6m4SqGerb6mV0RBW1irHbRMV8G3LPoWD9lZEb9KZ4azEvnZquacae/pdlxpLZOal62zVK2p1u9SNa+oc5Y6WDcOMzl0nJ6tgkVheDtwma6Cb1n0LR6ysyJ+lc4MZ131g1hqSWlvHNvpXoZZ0Dmrdp3uja5aOWfl2mBXndI4vVLE1b//oGW6Cr5l0bd4yM6K+FU6M5xlNBTLg1S36ILup3466JwTu8TN6+69ra5G1dpu4/T6vpvswGW6Cr5l0bd4yM6K+FU6ezgrSKQ6len2372zsthy4DJdBd+y6Fs8ZGdF/Cqdd9qGvav6tmE22Ta8jNqG0iyMrrqBeJeeaxseu0xXYfksvjcr4cOK/MOyszB+lc4MZ+lu9VaPsurqV4M++DqY7INvB85Sh+e16Ygfp+ckV9vRWscs01VYPovvzUr4sCJfNDvRi92x3uPXyX5jrEMzcJYd69Bkxl2qtiWVKDfWITFiujiFBbewyMyAhy/pqWRkbER+4DJdhcWz+OashA8r8kWzc8FZPkWjHGOHjIp++n6si+s7b+Q3PUxUnTcZaaWJpd7U6oepe1R9Ta8bU1ofuUxX4ZUsytdA3c0nkIlUt0zePTErQQ+Y66cwrBPPAVg0OzHO8ikaad816pNfNPJb7yz3wTdjQSslrUy62O1V0phjrqUeMxroxmIykZ6du+OOP2iZrsJrzpJSFJpAX0G5fvfkrITxFIZ14jkAT2ZHT1ZTzYZMf9Bfmbr2ejwezaLw62TPvm/4HjfX9b5Men6V6Sq85ixpYleq7ptV2llZnOcPZiXcT2FYI54D8Lyz7FQz6fx4Zera6/HgrIWiWcYxbeZuEOKsFbIYmnuy0kRv9DX0/ayE0RSGNeI5AM87K0xa5/3Xpq69Gg/OWiiaBRxTpdeia4jgrBWy6FbOSPXg3bg32MSshPZuCsMa8RyA551V6jqTNv1rU9fWiGej5Pw62Ts4S3eluE52nLVCFp2GUv3AjeydHuF7Pxx4jXgOwPPOMjNh9bjC16aurRHPRsn5dbJ3cFYkq2UtmN6MXBwQnLUqzzvLlFYuD16bBrJGPBsl59fJ9iuac+disSwO2oZ5f+lMz0po76YwrBHPAcBZb7/d3orOkuuSkS+fmS35P397ORe2+zF+tWbuIS/2wevulVrfnXWXzoNZCXdTGNaI5wDMaBumL05dWyOejZJ7xVnhy6MrN87Mlvw9/O2RtX5w1pybzb7xorPsWAe5O9t93U/PSribwrBGPAfghT54/aC0SzG9MHVtjXg2Su5ZZ0m2ZRDmq7XKXctmTf6uYn1grW+cpf6P4hk3m2dzmT5j2Zvl/GLb0Iwp1TOoOmc9mJUwnsKwRjwH4PWxDvWrU9fWiGej5F5xlvRXF0vGvnRmtuTv+sqatNb3zgqq0s4U2oJk0lnRu+X8Yh98W2d2sPagb/3BrITRFIY14jkAzzsr7mvur01dWyOejZJ7yVmrfzS+pL/8YLalmbDWD84yi3NtxHTNON/YWRtk86TOytNksO3UK1PXVohno+TmOKvKv27PVeXyPZkPS8ytXKx33yqe6r4/oLMmrPWks5rYzRTT04gTKWOZ7FjW+nuwvZVy26MJgn5iWTkQkEx91YXeuHJuSpOuOjAsbm1ffPk4udw+fXVduPrBOL1ReO996nDWWtmZcQdw1Xg2Su4lZ6W6bVjZOuZoey71AS9sd9dolqvchbVXyJxo9vbRGs6qMt02HMwUE2fpXi5VVGVhCrux84rdihU383u/m0YcloM1KOTOUSgurOyTOuHeWcPknLO6RQ1vMjJ6nN4ovGc/NvnXwlF5me2sqeQefFpDnOVBPBsl99TbXR985u5WXyp7o8fNcWrNIJssuZ/lKp+7JJUK7DM9YQd01sttQ1mc62aWF2yD1Ex1VGUU1nmjJJJImcatzIGU3oh+1zJVU02lMLu+iNj0V/TlnJR53op/krabkdzd/x4l5zqVcjuLQ2899CW9Prz3PnXUsxbIztRHL53vrKnk8m8PXzd7y7+9H+tw03d49BdxYu+vuvHLrh41nu2U209s+VSYB/rozeuDt3WPqlu4+aILzn1i+npUbedAVnqMTWoM1I+xCcxXh/xsXN0ps/ffjGVy/bL7VI+Tc85qzd+L9KHj9EbhPZ/F6WNx1jrZoZ71mG5Mqe4usR9/N47NzXHKLq19NJztlNuj66fulR3oozdvrIM2VhP05jcfO7ezjzL7LXKPzJtqqQul/SKEnUJiV6K6Cpv3xjEf4zY0dTbz6zi5wQQa+bs3ndIovXF4z2dxL3yLZ5vs4KzHpMOvykEvw6UvNd2JJf3ydzMHBrsIPnGv7EAfvXljSrvHfdVV1OLK96q/GqTjuyvxfHpHocGggXC6nN36JHn3S//6YDD6NTAt0nF64/Cez+Je+BbPh2XnA5xV2B20msFFpG8Wqm/oszhr3tyd7rEMYbaleBsoRd/dC7N2I2cFmapORabydu+sQXjPZ3EvfIvnw7JzdGc1w2VvR7VT6eFN2/Fsp4911oxcDJ9vR6ORh+Vr9szoGnOJbRtOOavq3+zKt2sbRtNtw2TUNlTV40z/u0+v/WGwtG8nyrd4Piw7R3eWk1IUp/ctar15yni2E8568Hxp+swr3bs17qaWMh10mpfBI2fpIxp3G9Ltit31wTeTffCjSX/q8LQ0Hf/j9EbhPZ9Ff4q8kUXos7ipXGkMPn6b9QMtl52PimdzZ8mHO6/knnjW917lhSyYeJEv8fFsJ5z14Plcj0nQVdPOWddYKkH6Np4dnJCOd0EbLucyGJswKGc31iE37orshOxxclLbakwYReiWrfySXh/e81n0pcgjN08lLCNb2jhry3jMJ/rBLePtneXGlNp1893FFMalOWw02wlnPXreDtrU8rDlK6NNi8KOrHKDQKUS9MBZcZ9CX77J6GIt7cibUXJ2EzT3yIycG6c3Cu/5LHpS5K3eLilN9Vj+KLj/+LV5/u2HccYM8um3XGa60fPifeodXjnLzt1x+xPZ+TpSFR/P3dEtRJz18Hl9QZlN/1z5tnV5P3dHv/7AWXrCVHJfvmbujt37WlaRKJu75GT070CTZjWlcXqj8J7P4vr8/o8n4om77jhb33xpAdoZM8gfvCXBWStkz6/S8Ssav3Px2uLDDylc1/tL6e3orF+/Jqw1jicK++H7ppvuJWfNmEH+4C1z26C7FO/0t8HMeHDWsTiSs65djeQ4zpqw1jie26BJe3XTMfT+SuMVEHS11s0Jl8aD1E672Zhd0sNtsLvZ7FOTzuWAiRnq3deCPBjvo3oXw67FO/1tMDMenHUsDuOsNh2sB3okZ325usbxjHbD0nWuvNu9dLDSVGT7+LS0bSdtPOGs4TbYbjb79KTz6RnqbnRQJfoc76M6jmHf4p3+NvgmnvGaLf3aL3GAs47GYZyVDzvZ33HWHxvy69eEtb446+4lyWndDqac52bu5VWvLtWY9UeqKnHbxo6THmyD7WazT086n56hrv6QnkzQ2B29BvuojmJ4WLzbMP1t8E084zVbcNYU//7b3vEtkYulWMBZl+G6Zu8469cu/ONRPJPOMrccwn64m6v+ZHLjVC9tEbRheZlw1mAb7PCnSecPZqhL4zCx090H+6iOYpjKzu7fBlOn2zJeswVnfeXff/Mq1Jm5+BB8cNYf//jng3gmnXV1L7lRhbVtFsvR7bC3/N5Zw22wB7PZzcujSecPZqin2mCVTmC8j+owhsni3f3bYOp0W8ZrtuCse8RYXoU6Kxcfw/7OGhrrh/6sYnDfMO6nb7quJ6lIpd85a7il7PjKDO4mcD6Y7WlqcY2Oarwn4TCGyezsoqxx2QbfOKuRn6YaibPGGGN5FeqMXHwQd1n8v9vxH5NX1TiefLCD33U0hezOWXYaeLy2sy5SnUp0he2Ls7oYJrPjg7G+cdZgbODuzkpjsxB5Vd6il9L7ms4lkOb7Lbm0Px8+HY0zlp/858Kn5MXdSJ8i/7Kuu51POJf9tPz75FU1jidyfUaBW3z/u7ahfcdw1eoHbcO8vwqnJ50/mKEuzcJLZUQ63ke1nt5rsM/O7t8G35xu35xl66rN1Kg4+ThkcfLjZ769VYGcqEQdGtu5JK9H47exlndWt2Vm4VaDcZSTyeZF/PVj32bx4LypK+h+SGXz3pS7PZ01dVXdxdOPg2/MZZP3a1MO++B1EVxE6GbueBsWU33wunxru6KsuQqnJ5230zPU5fC4MR3x431URzHsXLy/PzLWc84qTL7aPZ2lfyajP5qbDZAv2a2Kx+s5FINLq3D7HpTqg6NOjD4v2VP7bU9F87c/97bSps5qu/Mcf/1buqy7cg6Dq65CTC3ZPrx5LvNztP+K2/C5MpjPfs761+RVdRePzrGbbyg2kFtcefV1rEOjxyWYtXzqqjJecjPI3XU33Aa7m2U1Pel8eoa6bqHGxprjfVRHMexcvL8/MtZzzrLftfnmzkpspTrtvjcG389VYU5BrE7vnbOGdFu1pHo7qihTpzPq6sCXR1u5PM6M39Za2Fn9GG5XxE2YWd+3d2WtV23PJz8XgxNX9WscDKrG9XM7Ib10ovbjPp5+XYfCretgR3LGwZcxpfKhdoWUBP0McnfdDbfB7q7CB5POp2eom0e6vMf7qI5i2Ll4//XIWM8569Zts7Kts67uo26dVXddhPp5I61WFirN9De3fW/VFbj6rBS9kupc6lnJTUzVjT+Jv9mB51FmnLXeyel2vBVoN9Gjc1Yx6t+qWv2C/Iv0/7lt/BSm+di4GJyz1EnTF1A0Hrd4HfbgbJvFFfgaj1k/K7FZVpdSpYdsj5YhM/NmzGzy4QaddgZ5d90NtsHur8IHk86nZ6jrPUYC97f7fVTHMRyoeG2eBs5qjX3reFtnVZm+PEJpd4RxmbeD73RtoqpUQSSDZ8eJRcpxfTdXpl0niZWpel+u0XW3y1PRjDDWWu2kLMo7gVb9pmoiJPlmCJ2OgsELsR1+nXbOsnT3rewDqQ/Y92dpml7d1VE9t3vbCllcg9fieWn9rGW2Deq+Ip7628co3rs1W+ymwRs7KzctOPfxz/sqkTsqiqPG3ijRmxN3b5V6r+xodQ1ad9d2oLZ6KLn68S2r7zIj1lrjfCzPO6ck7as/8Xj8Tn/6YyX9e2e1rkl/MzVjEZU6pK3De1wqxTvFeYyL6hE7OKtwnSMf5Ky9khu+3VazxET6Vq7sphfrsQ5pf1RVZ3JQPC75qzQJU2nWXDPXNo/st/+tUs0SVc2KlYW16B6fte8z87c/lyy49XjnlFz6WmhfnRJst1Wqaq+ZbZsXce8s1Spv5TRkw82Xc5nJZpcaNUs5DU5kMh7GuF0W1+C1eJJX+vIWcJae32Ib+DhrUWc13adYbo7XVaH+mRsgg496WhbS1MjsnSh9Iagmh+x7r45q1cmJb5fUWOsSSsNElt6UmlXutp1KHt6y8u1cvV+mrzJY6Mk4q+wGOhhnDatMQ2fFZri3G/cgyVStdNNUJsUytFXhib+0bRbX4JV4xOovDE5bwFnDTnactaizepfoFkUdpFVjzq7+qMf6670ZtzSk/GXAntwmllExco+rMV9jMktexnkpadXXalA1u0wPpFu+bHZiUWfdtQ2VhyqpzurCjIb1rMxVy5o0GN03NP1Z5v8CZ+nN7l6oYS7gLOnBd5LEWYs6q3QVId33rhuKtfqv6pwlVONvKHP7XVx3ra/qVVnszHyZS+dvI1/yVVJFpbrMCnffKnq0yrh35+r9Mn2VL866axsGUh0ugq4/69K90OhviNROERk5a0T19S9tm8U18C2eD8uOv84ajNoV34RlVal6VVFaC0XORt34bLu8Ymp6geNbGF5uVdcAuWXqAspNjUrGaPX9Jw+/anw7V++X6av87Cw5J85ZWTfWIbBDg3TpN6OxDmaMY6xnUBVVi7P8x7fseOusyKnkqtfyCvJIfXfHrVwCrhskdbsnjG6sp3bdRhl0LHcO3dFt392ehElqB6joP1r/GM2BWchZ4qYv/Vl6BFzQNbQj6d7tZabLVd+XHQjpqnf4lqXlkuHYRZzlL75lx1tnuZZ2lIlg9NOlnsZZfnFWbt/bOStVvkoavcFnmFxN27CM9e5hevt0WZXbtTy/6SLw7Vy9XaYv03TtZt13ng1bdfJsZMdj13FZyw1GGV996d8rD/UXhTs3uR7fHUsHpQx7zNPOWfXDXsWVs7gGvsXzYdnx3lmXMGuNnC6yC7pcRT85y3yPy6vSF1/aiXEdjbm2mv6P4qwH9F20rj3etbVNy7qNr+6vyEAu1TLsRujG9n6Y+pap3LmpyrC8ReakjIv9rXVOfTtRvsXzYdnx1lld27C1zTtZ1drcsfqxnlXHXd97k5l6VlWZrhYzh7cJ+6YhbcNv32zFctNtwCqs9RdI9OVWVzmxVIMZYBfdBm3DVrXwyzBT/8LbaFjSW/fDfDtRvsXzYdnx1lnDrnGtHxnWkMU36Vq3oyCcs0o71nrQnyUz1PspVfpnK13Epst4tKQRffDf0I1GKHU96hZmMu5NlXnmfGOngGZ2MQ33t1ST/nadmLtz03tRSRPxmg/GJV3fWozGtxPlWzwflh1/nVX2PU5aO1XR6B6Psq77tRqDblul0H1tm/uGt7DbU9qmKc9kpu+4KgctE8Y6fMOln/8f9Vu16E2omi75ick4qoSLqp+A7pwlHVllk2YysDeXOe6uD6t+Zxi8dyfKt3g+LDv+Oivpm2/pOFXjLD15bbg4WeWmUMmrUWP7d9uLe3N7Eb2Vl0pW+kjs/XZ9WT64XHw7V/N4KxetXZ1OTzVt3PYtQb/KnCO2VjLnICrd7lSNjcHWs+qkkfNW6NWDVF3MrWtz1PWzjhHPh2XHX2f1c3cGzkpveXrT/b2N+pjLAh91Yy+HKE3zXF8omW6rfJ2Iey1M97wM95JOX9Mpw9yd7zBrp12kxNQJqdVXQe4WBkrGxw36s9S5McuSJbLBS572jcTgKt80N6lFX8xyTaW0OZvwqUUY18ni8vgWz4dlx19nuTnSwaiepV0kiz3W0vjQywwNkDfYablZv4Cm7oPPRXBlapYWaOyyarc35ki/weXpzpvnj3yqTF/HrAd/K3Xd9aJHXdkGXxPolZTjcX+WnvRZ3YYrKRb9jDr9VRIn19ROmIqKMDPTDw+6Hvwx4vmw7PjrLLcWTdCvBx/oaYbJRX++7XYW11tXpyr0ujPtXUuv6Rb0z6QadjXL0OqNwYt29lo0b5E8baLnj3yuTGfj2uC3LK77As7DCfRmxYO35qpCbKtZjWybaYbI2++j/K1NSRbN4nL4Fs+HZcdjZw0qWktwa+yiNN19elHYN9Ws9c7V8zfJ3tvbYd1cBG6drDHVd2ND9W0UZa74nabgpln8hHg+LDseOyu4vjOf40nmrK18TyUL0saNfmwWs73p61Z6fvQSuvrWmyyJG8bX7k5bLtXHVLWO8m5Apf3ZpTeouNi1c/Uf6d43o0w/Et+y6Fs8H5Ydn53V7WGxHjP2sPiCXXpab57iJj/qVHM9U9KOwpCeIGnFpiNnyf2Ae2f16fXOalz7V2qe3fvmlOkn4lsWfYvnw7ITLs7nlM6T0cTSQdaW0vtmN2e6hHZZQem+kVUhu73G4zLvZ8Son0l2y9M7Zw3S67Y3MJ1w/eZS5n0HLNNV8C2LvsXzYdnBWe9G05qpdk1YpO1gE8xLt7maWRo679eKGjjLNH5Hzhqk1x052HMzG7zvgGW6Cr5l0bd4Piw7OOvdaJpeIE03R1IPxcytaWq7R29h7wIM61n6iZGzBul1R3Z7m+vx4t37Dlimq+BbFn2Lh+ysiF+l81w0g5Wf8sEEu/jrbtyhaCsYOcsobuSsfMJZ3Uwj/eJLG7V4Vqar4FsWfYuH7KyIX6WzrLPMLUVp9+GshfEti77FQ3ZWxK/SeS6aS7+mStc2jFzbcOisQA9oDSecdbOjZ0u75k63RsuXtmFi24Y4y+cs+hYP2VkRv0rnuWgiMwChCeNRH3wz5Sw9ZOurs2zHV6r/4CC9qT748sVNPD0r01XwLYu+xUN2VsSv0nl6rEN4CdpCOtrtWIfcuGvkrKSUfnO9WEVkF0JPB0veZ02qx2CN03NH2rEOaaHdhbM8z6Jv8ZCdFfGrdJ6MJrLjPWU6SmJvnpZ2TGnvrFymbduRoHpidz5wj1kDrLjpPzhMzx6ptzoLbXcYzvI9i77FQ3ZWxK/SeTaablZO4Obu5HpQw7ht2MgYeXNUFMvSdwP3VLXeKNMu8zJIzx7Zzd3R6eEsz7PoWzxkZ0X8Kh2/ojl3Lg6VxeUHPe7N3iXqMX6Vjl/RvJGLE7B3KX94ke9doh7jV+n4Fc0buTgBe5fyhxf53iXqMX6Vjl/RvJGLE7B3KcNZ8evD51c0AOAfflnCr2gAwD/8soRf0QCAf/hlCb+iAQD/2Lsnl65dAHiFvRWFswDgFfZWFM4CAAAAAAAAAAAAAAAAAAAAAAAAAPgUGAwKAEcCZwHAkcBZe/AfewcAcFhw1g7884/f9w4B4KjgrB34r19/7B0CwFHBWdvzzz9+/aKiBTAPnLU9//XrFxUtgJngrM2RahYVLYCZ4KzNkWoWFS2AmeCsrTHVLCpaAPPAWVtjqllUtADmgbM2xlWzqGgBzAJnbYyrZlHRApgFztqWvppFRQtgDjhre/6lfPXfewcBcFBw1vbgLID54KztwVkA88FZ24OzAOaDs7YHZwHMB2dtD84CmA/O2h6cBTAfnLU9OAtgPjhre3AWwHxw1vbgLID54KztwVkA88FZ24OzAOaDs7YHZwHMB2dtD84CmA/O2h6cBTAfnLU9OAtgPjhre3AWwHxw1vbgLID54KztwVkA88FZ24OzAOaDs7YHZwHMB2dtD84CmA/O2h6cBTAfnLU9OAtgPjhre3AWwHxw1vbgLID54KztwVkA88FZ24OzAOaDs7YHZwHAkcBZAHAkcBYAHAmcBQBHAmcBwJHAWQBwJHAWABwJnAUARwJnAcCRwFkAcCRwFsDP5KGmrKO3k6rKMAmCa9iYZPP+L6RBkPZPOMIwlvfUexeBN+AsgJ+xzlI07yZ1C7MqCJLCJvuUs+T5695l4As4C+BnjFyqS6bN8g6p0Z5R08BZaZ63j50V1GFZ7V0InoCzAH7GyeUShrf3UorDUn4YE+X3ippwVlBIs7CdeOGk4CyAn3FySY1r5mOrWenzzmpNc7TWTUrAWXBClBjSKAnD0uqhicMwq1vpagor87rubVKVqta+5c5ZbV2qY5ousUK92taq4RibXqdUHpd1at8aXAt1uH5JqWeQznR/1s11XukHsXFVtEBX2meAs+B0KDHcMt2hrtt5telcz6LgamShVKFllRh1CU4uuX5PZN6t7+VJ77j6Na/EWLa76zbssJe3mt8k7Wx0A3DaWW1oDyqM4AwZtw4NOAtOhxKDqvWkYpJKy0LVsdJM+pmMxZQqtG2yvu/K9cErtbWB0lN2DapaO0kllmS3PG3CMAqCWOpuSn2F8s/VGEz+TJKmia68KR1dBpE8uG8YG1e1o86zxHSEAc6C06HEoNtbtdZEaVxwkXpQYr2SS50mGtwj7MY6ZI1qS9pmWiZHiwBTc4Trbyptm1J0pl+I7bOmJTmI5IGzGlMnu2gNDo7du+D8AGfB6Uht20urwTXEtC0uIp5G1ZKkonMZtMy6MaUio9o6KbYWSmxiRaOt1Xb99KWkkIeuE12lfXnKWaoiJ2kWfdvUHNAGgLPghKR9h3qu60mWRKpWVyWXXFWhIlXpSrq3jG7wxf1bov5OXyG/S798f+9PSy23mtI/86ecZfz2tR355tCwDwFnwem4d1YZG25SM7opX6XKV+KtpnvLvbPsO+KBs4ImMd36CzhL3yS89K3N/gDAWXA+Rs7qbtJp6rCITLswjoZtsZGz6uEroxFV0u0+aBtmtm3YO+u5tqFU2hL9b3wsbUMBZ8HpGDlLOp2kOlPFTaB7pS6iCmmXDXuTRs5q3KD4+stsG91RPuiDr++c9VwfvP4T7d0UQ/rgLTgLTsfYWcoFSRtEhXZGFdpxDspkw4EGI2fJWIdGD3yI+8SSUmpFidSs7FiHJtPuGjnrax9VnQrRnbNUHPFwcFbAWIcOnAWnY+wsN6bU9F4VdjxpHY6qOeNJNm5MaVH1iakjMhlTKr9cBgMjxs4KslGDrxtCEd+v61CH9zMbx+88MTgLTseds8zcncS02W523s51vKn93cRAM3cnrwaJ6FTu5u609q0DZ9Wj2tNjZ6XhaHAWc3d6cBbAhqRPqqcKR4OzmCPdg7MAtiR+rlvqduc21qLpwFkAW/JMRSuSuZBjtVHN6sBZAJty+9k+sVlmYgBrK/fgLIBNMXtYfEsShkl09x4WonHgLAA4EjgLAI4EzgKAI4GzAOBI4CwAOBI4CwCOBM4CmE8YskLM1uAsgPngrO3BWQDzwVnbg7MA5oOztgdnAcwHZ20PzgKYD87aHpwFMB+ctT04C2A+OGt7cBbAfHDW9uAsgPngrO3BWQDzwVnbg7MA5oOztgdnAcwHZ20PzgKYD87aHpwFMB+ctT04C2A+OGt7cBbAfHDW9uAsgPngrO3BWQDzwVnbg7MA5oOztgdnAcwHZ20PzgKYD87aHpwFMB+ctT04C2A+OGt7cBbAfHDW9uAsgPngrO3BWQDzwVnbg7MA5oOztgdnAcwHZ20PzgKYD87aHpwFMB+ctT04C2A+OGt7cBbAfHDW9uAsgPngrO3BWQDzwVnbg7MA5oOztgdnAcwHZ20PzgKYD87aHpwFMB+ctT04C2A+OGt7cBbAPP7nt99+E2epH/+zdyxnAmcBzOOvsON/947lTOAsgJn86ZT15//bO5QzgbMAZvIX1aw9wFkAc/mTatYO4CyAufxFNWsHcBbAbP6kmrU9OAtgNn9RzdoenAUwnz+pZm0OzgKYz19UszYHZwG8wZ9Us7YGZwG8wV9Us7YGZwG8A9WsrcFZAHAkcBYAHAmcBQBHAmcBwJHAWQBwJHAWABwJnAUARwJnwfkIfWfvAvIanAXnY28l4ax3wFlwPvZWEs56B5wF58NvK/gd3f7gLDgfflvB7+j2B2fB+fDbCn5Htz84C86H31bwO7r9wVlwPvy2gt/R7Q/OgvPhtxX8jm5/cBacD7+t4Hd0TxKF8VpJ4yw4H35bwe/onuSCswCWw28r+B3dk8Q4C2A5/LaC39EFuQrvWoRhmVfqtzQM06gIc/WwSVTkxa0NxFga0VZ1KeTRpVosAJwF58NvK/gdnTirNkoqKu2saxYqZ1XWU2EWDZ0VlWF/8DLgLDgfflvB7+jEWaGqYqnKldSulLOS7JanwU09aFWtSkmr0pkwbcNCH9zW4XJtRZwF58NvK/gdnTgrkZ+tah5qZ4Vp95t5+RJ0zmpUpUw/rWpe0UIB4Cw4H35bwe/oREpX/UBpqNL1LPml0bWuQMsrCTpn1cZo+vXLQgHgLDgfS1gh11djai7VBVs+R3CW0VAsD2wB9M/asrAlEru8uOMWAGfB+cBZb2c8wFkA27Gcs9o8T4PTOatrG/Yu6tqG0XTb8ELbEGA+yzmrS/BUztLd6m0YFr2zhn3wTTDZB98uFADOgvOBs97LuBvr0AzafHasQ27dlelxWt1Yh8S5awFwFpyPVfqzrmF40690D3aMbkVUxu2QUbFQ30+V2MGjpXZVbceUtoV9OmZMKcBs1umDL23r6PbmUCT/nZU2ykRFI78N+tbN3J3cuKlS0spE3XbuTrNcADgLzsc6zsqtq0rp59k5uhUZNYr3AGfB+VjHWa1pE0bv3iHDWd+Ds+B8rDQ+Kw6zQDcN3+u68cZZ6dTWi+l8Z00m93oyOAvOx0rOavTIpdJMZtk3uhWhngWwOWuNg8/CWpqG1/2jWxGcBbA5aznrphqHN91A3Du6TwZnwflYy1mteq58b3DWQtF9MjgLzsdqc6SLcIF1onDW9+AsOB+rOasJwzcHZy0U3SeDs+B8rOasKltg+QKc9T04C87HelYo3h2ctWp0nwHOgvOxmhWuSyxfgLO+B2fB+VjHCm3aZEusEoWzvgdnwflYxwqysJRe787L6D4HnAXnYx0rXMKweHMI/IrRfQ44C86H31bwO7r9wVlwPvy2gt/R7Q/OgvPhtxX8jm5/cBacD7+t4Hd0+4Oz4Hz4bYXH0f0CC86Cc4Gzjg7OgnOBs44OzoJzgbOODs6Cc3FUZwHAOfHbCn5HBwDb47cV/I4OALYn9J29CwgAvGJvJeEsAHiFvZWEswDgFZa3wpIp4iwAGIOzAOBI4CwAOBI4CwCOBM4CgCOBswDgSOAsADgSOAsAjgTOAoAjgbMA4EjgLAA4Eus6qyqLIMjDKAjSMIz7I+Rh/OUvyzvzMEzXjA4Ajs26zmrCNgiyOsBZALAM6zqrLsVWIqGhs/K8CaadFeMsAPiWdZ0lXlK2ysfO6l+7I46d4laLDgCOjU/OqsKbqpplq0YHAMdmbAWll6rOwqyu5LdIPQxL/VgpJ40S9VseVHkZhkmrj08TdUSSPkxx2ll9f1YVhoV+Sj+oszaI5OAH0QEA3DsrKfTqoGKSVvmoUL8WlVbOzawbeov1j1IOb+xaos3jFB0P+uDrMNT2u4bh5cfoAADunRVmTdooWV2D4BJL19JFKykVj13TWgyVp9fMPVlEQVtY70ym6HjgrNS6SiVc/RgdAMAXZ0lDrwn7FppqtdXaLZlIpdS/2QNsJSkKpR/qQYqOR2MdStM4zMLk5+gAAO6dpdt87dBC2jCpcZWIJuoOKM3Rwbh7/TVn5TrBq67Y/RQdAMC9s+LBz7Q2fVfGWbrm5W726Sf7zXF+vtf3yFnGfvUohZ/SAoDz8o2zbspFcZJ/56wstjxM0fFwHHwilbVs1Lr8KS0AOC+PnRWp/6qgbxt+dZZrG36XouOhs1SzMLqaFuezaQHAeXnsLKup6LGzajvPps6rhyk6Hs83LMO8tqO0fogOAOBbZxVVkBaPnSVHpEFbh0+MA9XHau6ddQuLbHJwVoCzAOCeb/qzSt29njx2VjemtH6coiMdbGY/dlYrT04NzgpwFgDc842zWpnFc6u+cZaZuxM336ToeOwseTA5OCvAWQBwjwfrlN4eDM5aJToAODb7O6vNJm8/rhQdABybnZ1Vpdfibo71utEBwLHZ2Vnply78laMDgGOzs7MivSTXhtEBwLHZvz9r2+gA4NjgLAA4EjgLAI4EzgKAI4GzAOBI4CwAOBI4CwCOROg7excQAHjF3krCWQDwCnsrCWcBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABswv8HZ6lKcNRUWXQAAAAldEVYdGRhdGU6Y3JlYXRlADIwMjUtMDEtMDNUMDg6MTE6NDErMDA6MDDvTcdFAAAAJXRFWHRkYXRlOm1vZGlmeQAyMDI1LTAxLTAzVDA4OjExOjQxKzAwOjAwnhB/+QAAACh0RVh0ZGF0ZTp0aW1lc3RhbXAAMjAyNS0wMS0wM1QwODoxMTo0MSswMDowMMkFXiYAAAAASUVORK5CYII=" alt="图片"></p>
+<p>JavaScript中的所有对象都来自<code>Object</code>，因此默认情况下，任何函数的原型属性<code>__proto__</code>都是<code>window.Object.prototype</code>。<code>prototype</code>原型对象同样会具有一个自己的原型，层层向上直到一个对象的原型为<code>null</code>。</p>
+<p>关于原型链，我们需要知道：</p>
+<ul>
+<li><p>当试图访问一个对象的属性时，会优先在该对象上搜寻。如果找不到，还会依次层层向上搜索该对象的原型对象、该对象的原型对象的原型对象等（套娃告警）</p>
+</li>
+<li><p>根据定义，<code>null</code>没有原型，并作为这个原型链中的最后一个环节</p>
+</li>
+<li><p>在<code>__proto__</code>的整个原型链被查看之后，浏览器才会认为该属性不存在，并给出属性值为<code>undefined</code>的结论</p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 任何函数的原型属性 __proto__ 都是 Object.prototype</span></span><br><span class="line"><span class="comment">// Object.getPrototypeOf() 方法返回指定对象的原型</span></span><br><span class="line"><span class="comment">// 我们能看到，null 作为原型链中最后一个环节</span></span><br><span class="line"><span class="title class_">Object</span>.<span class="title function_">getPrototypeOf</span>(<span class="title class_">Object</span>.<span class="property"><span class="keyword">prototype</span></span>) === <span class="literal">null</span>; <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>我们来看个具体的例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 让我们假设我们有一个对象 o, 其有自己的属性 a 和 b：</span></span><br><span class="line"><span class="keyword">var</span> o = &#123;<span class="attr">a</span>: <span class="number">1</span>, <span class="attr">b</span>: <span class="number">2</span>&#125;;</span><br><span class="line"><span class="comment">// o 的原型 o.__proto__有属性 b 和 c：</span></span><br><span class="line">o.<span class="property">__proto__</span> = &#123;<span class="attr">b</span>: <span class="number">3</span>, <span class="attr">c</span>: <span class="number">4</span>&#125;;</span><br><span class="line"><span class="comment">// 最后, o.__proto__.__proto__ 是 null.</span></span><br><span class="line"><span class="comment">// 这就是原型链的末尾，即 null，</span></span><br><span class="line"><span class="comment">// 根据定义，null 没有__proto__.</span></span><br><span class="line"><span class="comment">// 综上，整个原型链如下:</span></span><br><span class="line">&#123;<span class="attr">a</span>:<span class="number">1</span>, <span class="attr">b</span>:<span class="number">2</span>&#125; ---&gt; &#123;<span class="attr">b</span>:<span class="number">3</span>, <span class="attr">c</span>:<span class="number">4</span>&#125; ---&gt; <span class="literal">null</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 当我们在获取属性值的时候，就会触发原型链的查找：</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(o.<span class="property">a</span>); <span class="comment">// o.a =&gt; 1</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(o.<span class="property">b</span>); <span class="comment">// o.b =&gt; 2</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(o.<span class="property">c</span>); <span class="comment">// o.c =&gt; o.__proto__.c =&gt; 4</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(o.<span class="property">d</span>); <span class="comment">// o.c =&gt; o.__proto__.d =&gt; o.__proto__.__proto__ == null =&gt; undefined</span></span><br></pre></td></tr></table></figure>
+<p>原型链带来了继承的遍历，我们不需要在创建对象的时候给该对象重新赋值/添加方法，便可以通过原型链去访问原型对象上的属性和方法。比如，我们调用<code>lily.valueOf()</code>时，JavaScript引擎会进行以下操作：</p>
+<ol>
+<li>先检查<code>lily</code>对象是否具有可用的<code>valueOf()</code>方法。</li>
+<li>如果没有，则检查<code>lily</code>的原型对象（<code>Person.prototype</code>）是否具有可用的<code>valueof()</code>方法。</li>
+<li>如果也没有，则检查<code>Person()</code>构造函数的<code>prototype</code>属性所指向的对象的原型对象（即<code>Object.prototype</code>）是否具有可用的<code>valueOf()</code>方法，于是该方法被调用。</li>
+</ol>
+<p>我们能看到，通过原型链进行属性的查找会层层遍历每个原型对象，因此也可能会带来性能问题：</p>
+<ul>
+<li>当试图访问不存在的属性时，会遍历整个原型链</li>
+<li>在原型链上查找属性比较耗时，对性能有副作用，这在性能要求苛刻的情况下很重要</li>
+</ul>
+<p>因此，我们在设计对象的时候，需要注意代码中原型链的长度。当原型链过长时，可以选择进行分解，来避免可能带来的性能问题。</p>
+<p>说到属性查找，前面我们提到JavaScript中对象是由一组或多组的属性和值组成。要保存这些属性和值，一般我们都会想到使用字典，使用字符串作为键名，键值可以是任意对象，通过键名就可以读写键值。</p>
+<p>但我们都知道字典是非线性结构的，会导致读取效率会大大降低。因此，V8引擎采用了一套更为复杂和高效的存储策略，其中便涉及我们常说的快属性和慢属性，大家有兴趣也可以再深入进行研究。</p>
+<h2 id="实现JavaScript继承"><a href="#实现JavaScript继承" class="headerlink" title="实现JavaScript继承"></a>实现JavaScript继承</h2><p>通过原型链可以实现JavaScript继承，实际上JavaScript中实现继承的方式还包括经典继承(盗用构造函数)、组合继承、原型式继承、寄生式继承等等。</p>
+<p>其中，原型链继承方式中引用类型的属性被所有实例共享，无法做到实例私有；经典继承方式可以实现实例属性私有，但要求类型只能通过构造函数来定义；组合继承融合原型链继承和构造函数的优点，是JavaScript中最常用的继承模式，它长这样：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Parent</span>(<span class="params">name</span>) &#123;</span><br><span class="line">  <span class="comment">// 私有属性，不共享</span></span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">name</span> = name;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 需要复用、共享的方法定义在父类原型上 </span></span><br><span class="line"><span class="title class_">Parent</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">speak</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;hello&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Child</span>(<span class="params">name</span>) &#123;</span><br><span class="line">  <span class="title class_">Parent</span>.<span class="title function_">call</span>(<span class="variable language_">this</span>, name);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 将子类的 __proto__ 指向父类原型</span></span><br><span class="line"><span class="title class_">Child</span>.<span class="property">__proto__</span> = <span class="title class_">Parent</span>.<span class="property"><span class="keyword">prototype</span></span></span><br></pre></td></tr></table></figure>
+<p>虽然如今我们更倾向于使用ES6中的<code>class</code>，但实际上ES6/ES7中的新特性本质上主要是用来提升开发效率的语法糖。我们可以使用<code>@babel/plugin-transform-classes</code>对<code>class</code>相关代码进行编译，便可以看到编译后的代码本质上也是通过组合继承类似的方式实现继承。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>关于JavaScript的原型和继承，常常会在我们面试题中出现。随着ES6/ES7等新语法糖的出现，我们在日常开发中可能更倾向于使用<code>class</code>等语法来编写代码，原型继承等概念逐渐变淡。</p>
+<p>但不管语法糖怎么先进，JavaScript的设计在本质上依然没有变化。如果不了解这些内容，可能在我们遇到一些超出自己认知范围的内容时，很容易束手无策。</p>
+  
+	</div>
+	<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/2code2.jpg" width="200" height="200" style="display:block;margin: 0 auto;" />
+	<p style="text-align: center;margin-top: 10px;margin-bottom: 10px;">码生艰难，写文不易，给我家猪囤点猫粮了喵~</p>
+	<p style="text-align: center;"><a target="_blank" rel="noopener" href="https://space.bilibili.com/42233366">B站: 被删</a></p>
+	<div class="article-content">
+		<p style="margin-top:50px;">
+			查看Github有更多内容噢：<a target="_blank" rel="noopener" href="https://github.com/godbasin">https://github.com/godbasin</a>
+			<br>
+			更欢迎来<a href="https://godbasin.github.io/front-end-playground">被删的前端游乐场</a>边撸猫边学前端噢
+			<br>
+			<br>
+			如果你想要关注日常生活中的我，欢迎关注“牧羊的猪”公众号噢
+		</p>
+	</div>
+	<div class="author-right">
+  		<p>作者：被删</p>
+  		<p>出处：<a href="https://godbasin.github.io">https://godbasin.github.io</a></p>
+  		<p>本文版权归作者所有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利。</p>
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/分享/">分享</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/js%E4%BB%80%E9%94%A6/">js什锦</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  
+<!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a href="http://www.jiathis.com/share?uid=2134021" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config = {data_track_clickback:'true'};
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js?uid=2134021" charset="utf-8"></script>
+<!-- JiaThis Button END -->   
+
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2025/06/15/render-engine-downgrate-render/"  title="复杂渲染引擎架构与设计--10.降级渲染">
+ <strong>NEXT:</strong><br/> 
+ <span>复杂渲染引擎架构与设计--10.降级渲染
+</span>
+</a>
+</div>
+
+</nav>
+
+	<!-- 如果不是首页且没使用 `comments: false` 关闭评论，则尝试加载评论 -->
+
+    <!-- 配置中启用多说时，导入相应代码 -->
+    
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E5%9E%8B%E5%AF%B9%E8%B1%A1"><span class="toc-number">1.</span> <span class="toc-text">原型对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E5%9E%8B%E9%93%BE"><span class="toc-number">2.</span> <span class="toc-text">原型链</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0JavaScript%E7%BB%A7%E6%89%BF"><span class="toc-number">3.</span> <span class="toc-text">实现JavaScript继承</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  	
+	<div class="archiveslist">
+		<p class="asidetitle">最近文章</p>
+			<ul class="archive-list">
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2025/07/06/front-end-basic-js-extend/" title="前端基础补齐--有关 JavaScript 继承">前端基础补齐--有关 JavaScr...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2025/06/15/render-engine-downgrate-render/" title="复杂渲染引擎架构与设计--10.降级渲染">复杂渲染引擎架构与设计--10.降级...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2025/05/09/render-engine-pre-calculate/" title="复杂渲染引擎架构与设计--9.预热计算">复杂渲染引擎架构与设计--9.预热计...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2025/04/10/front-end-performance-preload-order/" title="前端性能优化--预加载顺序设计">前端性能优化--预加载顺序设计...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2025/03/09/front-end-performance-fps-monitor/" title="前端性能优化--FPS页面流畅度">前端性能优化--FPS页面流畅度...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2025/02/09/front-end-performance-fast-properties/" title="前端性能优化--JavaScript 引擎性能">前端性能优化--JavaScript...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2025/01/02/front-end-performance-binary-attribute/" title="前端性能优化--二进制压缩数据内容">前端性能优化--二进制压缩数据内容...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2024/12/27/front-end-performance-code-detail/" title="前端性能优化--代码习惯">前端性能优化--代码习惯...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2024/11/06/front-end-performance-flyweight-pattern/" title="前端性能优化--享元模式">前端性能优化--享元模式...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2024/10/27/tech-debt/" title="项目中的技术债务">项目中的技术债务</a>
+				</li>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+	</div>
+
+
+  
+  <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">归档</a></p>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/07/">七月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/06/">六月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/05/">五月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/04/">四月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/03/">三月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/02/">二月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/01/">一月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/12/">十二月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">十一月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">十月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">九月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">八月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">七月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">六月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">五月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">四月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">三月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/02/">二月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">一月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">十二月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">十一月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">十月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">九月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">八月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">七月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">六月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">四月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/03/">三月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/01/">一月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">十二月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">十月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">六月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">五月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">二月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">五月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">十月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">41</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">9</span></li></ul>
+  </div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle"><a href="/categories">分类</a></p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/Angular源码/" title="Angular源码">Angular源码<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/CSS炒饭/" title="CSS炒饭">CSS炒饭<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/D3小馒头/" title="D3小馒头">D3小馒头<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular2火锅/" title="angular2火锅">angular2火锅<sup>25</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular混搭/" title="angular混搭">angular混搭<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/box2djs方糖/" title="box2djs方糖">box2djs方糖<sup>34</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/cyclejs哈根达斯/" title="cyclejs哈根达斯">cyclejs哈根达斯<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/jQuery杂烩/" title="jQuery杂烩">jQuery杂烩<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/js什锦/" title="js什锦">js什锦<sup>28</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/react沙拉/" title="react沙拉">react沙拉<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/three-js奶茶/" title="three.js奶茶">three.js奶茶<sup>5</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/vue八宝粥/" title="vue八宝粥">vue八宝粥<sup>30</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/webpack宾治/" title="webpack宾治">webpack宾治<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/web乱炖/" title="web乱炖">web乱炖<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端技能提升/" title="前端技能提升">前端技能提升<sup>7</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端满汉全席/" title="前端满汉全席">前端满汉全席<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端解决方案/" title="前端解决方案">前端解决方案<sup>48</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/喵/" title="喵">喵<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/小程序双皮奶/" title="小程序双皮奶">小程序双皮奶<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/工作这杯茶/" title="工作这杯茶">工作这杯茶<sup>27</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/应用巧克力盒/" title="应用巧克力盒">应用巧克力盒<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/思想棉花糖/" title="思想棉花糖">思想棉花糖<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/柴米油盐工具集/" title="柴米油盐工具集">柴米油盐工具集<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/自动化甜筒/" title="自动化甜筒">自动化甜筒<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/非前端钙片/" title="非前端钙片">非前端钙片<sup>7</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle">标签</p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/分享/" title="分享">分享<sup>51</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/前端技能/" title="前端技能">前端技能<sup>7</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/功能设计/" title="功能设计">功能设计<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/原创部件/" title="原创部件">原创部件<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/心态/" title="心态">心态<sup>22</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/性能优化/" title="性能优化">性能优化<sup>34</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/教程/" title="教程">教程<sup>80</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/晒猫/" title="晒猫">晒猫<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/笔记/" title="笔记">笔记<sup>121</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/算法/" title="算法">算法<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/自制插件/" title="自制插件">自制插件<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/逻辑实现/" title="逻辑实现">逻辑实现<sup>19</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+    <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">about</a></p>
+      <ul class="archive-list">
+      	<li class="archive-list-item">
+      		<a>wangbeishan@163.com</a>
+      		<a target="_blank" rel="noopener" href="https://github.com/godbasin">github.com/godbasin</a>
+      	</li>
+      </ul>
+  </div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<section class="info">
+		<p> 即使梦想再小，却很伟大 ^_^ </p>
+	</section>
+	 
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2025 
+		
+		<a href="https://godbasin.github.io" target="_blank" title="被删">被删</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+
+
+
+
+
+  </body>
+</html>
