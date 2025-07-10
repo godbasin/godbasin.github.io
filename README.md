@@ -13,6 +13,8 @@
 
 ### 最新     
 
+> [《前端基础补齐--有关 JavaScript 代码执行》](https://godbasin.github.io/2025/08/09/front-end-basic-js-engine/)  
+> [《前端基础补齐--有关 JavaScript 继承》](https://godbasin.github.io/2025/07/06/front-end-basic-js-extend/)  
 > [《复杂渲染引擎架构与设计--10.降级渲染》](https://godbasin.github.io/2025/06/15/render-engine-downgrate-render/)  
 > [《复杂渲染引擎架构与设计--9.预热计算》](https://godbasin.github.io/2025/05/09/render-engine-pre-calculate/)  
 > [《前端性能优化--预加载顺序设计》](https://godbasin.github.io/2025/04/10/front-end-performance-preload-order/)  
