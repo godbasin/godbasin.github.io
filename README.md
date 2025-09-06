@@ -13,7 +13,7 @@
 
 ### 最新     
 
-> [《前端基础补齐--有关 JavaScript 单线程》](http://localhost:4000/2025/09/06/front-end-basic-js-eventloop/)  
+> [《前端基础补齐--有关 JavaScript 单线程》](https://godbasin.github.io/2025/09/06/front-end-basic-js-eventloop/)  
 > [《前端基础补齐--有关 JavaScript 代码执行》](https://godbasin.github.io/2025/08/09/front-end-basic-js-engine/)  
 > [《前端基础补齐--有关 JavaScript 继承》](https://godbasin.github.io/2025/07/06/front-end-basic-js-extend/)  
 > [《复杂渲染引擎架构与设计--10.降级渲染》](https://godbasin.github.io/2025/06/15/render-engine-downgrate-render/)  
