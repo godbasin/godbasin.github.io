@@ -13,7 +13,7 @@
 
 ### 最新     
 
-> [《前端性能优化--网页质量得分》](https://godbasin.github.io/2025/11/01/front-end-performance-website-complexity-design/)  
+> [《前端性能优化--网页复杂度设计》](https://godbasin.github.io/2025/11/01/front-end-performance-website-complexity-design/)  
 > [《前端性能优化--网页质量得分》](https://godbasin.github.io/2025/10/07/front-end-performance-website-quality-score/)  
 > [《前端基础补齐--有关 JavaScript 单线程》](https://godbasin.github.io/2025/09/06/front-end-basic-js-eventloop/)  
 > [《前端基础补齐--有关 JavaScript 代码执行》](https://godbasin.github.io/2025/08/09/front-end-basic-js-engine/)  
