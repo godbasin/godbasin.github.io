@@ -1,0 +1,1445 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>前端性能优化--网页质量得分 | Here. There.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="被删">
+    
+    <meta name="description" content="提到网页得分，相信很多做过性能的前端同学，也都有用过 Lighthouse 的性能评分。
+而在更复杂的业务场景下，类似 Lighthouse 这样的工具只能提供打开相关的性能数据。对于重度使用的前端网页来说，或许我们还需要更详细的参考标准。
+Lighthouse 性能得分其实我们之前在《前端性能优化">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Here. There." type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?3d902de4a19cf2bf179534ffd2dd7b7f";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/sun.png" alt="Here. There." title="Here. There."/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Here. There.">Here. There.</a></h1>
+				<h2 class="blog-motto">Love ice cream. Love sunshine. Love life. Love the world. Love myself. Love you.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">首页</a></li>
+					
+						<li><a target="_blank" rel="noopener" href="https://github.com/godbasin/godbasin.github.io">所有文章</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">分类</a></li>
+					
+						<li><a href="https://godbasin.github.io/front-end-playground">前端游乐场</a></li>
+					
+						<li><a href="/about">关于我</a></li>
+					
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2025/10/07/front-end-performance-website-quality-score/" title="前端性能优化--网页质量得分" itemprop="url">前端性能优化--网页质量得分</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://godbasin.github.io" title="被删">被删</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2025-10-07T14:47:22.000Z" itemprop="datePublished">2025-10-07</time>
+    更新日期:<time datetime="2025-09-06T15:06:28.477Z" itemprop="dateModified">2025-09-06</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Lighthouse-%E6%80%A7%E8%83%BD%E5%BE%97%E5%88%86"><span class="toc-number">1.</span> <span class="toc-text">Lighthouse 性能得分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%8D%E6%9D%82%E7%BD%91%E9%A1%B5%E8%B4%A8%E9%87%8F%E5%BE%97%E5%88%86"><span class="toc-number">2.</span> <span class="toc-text">复杂网页质量得分</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%A6%82%E4%BD%95%E4%B8%8A%E6%8A%A5"><span class="toc-number">2.1.</span> <span class="toc-text">数据如何上报</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%97%E5%88%86%E4%B8%8A%E6%8A%A5%E6%97%B6%E6%9C%BA"><span class="toc-number">2.2.</span> <span class="toc-text">得分上报时机</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B4%A8%E9%87%8F%E5%BE%97%E5%88%86%E5%BB%BA%E8%AE%BE"><span class="toc-number">3.</span> <span class="toc-text">质量得分建设</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9D%E6%AD%A5%E5%BE%97%E5%88%86%E5%BB%BA%E8%AE%BE"><span class="toc-number">3.1.</span> <span class="toc-text">初步得分建设</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%A7%E7%9B%98%E6%95%B0%E6%8D%AE%E5%BB%BA%E8%AE%BE"><span class="toc-number">3.2.</span> <span class="toc-text">大盘数据建设</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E5%88%B6%E5%8C%96%E5%88%86%E6%9E%90%E6%96%87%E6%A1%A3%E8%B4%A8%E9%87%8F"><span class="toc-number">3.2.1.</span> <span class="toc-text">定制化分析文档质量</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%93%E6%9D%9F%E8%AF%AD"><span class="toc-number"></span> <span class="toc-text">结束语</span></a>
+		</div>
+		
+		<p>提到网页得分，相信很多做过性能的前端同学，也都有用过 <a target="_blank" rel="noopener" href="https://developer.chrome.com/docs/lighthouse/overview?hl=zh-cn">Lighthouse</a> 的性能评分。</p>
+<p>而在更复杂的业务场景下，类似 Lighthouse 这样的工具只能提供打开相关的性能数据。对于重度使用的前端网页来说，或许我们还需要更详细的参考标准。</p>
+<h2 id="Lighthouse-性能得分"><a href="#Lighthouse-性能得分" class="headerlink" title="Lighthouse 性能得分"></a>Lighthouse 性能得分</h2><p>其实我们之前在<a href="https://godbasin.github.io/2024/03/17/front-end-performance-metric/">《前端性能优化–数据指标体系》</a>一文中也有介绍常见的前端性能指标，并提到 Google 的 <a target="_blank" rel="noopener" href="https://developers.google.com/speed/docs/insights/v5/about?hl=zh-cn">PageSpeed Insights (PSI)</a> 网页性能指标体系。</p>
+<p>简单来说，PageSpeed Insights 可同时获取实验室性能数据和用户实测数据，而 Lighthouse 则可获取实验室性能数据以及网页整体优化建议（包括但不限于性能建议）。</p>
+<p>而我们通过阅读 Lighthouse 官方文档，也能知道 Lighthouse 的评分标准。以 <a target="_blank" rel="noopener" href="https://developer.chrome.com/docs/lighthouse/performance/performance-scoring?hl=zh-cn#lighthouse_10">10 号灯塔</a>为例，其评分加权为：</p>
+<table>
+<thead>
+<tr>
+<th>评分点</th>
+<th>权重</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>First Contentful Paint（FCP，首次内容渲染）</td>
+<td>10%</td>
+</tr>
+<tr>
+<td>Speed Index（速度指数）</td>
+<td>10%</td>
+</tr>
+<tr>
+<td>Largest Contentful Paint（LCP，最大绘制内容）</td>
+<td>25%</td>
+</tr>
+<tr>
+<td>Total Blocking Time（TBT，总屏蔽时间）</td>
+<td>30%</td>
+</tr>
+<tr>
+<td>Cumulative Layout Shift（CLS，累计布局偏移）</td>
+<td>25%</td>
+</tr>
+</tbody>
+</table>
+<p>Lighthouse 收集性能指标（大多数以毫秒为单位报告）后，会根据指标值在 Lighthouse 评分分布中的所处位置，将每个原始指标值转换为 0 到 100 之间的指标得分。评分分布是基于 HTTP 归档中真实网站性能数据的性能指标派生出来的对数正态分布。</p>
+<p>相比 Lighthouse，PageSpeed Insights (PSI) 根据网页指标计划设置了阈值，并选择了所有指标的第 75 百分位，将用户体验质量分为三类：良好、需要改进或较差。</p>
+<p>但对于复杂的应用页面，这些指标都无法足够衡量用户的整体体验。我们通常会在首屏加载完成的时机将一些打开指标数据进行上报，但这依然会有个问题：用户在后续使用过程中的性能和质量情况是否可以关注到？</p>
+<p>因此我们可以借鉴 Lighthouse 和 PSI，自行根据业务的具体问题和使用场景，提出复杂网页的质量得分定义。</p>
+<h2 id="复杂网页质量得分"><a href="#复杂网页质量得分" class="headerlink" title="复杂网页质量得分"></a>复杂网页质量得分</h2><p>复杂的前端应用不多见，在我的文章里，经常提到的无非是游戏和在线文档两种。和以往一样，我们同样以在线表格为例子，来定义复杂页面的质量得分。</p>
+<p>或许我们在日常工作中，很多时候都是点对点地跟进性能问题，并没有再进一步地进行归档整理和体系化建设。但这样的模式会让我们一直处于被动，等到用户反馈问题、投诉卡顿等，其实已经比较滞后了。</p>
+<p>而对于线上的大盘数据中，到底还有多少用户的使用体验其实并不好，但没能反馈到开发者手上呢？这样的用户占比是怎样的，又是什么原因导致他们的使用体验很差呢？</p>
+<p>因此，我们基于以上的思考，来尝试定义网页质量得分：</p>
+<ol>
+<li>打开场景，主要为打开流畅度、响应速度等等。其实也是 PSI 里面的指标，包括 CLS、FID、LCP、INP、FCP、TTFB。</li>
+<li>使用场景，主要包括卡顿情况、页面滚动流畅度、用户交互等待耗时等等。除了卡顿、FPS 等指标，剩余的则是跟业务强相关的指标定义了。</li>
+</ol>
+<p>我们可以这样设计网页的质量得分，那么该质量得分数据会以以下方式呈现：</p>
+<ol>
+<li>首次产生得分：首屏/首表加载相关性能数据获取完毕，根据各种指标（CLS、FID、LCP、INP、FCP、TTFB）计算得分，并跟随这些数据进行统一上报。</li>
+<li>使用过程中分数变化：当用户在继续浏览和操作网页时，根据产生卡顿的次数/卡顿耗时、页面 FPS 流畅度、特定用户操作的等待耗时等等，以<strong>扣分</strong>的方式进行得分计算。当得分下降较严重时，将相关数据一并进行上报。</li>
+</ol>
+<h3 id="数据如何上报"><a href="#数据如何上报" class="headerlink" title="数据如何上报"></a>数据如何上报</h3><p>已知质量得分分成打开过程和持续使用过程，有两种方式进行得分的上报：</p>
+<ol>
+<li>统一时机上报。如果需要计算单次访问质量情况，更适合在某个统一的加载时机，将上述涉及的性能数据一起进行上报。这种方式更适合将这些数据进行聚类和二次分析，但问题在于用户在后续使用过程中，可能会突然关闭页面，导致数据未能及时上报。</li>
+<li>多次数据分别上报。</li>
+</ol>
+<p>多次上报（不同上报时机）的数据，如果需要聚合在一起进行分析，则需要关联到同一篇网页内容、甚至是同一次访问会话中，这种情况下：</p>
+<ul>
+<li>相关指标每次上报时，都需要关联到内容 id（考虑是否存在数据隐私问题）</li>
+<li>使用的数据平台需要支持数据二次聚合（先将多次访问数据以单篇内容为维度进行汇总，再以单篇内容作为基础颗粒度进行数据的二次计算，得到最终数据看板）</li>
+</ul>
+<h3 id="得分上报时机"><a href="#得分上报时机" class="headerlink" title="得分上报时机"></a>得分上报时机</h3><p>一般来说，我们希望关注用户的整体使用过程，则可以考虑两个阶段上报：</p>
+<ol>
+<li>在首屏数据加载完成时，根据打开指标计算得到一个得分，并进行上报。</li>
+<li>在打开阶段得到一个初始分数后，会基于此得分进行后续的计算，在页面<code>beforeunload</code>前，将初始得分、扣除分数、运行时长、生命周期信息、最终得分等进行上报。</li>
+</ol>
+<p>但在实际项目中验证发现，<code>beforeunload</code>下的上报数据对比首表加载完成，转化率不到 10%，因此需要考虑使用其他上报时机。</p>
+<p>因此，我们可以调整方向，使用其他方式来进行得分上报：</p>
+<ol>
+<li>达到一定扣分阈值时，进行上报。</li>
+<li>按停留时间上报，则需要配置定时器进行定时上报（可能会出现上报量过大的场景）。</li>
+</ol>
+<p>不管是哪种方式，我们还需要考虑一个问题：假设每次扣分都进行上报，那么要如何将多次的上报关联到一次，并认为是同一个会话过程产生的，进行去重获取最后的得分？</p>
+<p>答案也挺明显简单的：使用每次访问的唯一会话 id 进行去重过滤。</p>
+<p>使用扣分机制的好处是，我们针对相同会话中的多次上报，只需要取最小得分，便可得到该过程中用户的具体扣分情况，以此来得到本次网页的访问体验得分。</p>
+<h2 id="质量得分建设"><a href="#质量得分建设" class="headerlink" title="质量得分建设"></a>质量得分建设</h2><p>当我们尝试给一个页面定义质量得分时，很难一开始就能给到完整各种维度的指标定义和参考值。因此，为了跑通该指标体系，我们可以分阶段进行：</p>
+<ol>
+<li>定义初步指标评分体系，跑大盘数据观察数据。</li>
+<li>根据用户体验新增或调整指标，逐渐贴近用户真实感受。</li>
+<li>指标稳定后，分析待提升质量的网页特征，进行特征优化。</li>
+</ol>
+<h3 id="初步得分建设"><a href="#初步得分建设" class="headerlink" title="初步得分建设"></a>初步得分建设</h3><p>假设我们现在仅参考几个指标，还是以在线文档编辑的场景为例，以以下三个核心指标作为初步指标：</p>
+<table>
+<thead>
+<tr>
+<th>指标名称</th>
+<th>Good</th>
+<th>Needs Improvement</th>
+<th>Poor</th>
+<th>得分占比</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>首屏可见耗时（ms）</td>
+<td>(0, 1800]</td>
+<td>(1800, 2500]</td>
+<td>&gt; 2500</td>
+<td>30%</td>
+</tr>
+<tr>
+<td>首屏可交互耗时（ms）</td>
+<td>(0, 2950]</td>
+<td>(2950, 4000]</td>
+<td>&gt; 4000</td>
+<td>40%</td>
+</tr>
+<tr>
+<td>首屏可编辑耗时（ms）</td>
+<td>(0, 5000]</td>
+<td>(5000, 8000]</td>
+<td>&gt; 8000</td>
+<td>30%</td>
+</tr>
+<tr>
+<td>得分</td>
+<td>(100, 80]</td>
+<td>(80, 60]</td>
+<td>(60, 0]</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>以上只是初步最简单的定义，具体实践时可以调整或新增，比如全文档可编辑耗时、卡顿情况等等都可以统计进去。</p>
+</blockquote>
+<p>举个例子，假设一篇文档的加载耗时分别为：</p>
+<table>
+<thead>
+<tr>
+<th>指标名称</th>
+<th>指标数值</th>
+<th>计算得分</th>
+<th>得分</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>首屏可见耗时</td>
+<td>2000 ms</td>
+<td>= 80 - (2000 - 1800) / (2500 - 1800) * (80 - 60)</td>
+<td>74.29</td>
+</tr>
+<tr>
+<td>首屏可交互耗时</td>
+<td>3000 ms</td>
+<td>= 80 - (3000 - 2950) / (4000 - 2950) * (80 - 60)</td>
+<td>79.05</td>
+</tr>
+<tr>
+<td>首屏可编辑耗时</td>
+<td>6000 ms</td>
+<td>= 80 - (6000 - 5000) / (8000- 5000) * (80 - 60)</td>
+<td>73.33</td>
+</tr>
+<tr>
+<td>总得分</td>
+<td></td>
+<td>= 74.29 _ 30% + 79.05 _ 40% + 73.33 * 30%</td>
+<td>75.91</td>
+</tr>
+</tbody>
+</table>
+<p>那么，这篇文档的得分是 75.91 分。</p>
+<h3 id="大盘数据建设"><a href="#大盘数据建设" class="headerlink" title="大盘数据建设"></a>大盘数据建设</h3><p>现在，我们有了每篇文档的得分，那么针对每篇文档得分大盘数据就有了参考意义。我们可以针对每篇文档的得分，捞取出服务质量不好的文档并进行分析。</p>
+<p>举个例子，我们可以建立一个大盘表格服务质量占比看板：</p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/website-quality-score-1.jpg" alt=""></p>
+<p>这样就可以观察大盘上文档质量的整体情况。</p>
+<h4 id="定制化分析文档质量"><a href="#定制化分析文档质量" class="headerlink" title="定制化分析文档质量"></a>定制化分析文档质量</h4><p>我们可以根据单篇文档服务质量的大盘情况，捞取质量得分偏低的文档进行进一步分析。我们可以捞取得分在【30，50】区间的文档数据，来分析得分偏低的文档是符合预期还是某些特性场景（比如超大文档）。</p>
+<p>我们还可以调整数据统计方向，针对性考察某些特性的分布情况。假设现在针对在线表格的场景下，我们怀疑每篇表格服务质量与表格的单元格数量有关系，那么我们可以建立一个视图：</p>
+<ul>
+<li>以表格质量得分为 y 轴</li>
+<li>以表格单元格数量为 x 轴</li>
+</ul>
+<p>假设我们跑出来的数据呈现如下，那么我们可以认为每篇表格服务质量与单元格数量呈明显的负相关：</p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/website-quality-score-2.jpg" alt=""></p>
+<p>除了表格数量以外，我们还可以根据疑似有问题的特性（比如函数数量等）进行数据统计，来进行数据分析。</p>
+<h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p>很多时候，项目小的时候我们吐槽没啥事做，项目大的时候我们又吐槽没啥办法，但其实能做的可做的还有很多。</p>
+<p>每一个解决的问题，它都可以成为后续很多问题的助推力，去完善一个大的解决方案。多思考，多尝试，会发现还有很多东西可以学习和研究呢~</p>
+  
+	</div>
+	<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/2code2.jpg" width="200" height="200" style="display:block;margin: 0 auto;" />
+	<p style="text-align: center;margin-top: 10px;margin-bottom: 10px;">码生艰难，写文不易，给我家猪囤点猫粮了喵~</p>
+	<p style="text-align: center;"><a target="_blank" rel="noopener" href="https://space.bilibili.com/42233366">B站: 被删</a></p>
+	<div class="article-content">
+		<p style="margin-top:50px;">
+			查看Github有更多内容噢：<a target="_blank" rel="noopener" href="https://github.com/godbasin">https://github.com/godbasin</a>
+			<br>
+			更欢迎来<a href="https://godbasin.github.io/front-end-playground">被删的前端游乐场</a>边撸猫边学前端噢
+			<br>
+			<br>
+			如果你想要关注日常生活中的我，欢迎关注“牧羊的猪”公众号噢
+		</p>
+	</div>
+	<div class="author-right">
+  		<p>作者：被删</p>
+  		<p>出处：<a href="https://godbasin.github.io">https://godbasin.github.io</a></p>
+  		<p>本文版权归作者所有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利。</p>
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/性能优化/">性能优化</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/%E5%89%8D%E7%AB%AF%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/">前端解决方案</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  
+<!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a href="http://www.jiathis.com/share?uid=2134021" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config = {data_track_clickback:'true'};
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js?uid=2134021" charset="utf-8"></script>
+<!-- JiaThis Button END -->   
+
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2025/09/06/front-end-basic-js-eventloop/"  title="前端基础补齐--有关 JavaScript 单线程">
+ <strong>NEXT:</strong><br/> 
+ <span>前端基础补齐--有关 JavaScript 单线程
+</span>
+</a>
+</div>
+
+</nav>
+
+	<!-- 如果不是首页且没使用 `comments: false` 关闭评论，则尝试加载评论 -->
+
+    <!-- 配置中启用多说时，导入相应代码 -->
+    
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Lighthouse-%E6%80%A7%E8%83%BD%E5%BE%97%E5%88%86"><span class="toc-number">1.</span> <span class="toc-text">Lighthouse 性能得分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%8D%E6%9D%82%E7%BD%91%E9%A1%B5%E8%B4%A8%E9%87%8F%E5%BE%97%E5%88%86"><span class="toc-number">2.</span> <span class="toc-text">复杂网页质量得分</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%A6%82%E4%BD%95%E4%B8%8A%E6%8A%A5"><span class="toc-number">2.1.</span> <span class="toc-text">数据如何上报</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%97%E5%88%86%E4%B8%8A%E6%8A%A5%E6%97%B6%E6%9C%BA"><span class="toc-number">2.2.</span> <span class="toc-text">得分上报时机</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B4%A8%E9%87%8F%E5%BE%97%E5%88%86%E5%BB%BA%E8%AE%BE"><span class="toc-number">3.</span> <span class="toc-text">质量得分建设</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9D%E6%AD%A5%E5%BE%97%E5%88%86%E5%BB%BA%E8%AE%BE"><span class="toc-number">3.1.</span> <span class="toc-text">初步得分建设</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%A7%E7%9B%98%E6%95%B0%E6%8D%AE%E5%BB%BA%E8%AE%BE"><span class="toc-number">3.2.</span> <span class="toc-text">大盘数据建设</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E5%88%B6%E5%8C%96%E5%88%86%E6%9E%90%E6%96%87%E6%A1%A3%E8%B4%A8%E9%87%8F"><span class="toc-number">3.2.1.</span> <span class="toc-text">定制化分析文档质量</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%93%E6%9D%9F%E8%AF%AD"><span class="toc-number"></span> <span class="toc-text">结束语</span></a>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  	
+	<div class="archiveslist">
+		<p class="asidetitle">最近文章</p>
+			<ul class="archive-list">
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2025/10/07/front-end-performance-website-quality-score/" title="前端性能优化--网页质量得分">前端性能优化--网页质量得分...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2025/09/06/front-end-basic-js-eventloop/" title="前端基础补齐--有关 JavaScript 单线程">前端基础补齐--有关 JavaScr...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2025/08/09/front-end-basic-js-engine/" title="前端基础补齐--有关 JavaScript 代码执行">前端基础补齐--有关 JavaScr...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2025/07/06/front-end-basic-js-extend/" title="前端基础补齐--有关 JavaScript 继承">前端基础补齐--有关 JavaScr...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2025/06/15/render-engine-downgrate-render/" title="复杂渲染引擎架构与设计--10.降级渲染">复杂渲染引擎架构与设计--10.降级...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2025/05/09/render-engine-pre-calculate/" title="复杂渲染引擎架构与设计--9.预热计算">复杂渲染引擎架构与设计--9.预热计...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2025/04/10/front-end-performance-preload-order/" title="前端性能优化--预加载顺序设计">前端性能优化--预加载顺序设计...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2025/03/09/front-end-performance-fps-monitor/" title="前端性能优化--FPS页面流畅度">前端性能优化--FPS页面流畅度...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2025/02/09/front-end-performance-fast-properties/" title="前端性能优化--JavaScript 引擎性能">前端性能优化--JavaScript...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2025/01/02/front-end-performance-binary-attribute/" title="前端性能优化--二进制压缩数据内容">前端性能优化--二进制压缩数据内容...</a>
+				</li>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+	</div>
+
+
+  
+  <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">归档</a></p>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/10/">十月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/09/">九月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/08/">八月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/07/">七月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/06/">六月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/05/">五月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/04/">四月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/03/">三月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/02/">二月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/01/">一月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/12/">十二月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">十一月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">十月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">九月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">八月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">七月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">六月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">五月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">四月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">三月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/02/">二月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">一月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">十二月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">十一月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">十月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">九月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">八月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">七月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">六月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">四月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/03/">三月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/01/">一月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">十二月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">十月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">六月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">五月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">二月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">五月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">十月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">41</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">9</span></li></ul>
+  </div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle"><a href="/categories">分类</a></p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/Angular源码/" title="Angular源码">Angular源码<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/CSS炒饭/" title="CSS炒饭">CSS炒饭<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/D3小馒头/" title="D3小馒头">D3小馒头<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular2火锅/" title="angular2火锅">angular2火锅<sup>25</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular混搭/" title="angular混搭">angular混搭<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/box2djs方糖/" title="box2djs方糖">box2djs方糖<sup>34</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/cyclejs哈根达斯/" title="cyclejs哈根达斯">cyclejs哈根达斯<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/jQuery杂烩/" title="jQuery杂烩">jQuery杂烩<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/js什锦/" title="js什锦">js什锦<sup>30</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/react沙拉/" title="react沙拉">react沙拉<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/three-js奶茶/" title="three.js奶茶">three.js奶茶<sup>5</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/vue八宝粥/" title="vue八宝粥">vue八宝粥<sup>30</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/webpack宾治/" title="webpack宾治">webpack宾治<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/web乱炖/" title="web乱炖">web乱炖<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端技能提升/" title="前端技能提升">前端技能提升<sup>7</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端满汉全席/" title="前端满汉全席">前端满汉全席<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端解决方案/" title="前端解决方案">前端解决方案<sup>49</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/喵/" title="喵">喵<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/小程序双皮奶/" title="小程序双皮奶">小程序双皮奶<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/工作这杯茶/" title="工作这杯茶">工作这杯茶<sup>27</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/应用巧克力盒/" title="应用巧克力盒">应用巧克力盒<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/思想棉花糖/" title="思想棉花糖">思想棉花糖<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/柴米油盐工具集/" title="柴米油盐工具集">柴米油盐工具集<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/自动化甜筒/" title="自动化甜筒">自动化甜筒<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/非前端钙片/" title="非前端钙片">非前端钙片<sup>7</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle">标签</p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/分享/" title="分享">分享<sup>53</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/前端技能/" title="前端技能">前端技能<sup>7</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/功能设计/" title="功能设计">功能设计<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/原创部件/" title="原创部件">原创部件<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/心态/" title="心态">心态<sup>22</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/性能优化/" title="性能优化">性能优化<sup>35</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/教程/" title="教程">教程<sup>80</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/晒猫/" title="晒猫">晒猫<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/笔记/" title="笔记">笔记<sup>121</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/算法/" title="算法">算法<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/自制插件/" title="自制插件">自制插件<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/逻辑实现/" title="逻辑实现">逻辑实现<sup>19</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+    <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">about</a></p>
+      <ul class="archive-list">
+      	<li class="archive-list-item">
+      		<a>wangbeishan@163.com</a>
+      		<a target="_blank" rel="noopener" href="https://github.com/godbasin">github.com/godbasin</a>
+      	</li>
+      </ul>
+  </div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<section class="info">
+		<p> 即使梦想再小，却很伟大 ^_^ </p>
+	</section>
+	 
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2025 
+		
+		<a href="https://godbasin.github.io" target="_blank" title="被删">被删</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+
+
+
+
+
+  </body>
+</html>

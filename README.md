@@ -13,6 +13,7 @@
 
 ### 最新     
 
+> [《前端性能优化--网页质量得分》](https://godbasin.github.io/2025/10/07/front-end-performance-website-quality-score/)  
 > [《前端基础补齐--有关 JavaScript 单线程》](https://godbasin.github.io/2025/09/06/front-end-basic-js-eventloop/)  
 > [《前端基础补齐--有关 JavaScript 代码执行》](https://godbasin.github.io/2025/08/09/front-end-basic-js-engine/)  
 > [《前端基础补齐--有关 JavaScript 继承》](https://godbasin.github.io/2025/07/06/front-end-basic-js-extend/)  
@@ -26,15 +27,6 @@
 > [《前端性能优化--享元模式》](https://godbasin.github.io/2024/11/06/front-end-performance-flyweight-pattern/)  
 > [《项目中的技术债务》](https://godbasin.github.io/2024/10/27/tech-debt/)  
 > [《前端性能优化--卡顿链路追踪》](https://godbasin.github.io/2024/10/15/front-end-performance-jank-monitor/)  
-> [《前端性能优化--JavaScript 数组解构》](https://godbasin.github.io/2024/09/03/front-end-performance-array-performance/)  
-> [《前端性能优化--任务管理和调度》](https://godbasin.github.io/2024/08/05/front-end-performance-task-schedule/)  
-> [《前端性能优化--R 树的使用》](https://godbasin.github.io/2024/07/17/front-end-performance-r-tree/)  
-> [《前端性能优化--卡顿心跳检测》](https://godbasin.github.io/2024/06/04/front-end-performance-jank-heartbeat-monitor/)  
-> [《前端性能优化--用户卡顿检测》](https://godbasin.github.io/2024/05/02/front-end-performance-jank-detect/)  
-> [《让你的长任务在 50 毫秒内结束》](https://godbasin.github.io/2024/04/03/front-end-performance-long-task/)  
-> [《前端性能优化--数据指标体系》](https://godbasin.github.io/2024/03/17/front-end-performance-metric/)  
-> [《有趣的 PerformanceObserver》](https://godbasin.github.io/2024/02/21/front-end-performance-about-performanceobserver/)  
-> [《前端性能优化--卡顿的监控和定位》](https://godbasin.github.io/2024/01/21/front-end-performance-no-response-solution/)  
 
 
 ### 复杂渲染引擎架构与设计
@@ -48,6 +40,7 @@
 > [《复杂渲染引擎架构与设计--7.离屏渲染》](https://godbasin.github.io/2023/10/13/render-engine-offscreen-render/)   
 > [《复杂渲染引擎架构与设计--8.元素与事件》](https://godbasin.github.io/2023/11/25/render-engine-element-and-event/)   
 > [《复杂渲染引擎架构与设计--9.预热计算》](https://godbasin.github.io/2025/05/09/render-engine-pre-calculate/)  
+> [《复杂渲染引擎架构与设计--10.降级渲染》](https://godbasin.github.io/2025/06/15/render-engine-downgrate-render/)  
 
 ### 前端技能提升
 
@@ -62,6 +55,12 @@
 
 ### 前端性能优化
 
+> [《前端性能优化--预加载顺序设计》](https://godbasin.github.io/2025/04/10/front-end-performance-preload-order/)  
+> [《前端性能优化--FPS页面流畅度》](https://godbasin.github.io/2025/03/09/front-end-performance-fps-monitor/)  
+> [《前端性能优化--JavaScript 引擎性能》](https://godbasin.github.io/2025/02/09/front-end-performance-fast-properties/)  
+> [《前端性能优化--二进制压缩数据内容》](https://godbasin.github.io/2025/01/02/front-end-performance-binary-attribute/)  
+> [《前端性能优化--代码习惯》](https://godbasin.github.io/2024/12/27/front-end-performance-code-detail/)  
+> [《前端性能优化--享元模式》](https://godbasin.github.io/2024/11/06/front-end-performance-flyweight-pattern/)  
 > [《前端性能优化--用户卡顿检测》](https://godbasin.github.io/2024/05/02/front-end-performance-jank-detect/)  
 > [《让你的长任务在 50 毫秒内结束》](https://godbasin.github.io/2024/04/03/front-end-performance-long-task/)  
 > [《前端性能优化--数据指标体系》](https://godbasin.github.io/2024/03/17/front-end-performance-metric/)  
@@ -76,7 +75,7 @@
 > [《前端性能优化--加载流程篇》](https://godbasin.github.io/2022/04/09/front-end-performance-startup/)   
 > [《前端性能优化--归纳篇》](https://godbasin.github.io/2022/03/06/front-end-performance-optimization/)   
 
-> [《前端性能优化--卡顿的监控和定位》](https://godbasin.github.io/2024/01/21/front-end-performance-no-response-solution/)  
+> [《前端性能优化--卡顿链路追踪》](https://godbasin.github.io/2024/10/15/front-end-performance-jank-monitor/)  
 > [《前端性能优化--数据指标体系》](https://godbasin.github.io/2024/03/17/front-end-performance-metric/)  
 > [《前端性能优化--用户卡顿检测》](https://godbasin.github.io/2024/05/02/front-end-performance-jank-detect/)  
 > [《前端性能优化--卡顿心跳检测》](https://godbasin.github.io/2024/06/04/front-end-performance-jank-heartbeat-monitor/)  
@@ -117,6 +116,7 @@
 > [《选择这件事》](https://godbasin.github.io/2018/12/16/work-1-choice/)   
 
 ### 前端杂谈    
+> [《项目中的技术债务》](https://godbasin.github.io/2024/10/27/tech-debt/)  
 > [《我所理解的前端工程化》](https://godbasin.github.io/2022/02/07/front-end-engineering/)   
 > [《在线文档的网络层开发思考--职责驱动设计》](https://godbasin.github.io/2021/01/23/network-design-responsibility-driven-design/)   
 > [《如何设计一个任务管理器》](https://godbasin.github.io/2020/11/01/task-runner-design/)   
@@ -239,6 +239,9 @@
 > [《认识数据库》](https://godbasin.github.io/2018/07/15/application-development-with-learning-database/)   
 
 ### 前端入门    
+> [《前端基础补齐--有关 JavaScript 单线程》](https://godbasin.github.io/2025/09/06/front-end-basic-js-eventloop/)  
+> [《前端基础补齐--有关 JavaScript 代码执行》](https://godbasin.github.io/2025/08/09/front-end-basic-js-engine/)  
+> [《前端基础补齐--有关 JavaScript 继承》](https://godbasin.github.io/2025/07/06/front-end-basic-js-extend/)  
 > [《浏览器是如何进行页面渲染的》](https://godbasin.github.io/2021/10/16/web-browser-render/)   
 > [《前端入门8--Ajax和http》](https://godbasin.github.io/2018/05/19/front-end-8-http-and-ajax/)   
 > [《前端入门7--代码调试》](https://godbasin.github.io/2018/05/13/front-end-7-debug/)   
