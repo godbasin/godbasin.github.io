@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://godbasin.github.io/"/>
-  <updated>2025-09-06T17:10:51.801Z</updated>
+  <updated>2025-11-01T14:25:43.389Z</updated>
   <id>https://godbasin.github.io/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>如何提升项目管理能力</title>
+    <link href="https://godbasin.github.io/2025/12/21/how-to-manage-front-end-project/"/>
+    <id>https://godbasin.github.io/2025/12/21/how-to-manage-front-end-project/</id>
+    <published>2025-12-21T06:25:12.000Z</published>
+    <updated>2025-11-01T14:25:43.389Z</updated>
+    
+    <content type="html"><![CDATA[<p>前面在<a href="https://godbasin.github.io/2023/01/12/design-and-manage-front-end-project/">《如何设计与管理一个前端项目》</a>一文中，提到过需要做风险把控、事后复盘、数据量化，但具体怎么执行呢？本文主要结合以前的实战经验进行说明。</p><span id="more"></span><p>前面提到，我们需要主动把控各个环节的情况，及时推动和解决出现的一些多方协作的问题，先从风险控制说起。</p><h1 id="1-风险控制"><a href="#1-风险控制" class="headerlink" title="1. 风险控制"></a>1. 风险控制</h1><p>举个例子，之前我接过一个需要带外包同学进行小程序开发的项目。在项目启动之前，我找到另外一个有过相同经验的开发咨询他们项目的一些情况，得到的反馈包括以下问题：  </p><p>(1) 交付物质量问题：  </p><ul><li>主流程无法正常体验  </li><li>代码中充斥着调试代码，交付时接口还连着测试环境  </li></ul><p>(2) 代码规范问题：  </p><ul><li>格式缩进混乱  </li></ul><p>(3) 性能问题：</p><ul><li>只是用一个方法，随意引入第三方开源库  </li></ul><p>(4) 可维护性问题：  </p><ul><li>多页面重复逻辑  </li><li>多页面写死appid等应该配置的数据  </li><li>接口调用及处理放在多个页面逻辑代码内  </li></ul><p>(5) 代码健壮性问题：  </p><ul><li>需求逻辑边界未处理，后台数据异常直接报错  </li><li>样式兼容不足，交付时文字掉行  </li></ul><p>这些都是可预估的风险。为了避免同样的问题出现，我做了一些前期的准备工作。通过前置的这些准备工作，也达到了不错的使用效果：</p><table><thead><tr><th>解决方案</th><th>分析/其他方案对比/模块划分</th><th>使用效果</th></tr></thead><tbody><tr><td>开发协作 + 代码管理</td><td>小程序提供的TGit仓库<br>TGit与小程序关联，权限管理与开发者权限相关，可在公众平台配置<br>对比内网Git，可支持与离岸外包外网协作<br>使用Git可方便跟踪代码变更历史，同时Git在前端开发中普及度较高</td><td>开发 外包负责人 与外包协助顺畅，支持小团队并行开发<br>代码变更可追踪，方便管理<br>便于进行 code review，及时发现问题</td></tr><tr><td>基础环境</td><td>Gulp编译<br>支持依赖安装与打包<br>支持less与Babel编译<br>可进行文件变更监控、编译、打包</td><td>支持使用less编写样式，提升开发效率<br>支持使用ES6/ES7语法</td></tr><tr><td>mock环境</td><td>配置json作为mock数据<br>本地 node express 服务，简单路由映射到文件路径<br>通过切换 host 代理和 cgi 接口配置，切换 mock 数据、sandbox 和正式环境</td><td>后台提供完整接口文档和返回数据，前端通过 mock 完成功能流程开发，无需依赖后台<br>后台服务异常时，可切换 mock 环境，不阻塞前端开发<br>项目维护或交接时，可通过 mock 数据快速查看所有功能</td></tr><tr><td>代码规范</td><td>prettier<br>配置好基本规范（换行、行末分号、缩进等），配合git commit提交时自动格式化代码，抹平编译器配置差距。对比 Eslint 校验：<br>静默格式化，无需开发手动调整或格式化<br>格式化不影响 git 历史，不会导致大片代码变更、不好定位的问题</td><td>只需要 外包负责人 配置化规范，开发对代码格式化无感知<br>代码缩进、句尾分号等都保持一致</td></tr><tr><td>基础库</td><td>提供常用基础库<br>请求管理<br>日志插件<br>常用工具<br>常用组件</td><td>提供公共请求方法，统一处理登录态失效、静默续期、测速上报、数据缓存、全局接口session_key参数等，外包只需关心接口的业务逻辑<br>大大减少了搭建环境的时间，部分功能模块也得到了复用，对开发速度有很大帮助</td></tr><tr><td>文档管理</td><td>提供完善文档<br>项目文档<br>工具库 demo 与文档<br>接口文档</td><td>项目相关文档很细，降低了不少沟通成本</td></tr><tr><td>权限和联调环境</td><td>提供可使用的权限和联调环境<br>申请外包驻场开发<br>提供带权限和环境的测试机<br>联调接口部署 sandbox</td><td>驻场开发过程，外包与后台联调沟通效率提升不少<br>解决了外包无商户权限的问题<br>外包可离岸联调，同时设计、产品体验也无需配置HOST进行</td></tr></tbody></table><p>通过前期准备的这些方案和工具，提前控制好一些可预见的风险，整个开发过程比较顺利。但是如果我们的效果只有这些的话，很多时候是无法证明自己做了这么多事情的价值。那么，我们可以尝试用数据说话。</p><h1 id="用数据说话"><a href="#用数据说话" class="headerlink" title="用数据说话"></a>用数据说话</h1><p>这次带外包进行开发的项目共分成了两期，第一期开发的时候依然存在一些问题导致延期，包括：  </p><p>(1) 开发完成延期3天：  </p><ul><li>开发未结束上个项目（另外一个小城小程序），通过临时加入开发人员来赶上进度  </li><li>对可联调时间点评估不准确，启动联调时间晚了2天  </li><li>联调过程，后台接口依赖其他团队配合，其他团队启动时间较晚，最终联调比预估多花费1天  </li></ul><p>(2) 体验时长共2周，延期7天：  </p><ul><li>设计对小程序质量要求十分高，故有不少的视觉调整，基本上每天一版细节调整（共 12 版）  </li><li>产品体验时间较长，基本上一周一次产品体验的迭代（共两轮体验）  </li><li>部分交互细节在需求没明确，产品体验时发现问题，其中的一些对开发逻辑调整较大  </li><li>开发预留自测时间不充分，产品体验发现问题较多  </li></ul><p>在二期开发的时候，通过一些对策来避免这些问题，例如：  </p><ul><li>开发评估新的合作模式的项目预留多一些buffer  </li><li>对涉及多方合作的项目，开发外包负责人需多预留些buffer  </li><li>如果希望高度还原或者想做细致的交互，需要和外包商特别提一下  </li><li>体验过程中，对开发、体验问题及时反馈  </li><li>需求文档需完善交互细节，才给到外包开发  </li><li>开发需预留足够的自测时间，对正常路径、异常路径都完成充分自测  </li></ul><p>通过这些对策，二期开发的时候成功地避免了同样的问题。我们可以通过图表的方式更加清晰洗表达，如图：</p><p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/my-career5-6.jpg" alt="两期的开发时间结果">  </p><p>除了时间维度，我们还可以通过质量的维度来对比两期的开发情况，如图：</p><p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/my-career5-7.jpg" alt="两期的开发时间结果">  </p><p>通过这些数据的输出，我们可以进行项目的复盘。</p><h1 id="及时反馈与复盘"><a href="#及时反馈与复盘" class="headerlink" title="及时反馈与复盘"></a>及时反馈与复盘</h1><p>很多开发习惯了当代码开发完成、发布上线之后就结束了这个项目，其实他们遗漏了一个很重要的环节：复盘。通过复盘这种方式，我们可以发现自身的一些问题并改进，还可以让团队其他人以及管理者知道我们做了些什么，这是很重要的。</p><p>依然回到这个项目，复盘内容除了上述的数据展示，还可以包括一些项目结束后的问题分析，例如在这次开发过程问题：  </p><ul><li>外包开发效率上问题不大，项目延期主要原因：  <ul><li>等待后台接口可联调时间比预期要长  </li><li>产品对接问题：提供资源、体验产品不够及时，需求规划需要更加详细  </li><li>需求变更，主要体现在设计和交互调整  </li></ul></li><li>沟通和交流上，外包态度比较积极，反馈及时。可以改进的地方：  <ul><li>每日、每周工作进度及时做总结和汇总  </li><li>对产品设计和体验的合理性可具备有一定的思考，主动发现问题、提出问题、解决问题  </li><li>开发风格不一致，代码规范不一致，导致部分问题如下：过度抽象、使用自带工具库、逻辑管理较乱、变量类型混乱、重复代码过多  </li></ul></li></ul><p>问题发现了，就需要进行解决，与外包同学进行沟通反馈的内容同样可以作为复盘内容的一部分：  </p><p>(1) 开发启动前，与外包进行需求评审，同时提供了基础代码，可参照上方“前期准备”所述。  </p><p>(2) 开发过程中，外包负责人发现一些代码上的问题，与外包进行沟通后，已调整和优化大部分代码。  </p><p>(3) 开发完成后，与外包收集建议反馈，以及与其他项目对比，主要整理如下：  </p><ul><li>该项目过程的一些优点：  <ul><li>初始化时提供的代码大大减少了搭建环境的时间，部分功能模块也得到了复用，对开发速度有很大帮助  </li><li>项目相关文档很细，降低了不少沟通成本  </li><li>项目开发过程中，外包成长很多，也知道了之前存在的一些问题  </li></ul></li><li>对该项目的一些建议：  <ul><li>代码规范：外包希望外包负责人能提供一份前端代码规范</li><li>分工：外包负责业务相关页面开发，外包负责人 负责提供基础框架和工具库</li><li>小程序：小程序的特性还有一些限制应该考虑进去，比如小程序自定义modal盖不住输入框、title bar没有分割线、tab bar高度无法自定义等</li><li>视觉还原：外包工程师大部分都是编程方向的，对UI理解不深，如果希望高度还原或者想做细致的交互，需要和外包商特别提一下</li></ul></li></ul><p>这些内容，都可以通过邮件的方式发送给团队以及合作方，同时还可以作为自身的经验沉淀，后续更多项目中可以进行参考。这里举了一个特别详细的例子，可能会有些啰嗦，但大家可以仔细品读里面的一些问题的分析、处理过程和总结方式。如果使用得当，我们还可以通过这种方式来影响我们的团队和管理者，也是向上管理的一种方法。</p><h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p>但其实不只是工作中，我们生活里也可以常常进行反思和总结，这样我们的步伐才可以越跑越快。成长的过程中总会遇到各式各样的问题，有些问题被我们忽视而过，有些问题我们选择了逃避，但其实我们还可以通过迎面应战、解决并反思的方式，在这样一次次战斗中快速地成长。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;前面在&lt;a href=&quot;https://godbasin.github.io/2023/01/12/design-and-manage-front-end-project/&quot;&gt;《如何设计与管理一个前端项目》&lt;/a&gt;一文中，提到过需要做风险把控、事后复盘、数据量化，但具体怎么执行呢？本文主要结合以前的实战经验进行说明。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="前端技能提升" scheme="https://godbasin.github.io/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E8%83%BD%E6%8F%90%E5%8D%87/"/>
+    
+    
+      <category term="前端技能" scheme="https://godbasin.github.io/tags/%E5%89%8D%E7%AB%AF%E6%8A%80%E8%83%BD/"/>
+    
+  </entry>
   
   <entry>
     <title>前端性能优化--网页复杂度设计</title>
@@ -497,31 +519,6 @@
     <summary type="html">
     
       &lt;p&gt;对于重前端计算的网页来说，性能问题天天都冒出来，而操作卡顿可能会直接劝退用户。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="前端解决方案" scheme="https://godbasin.github.io/categories/%E5%89%8D%E7%AB%AF%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"/>
-    
-    
-      <category term="性能优化" scheme="https://godbasin.github.io/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>前端性能优化--用户卡顿检测</title>
-    <link href="https://godbasin.github.io/2024/05/02/front-end-performance-jank-detect/"/>
-    <id>https://godbasin.github.io/2024/05/02/front-end-performance-jank-detect/</id>
-    <published>2024-05-02T15:35:25.000Z</published>
-    <updated>2024-05-02T15:35:30.458Z</updated>
-    
-    <content type="html"><![CDATA[<p>前面跟大家介绍过<a href="https://godbasin.github.io/2024/01/21/front-end-performance-no-response-solution/">前端性能卡顿的检测和监控</a>，其中提到了<code>requestAnimationFrame</code>心跳检测等方式来检测代码执行耗时，从而判断是否存在卡顿。</p><p>而实际上我们观察一些用户反馈，会发现这样检测的效果并不是很理想。</p><h1 id="用户感觉的“卡”"><a href="#用户感觉的“卡”" class="headerlink" title="用户感觉的“卡”"></a>用户感觉的“卡”</h1><p>一般来说，我们会根据代码检测的任务耗时超过一定值判断为卡顿，比如超过 1s 的长任务。但实际上，这样的方法难以准确命中“用户侧卡顿”的场景，这是因为：</p><ul><li>超过 1s 的任务执行时，用户未必在进行页面操作，未感受到“卡顿”</li><li>对用户来说，在浏览器中各个过程中的卡顿阈值是不一致的，比如：<ul><li>页面打开过程中，会习惯性地等待，此时卡顿阈值会稍微高一些</li><li>页面加载完成后，对各种功能的操作响应更敏感，希望能快速响应操作</li></ul></li></ul><p>因此，我们可以重新定义卡顿指标，可以将其分为两种：</p><ol><li>技术侧卡顿（代码长任务）。</li><li>用户侧卡顿（交互响应耗时）。</li></ol><p>本文我们重点来探讨用户侧卡顿的检测。</p><h2 id="用户侧卡顿"><a href="#用户侧卡顿" class="headerlink" title="用户侧卡顿"></a>用户侧卡顿</h2><p>如果你有认真整理用户反馈，便会发现，对于大型应用比如在线表格/网页游戏等，相比于加载过程中偶尔一两秒的卡顿，更让他们难以接受的问题有频繁出现卡顿、某个操作卡顿耗时过长、某个较频繁的操作必现卡顿等。</p><p>那么，我们可以基于这些场景，重新定义用户侧卡顿的指标，满足以下场景均可认为产生了卡顿：</p><table><thead><tr><th>问题</th><th>对应性能指标</th><th>指标定义</th><th>补充说明</th></tr></thead><tbody><tr><td>操作后响应不及时</td><td>用户交互（点击）后，rAF 响应耗时 &gt; 1000ms</td><td>交互卡顿</td><td>类似 INP（参考 <a href="https://web.dev/articles/inp），但滚动行为考虑在内">https://web.dev/articles/inp），但滚动行为考虑在内</a></td></tr><tr><td>操作（编辑/滚动）频繁出现卡顿</td><td>20s 内，交互响应卡顿次数 &gt; 5</td><td>交互卡顿频率</td><td></td></tr><tr><td>某个操作卡顿耗时过长，长达 5s/10s 甚至更多</td><td>- 交互响应卡顿耗时 &gt; 5s</td></tr><tr><td>- 交互响应卡顿耗时 &gt; 10s</td><td>交互长耗时卡顿</td><td></td></tr><tr><td>某个较频繁的操作必现卡顿</td><td>相同的卡顿埋点次数 &gt; 5</td><td>同因交互卡顿</td></tr></tbody></table><p>这里有一个难处理的地方：如何判断用户交互后产生了卡顿呢？因为我们可以拆分成以下情况：</p><ol><li>用户交互后，同步执行长耗时任务产生卡顿。</li><li>用户交互后，异步执行逻辑的时候产生卡顿。</li></ol><h3 id="1-同步任务卡顿"><a href="#1-同步任务卡顿" class="headerlink" title="1. 同步任务卡顿"></a>1. 同步任务卡顿</h3><p>我们可以在监听到用户交互时进行耗时计算：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">window</span>.<span class="title function_">addEventListener</span>(<span class="string">&quot;click&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> startTime = <span class="keyword">new</span> <span class="title class_">Date</span>().<span class="title function_">getTime</span>();</span><br><span class="line">  <span class="title function_">requestAnimationFrame</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> duringTime = <span class="keyword">new</span> <span class="title class_">Date</span>().<span class="title function_">getTime</span>() - startTime;</span><br><span class="line">    <span class="comment">// 交互后超过 1s 才响应</span></span><br><span class="line">    <span class="keyword">if</span> (duringTime &gt; <span class="number">1000</span>) &#123;</span><br><span class="line">      <span class="comment">// 则判断为卡顿</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;, <span class="number">0</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><h3 id="2-异步任务卡顿"><a href="#2-异步任务卡顿" class="headerlink" title="2. 异步任务卡顿"></a>2. 异步任务卡顿</h3><p>对于异步任务，由于卡顿发生在用户交互后，难以通过代码直接发现。我们可以从另外一个角度分析，即当页面交互发生卡顿时，用户常常会在页面中进行操作，来确认页面是否无响应。因此，我们可以通过这样的代码判断：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> clickCount = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">let</span> hasClick = <span class="literal">false</span>;</span><br><span class="line"><span class="variable language_">window</span>.<span class="title function_">addEventListener</span>(<span class="string">&quot;click&quot;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  clickCount++;</span><br><span class="line">  <span class="keyword">if</span> (hasClick) <span class="keyword">return</span>;</span><br><span class="line">  hasClick = <span class="literal">true</span>;</span><br><span class="line">  <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 卡顿过程中发生了连续点击操作</span></span><br><span class="line">    <span class="keyword">if</span> (clickCount &gt; <span class="number">2</span>) &#123;</span><br><span class="line">      <span class="comment">// 则判断为卡顿</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 清空数据</span></span><br><span class="line">    clickCount = <span class="number">0</span>;</span><br><span class="line">    hasClick = <span class="literal">false</span>;</span><br><span class="line">  &#125;, <span class="number">0</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><h2 id="总卡顿指标设计"><a href="#总卡顿指标设计" class="headerlink" title="总卡顿指标设计"></a>总卡顿指标设计</h2><p>综上所述，我们会将以下情况作为一次卡顿的产生，并且做卡顿次数的上报：</p><ul><li>用户交互后，同步卡顿超过 1s</li><li>检测到一次宏任务中，用户连续点击操作超过 5 次</li></ul><p>同时，我们可以在特特定场景发生的时候，将数据以及日志同时进行上报，比如：</p><ul><li>20s 内产生卡顿次数 &gt; 5</li><li>检测到某段代码执行超过 5s/10s</li><li>检测到卡顿埋点中卡顿（超过 1s）的相同埋点多次产生（相同的卡顿埋点次数 &gt; 5）</li></ul><p>通过这样的方式，我们可以判断用户是否产生了卡顿。但实际上要如何定位卡顿的位置呢，还是得通过日志和埋点进行，可以参考<a href="https://godbasin.github.io/2024/01/21/front-end-performance-no-response-solution/">《前端性能优化–卡顿的监控和定位》</a>一文。</p><h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p>很多时候，我们开发在实现功能的时候，常常会从编程出发去思考问题，但实际上我们可以更贴近用户一些滴~</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;前面跟大家介绍过&lt;a href=&quot;https://godbasin.github.io/2024/01/21/front-end-performance-no-response-solution/&quot;&gt;前端性能卡顿的检测和监控&lt;/a&gt;，其中提到了&lt;code&gt;requestAn
-      
     
     </summary>
     

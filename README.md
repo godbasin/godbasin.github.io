@@ -13,6 +13,7 @@
 
 ### 最新     
 
+> [《如何提升项目管理能力》](https://godbasin.github.io/2025/12/21/how-to-manage-front-end-project/)  
 > [《前端性能优化--网页复杂度设计》](https://godbasin.github.io/2025/11/01/front-end-performance-website-complexity-design/)  
 > [《前端性能优化--网页质量得分》](https://godbasin.github.io/2025/10/07/front-end-performance-website-quality-score/)  
 > [《前端基础补齐--有关 JavaScript 单线程》](https://godbasin.github.io/2025/09/06/front-end-basic-js-eventloop/)  
@@ -27,7 +28,6 @@
 > [《前端性能优化--代码习惯》](https://godbasin.github.io/2024/12/27/front-end-performance-code-detail/)  
 > [《前端性能优化--享元模式》](https://godbasin.github.io/2024/11/06/front-end-performance-flyweight-pattern/)  
 > [《项目中的技术债务》](https://godbasin.github.io/2024/10/27/tech-debt/)  
-> [《前端性能优化--卡顿链路追踪》](https://godbasin.github.io/2024/10/15/front-end-performance-jank-monitor/)  
 
 
 ### 复杂渲染引擎架构与设计
@@ -48,24 +48,14 @@
 > [《如何进行前端职业规划》](https://godbasin.github.io/2023/04/06/front-end-career-planning/)   
 > [《为什么项目复盘很重要》](https://godbasin.github.io/2023/03/21/why-project-reviews-are-important/)   
 > [《如何设计与管理一个前端项目》](https://godbasin.github.io/2023/01/12/design-and-manage-front-end-project/)   
+> [《如何提升项目管理能力》](https://godbasin.github.io/2025/12/21/how-to-manage-front-end-project/)  
 > [《技术方案的调研和设计过程》](https://godbasin.github.io/2022/12/03/research-and-design-process/)   
 > [《大型前端项目的常见问题和解决方案》](https://godbasin.github.io/2023/07/01/complex-front-end-project-solution/)   
 > [《从面试角度了解前端基础知识体系》](https://godbasin.github.io/2023/12/25/learn-front-end-develop-from-interview/)   
-> [《项目中的技术债务》](https://godbasin.github.io/2024/10/27/tech-debt/)  
 
 
 ### 前端性能优化
 
-> [《前端性能优化--预加载顺序设计》](https://godbasin.github.io/2025/04/10/front-end-performance-preload-order/)  
-> [《前端性能优化--FPS页面流畅度》](https://godbasin.github.io/2025/03/09/front-end-performance-fps-monitor/)  
-> [《前端性能优化--JavaScript 引擎性能》](https://godbasin.github.io/2025/02/09/front-end-performance-fast-properties/)  
-> [《前端性能优化--二进制压缩数据内容》](https://godbasin.github.io/2025/01/02/front-end-performance-binary-attribute/)  
-> [《前端性能优化--代码习惯》](https://godbasin.github.io/2024/12/27/front-end-performance-code-detail/)  
-> [《前端性能优化--享元模式》](https://godbasin.github.io/2024/11/06/front-end-performance-flyweight-pattern/)  
-> [《前端性能优化--用户卡顿检测》](https://godbasin.github.io/2024/05/02/front-end-performance-jank-detect/)  
-> [《让你的长任务在 50 毫秒内结束》](https://godbasin.github.io/2024/04/03/front-end-performance-long-task/)  
-> [《前端性能优化--数据指标体系》](https://godbasin.github.io/2024/03/17/front-end-performance-metric/)  
-> [《有趣的 PerformanceObserver》](https://godbasin.github.io/2024/02/21/front-end-performance-about-performanceobserver/)  
 > [《前端性能优化--卡顿的监控和定位》](https://godbasin.github.io/2024/01/21/front-end-performance-no-response-solution/)   
 > [《前端性能优化--项目管理篇》](https://godbasin.github.io/2022/11/20/front-end-performance-optimization-project/)   
 > [《前端性能优化--SSR篇》](https://godbasin.github.io/2022/10/15/front-end-performance-ssr/)   
@@ -90,6 +80,8 @@
 > [《前端性能优化--JavaScript 引擎性能》](https://godbasin.github.io/2025/02/09/front-end-performance-fast-properties/)  
 > [《前端性能优化--FPS页面流畅度》](https://godbasin.github.io/2025/03/09/front-end-performance-fps-monitor/)  
 > [《前端性能优化--预加载顺序设计》](https://godbasin.github.io/2025/04/10/front-end-performance-preload-order/)  
+> [《前端性能优化--网页复杂度设计》](https://godbasin.github.io/2025/11/01/front-end-performance-website-complexity-design/)  
+> [《前端性能优化--网页质量得分》](https://godbasin.github.io/2025/10/07/front-end-performance-website-quality-score/)  
 
 > [《有趣的 PerformanceObserver》](https://godbasin.github.io/2024/02/21/front-end-performance-about-performanceobserver/)  
 > [《让你的长任务在 50 毫秒内结束》](https://godbasin.github.io/2024/04/03/front-end-performance-long-task/)  
