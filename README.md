@@ -13,6 +13,7 @@
 
 ### 最新     
 
+> [《2026 程序员指南》](https://godbasin.github.io/2026/01/01/2026-programer/)  
 > [《如何提升项目管理能力》](https://godbasin.github.io/2025/12/21/how-to-manage-front-end-project/)  
 > [《前端性能优化--网页复杂度设计》](https://godbasin.github.io/2025/11/01/front-end-performance-website-complexity-design/)  
 > [《前端性能优化--网页质量得分》](https://godbasin.github.io/2025/10/07/front-end-performance-website-quality-score/)  
@@ -109,6 +110,7 @@
 > [《选择这件事》](https://godbasin.github.io/2018/12/16/work-1-choice/)   
 
 ### 前端杂谈    
+> [《如何提升项目管理能力》](https://godbasin.github.io/2025/12/21/how-to-manage-front-end-project/)  
 > [《项目中的技术债务》](https://godbasin.github.io/2024/10/27/tech-debt/)  
 > [《我所理解的前端工程化》](https://godbasin.github.io/2022/02/07/front-end-engineering/)   
 > [《在线文档的网络层开发思考--职责驱动设计》](https://godbasin.github.io/2021/01/23/network-design-responsibility-driven-design/)   
