@@ -13,6 +13,7 @@
 
 ### 最新     
 
+> [《前端这几年--16.AI时代的开发》](https://godbasin.github.io/2026/07/25/about-front-end-16/)   
 > [《2026 程序员指南》](https://godbasin.github.io/2026/01/01/2026-programer/)  
 > [《如何提升项目管理能力》](https://godbasin.github.io/2025/12/21/how-to-manage-front-end-project/)  
 > [《前端性能优化--网页复杂度设计》](https://godbasin.github.io/2025/11/01/front-end-performance-website-complexity-design/)  
@@ -104,10 +105,12 @@
 > [《前端这几年--13.关于技术开发的职业发展》](https://godbasin.github.io/2021/11/28/about-front-end-13/)   
 > [《前端这几年--14.技术深度是伪命题吗》](https://godbasin.github.io/2021/12/12/about-front-end-14/)   
 > [《前端这几年--15.关于互联网寒冬》](https://godbasin.github.io/2022/09/17/about-front-end-15/)   
+> [《前端这几年--16.AI时代的开发》](https://godbasin.github.io/2022/09/17/about-front-end-16/)   
 > [《前端这几年--答辩晋级这件事》](https://godbasin.github.io/2022/02/27/about-updating/)   
 > [《前端这几年--写文章这件事》](https://godbasin.github.io/2021/01/10/about-writing/)   
 > [《写文章这件事》](https://godbasin.github.io/2019/03/10/work-2-article/)   
 > [《选择这件事》](https://godbasin.github.io/2018/12/16/work-1-choice/)   
+> [《2026 程序员指南》](https://godbasin.github.io/2026/01/01/2026-programer/)  
 
 ### 前端杂谈    
 > [《如何提升项目管理能力》](https://godbasin.github.io/2025/12/21/how-to-manage-front-end-project/)  
