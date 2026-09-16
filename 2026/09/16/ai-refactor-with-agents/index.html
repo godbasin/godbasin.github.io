@@ -1,0 +1,1460 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>一边做业务一边做重构：将真实债务项目重构成 AI 可维护项目 | Here. There.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="被删">
+    
+    <meta name="description" content="在 AI 很强的现在，依然很多人会认为，AI 更适用于新项目快速迭代，但很难在一个背负着沉重的历史包袱的项目中起到很大的用处。
+最近大半年都在重构项目，从前期使用 AI 依然困难重重，到如今 AI 能高效定位问题、给到十分贴合项目需要的解决方案，中间特别明显的一个转折点，在于开始给项目搭建 AI 上">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="Here. There." type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+<script type="text/javascript">
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?3d902de4a19cf2bf179534ffd2dd7b7f";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/sun.png" alt="Here. There." title="Here. There."/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Here. There.">Here. There.</a></h1>
+				<h2 class="blog-motto">Love ice cream. Love sunshine. Love life. Love the world. Love myself. Love you.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">首页</a></li>
+					
+						<li><a target="_blank" rel="noopener" href="https://github.com/godbasin/godbasin.github.io">所有文章</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/categories">分类</a></li>
+					
+						<li><a href="https://godbasin.github.io/front-end-playground">前端游乐场</a></li>
+					
+						<li><a href="/about">关于我</a></li>
+					
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2026/09/16/ai-refactor-with-agents/" title="一边做业务一边做重构：将真实债务项目重构成 AI 可维护项目" itemprop="url">一边做业务一边做重构：将真实债务项目重构成 AI 可维护项目</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="https://godbasin.github.io" title="被删">被删</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2026-09-16T13:36:21.000Z" itemprop="datePublished">2026-09-16</time>
+    更新日期:<time datetime="2026-09-16T13:38:21.203Z" itemprop="dateModified">2026-09-16</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%9D%E8%80%83%EF%BC%9AAI-%E6%8F%90%E6%95%88%E5%88%B0%E5%BA%95%E6%98%AF%E5%9C%A8%E6%8F%90%E6%95%88%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">思考：AI 提效到底是在提效什么？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%9A%E5%8A%A1%E7%93%B6%E9%A2%88%E5%B8%B8%E5%9C%A8%E4%B8%8A%E4%B8%8B%E6%96%87"><span class="toc-number">1.1.</span> <span class="toc-text">业务瓶颈常在上下文</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E6%9E%84%E6%88%90%E4%B8%BA-AI-%E5%8F%AF%E7%BB%B4%E6%8A%A4%E9%A1%B9%E7%9B%AE"><span class="toc-number">1.2.</span> <span class="toc-text">重构成为 AI 可维护项目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AI-%E4%B8%8A%E4%B8%8B%E6%96%87%E5%86%85%E5%AE%B9%E5%BB%BA%E8%AE%BE"><span class="toc-number">1.3.</span> <span class="toc-text">AI 上下文内容建设</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8E-AGENTS-md-%E5%BC%80%E5%A7%8B"><span class="toc-number">1.3.1.</span> <span class="toc-text">从 AGENTS.md 开始</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B8%A6%E7%9D%80-AI-%E4%B8%80%E8%B5%B7%E9%87%8D%E6%9E%84%E4%B8%9A%E5%8A%A1"><span class="toc-number">2.</span> <span class="toc-text">带着 AI 一起重构业务</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E7%A7%BB%E9%99%A4%E9%A1%B9%E7%9B%AE%E4%B8%AD%E4%B8%8D%E5%86%8D%E8%B5%B7%E4%BD%9C%E7%94%A8%E7%9A%84%E4%BB%A3%E7%A0%81"><span class="toc-number">2.1.</span> <span class="toc-text">一、移除项目中不再起作用的代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%81%9A%E5%87%8F%E6%B3%95%EF%BC%8C%E5%A4%8D%E6%9D%82%E6%9E%B6%E6%9E%84%E7%AE%80%E5%8D%95%E5%8C%96"><span class="toc-number">2.2.</span> <span class="toc-text">二、做减法，复杂架构简单化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%AE%9A%E8%A7%84%E8%8C%83%EF%BC%8C%E7%BB%99%E9%A1%B9%E7%9B%AE%E8%AE%BE%E7%BD%AE%E7%BA%A6%E6%9D%9F%E8%BE%B9%E7%95%8C"><span class="toc-number">2.3.</span> <span class="toc-text">三、定规范，给项目设置约束边界</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%AE%9A%E6%A0%87%E5%87%86%EF%BC%8C%E5%BB%BA%E8%AE%BE%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E5%B7%A5%E7%A8%8B"><span class="toc-number">2.4.</span> <span class="toc-text">四、定标准，建设自动化测试工程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E6%B5%8B-E2E%E7%94%A8%E4%BE%8B%E8%A6%86%E7%9B%96-MR-%E6%B5%81%E6%B0%B4%E7%BA%BF%E5%9B%9E%E5%BD%92"><span class="toc-number">2.4.1.</span> <span class="toc-text">单测&#x2F;E2E用例覆盖 + MR 流水线回归</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%86%E8%A7%89%E7%94%A8%E4%BE%8B%E5%9B%9E%E5%BD%92%E5%BB%BA%E8%AE%BE"><span class="toc-number">2.4.2.</span> <span class="toc-text">视觉用例回归建设</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MR-%E8%87%AA%E5%AE%9A%E4%B9%89%E8%A7%84%E5%88%99"><span class="toc-number">2.4.3.</span> <span class="toc-text">MR 自定义规则</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%B0%86%E5%80%BA%E5%8A%A1%E6%B2%BB%E7%90%86%E5%B8%B8%E6%80%81%E5%8C%96"><span class="toc-number">2.5.</span> <span class="toc-text">五、将债务治理常态化</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%93%E6%9D%9F%E8%AF%AD"><span class="toc-number">3.</span> <span class="toc-text">结束语</span></a></li></ol>
+		</div>
+		
+		<p>在 AI 很强的现在，依然很多人会认为，<strong>AI 更适用于新项目快速迭代，但很难在一个背负着沉重的历史包袱的项目中起到很大的用处。</strong></p>
+<p>最近大半年都在重构项目，从前期使用 AI 依然困难重重，到如今 AI 能高效定位问题、给到十分贴合项目需要的解决方案，中间特别明显的一个转折点，<strong>在于开始给项目搭建 AI 上下文工程。</strong></p>
+<p>当然，这一年来 AI 的能力本身也在不断加强，我们项目的质量和架构的合理性在我的努力重构下也在稳步提升，但 AI 上下文的搭建依然起到了十分关键的作用。</p>
+<p>今天给大家分享的，主要是如何在重构过程中，将 AI 总是胡言乱语，变成了 AI 也可高效助力的一个项目。</p>
+<h1 id="思考：AI-提效到底是在提效什么？"><a href="#思考：AI-提效到底是在提效什么？" class="headerlink" title="思考：AI 提效到底是在提效什么？"></a>思考：AI 提效到底是在提效什么？</h1><p>在过去的一年里，AI 的能力有大幅度的提升，从最初只能做点明确的小任务，到如今能协助排查问题、提出可落地的解决方案、自执行落地和自测等等，在我们工作中参与的幅度越来越大。</p>
+<p>如今很多新业务直接是 AI 原生项目，意味着从立项到上线，开发未亲自写过一行代码，基本上都是 AI 自行完成的。</p>
+<p>但<strong>即使在 AI 能力很强的今天，大家还是有些共识，比如一个历史债务很重的项目中，AI 能发挥的作用很少，还是需要开发的介入更多。</strong></p>
+<p>这很大一部分原因是：<strong>AI 的上下文知识不够</strong>。</p>
+<h2 id="业务瓶颈常在上下文"><a href="#业务瓶颈常在上下文" class="headerlink" title="业务瓶颈常在上下文"></a>业务瓶颈常在上下文</h2><p>其实 AI 和开发并没有太大的区别，<strong>很多时候区别只是在于，我们比 AI 拥有更多的上下文</strong>，这些上下文包括：</p>
+<ol>
+<li><strong>业务的历史背景，项目的整体协作方式</strong>（与其他模块的关系等）。</li>
+<li><strong>过去的需求文档、技术文档</strong>，可能存在其他地方或者是开发和产品的脑袋中。</li>
+<li><strong>项目真实运行情况</strong>，哪些分支代码上的功能还在跑的、哪些只是历史兼容但不会运行到的。</li>
+<li><strong>架构设计和技术债务情况</strong>，哪些技术改造只做了一半，未改造彻底等。</li>
+</ol>
+<p>这些问题，不管是 AI 还是新加入业务的开发来说，都会遇到，而<strong>我们过往经常做的定规范、写文档、做通用化/平台化方案等很多工作内容，都是为了降低对接和沟通成本</strong>。</p>
+<p>现在我们很多人都会让 AI 写代码，开发成本大大降低了，如今困扰我们的往往是沟通协作成本。人和人之间如此，人和 AI 之间也是如此。</p>
+<h2 id="重构成为-AI-可维护项目"><a href="#重构成为-AI-可维护项目" class="headerlink" title="重构成为 AI 可维护项目"></a>重构成为 AI 可维护项目</h2><p>回到话题，我们常说的 AI 提效，到底是指什么？</p>
+<p>在过去这一年中 AI 已经逐渐参与到很多业务中，十分肯定的是它能提效我们的开发过程，但 <strong>AI 还能做更多，包括排查问题、系统现状分析、技术方案设计和落地、代码 Review 等等。</strong>如今很多人也已经在尝试让 AI 参与更多，但大多数依然仅限于 AI 原生的新业务。</p>
+<p>旧业务和新业务，其实区别便在于 AI 的上下文是否充分。<strong>对于历史债务多、维护成本高的项目来说，其实正适合带着 AI 进行重构</strong>，重构的过程中给 AI 逐渐补充足量的上下文信息，这样重构后我们就能得到一个 AI 可维护的项目。</p>
+<p>过去我们重构，原因无非是架构设计已无法支持业务迭代、技术债务过重需要专项治理、来新人了大家都按自己的想法重做一遍。</p>
+<p>如今我们重构，除了治理项目中的既有问题，更是<strong>给 AI 添加足够的上下文信息，使得 AI 能参与到日常排障、功能迭代、架构优化中</strong>，让开发从日常的高成本维护和反复沟通协作中减负，达到真正的项目提效。</p>
+<h2 id="AI-上下文内容建设"><a href="#AI-上下文内容建设" class="headerlink" title="AI 上下文内容建设"></a>AI 上下文内容建设</h2><p>我从去年年底就开始治理我们项目的技术债务，今年刚开始的时候，<strong>AI 能力已经很强了，但依然经常会判断出错</strong>。</p>
+<p>判断不准确的原因除了架构过度设计、同时设计的方案落地过程变了形之外，还有很多并没有真实在运行的代码。这些代码是否真的运行，不管是开发还是 AI 都无法通过相关引用判断，因为代码有真实的引用，但在真实运行时可能某个链路却彻底不会运行到。</p>
+<p><strong>这些上下文除了 AI 无非获取，很多时候开发自己也无法获取。</strong></p>
+<p><strong>过去很长的工程项目中，上下文信息的维护也常常是业务痛点。</strong>团队知识的建设很重要，但是无法体现价值，因此往往因为性价比等各种原因，几乎没有团队能将团队知识建设得很好，甚至很多技术强的团队反而崇拜“自己看代码解决”的协助方式。</p>
+<p>开发都不爱写文档，也不爱看文档，每个细节和协作内容都存在各自的脑袋中。信息的不对齐、遗漏导致协作过程中的变形，架构设计、技术方案也常常很难坚定不移地完整落地。</p>
+<p>我们过去推崇的<strong>功能组件化、平台化、通用化，目标都是为了减少开发和维护成本，因为约束了大家认可的规范和协议</strong>，这些规范和协议便是我们协作中的上下文信息。</p>
+<p>和 AI 协作也是如此，并且在开发成本已被 AI 大大降低的今天，业务开发的效率往往卡在人与人、人与 AI 的协作中。建设团队文档和知识，是为了减少人与人之间的协作，那么建设 AI 上下文工程，便是为了：<strong>同样的事情，应该只需要跟 AI 强调一遍即可</strong>。</p>
+<h3 id="从-AGENTS-md-开始"><a href="#从-AGENTS-md-开始" class="headerlink" title="从 AGENTS.md 开始"></a>从 AGENTS.md 开始</h3><p>AI 的上下文知识沉淀，最简单的方式便是从静态上下文开始，这便是跟着代码仓库走的<code>AGENTS.md</code>。</p>
+<p>当然，AI 上下文也是有限的，因此我们需要将项目的信息拆分领域放在对应的位置，只保留最重要的内容放置在项目根目录的<code>AGENTS.md</code>中，比如：</p>
+<figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># 知识索引</span></span><br><span class="line">此处描述各个领域的知识需要去哪里找，比如</span><br><span class="line"><span class="bullet">-</span> 业务背景知识</span><br><span class="line"><span class="bullet">-</span> 架构信息&amp;技术方案沉淀</span><br><span class="line"><span class="bullet">-</span> 通用组件&amp;规范</span><br><span class="line"><span class="bullet">-</span> 三方的对接系统信息</span><br><span class="line"><span class="bullet">-</span> 其他业务规范等</span><br><span class="line"></span><br><span class="line"><span class="section">## 要求</span></span><br><span class="line"><span class="bullet">-</span> AI 代提交代码时，commit message 必须以 <span class="code">`| pub`</span> 结尾（这条为我们项目仓库规范）</span><br><span class="line"></span><br><span class="line"><span class="section">### 知识落盘规范</span></span><br><span class="line"><span class="bullet">-</span> 根目录 AGENTS.md 和 CLAUDE.md 只保留索引概要（路径 + 1~2 句摘要），不在此堆细节。</span><br><span class="line"><span class="bullet">-</span> 当对话中出现可复用的规则/兼容性/排障结论/项目知识时，必须就近落盘到对应模块 <span class="code">`AGENTS.md`</span>，并同步更新根目录 AGENTS.md 和 CLAUDE.md 中的知识索引（以模块内容为准）。</span><br><span class="line"><span class="bullet">-</span> 当发现知识索引出现内容过期或不准确时，主动修改</span><br></pre></td></tr></table></figure>
+<p>新建一个根目录的<code>AGENTS.md</code>，是一个简单的开始（此处感谢 yuankai 同学的积极分享）。</p>
+<h1 id="带着-AI-一起重构业务"><a href="#带着-AI-一起重构业务" class="headerlink" title="带着 AI 一起重构业务"></a>带着 AI 一起重构业务</h1><p>即使在 AI 能力超强的现在，依然有无数的业务不会选择进行重构。<strong>“代码还能跑就不要动”，这样的历史教训还在深刻影响着不少人。</strong></p>
+<p>这对一个停止迭代需求的业务来说，或许问题不大。但如果项目还在快速迭代，将项目重构成一个 AI 项目，在不远的未来可以逐步放手交由 AI 去做更多的事情。</p>
+<p>先简单介绍下我们的<a target="_blank" rel="noopener" href="https://edu.weixin.qq.com/">小程序教育平台</a>，该平台可以理解为一个面向教育场景的“项目创作 + 课程教学 + 小程序体验/发布”平台。它是<strong>围绕教育内容生产、学习过程、项目开发、作品体验和发布管理串起来的一整套系统</strong>，核心功能包括：</p>
+<ul>
+<li>自由创作/AI Coding：小程序编程/编译/预览/发布、AI 编程</li>
+<li>课程学习/课程制作：项目式课程的学习、制作、能力配置，包括小程序预览、富文本编辑知识面板、代码编辑器、AI 对话、答题等各种内容板块</li>
+<li>资源管理：学校/班级/学生账号、小程序管理、云开发/混元资源等<br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/ai-refactor-with-agents-1.png" alt="462e23eb-beaa-4dfe-ad67-2be606488806.png"><br>!12 !!#0040ff 自由创作（代码编辑+小程序预览+AI对话+代码版本管理+素材库资源管理）!!!<br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/ai-refactor-with-agents-2.png" alt="fc6653f2-42c7-4d61-a170-d64704a2f5af.png"></li>
+</ul>
+<p>!12 !!#005cff 课程制作（代码预览+富文本+AI对话+答题各种模块组合）!!!</p>
+<p>系统的复杂度拆分为两部份：</p>
+<ol>
+<li><strong>前端 WEB 本身的复杂度。</strong>除了业务需求上的复杂交互设计（比如课程学习/自由创作/课程制作等复杂板块需要支持宽窄屏+拖拽调整+动画效果），还有需求迭代导致的功能高度耦合（比如多个复杂交互页面逻辑均耦合在一起用 if/else 隔离），以及部份过度设计的技术实现（比如代码编辑器设计支持 OT 协同导致复杂度提升不少）。</li>
+<li><strong>项目中还涉及到 WEB 外的其他模块</strong>。除了常见的后端模块外，还包括模拟器预览的代码编译模块、项目管理和代码拉取等 Node 模块、AI Agent 模块、付费能力模块，以及三方的能力比如腾讯云、混元等。</li>
+</ol>
+<p>对于最复杂的自由创作/课程学习/课程制作页面，近半年的重构对比（AI 分析画的图）：<br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/ai-refactor-with-agents-3.png" alt="88384607-6654-45fe-a7e1-4efe712746cf.png"><br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/ai-refactor-with-agents-4.png" alt="2619b542-9c78-4352-9e83-7cfbdc5071e7.png"></p>
+<p>我们目标是 AI 也能在这种复杂度中有效运作，那么可以带着 AI 把这里的链路和设计一起重构。</p>
+<p>AI 怎么知道要怎么做，那当然是我们怎么做，它就怎么做。<strong>AI 自行读代码理解依然可能不准确，前期会需要不少引导的工作。</strong></p>
+<h2 id="一、移除项目中不再起作用的代码"><a href="#一、移除项目中不再起作用的代码" class="headerlink" title="一、移除项目中不再起作用的代码"></a>一、移除项目中不再起作用的代码</h2><p><strong>对于债务较多的业务来说，最混淆视听的无非是设计了许多并没有真正起作用的功能代码</strong>，比如我们项目：</p>
+<ul>
+<li>纯 WEB 项目，但因为复制粘贴旧的客户端兼容代码改造，遗留了大量的环境判断 if/else 代码</li>
+<li>代码编辑设计了 OT 协同，但由于各种原因最终落地时只是纯 HTTP 请求同步代码，并没有用到协同</li>
+<li>项目曾经尝试调整为 WebIDE 的架构，最终没有落地，但模块间保留了 N 种不一致的消息通信方式</li>
+<li>AI Agent 功能曾经在 WEB 端实现，如今迁移到了单独的 Node 模块，但前端新旧链路耦合严重，难以分辨哪些代码还在生效</li>
+</ul>
+<p><strong>这些遗留的问题不仅对开发来说很吃力，对 AI 来说也很吃力</strong>，因为它无法通过单纯的代码是否有引用来判断代码是否还真实有效，有些判断条件甚至写到了环境变量中，即使是同个项目的开发也很难辨认。</p>
+<p>但我们在梳理治理这些债务的过程中，可以同时借助 AI 来快速辨别完全无引用的代码，再结合项目真实运行情况和从同事那问来的背景情况，和 AI 一起治理重构这些代码，同时让 AI 记录沉淀下来。</p>
+<p><strong>屎山清理第一步：让代码跑起来和看上去一致。</strong></p>
+<h2 id="二、做减法，复杂架构简单化"><a href="#二、做减法，复杂架构简单化" class="headerlink" title="二、做减法，复杂架构简单化"></a>二、做减法，复杂架构简单化</h2><p>其实大多数的业务里，不需要多高的复杂度。但是实际在开发过程中，过度设计的业务比比皆是。<strong>而真正让人害怕的是，过度设计之后并不能改造彻底，更可怕的是，项目在经历几轮重构不彻底之后，落下了许多的历史包袱了。</strong></p>
+<p>随着参与的项目数量越多，我越来越能理解这件事：<strong>架构设计之所以重要，不是因为它看起来高级，而是因为它能把复杂度压下来。</strong></p>
+<p>举个例子，上面提到了我们业务实现了 OT 协同编辑代码，但实际上业务场景里并没有协同的诉求，在可见的未来中也不存在类似的需求。</p>
+<p>这是一个过度设计的经典案例，为了追求复杂度而增加复杂度，这种其实在我们很多项目中都比较常见，毕竟做复杂比做简单更能体现价值。虽不赞同，但可理解。</p>
+<p>我们总在设计的时候过度考虑未来业务的拓展性，但是实践下来结果往往是业务变化总是跟想象的不大一样。<strong>好的架构必然是立足于现在，随着业务变动而调整的。</strong></p>
+<p>在代码编辑协同这个案例中，分成了两次重构，分别是：</p>
+<table>
+<thead>
+<tr>
+<th>重构步骤</th>
+<th>核心重构点</th>
+<th>AI 角色</th>
+<th>AI 表现</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>第一次重构</td>
+<td>下线 ot 和 websocket，改用 http 提交更新 + 定时拉取</td>
+<td>辅助方案优化 + 执行落地</td>
+<td>常常判断不准确，需要引导</td>
+</tr>
+<tr>
+<td>第二次重构</td>
+<td>下线定期拉取逻辑，保留 http 提交代码 + AI 更新代码后推送拉取</td>
+<td><strong>主导方案</strong> + 执行落地</td>
+<td>大多数情况下分析准确，偶尔需要引导</td>
+</tr>
+</tbody>
+</table>
+<p>由于在第一次重构过程中，给 AI 引导添加了不少的上下文信息，在第二次重构过程中 AI 主导的方案整体上比较清晰，判断也基本准确，落地效果也很不错。</p>
+<p><strong>屎山清理第二步：将复杂问题简单化。</strong></p>
+<h2 id="三、定规范，给项目设置约束边界"><a href="#三、定规范，给项目设置约束边界" class="headerlink" title="三、定规范，给项目设置约束边界"></a>三、定规范，给项目设置约束边界</h2><p><strong>真正让一个项目难以维护的，往往不是业务本身有多难，而是缺少约束的规范和边界、以及长时间的持续收敛。</strong></p>
+<p>我们项目页面很多，交互也复杂，尤其是高复杂度的自由创作页面和课程制作页面，宽窄屏适配+各板块拖拽+板块出现/隐藏动画效果+国际化支持。<br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/ai-refactor-with-agents-5.png" alt="5de4a59e-91c3-45ea-a767-df86ccd9c4ba.png"></p>
+<p><strong>除了业务在快速迭代，开发的架构也在迭代以外，我们设计稿其实也在不断地调整，会出现同样的内容在不同时期的设计稿上不一致等问题</strong>，使得项目各个页面看起来问题很多。当然，这里也有不少是开发过程导致样式反复改坏的问题，后面会在自动化测试中统一阐述。</p>
+<p>但样式设计是一个比较典型的问题，解决方法也很简单：拉齐设计同学，一起定下项目整体上的规范，包括：页面布局规范（标题&amp;内容&amp;间距）、宽窄屏适配规范、统一组件规范（弹窗&amp;表格&amp;按钮等）、页面滚动规范等等。</p>
+<p>样式规范的落地，使用了两种方案的组合：</p>
+<ol>
+<li><strong>建设统一组件，将过往设计稿中不符合规范的统一收纳处理。</strong></li>
+<li><strong>建设规范沉淀，让 AI 自行检查是否遵循规范，并在 MR 过程中进行规则检测。</strong></li>
+</ol>
+<p>规范有了，才能在后续长期的迭代过程中，持续地治理和遵循。</p>
+<p><strong>屎山清理第三步：让事情的执行有所依据。</strong></p>
+<h2 id="四、定标准，建设自动化测试工程"><a href="#四、定标准，建设自动化测试工程" class="headerlink" title="四、定标准，建设自动化测试工程"></a>四、定标准，建设自动化测试工程</h2><p>显而易见，未来越来越多的需求会使用 AI 开发，需求开发、架构改造、问题修复过程中，难以快速判断是否有其他功能受到影响。因此，自动化测试的工程建设势在必行。</p>
+<p><strong>在过去，前端之所以很少使用大量的测试用例覆盖，因为前端的变化十分快，用例的维护成本很高。</strong></p>
+<p>但如今我们有 AI 了，自动化测试的开发工作量已经大幅度下降。在 AI 的协助下，测试用例维护成本仅剩下了 AI 上下文的维护、token 的成本。</p>
+<h3 id="单测-E2E用例覆盖-MR-流水线回归"><a href="#单测-E2E用例覆盖-MR-流水线回归" class="headerlink" title="单测/E2E用例覆盖 + MR 流水线回归"></a>单测/E2E用例覆盖 + MR 流水线回归</h3><p>用例的搭建和完善并不是一次能达成的目标，需要持续的建设，因此我也拆了好几期进行：</p>
+<table>
+<thead>
+<tr>
+<th>搭建步骤</th>
+<th>核心改造点</th>
+<th>AI 角色</th>
+<th>AI 表现</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>第一期</td>
+<td>搭建项目自动化测试能力（包括单测和 E2E）</td>
+<td>主导方案 + 执行落地</td>
+<td>需要配合告诉 AI 预期进行调整</td>
+</tr>
+<tr>
+<td>第二期</td>
+<td>搭建 MR 回归流水线（包括单测和 E2E） + 流水线镜像</td>
+<td>辅导方案 + 执行落地</td>
+<td>需要提供蓝盾流水线、司内 docker 构建等上下文，配合 AI 调整实现</td>
+</tr>
+<tr>
+<td>第三期</td>
+<td>梳理和补充测试用例（拆分 P0/P1/P2）</td>
+<td>根据上下文整理用例，拆分核心用例和非核心用例</td>
+<td>需要提供过往已有用例辅助分析，引导和调整核心/非核心边界</td>
+</tr>
+<tr>
+<td>第四期</td>
+<td>梳理和补充复杂链路测试用例</td>
+<td>辅助分析 + 执行落地</td>
+<td>需要提供复杂链路上下文，引导分析建立用例</td>
+</tr>
+</tbody>
+</table>
+<p><strong>单测核心用于简单功能的测试，都是基于 Mock 数据建设。E2E 则涉及到多页面的链路加载和交互，不少功能会使用线上真实连续运行。</strong>真实环境的执行需要配合提供测试账号，也需要在测试完成后进行数据的治理，比如测试过程产生了很多的新建空项目，需要移除，否则测试账号很快便会触碰上限。</p>
+<p>这部分的工作，陆陆续续大概花了一两个月。改造前后有特别明显的变化，最大的改善便是：过去每次发布前，我都需要自行回归核心的功能点，尤其是场景不一样但是功能高度耦合的 自由创作/课程学习/课程制作 这几个板块的页面。</p>
+<p>当然，在方案上线并开始运行的一段时间，也是会人工辅助验证，确认用例覆盖是否足够和有效。现在基本上不再需要人工测试，<strong>从去年的每次发版必出核心链路的问题，到近几个月的发版基本很少用户反馈了</strong>，而我们的用户量其实是在持续上涨的。</p>
+<h3 id="视觉用例回归建设"><a href="#视觉用例回归建设" class="headerlink" title="视觉用例回归建设"></a>视觉用例回归建设</h3><p>去年的时候，项目整体上还处在焦头烂额地排查问题/修复问题、治理历史债务、快速迭代新需求的阶段，样式问题的治理基本上只能 case by case 解决。</p>
+<p>今年上半年把大部分债务治理完成后，单测和 E2E 用例能力覆盖稳定了，样式问题便开始出现在我们视野范围中了。</p>
+<p>其实前面在“定规范”的部分，也阐述了样式问题的治理方案，但依然无法解决一个问题：<strong>样式在不知不觉中会被改坏</strong>。样式被改坏的原因很多，包括改动统一组件、自测走查不仔细、AI 改动不确定边界等等，这里不仅对开发来说产生不少的反复开发工作量，对设计同学来说更是需要反复走查提问题的炸裂存在。</p>
+<p>基于项目已经搭建好了整体的自动化测试框架，新增视觉用例的流水线便不再痛苦。基于针对项目定制的 Docker 流水线环境，新增一条视觉回归的流水线，并将视觉回归的产物跟随着代码仓库走。</p>
+<p>当然，<strong>视觉回归并不是一张大的截图就能解决所有样式问题，考虑到流水线稳定性情况，是要给每个视觉用例的像素偏差定个范围值的</strong>。因此，视觉回归的整体解决方案会是：</p>
+<ol>
+<li><strong>大的截图用于检测大的布局异常问题，像素偏差允许范围会比较高</strong>，识别不了小问题（文字、圆角等问题）。</li>
+<li><strong>各个组件拆出小的视觉用例，补充各种状态下的样式回归，像素偏差会限制比较严格</strong>，用于发现精确问题。</li>
+</ol>
+<p>这样的好处是，<strong>即使开发过程未能准确判断测试用例的异常是否符合预期，让 AI 误动了其他的样式来让流水线通过，我们也能直接在 MR 过程中发现</strong>。</p>
+<p>下图便是发现流水线异常，AI 在修复过程中把样式改动到了，在 MR 的时候就可以明显发现：<br><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/ai-refactor-with-agents-6.png" alt="0fe86c7d-971f-4b90-9d03-bceddb76f2e2.png"></p>
+<h3 id="MR-自定义规则"><a href="#MR-自定义规则" class="headerlink" title="MR 自定义规则"></a>MR 自定义规则</h3><p><strong>除了流水线确保已有功能没有改坏以外，我们还需要确保新增的功能是否都能按照定下的规范来执行。</strong>为此，我们需要一个在 MR 流水线中进行 AI 评审的能力。</p>
+<p>这部分原本以为要自己建设，正好看到工蜂有类似的能力，便试用上了。操作也很简单，在项目中添加 AI 评审的规则，然后在工蜂中选择该规则文件给到 AI。当然，这个能力刚补充上线，目前还在实践中，还没有运行足够的时间去验证可行性和效果。</p>
+<p>至此，我们的每次 MR 合入时，都需要通过以下流水线：</p>
+<p><img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/ai-refactor-with-agents-7.png" alt="11c39d7a-49ff-4602-bede-aec5b7a0813b.png"></p>
+<p><strong>屎山清理第四步：避免问题反复出现。</strong></p>
+<h2 id="五、将债务治理常态化"><a href="#五、将债务治理常态化" class="headerlink" title="五、将债务治理常态化"></a>五、将债务治理常态化</h2><p>前面也提到过，<strong>债务的产生，很多时候来自于重构和方案落地的不够彻底，一次次遗留的问题，久而久之便成了债务</strong>。</p>
+<p>这些问题在很多历史项目中我们都能看到，因为几乎所有项目都会存在这样的问题：</p>
+<ul>
+<li>架构设计跟不上业务迭代，变成了技术债务</li>
+<li>技术重构没有执行彻底，产生了新的技术债务</li>
+<li>项目反复迭代&amp;改造，新旧债务层层叠加</li>
+</ul>
+<p>在过去，我看过的所有真实在跑的项目都没能彻底完成技术改造，很多时候大家都兴致冲冲起了个头，后续因为业务方向调整、业务需求挤压、性价比下降等各种原因未能改造彻底，总是留下不少的尾巴。</p>
+<p>这个问题，在 AI 加入之后，我们可以得到更好地解决：<strong>将周期集中的技术专项改造，变成日常开发的常规化改造</strong>。</p>
+<p>解决方案也很简单，无非是通过前面的“定规范”，补充持续的治理方向，在后续迭代的过程中，AI 会遵循新规范顺手治理历史问题。同时，通过 MR review 时定下的 AI 评审，来检测是否有新增问题。</p>
+<p><strong>屎山清理第五步：每天做一点，事情更长久。</strong></p>
+<h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p>本来想用 AI 回顾我们代码仓库近半年的演化总结文章，看了下，言之凿凿，食而无味。罢了，还是手写有味道。</p>
+<p>AI 能做的事情越来越多了，我们干涉的越来越少了。什么时候能完全放手呢？我们应该真的放手吗？</p>
+<p>作为旧时代守门人的老古董，我觉得<strong>落地执行、沟通提效、记录沉淀都可以交给 AI，唯独思考不可以</strong>。</p>
+<p>正如 AI 无法写出我的思考，即使它读了足够的代码和文档、也是从<code>AGENTS.md</code>开始便跟随着我一路重构，但还是少了一些思想内核吧。</p>
+  
+	</div>
+	<img src="https://github-imglib-1255459943.cos.ap-chengdu.myqcloud.com/2code2.jpg" width="200" height="200" style="display:block;margin: 0 auto;" />
+	<p style="text-align: center;margin-top: 10px;margin-bottom: 10px;">码生艰难，写文不易，给我家猪囤点猫粮了喵~</p>
+	<p style="text-align: center;"><a target="_blank" rel="noopener" href="https://space.bilibili.com/42233366">B站: 被删</a></p>
+	<div class="article-content">
+		<p style="margin-top:50px;">
+			查看Github有更多内容噢：<a target="_blank" rel="noopener" href="https://github.com/godbasin">https://github.com/godbasin</a>
+			<br>
+			更欢迎来<a href="https://godbasin.github.io/front-end-playground">被删的前端游乐场</a>边撸猫边学前端噢
+			<br>
+			<br>
+			如果你想要关注日常生活中的我，欢迎关注“牧羊的猪”公众号噢
+		</p>
+	</div>
+	<div class="author-right">
+  		<p>作者：被删</p>
+  		<p>出处：<a href="https://godbasin.github.io">https://godbasin.github.io</a></p>
+  		<p>本文版权归作者所有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利。</p>
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/前端架构/">前端架构</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/AI-%E6%97%B6%E4%BB%A3%E7%9A%84%E7%A8%8B%E5%BA%8F%E5%91%98/">AI 时代的程序员</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  
+<!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_24x24">
+	<a class="jiathis_button_qzone"></a>
+	<a class="jiathis_button_tsina"></a>
+	<a class="jiathis_button_tqq"></a>
+	<a class="jiathis_button_weixin"></a>
+	<a class="jiathis_button_renren"></a>
+	<a href="http://www.jiathis.com/share?uid=2134021" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config = {data_track_clickback:'true'};
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js?uid=2134021" charset="utf-8"></script>
+<!-- JiaThis Button END -->   
+
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2026/07/25/about-front-end-16/"  title="前端这几年--16. AI 时代的开发">
+ <strong>NEXT:</strong><br/> 
+ <span>前端这几年--16. AI 时代的开发
+</span>
+</a>
+</div>
+
+</nav>
+
+	<!-- 如果不是首页且没使用 `comments: false` 关闭评论，则尝试加载评论 -->
+
+    <!-- 配置中启用多说时，导入相应代码 -->
+    
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%9D%E8%80%83%EF%BC%9AAI-%E6%8F%90%E6%95%88%E5%88%B0%E5%BA%95%E6%98%AF%E5%9C%A8%E6%8F%90%E6%95%88%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">思考：AI 提效到底是在提效什么？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%9A%E5%8A%A1%E7%93%B6%E9%A2%88%E5%B8%B8%E5%9C%A8%E4%B8%8A%E4%B8%8B%E6%96%87"><span class="toc-number">1.1.</span> <span class="toc-text">业务瓶颈常在上下文</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E6%9E%84%E6%88%90%E4%B8%BA-AI-%E5%8F%AF%E7%BB%B4%E6%8A%A4%E9%A1%B9%E7%9B%AE"><span class="toc-number">1.2.</span> <span class="toc-text">重构成为 AI 可维护项目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AI-%E4%B8%8A%E4%B8%8B%E6%96%87%E5%86%85%E5%AE%B9%E5%BB%BA%E8%AE%BE"><span class="toc-number">1.3.</span> <span class="toc-text">AI 上下文内容建设</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8E-AGENTS-md-%E5%BC%80%E5%A7%8B"><span class="toc-number">1.3.1.</span> <span class="toc-text">从 AGENTS.md 开始</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B8%A6%E7%9D%80-AI-%E4%B8%80%E8%B5%B7%E9%87%8D%E6%9E%84%E4%B8%9A%E5%8A%A1"><span class="toc-number">2.</span> <span class="toc-text">带着 AI 一起重构业务</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E7%A7%BB%E9%99%A4%E9%A1%B9%E7%9B%AE%E4%B8%AD%E4%B8%8D%E5%86%8D%E8%B5%B7%E4%BD%9C%E7%94%A8%E7%9A%84%E4%BB%A3%E7%A0%81"><span class="toc-number">2.1.</span> <span class="toc-text">一、移除项目中不再起作用的代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%81%9A%E5%87%8F%E6%B3%95%EF%BC%8C%E5%A4%8D%E6%9D%82%E6%9E%B6%E6%9E%84%E7%AE%80%E5%8D%95%E5%8C%96"><span class="toc-number">2.2.</span> <span class="toc-text">二、做减法，复杂架构简单化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%AE%9A%E8%A7%84%E8%8C%83%EF%BC%8C%E7%BB%99%E9%A1%B9%E7%9B%AE%E8%AE%BE%E7%BD%AE%E7%BA%A6%E6%9D%9F%E8%BE%B9%E7%95%8C"><span class="toc-number">2.3.</span> <span class="toc-text">三、定规范，给项目设置约束边界</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%AE%9A%E6%A0%87%E5%87%86%EF%BC%8C%E5%BB%BA%E8%AE%BE%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95%E5%B7%A5%E7%A8%8B"><span class="toc-number">2.4.</span> <span class="toc-text">四、定标准，建设自动化测试工程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E6%B5%8B-E2E%E7%94%A8%E4%BE%8B%E8%A6%86%E7%9B%96-MR-%E6%B5%81%E6%B0%B4%E7%BA%BF%E5%9B%9E%E5%BD%92"><span class="toc-number">2.4.1.</span> <span class="toc-text">单测&#x2F;E2E用例覆盖 + MR 流水线回归</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%86%E8%A7%89%E7%94%A8%E4%BE%8B%E5%9B%9E%E5%BD%92%E5%BB%BA%E8%AE%BE"><span class="toc-number">2.4.2.</span> <span class="toc-text">视觉用例回归建设</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MR-%E8%87%AA%E5%AE%9A%E4%B9%89%E8%A7%84%E5%88%99"><span class="toc-number">2.4.3.</span> <span class="toc-text">MR 自定义规则</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%B0%86%E5%80%BA%E5%8A%A1%E6%B2%BB%E7%90%86%E5%B8%B8%E6%80%81%E5%8C%96"><span class="toc-number">2.5.</span> <span class="toc-text">五、将债务治理常态化</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%93%E6%9D%9F%E8%AF%AD"><span class="toc-number">3.</span> <span class="toc-text">结束语</span></a></li></ol>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  	
+	<div class="archiveslist">
+		<p class="asidetitle">最近文章</p>
+			<ul class="archive-list">
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2026/09/16/ai-refactor-with-agents/" title="一边做业务一边做重构：将真实债务项目重构成 AI 可维护项目">一边做业务一边做重构：将真实债务项目...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2026/07/25/about-front-end-16/" title="前端这几年--16. AI 时代的开发">前端这几年--16. AI 时代的开...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2026/01/01/2026-programer/" title="2026 程序员指南">2026 程序员指南</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2025/12/21/how-to-manage-front-end-project/" title="如何提升项目管理能力">如何提升项目管理能力</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2025/11/01/front-end-performance-website-complexity-design/" title="前端性能优化--网页复杂度设计">前端性能优化--网页复杂度设计...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2025/10/07/front-end-performance-website-quality-score/" title="前端性能优化--网页质量得分">前端性能优化--网页质量得分...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2025/09/06/front-end-basic-js-eventloop/" title="前端基础补齐--有关 JavaScript 单线程">前端基础补齐--有关 JavaScr...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2025/08/09/front-end-basic-js-engine/" title="前端基础补齐--有关 JavaScript 代码执行">前端基础补齐--有关 JavaScr...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2025/07/06/front-end-basic-js-extend/" title="前端基础补齐--有关 JavaScript 继承">前端基础补齐--有关 JavaScr...</a>
+				</li>
+				
+			
+					
+				<li class="archive-list-item">
+					<a class="archive-list-link" href="/2025/06/15/render-engine-downgrate-render/" title="复杂渲染引擎架构与设计--10.降级渲染">复杂渲染引擎架构与设计--10.降级...</a>
+				</li>
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+	</div>
+
+
+  
+  <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">归档</a></p>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/09/">九月 2026</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/07/">七月 2026</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/01/">一月 2026</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/12/">十二月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/11/">十一月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/10/">十月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/09/">九月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/08/">八月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/07/">七月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/06/">六月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/05/">五月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/04/">四月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/03/">三月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/02/">二月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2025/01/">一月 2025</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/12/">十二月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/11/">十一月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/10/">十月 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/09/">九月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/08/">八月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/07/">七月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">六月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/05/">五月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/04/">四月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">三月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/02/">二月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">一月 2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">十二月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">十一月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">十月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">九月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">八月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">七月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">六月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">五月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">四月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/03/">三月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/01/">一月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">十二月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">十月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">六月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">五月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">二月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">九月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">五月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/02/">二月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">十月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">二月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">六月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">四月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">一月 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">11</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a><span class="archive-list-count">41</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">十一月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">9</span></li></ul>
+  </div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle"><a href="/categories">分类</a></p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/AI-时代的程序员/" title="AI 时代的程序员">AI 时代的程序员<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/Angular源码/" title="Angular源码">Angular源码<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/CSS炒饭/" title="CSS炒饭">CSS炒饭<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/D3小馒头/" title="D3小馒头">D3小馒头<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular2火锅/" title="angular2火锅">angular2火锅<sup>25</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/angular混搭/" title="angular混搭">angular混搭<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/box2djs方糖/" title="box2djs方糖">box2djs方糖<sup>34</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/cyclejs哈根达斯/" title="cyclejs哈根达斯">cyclejs哈根达斯<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/jQuery杂烩/" title="jQuery杂烩">jQuery杂烩<sup>3</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/js什锦/" title="js什锦">js什锦<sup>30</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/react沙拉/" title="react沙拉">react沙拉<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/three-js奶茶/" title="three.js奶茶">three.js奶茶<sup>5</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/vue八宝粥/" title="vue八宝粥">vue八宝粥<sup>30</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/webpack宾治/" title="webpack宾治">webpack宾治<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/web乱炖/" title="web乱炖">web乱炖<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端技能提升/" title="前端技能提升">前端技能提升<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端满汉全席/" title="前端满汉全席">前端满汉全席<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/前端解决方案/" title="前端解决方案">前端解决方案<sup>50</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/喵/" title="喵">喵<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/小程序双皮奶/" title="小程序双皮奶">小程序双皮奶<sup>33</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/工作这杯茶/" title="工作这杯茶">工作这杯茶<sup>29</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/应用巧克力盒/" title="应用巧克力盒">应用巧克力盒<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/思想棉花糖/" title="思想棉花糖">思想棉花糖<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/柴米油盐工具集/" title="柴米油盐工具集">柴米油盐工具集<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/自动化甜筒/" title="自动化甜筒">自动化甜筒<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/categories/非前端钙片/" title="非前端钙片">非前端钙片<sup>7</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="archiveslist">
+	<p class="asidetitle">标签</p>
+		<ul class="archive-list">
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/分享/" title="分享">分享<sup>54</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/前端技能/" title="前端技能">前端技能<sup>8</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/前端架构/" title="前端架构">前端架构<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/功能设计/" title="功能设计">功能设计<sup>16</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/原创部件/" title="原创部件">原创部件<sup>1</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/心态/" title="心态">心态<sup>23</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/性能优化/" title="性能优化">性能优化<sup>36</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/教程/" title="教程">教程<sup>80</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/晒猫/" title="晒猫">晒猫<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/笔记/" title="笔记">笔记<sup>121</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/算法/" title="算法">算法<sup>9</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/自制插件/" title="自制插件">自制插件<sup>2</sup></a>
+			</li>
+		
+			<li class="archive-list-item">
+				<a class="archive-list-link" href="/tags/逻辑实现/" title="逻辑实现">逻辑实现<sup>19</sup></a>
+			</li>
+		
+		</ul>
+</div>
+
+
+    <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">about</a></p>
+      <ul class="archive-list">
+      	<li class="archive-list-item">
+      		<a>wangbeishan@163.com</a>
+      		<a target="_blank" rel="noopener" href="https://github.com/godbasin">github.com/godbasin</a>
+      	</li>
+      </ul>
+  </div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<section class="info">
+		<p> 即使梦想再小，却很伟大 ^_^ </p>
+	</section>
+	 
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2026 
+		
+		<a href="https://godbasin.github.io" target="_blank" title="被删">被删</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+
+
+
+
+
+  </body>
+</html>

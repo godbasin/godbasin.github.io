@@ -13,6 +13,7 @@
 
 ### 最新     
 
+> [《如何将真实债务项目重构成 AI 可维护项目》](https://godbasin.github.io/2026/09/16/ai-refactor-with-agents/)   
 > [《前端这几年--16.AI时代的开发》](https://godbasin.github.io/2026/07/25/about-front-end-16/)   
 > [《2026 程序员指南》](https://godbasin.github.io/2026/01/01/2026-programer/)  
 > [《如何提升项目管理能力》](https://godbasin.github.io/2025/12/21/how-to-manage-front-end-project/)  
